@@ -3,116 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Explore the future of wearable tech with AR Glasses. Latest models, deep reviews, and future innovations." />
-  <meta name="keywords" content="AR Glasses, Augmented Reality, Apple Vision Pro, Smart Glasses, Ray-Ban Stories, AR Technology, Meta, Wearables" />
+  <meta name="description" content="Discover the future of AR Glasses. Explore top manufacturers, in-depth reviews, and the latest in wearable augmented reality." />
+  <meta name="keywords" content="AR Glasses, Augmented Reality, Wearable Tech, Apple Vision Pro, Meta Ray-Ban, Smart Glasses" />
   <meta name="author" content="ARGlasses.com" />
-  <title>AR Glasses | Augmented Reality Eyewear Redefined</title>
+  <title>AR Glasses | Leading the Augmented Reality Revolution</title>
   <style>
     :root {
-      --primary: #0e76a8;
-      --dark: #111;
-      --light: #f4f4f4;
-      --accent: #ff4a57;
+      --primary-color: #0e76a8;
+      --secondary-color: #ffffff;
+      --accent-color: #ff4a57;
+      --background-color: #f9fbfd;
+      --text-color: #1a1a1a;
+      --card-bg: #ffffff;
+      --card-shadow: rgba(0, 0, 0, 0.1);
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
       line-height: 1.6;
-      background-color: var(--light);
-      color: var(--dark);
     }
 
     header {
-      background: var(--primary);
-      color: #fff;
-      padding: 2rem;
+      background: var(--primary-color);
+      color: var(--secondary-color);
+      padding: 2.5rem 1rem;
       text-align: center;
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      opacity: 0.9;
     }
 
     nav {
-      background: #fff;
       display: flex;
       justify-content: center;
-      padding: 1rem;
-      border-bottom: 1px solid #ccc;
+      background: var(--secondary-color);
+      box-shadow: 0 2px 4px var(--card-shadow);
     }
 
     nav a {
-      color: var(--primary);
-      margin: 0 1rem;
+      display: inline-block;
+      padding: 1rem;
+      color: var(--primary-color);
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
     }
 
     .hero {
-      padding: 4rem 2rem;
-      background: #e9f7fb;
       text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, #e9f7fb, #f1fafe);
     }
 
     .hero h2 {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
     }
 
     .hero p {
-      font-size: 1.1rem;
-      max-width: 600px;
+      font-size: 1.2rem;
+      max-width: 700px;
       margin: 0 auto;
+    }
+
+    .cta {
+      margin-top: 2rem;
+    }
+
+    .cta a {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary-color);
+      color: var(--secondary-color);
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .cta a:hover {
+      background: var(--accent-color);
     }
 
     .features {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 3rem 1rem;
-      background: #fff;
+      justify-content: center;
+      gap: 2rem;
+      padding: 4rem 2rem;
     }
 
     .feature {
-      flex: 1 1 300px;
-      max-width: 400px;
-      margin: 1rem;
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px var(--card-shadow);
       padding: 2rem;
-      background: var(--light);
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      max-width: 300px;
       transition: transform 0.3s ease;
     }
 
     .feature:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+    }
+
+    .feature h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature p {
+      font-size: 1rem;
+      color: #555;
     }
 
     footer {
+      background: var(--primary-color);
+      color: var(--secondary-color);
       text-align: center;
-      padding: 2rem;
-      background: var(--primary);
-      color: #fff;
+      padding: 2rem 1rem;
+      margin-top: 2rem;
     }
 
     @media (max-width: 768px) {
-      .features {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      header h1 {
+      .hero h2 {
         font-size: 2rem;
       }
 
-      .hero h2 {
-        font-size: 1.6rem;
+      .features {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -120,37 +158,46 @@
 <body>
   <header>
     <h1>AR Glasses</h1>
-    <p>Redefining Reality, One Lens at a Time</p>
+    <p>Leading the Augmented Reality Revolution</p>
   </header>
 
   <nav>
+    <a href="index.html">Home</a>
+    <a href="manufacturers.html">Manufacturers</a>
     <a href="about.html">About</a>
     <a href="blog/">Blog</a>
     <a href="contact.html">Contact</a>
   </nav>
 
   <section class="hero">
-    <h2>The Future of Wearable Augmented Reality</h2>
-    <p>Discover the top AR Glasses brands, explore in-depth reviews, and stay ahead with the latest innovations in spatial computing and immersive vision.</p>
+    <h2>See the World Differently with AR Glasses</h2>
+    <p>Explore cutting-edge augmented reality eyewear from industry leaders. Learn, compare, and stay ahead in the world of immersive technology.</p>
+    <div class="cta">
+      <a href="manufacturers.html">View Top Brands</a>
+    </div>
   </section>
 
   <section class="features">
     <div class="feature">
-      <h3>Product Reviews</h3>
-      <p>Unbiased reviews of the latest AR Glasses including Apple Vision Pro, Ray-Ban Meta, and more.</p>
+      <h3>Brand Spotlights</h3>
+      <p>Discover detailed profiles of Apple, Meta, Microsoft, XREAL, and more AR tech pioneers.</p>
     </div>
     <div class="feature">
-      <h3>Developer Insights</h3>
-      <p>Explore SDKs, APIs, and emerging platforms in AR software development.</p>
+      <h3>Expert Reviews</h3>
+      <p>Unbiased, deep-dive reviews on AR glasses — features, performance, value, and innovation.</p>
     </div>
     <div class="feature">
-      <h3>Industry News</h3>
-      <p>Stay updated with the latest acquisitions, breakthroughs, and AR hardware trends.</p>
+      <h3>Developer Tools</h3>
+      <p>SDKs, APIs, and platform support to help developers build tomorrow’s AR experiences.</p>
+    </div>
+    <div class="feature">
+      <h3>AR Industry News</h3>
+      <p>Stay informed with the latest news, mergers, patents, and product launches shaping AR.</p>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2025 ARGlasses.com — All Rights Reserved</p>
+    <p>&copy; 2025 ARGlasses.com — All rights reserved.</p>
   </footer>
 </body>
 </html>
