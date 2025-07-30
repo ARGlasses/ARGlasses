@@ -1,0 +1,52 @@
+
+:root {
+  --primary-color: #0e76a8;
+  --secondary-color: #ffffff;
+  --accent-color: #ff4a57;
+  --background-color: #f9fbfd;
+  --text-color: #1a1a1a;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+header, nav, main, footer {
+  padding: 1rem;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+nav {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+nav a {
+  color: var(--secondary-color);
+}
+
+h1, h2, h3 {
+  color: var(--primary-color);
+}
