@@ -10,6 +10,7 @@
     <style>
       body {
         font-family: 'Poppins', sans-serif;
+        background-color: white;
       }
 
       nav.container-fluid {
@@ -80,10 +81,17 @@
         color: #ffffffcc;
       }
 
-      .full-width-image figcaption {
+      .image-grid figure img {
+        border-radius: 14px;
+        width: 100%;
+        height: auto;
+        max-height: 450px;
+        object-fit: cover;
+      }
+
+      .image-grid figcaption {
         text-align: center;
-        font-style: italic;
-        margin-top: 1rem;
+        margin-top: 0.5rem;
       }
     </style>
   </head>
@@ -114,37 +122,16 @@
       </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="container">
-      <div class="grid">
-        <section>
-          <p>
-            Augmented Reality Glasses (AR Glasses) are redefining how we experience reality. From navigation to notifications, digital overlays to immersive experiences — the future is no longer on a screen, it’s right in front of your eyes.
-          </p>
-
-          <h3>Why AR Glasses Are Trending</h3>
-          <p>
-            Tech giants are racing to deliver stylish, powerful smart glasses. From live directions and messaging overlays to immersive experiences, AR glasses are evolving from novelty to necessity.
-          </p>
-
-          <h3>What to Expect in 2025</h3>
-          <p>
-            Expect sleek frames, longer battery life, and seamless connectivity with AI assistants. With advances in display tech, AR glasses will feel less like gadgets — and more like extensions of ourselves.
-          </p>
-        </section>
-      </div>
-    </main>
-
-    <!-- Additional Images Section -->
-    <section class="container">
+    <!-- Side-by-side Images -->
+    <section class="container image-grid">
       <div class="grid">
         <figure>
-          <img src="images/ARglasses-projection.png" alt="AR Glasses Projection View" style="border-radius: 12px; width: 100%; height: auto;" />
-          <figcaption style="text-align: center; margin-top: 0.5rem;">Projection View</figcaption>
+          <img src="images/ARglasses-projection.png" alt="AR Glasses Projection View" />
+          <figcaption>Projection View</figcaption>
         </figure>
         <figure>
-          <img src="images/ARglasses-timeline.png" alt="AR Glasses Development Timeline" style="border-radius: 12px; width: 100%; height: auto;" />
-          <figcaption style="text-align: center; margin-top: 0.5rem;">Development Timeline</figcaption>
+          <img src="images/ARglasses-timeline.png" alt="AR Glasses Development Timeline" />
+          <figcaption>Development Timeline</figcaption>
         </figure>
       </div>
     </section>
