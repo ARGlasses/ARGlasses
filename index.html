@@ -1,60 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AR Glasses — The Future is Now</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <li><strong>ARGlasses.com</strong></li>
+      </ul>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Trends</a></li>
+        <li><a href="#" role="button">Subscribe</a></li>
+      </ul>
+    </nav>
 
-  <!-- SEO -->
-  <meta name="description"
-        content="Discover the future of AR glasses through news, in-depth reviews and the latest advances in wearable augmented reality." />
-  <meta name="keywords"
-        content="AR glasses, augmented reality, wearable tech, smart glasses, Apple Vision Pro, Meta Ray-Ban" />
-  <meta name="author" content="ARGlasses.com" />
+    <main class="container">
+      <div class="grid">
+        <section>
+          <hgroup>
+            <h2>The Future is Clear</h2>
+            <h3>Exploring the Rise of Augmented Reality Glasses</h3>
+          </hgroup>
+          <p>AR Glasses are poised to revolutionize how we interact with technology. From immersive navigation to contextual real-time data overlays, the world around us is about to get a digital upgrade — right before our eyes.</p>
 
-  <title>AR Glasses&nbsp;| Leading the Augmented-Reality Revolution</title>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1581090700227-1e8f9c5a6a76?auto=format&fit=crop&w=1400&q=80" alt="AR Glasses" />
+            <figcaption>
+              <a href="https://unsplash.com/photos/MF1yr5M2Cuw" target="_blank">Photo by Laurenz Heymann on Unsplash</a>
+            </figcaption>
+          </figure>
 
-  <!-- Site-wide styles -->
-  <link rel="stylesheet" href="style.css" />
-</head>
+          <h3>Why AR Glasses are Trending</h3>
+          <p>Big tech companies are racing to dominate the AR space, blending fashion and function. With heads-up displays, gesture controls, and real-time translation, the potential use cases span productivity, entertainment, education, and beyond.</p>
 
-<body>
-  <header class="hero">
-    <h1>AR Glasses</h1>
-    <p>Your hub for everything augmented reality</p>
-  </header>
+          <h3>What to Expect in 2025</h3>
+          <p>Expect lighter frames, better battery life, and seamless integration with smartphones and AI assistants. AR Glasses are shifting from sci-fi to daily essential — think smartwatches, but for your face.</p>
+        </section>
+      </div>
+    </main>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="blog/">Blog</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-
-  <main>
-    <section class="hero">
-      <h2>See the World Re-imagined</h2>
-      <p>Independent reviews, tutorials, and deep-dives into the next generation of wearable computing.</p>
-      <a class="cta" href="blog/">Read the Blog</a>
+    <section aria-label="Subscribe example">
+      <div class="container">
+        <article>
+          <hgroup>
+            <h2>Join the AR Revolution</h2>
+            <h3>Subscribe for updates and trends in the AR Glasses world</h3>
+          </hgroup>
+          <form class="grid">
+            <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
+            <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
+            <button type="submit" onclick="event.preventDefault()">Subscribe</button>
+          </form>
+        </article>
+      </div>
     </section>
 
-    <section class="features">
-      <div class="feature">
-        <h3>Hands-on Reviews</h3>
-        <p>We test the latest smart glasses so you know what’s worth your money.</p>
-      </div>
-      <div class="feature">
-        <h3>How-to Guides</h3>
-        <p>Step-by-step walkthroughs for developers and early adopters alike.</p>
-      </div>
-      <div class="feature">
-        <h3>Industry News</h3>
-        <p>Daily coverage of patents, launches, partnerships and more.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 ARGlasses.com — All rights reserved.</p>
-  </footer>
-</body>
+    <footer class="container">
+      <small>
+        <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
+      </small>
+    </footer>
+  </body>
 </html>
