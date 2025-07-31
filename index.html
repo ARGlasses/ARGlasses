@@ -3,198 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Discover the future of AR Glasses. Explore top manufacturers, in-depth reviews, and the latest in wearable augmented reality." />
-  <meta name="keywords" content="AR Glasses, Augmented Reality, Wearable Tech, Apple Vision Pro, Meta Ray-Ban, Smart Glasses" />
+
+  <!-- SEO -->
+  <meta name="description"
+        content="Discover the future of AR glasses through news, in-depth reviews and the latest advances in wearable augmented reality." />
+  <meta name="keywords"
+        content="AR glasses, augmented reality, wearable tech, smart glasses, Apple Vision Pro, Meta Ray-Ban" />
   <meta name="author" content="ARGlasses.com" />
-  <title>AR Glasses | Leading the Augmented Reality Revolution</title>
-  <style>
-    :root {
-      --primary-color: #0e76a8;
-      --secondary-color: #ffffff;
-      --accent-color: #ff4a57;
-      --background-color: #f9fbfd;
-      --text-color: #1a1a1a;
-      --card-bg: #ffffff;
-      --card-shadow: rgba(0, 0, 0, 0.1);
-    }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <title>AR Glasses&nbsp;| Leading the Augmented-Reality Revolution</title>
 
-    body {
-      font-family: 'Helvetica Neue', sans-serif;
-      background-color: var(--background-color);
-      color: var(--text-color);
-      line-height: 1.6;
-    }
-
-    header {
-      background: var(--primary-color);
-      color: var(--secondary-color);
-      padding: 2.5rem 1rem;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    header p {
-      font-size: 1.25rem;
-      opacity: 0.9;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      background: var(--secondary-color);
-      box-shadow: 0 2px 4px var(--card-shadow);
-    }
-
-    nav a {
-      display: inline-block;
-      padding: 1rem;
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: var(--accent-color);
-    }
-
-    .hero {
-      text-align: center;
-      padding: 5rem 2rem;
-      background: linear-gradient(135deg, #e9f7fb, #f1fafe);
-    }
-
-    .hero h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .cta {
-      margin-top: 2rem;
-    }
-
-    .cta a {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background: var(--primary-color);
-      color: var(--secondary-color);
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .cta a:hover {
-      background: var(--accent-color);
-    }
-
-    .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      padding: 4rem 2rem;
-    }
-
-    .feature {
-      background: var(--card-bg);
-      box-shadow: 0 4px 12px var(--card-shadow);
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 300px;
-      transition: transform 0.3s ease;
-    }
-
-    .feature:hover {
-      transform: translateY(-8px);
-    }
-
-    .feature h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature p {
-      font-size: 1rem;
-      color: #555;
-    }
-
-    footer {
-      background: var(--primary-color);
-      color: var(--secondary-color);
-      text-align: center;
-      padding: 2rem 1rem;
-      margin-top: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .hero h2 {
-        font-size: 2rem;
-      }
-
-      .features {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-  </style>
+  <!-- Site-wide styles -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <header>
+  <header class="hero">
     <h1>AR Glasses</h1>
-    <p>Leading the Augmented Reality Revolution</p>
+    <p>Your hub for everything augmented reality</p>
   </header>
 
   <nav>
     <a href="index.html">Home</a>
-    <a href="manufacturers.html">Manufacturers</a>
-    <a href="about.html">About</a>
     <a href="blog/">Blog</a>
+    <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
   </nav>
 
-  <section class="hero">
-    <h2>See the World Differently with AR Glasses</h2>
-    <p>Explore cutting-edge augmented reality eyewear from industry leaders. Learn, compare, and stay ahead in the world of immersive technology.</p>
-    <div class="cta">
-      <a href="manufacturers.html">View Top Brands</a>
-    </div>
-  </section>
+  <main>
+    <section class="hero">
+      <h2>See the World Re-imagined</h2>
+      <p>Independent reviews, tutorials, and deep-dives into the next generation of wearable computing.</p>
+      <a class="cta" href="blog/">Read the Blog</a>
+    </section>
 
-  <section class="features">
-    <div class="feature">
-      <h3>Brand Spotlights</h3>
-      <p>Discover detailed profiles of Apple, Meta, Microsoft, XREAL, and more AR tech pioneers.</p>
-    </div>
-    <div class="feature">
-      <h3>Expert Reviews</h3>
-      <p>Unbiased, deep-dive reviews on AR glasses — features, performance, value, and innovation.</p>
-    </div>
-    <div class="feature">
-      <h3>Developer Tools</h3>
-      <p>SDKs, APIs, and platform support to help developers build tomorrow’s AR experiences.</p>
-    </div>
-    <div class="feature">
-      <h3>AR Industry News</h3>
-      <p>Stay informed with the latest news, mergers, patents, and product launches shaping AR.</p>
-    </div>
-  </section>
+    <section class="features">
+      <div class="feature">
+        <h3>Hands-on Reviews</h3>
+        <p>We test the latest smart glasses so you know what’s worth your money.</p>
+      </div>
+      <div class="feature">
+        <h3>How-to Guides</h3>
+        <p>Step-by-step walkthroughs for developers and early adopters alike.</p>
+      </div>
+      <div class="feature">
+        <h3>Industry News</h3>
+        <p>Daily coverage of patents, launches, partnerships and more.</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 ARGlasses.com — All rights reserved.</p>
