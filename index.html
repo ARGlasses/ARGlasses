@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AR Glasses — The Future is Now</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+
       nav.container-fluid {
         position: sticky;
         top: 0;
@@ -56,11 +61,19 @@
       .hero h2 {
         font-size: 2.5rem;
         margin-bottom: 1rem;
+        font-weight: 600;
       }
 
       .hero h3 {
         font-size: 1.5rem;
         font-weight: 300;
+      }
+
+      .hero p.brand {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        font-weight: 400;
+        color: #ffffffcc;
       }
 
       .full-width-image figcaption {
@@ -76,7 +89,7 @@
         <li>
           <strong style="display: flex; align-items: center; gap: 0.5rem;">
             <img src="images/logo2.png" alt="AR Glasses Logo" style="height: 32px; width: auto;" />
-            ARGlasses.com
+            AR Glasses
           </strong>
         </li>
       </ul>
@@ -87,10 +100,11 @@
       </ul>
     </nav>
 
-    <!-- Hero Section with Background Image -->
+    <!-- Hero Section with Background Image and Overlay Text -->
     <section class="hero">
       <img src="images/ar-glasses.png" alt="AR Glasses with futuristic display" />
       <div class="hero-content">
+        <p class="brand">ARGlasses.com™</p>
         <h2>Welcome to the AR Future</h2>
         <h3>See the world through next-gen smart lenses</h3>
       </div>
