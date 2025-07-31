@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,10 +11,29 @@
         position: sticky;
         top: 0;
         z-index: 999;
-        background: var(--background-color, #fff);
+        background: white;
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .full-width-image {
+        margin: 3rem 0;
+        width: 100%;
+      }
+
+      .full-width-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .full-width-image figcaption {
+        text-align: center;
+        font-style: italic;
+        margin-top: 1rem;
       }
     </style>
   </head>
@@ -45,15 +64,21 @@
           <p>
             Augmented Reality Glasses (AR Glasses) are redefining how we experience reality. From navigation to notifications, digital overlays to immersive experiences — the future is no longer on a screen, it’s right in front of your eyes.
           </p>
+        </section>
+      </div>
+    </main>
 
-          <!-- Smart Glasses Image -->
-          <figure style="text-align: center; margin-top: 2rem;">
-            <img src="images/ar-glasses.png" alt="AR Glasses with futuristic display" style="max-width: 100%; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);" />
-            <figcaption style="margin-top: 1rem; font-style: italic;">
-              Smart glasses with real-time display projection — the future on your face.
-            </figcaption>
-          </figure>
+    <!-- Full Width Image Outside of Container -->
+    <figure class="full-width-image">
+      <img src="images/ar-glasses.png" alt="AR Glasses with futuristic display" />
+      <figcaption>
+        Smart glasses with real-time display projection — the future on your face.
+      </figcaption>
+    </figure>
 
+    <main class="container">
+      <div class="grid">
+        <section>
           <h3>Why AR Glasses Are Trending</h3>
           <p>
             Tech giants are racing to deliver stylish, powerful smart glasses. From live directions and messaging overlays to immersive experiences, AR glasses are evolving from novelty to necessity.
