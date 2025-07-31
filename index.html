@@ -30,7 +30,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
         text-align: center;
       }
 
@@ -48,7 +47,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4); /* dark overlay */
+        background: rgba(0, 0, 0, 0.4);
         z-index: 2;
       }
 
@@ -56,6 +55,11 @@
         position: relative;
         z-index: 3;
         padding: 2rem;
+        color: white;
+      }
+
+      .hero h2, .hero h3, .hero p.brand {
+        color: white;
       }
 
       .hero h2 {
@@ -88,7 +92,7 @@
       <ul>
         <li>
           <strong style="display: flex; align-items: center; gap: 0.5rem;">
-            <img src="images/logo2.png" alt="AR Glasses Logo" style="height: 32px; width: auto;" />
+            <img src="images/logo3.png" alt="AR Glasses Logo" style="height: 32px; width: auto;" />
             AR Glasses
           </strong>
         </li>
@@ -100,7 +104,7 @@
       </ul>
     </nav>
 
-    <!-- Hero Section with Background Image and Overlay Text -->
+    <!-- Hero Section with Background Image and White Text -->
     <section class="hero">
       <img src="images/ar-glasses.png" alt="AR Glasses with futuristic display" />
       <div class="hero-content">
