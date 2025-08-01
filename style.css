@@ -25,7 +25,8 @@ nav.container-fluid {
   align-items: center;
   margin-inline: auto;
   max-width: 1200px;
-  box-shadow: none;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 nav ul {
@@ -39,7 +40,7 @@ nav ul {
 
 nav a {
   text-decoration: none;
-  color: #444; /* light mode */
+  color: #444;
   transition: color 0.3s ease;
 }
 
@@ -59,15 +60,29 @@ nav a:hover {
   width: auto;
 }
 
-/* ===== Icon Styling ===== */
+/* SVG Icons */
 .icon {
-  font-size: 1.1rem;
-  display: inline-block;
-  line-height: 1;
+  vertical-align: middle;
+  stroke: currentColor;
 }
 
-/* ===== Dark Mode Nav Text ===== */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+/* Scroll Background Toggle */
+nav.container-fluid.scrolled {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 @media (prefers-color-scheme: dark) {
+  nav.container-fluid.scrolled {
+    background-color: rgba(30, 30, 30, 0.95);
+  }
+
   nav a {
     color: #fff;
   }
@@ -79,9 +94,33 @@ nav a:hover {
   .logo {
     color: #fff;
   }
+
+  body {
+    background: #111;
+    color: #eee;
+  }
+
+  nav,
+  main,
+  footer {
+    background-color: #1e1e1e;
+  }
+
+  h1, h2, h3 {
+    color: #66ccff;
+  }
+
+  button {
+    background: #66ccff;
+    color: #000;
+  }
+
+  button:hover {
+    background: #99ddff;
+  }
 }
 
-/* ===== Hero Section ===== */
+/* Hero Section */
 .hero {
   position: relative;
   width: 100%;
@@ -141,13 +180,13 @@ nav a:hover {
   color: #ffffffcc;
 }
 
-/* ===== Main Container ===== */
+/* Main Container */
 main.container {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
-/* ===== Image Grid Section ===== */
+/* Image Grid */
 .image-grid .grid.two-column {
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
@@ -180,7 +219,7 @@ figcaption {
   margin-top: 0.5rem;
 }
 
-/* ===== Buttons ===== */
+/* Buttons */
 button {
   background: #004f88;
   color: #fff;
@@ -191,7 +230,7 @@ button:hover {
   background: #006dd1;
 }
 
-/* ===== Footer ===== */
+/* Footer */
 footer {
   margin-top: 3rem;
   padding-top: 1rem;
@@ -200,34 +239,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ===== Dark Mode General ===== */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #111;
-    color: #eee;
-  }
-
-  nav,
-  main,
-  footer {
-    background-color: #1e1e1e;
-  }
-
-  h1, h2, h3 {
-    color: #66ccff;
-  }
-
-  button {
-    background: #66ccff;
-    color: #000;
-  }
-
-  button:hover {
-    background: #99ddff;
-  }
-}
-
-/* ===== Responsive ===== */
+/* Responsive */
 @media (max-width: 768px) {
   .grid.two-column {
     grid-template-columns: 1fr !important;
