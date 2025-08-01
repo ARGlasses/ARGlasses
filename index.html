@@ -12,7 +12,7 @@
   <body>
 
     <!-- Navigation -->
-    <nav class="container-fluid">
+    <nav class="container-fluid" id="navbar">
       <ul>
         <li>
           <strong class="logo">
@@ -22,10 +22,25 @@
         </li>
       </ul>
       <ul>
-        <li><a href="#" aria-label="Explore AR Glasses">Explore AR Glasses</a></li>
-        <li><a href="#" aria-label="Support">Support</a></li>
-        <li><a href="#" aria-label="Search"><span class="icon">🔍</span></a></li>
-        <li><a href="#" aria-label="Login"><span class="icon">🔐</span></a></li>
+        <li><a href="#">Explore AR Glasses</a></li>
+        <li><a href="#">Support</a></li>
+        <li>
+          <a href="#" class="icon-link" aria-label="Search">
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="icon-link" aria-label="Login">
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </a>
+        </li>
       </ul>
     </nav>
 
@@ -83,6 +98,17 @@
         <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
       </small>
     </footer>
-    
+
+    <!-- Scroll Nav Behavior Script -->
+    <script>
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+    </script>
   </body>
 </html>
