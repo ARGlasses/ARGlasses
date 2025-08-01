@@ -1,25 +1,40 @@
+/* ===== Global Styles ===== */
 body {
   background: linear-gradient(to right, #f0f4ff, #ffffff);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #111;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 h1, h2, h3 {
   color: #004f88;
 }
 
+/* ===== Navigation ===== */
 nav {
   background-color: #ffffffee;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #ddd;
 }
 
+/* ===== Main Layout Padding ===== */
 main.container {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
+/* ===== Image Zoom + Overflow Fix ===== */
+figure {
+  overflow: hidden;
+  margin: 0;
+}
+
 figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  object-fit: cover;
   transition: transform 0.4s ease;
 }
 
@@ -27,6 +42,7 @@ figure img:hover {
   transform: scale(1.03);
 }
 
+/* ===== Buttons ===== */
 button {
   background: #004f88;
   color: #fff;
@@ -37,6 +53,7 @@ button:hover {
   background: #006dd1;
 }
 
+/* ===== Footer ===== */
 footer {
   margin-top: 3rem;
   padding-top: 1rem;
@@ -45,13 +62,16 @@ footer {
   font-size: 0.9rem;
 }
 
+/* ===== Dark Mode Support ===== */
 @media (prefers-color-scheme: dark) {
   body {
     background: #111;
     color: #eee;
   }
 
-  nav, main, footer {
+  nav,
+  main,
+  footer {
     background-color: #1e1e1e;
   }
 
