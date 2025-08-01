@@ -15,17 +15,17 @@ nav.container-fluid {
   position: sticky;
   top: 0;
   z-index: 999;
-  background: transparent;           /* transparent background */
-  backdrop-filter: none;             /* no blur */
-  border-bottom: none;               /* no bottom border */
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
   padding-block: 0.75rem;
-  padding-inline: 5rem;              /* strong inward padding */
+  padding-inline: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-inline: auto;
   max-width: 1200px;
-  box-shadow: none;                  /* no shadow */
+  box-shadow: none;
 }
 
 nav ul {
@@ -37,15 +37,41 @@ nav ul {
   padding: 0;
 }
 
+nav a {
+  text-decoration: none;
+  color: #444; /* light mode */
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #000;
+}
+
 .logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: #444;
 }
 
 .logo img {
   height: 32px;
   width: auto;
+}
+
+/* ===== Dark Mode Nav Text ===== */
+@media (prefers-color-scheme: dark) {
+  nav a {
+    color: #fff;
+  }
+
+  nav a:hover {
+    color: #ccc;
+  }
+
+  .logo {
+    color: #fff;
+  }
 }
 
 /* ===== Hero Section ===== */
@@ -167,7 +193,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ===== Dark Mode ===== */
+/* ===== Dark Mode General ===== */
 @media (prefers-color-scheme: dark) {
   body {
     background: #111;
