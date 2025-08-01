@@ -18,8 +18,20 @@ nav.container-fluid {
   background-color: #ffffffee;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #ddd;
-  padding: 0.75rem 0;
+  padding: 0.75rem 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
@@ -183,5 +195,15 @@ footer {
 @media (max-width: 768px) {
   .grid.two-column {
     grid-template-columns: 1fr !important;
+  }
+
+  nav.container-fluid {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }
