@@ -15,17 +15,17 @@ nav.container-fluid {
   position: sticky;
   top: 0;
   z-index: 999;
-  background-color: #ffffffee;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #ddd;
+  background: transparent;           /* transparent background */
+  backdrop-filter: none;             /* no blur */
+  border-bottom: none;               /* no bottom border */
   padding-block: 0.75rem;
-  padding-inline: 5rem; /* significantly inward */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding-inline: 5rem;              /* strong inward padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-inline: auto;
   max-width: 1200px;
+  box-shadow: none;                  /* no shadow */
 }
 
 nav ul {
