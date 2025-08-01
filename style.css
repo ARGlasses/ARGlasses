@@ -59,6 +59,13 @@ nav a:hover {
   width: auto;
 }
 
+/* ===== Icon Styling ===== */
+.icon {
+  font-size: 1.1rem;
+  display: inline-block;
+  line-height: 1;
+}
+
 /* ===== Dark Mode Nav Text ===== */
 @media (prefers-color-scheme: dark) {
   nav a {
