@@ -1,9 +1,9 @@
 /* ===== Global Styles ===== */
 body {
   background: linear-gradient(to right, #f0f4ff, #ffffff);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #111;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -11,19 +11,104 @@ h1, h2, h3 {
 }
 
 /* ===== Navigation ===== */
-nav {
+nav.container-fluid {
+  position: sticky;
+  top: 0;
+  z-index: 999;
   background-color: #ffffffee;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #ddd;
+  padding: 0.75rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* ===== Main Layout Padding ===== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo img {
+  height: 32px;
+  width: auto;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  padding: 2rem;
+  color: white;
+}
+
+.hero h2,
+.hero h3,
+.hero p.brand {
+  color: white;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.hero h3 {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.hero p.brand {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #ffffffcc;
+}
+
+/* ===== Main Container ===== */
 main.container {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
-/* ===== Image Zoom + Overflow Fix ===== */
+/* ===== Image Grid Section ===== */
+.image-grid .grid.two-column {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.full-width-image {
+  margin-top: 2rem;
+}
+
 figure {
   overflow: hidden;
   margin: 0;
@@ -40,6 +125,11 @@ figure img {
 
 figure img:hover {
   transform: scale(1.03);
+}
+
+figcaption {
+  text-align: center;
+  margin-top: 0.5rem;
 }
 
 /* ===== Buttons ===== */
@@ -62,7 +152,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ===== Dark Mode Support ===== */
+/* ===== Dark Mode ===== */
 @media (prefers-color-scheme: dark) {
   body {
     background: #111;
@@ -86,5 +176,12 @@ footer {
 
   button:hover {
     background: #99ddff;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .grid.two-column {
+    grid-template-columns: 1fr !important;
   }
 }
