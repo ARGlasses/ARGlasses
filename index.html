@@ -94,10 +94,6 @@
         text-align: center;
         margin-top: 0.5rem;
       }
-
-      .full-width-figure {
-        grid-column: 1 / -1;
-      }
     </style>
   </head>
   <body>
@@ -130,7 +126,8 @@
 
     <!-- Image Grid -->
     <section class="container image-grid">
-      <div class="grid">
+      <!-- Two side-by-side images -->
+      <div class="grid" style="grid-template-columns: repeat(2, 1fr); gap: 2rem;">
         <figure>
           <img src="images/ARglasses-projection.png" alt="AR Glasses Projection View" loading="lazy" />
           <figcaption>Projection View</figcaption>
@@ -139,9 +136,13 @@
           <img src="images/ARglasses-timeline.png" alt="AR Glasses Development Timeline" loading="lazy" />
           <figcaption>Development Timeline</figcaption>
         </figure>
-        <figure class="full-width-figure">
-          <img src="images/ARglasses-parklife.png" alt="People using AR glasses in a park setting" loading="lazy" />
-          <figcaption>AR in Everyday Life</figcaption>
+      </div>
+
+      <!-- Full-width image below -->
+      <div style="margin-top: 2rem;">
+        <figure>
+          <img src="images/ARglasses-parklife.png" alt="People using AR glasses in a park setting" loading="lazy" style="border-radius: 14px; width: 100%; height: auto;" />
+          <figcaption style="text-align: center; margin-top: 0.5rem;">AR in Everyday Life</figcaption>
         </figure>
       </div>
     </section>
