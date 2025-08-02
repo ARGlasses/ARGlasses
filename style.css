@@ -40,19 +40,13 @@ nav ul {
 
 nav a {
   text-decoration: none;
-  color: #444;
   transition: color 0.3s ease;
-}
-
-nav a:hover {
-  color: #000;
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #444;
 }
 
 .logo img {
@@ -60,7 +54,6 @@ nav a:hover {
   width: auto;
 }
 
-/* SVG Icons */
 .icon {
   vertical-align: middle;
   stroke: currentColor;
@@ -72,27 +65,36 @@ nav a:hover {
   padding: 0.25rem;
 }
 
-/* Scroll Background Toggle */
+/* Dynamic Nav Themes */
+nav.container-fluid.dark-nav a,
+nav.container-fluid.dark-nav strong,
+nav.container-fluid.dark-nav .icon {
+  color: white !important;
+}
+
+nav.container-fluid.dark-nav .logo {
+  color: white !important;
+}
+
+nav.container-fluid.light-nav a,
+nav.container-fluid.light-nav strong,
+nav.container-fluid.light-nav .icon {
+  color: #333 !important;
+}
+
+nav.container-fluid.light-nav .logo {
+  color: #333 !important;
+}
+
 nav.container-fluid.scrolled {
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
   nav.container-fluid.scrolled {
     background-color: rgba(30, 30, 30, 0.95);
-  }
-
-  nav a {
-    color: #fff;
-  }
-
-  nav a:hover {
-    color: #ccc;
-  }
-
-  .logo {
-    color: #fff;
   }
 
   body {
