@@ -1,187 +1,126 @@
-/* ===== Global Styles ===== */
-body {
-  background: linear-gradient(to right, #f0f4ff, #ffffff);
-  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #111;
-  overflow-x: hidden;
-}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AR Glasses — The Future is Now</title>
+    <meta name="description" content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction." />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
 
-h1, h2, h3 {
-  color: #004f88;
-}
+    <!-- Navigation -->
+    <nav class="container-fluid dark-nav" id="navbar">
+      <ul>
+        <li>
+          <strong class="logo">
+            <img src="images/logo3.png" alt="AR Glasses Logo" />
+            AR Glasses
+          </strong>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="#">Explore AR Glasses</a></li>
+        <li><a href="#">Support</a></li>
+        <li>
+          <a href="#" class="icon-link" aria-label="Search">
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="icon-link" aria-label="Login">
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
-/* ===== Navigation ===== */
-nav.container-fluid {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: transparent; /* Always transparent */
-  border-bottom: none;
-  padding-block: 0.75rem;
-  padding-inline: 5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin-inline: auto;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
-}
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="images/ar-glasses.png" alt="Person wearing AR glasses with digital overlay" />
+      <div class="hero-content">
+        <p class="brand">ARGlasses.com™</p>
+        <h2>Welcome to AR Future</h2>
+        <h3>See the world through next-gen smart lenses</h3>
+      </div>
+    </section>
 
-nav ul {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Image Grid -->
+      <section class="image-grid">
+        <div class="grid two-column">
+          <figure>
+            <img src="images/ARglasses-projection.png" alt="Augmented projection through AR Glasses" loading="lazy" />
+            <figcaption>Projection View</figcaption>
+          </figure>
+          <figure>
+            <img src="images/ARglasses-timeline.png" alt="AR Glasses development timeline graph" loading="lazy" />
+            <figcaption>Development Timeline</figcaption>
+          </figure>
+        </div>
 
-nav a {
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
+        <div class="full-width-image">
+          <figure>
+            <img src="images/ARglasses-parklife.png" alt="People enjoying AR glasses in the park" loading="lazy" />
+            <figcaption>AR in Everyday Life</figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+    <!-- Subscribe Section -->
+    <section aria-label="Subscribe to updates">
+      <div class="container">
+        <article>
+          <hgroup>
+            <h2>Stay Ahead of the Curve</h2>
+            <h3>Subscribe for updates and breakthroughs in the world of AR</h3>
+          </hgroup>
+          <form class="grid" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
+            <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </article>
+      </div>
+    </section>
 
-.logo img {
-  height: 32px;
-  width: auto;
-}
+    <!-- Footer -->
+    <footer class="container">
+      <small>
+        <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
+      </small>
+    </footer>
 
-.icon {
-  vertical-align: middle;
-  stroke: currentColor;
-}
+    <!-- Scroll Nav Behavior Script -->
+    <script>
+      const navbar = document.getElementById('navbar');
+      const heroSection = document.querySelector('.hero');
 
-.icon-link {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem;
-}
+      function updateNavbarTheme() {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
 
-/* Dynamic Nav Themes */
-nav.container-fluid.dark-nav a,
-nav.container-fluid.dark-nav strong,
-nav.container-fluid.dark-nav .icon {
-  color: white !important;
-}
+        if (heroBottom <= 0) {
+          navbar.classList.remove('dark-nav');
+          navbar.classList.add('light-nav');
+        } else {
+          navbar.classList.remove('light-nav');
+          navbar.classList.add('dark-nav');
+        }
+      }
 
-nav.container-fluid.dark-nav .logo {
-  color: white !important;
-}
-
-nav.container-fluid.light-nav a,
-nav.container-fluid.light-nav strong,
-nav.container-fluid.light-nav .icon {
-  color: #333 !important;
-}
-
-nav.container-fluid.light-nav .logo {
-  color: #333 !important;
-}
-
-/* Hero Section */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 75vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  padding-top: 5rem; /* offset for fixed nav */
-}
-
-.hero img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 3;
-  padding: 2rem;
-  color: white;
-}
-
-.hero h2,
-.hero h3,
-.hero p.brand {
-  color: white;
-}
-
-.hero h2 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.hero h3 {
-  font-size: 1.5rem;
-  font-weight: 300;
-}
-
-.hero p.brand {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: #ffffffcc;
-}
-
-/* Main Container */
-main.container {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-/* Image Grid */
-.image-grid .grid.two-column {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-}
-
-.full-width-image {
-  margin-top: 2rem;
-}
-
-figure {
-  overflow: hidden;
-  margin: 0;
-}
-
-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 14px;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-figure img:hover {
-  transform: scale(1.03);
-}
-
-figcaption {
-  text-align: center;
-  margin-top: 0.5re
+      window.addEventListener('scroll', updateNavbarTheme);
+      window.addEventListener('DOMContentLoaded', updateNavbarTheme);
+    </script>
+  </body>
+</html>
