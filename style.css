@@ -17,7 +17,7 @@ nav.container-fluid {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: transparent;
+  background: transparent; /* Always transparent */
   border-bottom: none;
   padding-block: 0.75rem;
   padding-inline: 5rem;
@@ -27,7 +27,7 @@ nav.container-fluid {
   max-width: 1200px;
   margin-inline: auto;
   font-size: 0.9rem;
-  transition: color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 nav ul {
@@ -87,39 +87,6 @@ nav.container-fluid.light-nav .logo {
   color: #333 !important;
 }
 
-nav.container-fluid.scrolled {
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #111;
-    color: #eee;
-  }
-
-  nav,
-  main,
-  footer {
-    background-color: #1e1e1e;
-  }
-
-  h1, h2, h3 {
-    color: #66ccff;
-  }
-
-  button {
-    background: #66ccff;
-    color: #000;
-  }
-
-  button:hover {
-    background: #99ddff;
-  }
-}
-
 /* Hero Section */
 .hero {
   position: relative;
@@ -130,7 +97,7 @@ nav.container-fluid.scrolled {
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  padding-top: 5rem; /* offsets fixed nav */
+  padding-top: 5rem; /* offset for fixed nav */
 }
 
 .hero img {
@@ -238,6 +205,33 @@ footer {
   border-top: 1px solid #ccc;
   text-align: center;
   font-size: 0.9rem;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #111;
+    color: #eee;
+  }
+
+  nav,
+  main,
+  footer {
+    background-color: #1e1e1e;
+  }
+
+  h1, h2, h3 {
+    color: #66ccff;
+  }
+
+  button {
+    background: #66ccff;
+    color: #000;
+  }
+
+  button:hover {
+    background: #99ddff;
+  }
 }
 
 /* Responsive */
