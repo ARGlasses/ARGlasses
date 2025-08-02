@@ -16,7 +16,7 @@
       <ul>
         <li>
           <strong class="logo">
-            <img src="images/logo6.png" alt="AR Glasses Logo" />
+            <img src="images/logo3.png" alt="AR Glasses Logo" />
             AR Glasses
           </strong>
         </li>
@@ -54,53 +54,58 @@
       </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="container">
-      <!-- Image Grid -->
-      <section class="image-grid">
-        <div class="grid two-column">
-          <figure>
-            <img src="images/ARglasses-projection.png" alt="Augmented projection through AR Glasses" loading="lazy" />
-            <figcaption>Projection View</figcaption>
-          </figure>
-          <figure>
-            <img src="images/ARglasses-timeline.png" alt="AR Glasses development timeline graph" loading="lazy" />
-            <figcaption>Development Timeline</figcaption>
-          </figure>
-        </div>
+    <!-- START White Background Content -->
+    <div class="white-bg">
 
-        <div class="full-width-image">
-          <figure>
-            <img src="images/ARglasses-parklife.png" alt="People enjoying AR glasses in the park" loading="lazy" />
-            <figcaption>AR in Everyday Life</figcaption>
-          </figure>
+      <!-- Main Content -->
+      <main class="container">
+        <section class="image-grid">
+          <div class="grid two-column">
+            <figure>
+              <img src="images/ARglasses-projection.png" alt="Augmented projection through AR Glasses" loading="lazy" />
+              <figcaption>Projection View</figcaption>
+            </figure>
+            <figure>
+              <img src="images/ARglasses-timeline.png" alt="AR Glasses development timeline graph" loading="lazy" />
+              <figcaption>Development Timeline</figcaption>
+            </figure>
+          </div>
+
+          <div class="full-width-image">
+            <figure>
+              <img src="images/ARglasses-parklife.png" alt="People enjoying AR glasses in the park" loading="lazy" />
+              <figcaption>AR in Everyday Life</figcaption>
+            </figure>
+          </div>
+        </section>
+      </main>
+
+      <!-- Subscribe Section -->
+      <section aria-label="Subscribe to updates">
+        <div class="container">
+          <article>
+            <hgroup>
+              <h2>Stay Ahead of the Curve</h2>
+              <h3>Subscribe for updates and breakthroughs in the world of AR</h3>
+            </hgroup>
+            <form class="grid" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+              <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
+              <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
+              <button type="submit">Subscribe</button>
+            </form>
+          </article>
         </div>
       </section>
-    </main>
 
-    <!-- Subscribe Section -->
-    <section aria-label="Subscribe to updates">
-      <div class="container">
-        <article>
-          <hgroup>
-            <h2>Stay Ahead of the Curve</h2>
-            <h3>Subscribe for updates and breakthroughs in the world of AR</h3>
-          </hgroup>
-          <form class="grid" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
-            <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
-            <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
-            <button type="submit">Subscribe</button>
-          </form>
-        </article>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="container">
-      <small>
-        <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
-      </small>
-    </footer>
+      <!-- Footer -->
+      <footer class="container">
+        <small>
+          <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
+        </small>
+      </footer>
+      
+    </div>
+    <!-- END White Background Content -->
 
     <!-- Scroll Nav Behavior Script -->
     <script>
