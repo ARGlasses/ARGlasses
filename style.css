@@ -177,13 +177,14 @@ main.container {
   background: white;
 }
 
+/* ===== Image and Caption Styles ===== */
 figure {
   position: relative;
   overflow: hidden;
   margin: 0;
   padding: 0;
   border-radius: 14px;
-  background: white; /* ensures white background around images */
+  background: white;
 }
 
 figure img {
@@ -195,21 +196,23 @@ figure img {
   border-radius: 14px;
 }
 
-/* ===== Caption overlay ===== */
-figcaption {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  color: white;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
 figure img:hover {
   transform: scale(1.03);
+}
+
+/* ===== Centered Transparent Overlay Text ===== */
+figcaption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  background: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* ===== Buttons ===== */
@@ -260,7 +263,7 @@ footer {
   }
 
   figcaption {
-    background: rgba(255, 255, 255, 0.1);
+    background: none;
     color: #fff;
   }
 }
