@@ -36,10 +36,15 @@ nav.container-fluid {
 
   /* === Meta Style Font === */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 3px;
+  font-size: 0.75rem;         /* 12px base for accessibility */
   font-weight: 500;
   letter-spacing: 0.25px;
-  text-transform: none;
+  text-transform: uppercase;
+  transform: scale(0.75);     /* Visually shrinks to ~9px */
+  transform-origin: top left;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 nav ul {
@@ -54,6 +59,7 @@ nav ul {
 nav a {
   text-decoration: none;
   transition: color 0.3s ease;
+  color: inherit;
 }
 
 .logo {
