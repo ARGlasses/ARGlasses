@@ -34,17 +34,21 @@ nav.container-fluid {
   max-width: 1200px;
   margin-inline: auto;
 
-  /* === Meta Style Font === */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 0.75rem;         /* 12px base for accessibility */
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.25px;
-  text-transform: uppercase;
-  transform: scale(0.75);     /* Visually shrinks to ~9px */
-  transform-origin: top left;
-  display: inline-block;
+  text-transform: none; /* Keeps original casing */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.nav-scale-wrapper {
+  transform: scale(0.75);
+  transform-origin: top left;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 nav ul {
@@ -297,9 +301,13 @@ footer {
     gap: 0.75rem;
     padding-top: 0.5rem;
   }
+
+  .nav-scale-wrapper {
+    transform: scale(0.9); /* Slightly larger on mobile if needed */
+  }
 }
 
-/* ===== Force white everywhere (no dark vertical strips) ===== */
+/* ===== Force white everywhere ===== */
 body,
 .white-bg,
 main.container,
