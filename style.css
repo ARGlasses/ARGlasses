@@ -12,11 +12,12 @@ h1, h2, h3 {
 
 /* ===== Navigation ===== */
 nav.container-fluid {
-  position: sticky;
+  position: absolute;
   top: 0;
-  z-index: 999;
+  left: 0;
+  right: 0;
+  z-index: 10;
   background: transparent;
-  backdrop-filter: none;
   border-bottom: none;
   padding-block: 0.75rem;
   padding-inline: 5rem;
@@ -26,7 +27,7 @@ nav.container-fluid {
   margin-inline: auto;
   max-width: 1200px;
   font-size: 0.9rem;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 nav ul {
@@ -86,17 +87,8 @@ nav.container-fluid.light-nav .logo {
   color: #333 !important;
 }
 
-nav.container-fluid.scrolled {
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
-  nav.container-fluid.scrolled {
-    background-color: rgba(30, 30, 30, 0.95);
-  }
-
   body {
     background: #111;
     color: #eee;
@@ -184,6 +176,7 @@ nav.container-fluid.scrolled {
 
 /* Main Container */
 main.container {
+  margin-top: 5rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
