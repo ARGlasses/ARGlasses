@@ -4,15 +4,17 @@ body {
   font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #111;
   overflow-x: hidden;
+  margin: 0;
 }
 
 h1, h2, h3 {
   color: #004f88;
 }
 
-/* Make content after hero permanently white */
 .white-bg {
   background: white;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 /* ===== Navigation ===== */
@@ -22,7 +24,7 @@ nav.container-fluid {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: transparent; /* Always transparent */
+  background: transparent;
   border-bottom: none;
   padding-block: 0.75rem;
   padding-inline: 5rem;
@@ -102,7 +104,7 @@ nav.container-fluid.light-nav .logo {
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  padding-top: 5rem; /* offset for fixed nav */
+  padding-top: 5rem;
 }
 
 .hero img {
@@ -155,41 +157,59 @@ nav.container-fluid.light-nav .logo {
 
 /* ===== Main Container ===== */
 main.container {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 0 2rem;
 }
 
 /* ===== Image Grid ===== */
+.image-grid {
+  background: white;
+  padding: 2rem 0;
+}
+
 .image-grid .grid.two-column {
+  display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
 .full-width-image {
   margin-top: 2rem;
+  background: white;
 }
 
 figure {
+  position: relative;
   overflow: hidden;
   margin: 0;
+  padding: 0;
+  border-radius: 14px;
+  background: white; /* ensures white background around images */
 }
 
 figure img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 14px;
   object-fit: cover;
   transition: transform 0.4s ease;
+  border-radius: 14px;
+}
+
+/* ===== Caption overlay ===== */
+figcaption {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 figure img:hover {
   transform: scale(1.03);
-}
-
-figcaption {
-  text-align: center;
-  margin-top: 0.5rem;
 }
 
 /* ===== Buttons ===== */
@@ -210,9 +230,10 @@ footer {
   border-top: 1px solid #ccc;
   text-align: center;
   font-size: 0.9rem;
+  background: white;
 }
 
-/* ===== Dark mode support ===== */
+/* ===== Dark Mode Support ===== */
 @media (prefers-color-scheme: dark) {
   body {
     background: #111;
@@ -237,9 +258,14 @@ footer {
   button:hover {
     background: #99ddff;
   }
+
+  figcaption {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
 }
 
-/* ===== Responsive styles ===== */
+/* ===== Responsive Styles ===== */
 @media (max-width: 768px) {
   .grid.two-column {
     grid-template-columns: 1fr !important;
