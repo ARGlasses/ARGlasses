@@ -112,9 +112,9 @@
 
         if (heroBottom <= 0) {
           navbar.classList.remove('dark-nav');
-          navbar.classList.add('light-nav');
+          navbar.classList.add('light-nav', 'scrolled');
         } else {
-          navbar.classList.remove('light-nav');
+          navbar.classList.remove('light-nav', 'scrolled');
           navbar.classList.add('dark-nav');
         }
       }
