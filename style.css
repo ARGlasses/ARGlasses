@@ -12,11 +12,11 @@ h1, h2, h3 {
 
 /* ===== Navigation ===== */
 nav.container-fluid {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 1000;
   background: transparent;
   border-bottom: none;
   padding-block: 0.75rem;
@@ -24,8 +24,8 @@ nav.container-fluid {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-inline: auto;
   max-width: 1200px;
+  margin-inline: auto;
   font-size: 0.9rem;
   transition: color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
@@ -87,6 +87,12 @@ nav.container-fluid.light-nav .logo {
   color: #333 !important;
 }
 
+nav.container-fluid.scrolled {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   body {
@@ -124,6 +130,7 @@ nav.container-fluid.light-nav .logo {
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  padding-top: 5rem; /* offsets fixed nav */
 }
 
 .hero img {
@@ -176,7 +183,6 @@ nav.container-fluid.light-nav .logo {
 
 /* Main Container */
 main.container {
-  margin-top: 5rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
