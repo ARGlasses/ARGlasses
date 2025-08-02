@@ -1,6 +1,6 @@
 /* ===== Global Styles ===== */
 body {
-  background: linear-gradient(to right, #f0f4ff, #ffffff);
+  background: white;
   font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #111;
   overflow-x: hidden;
@@ -121,7 +121,7 @@ nav.container-fluid.light-nav .logo {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4); /* Keep this ONLY for hero overlay */
   z-index: 2;
 }
 
@@ -200,7 +200,7 @@ figure img:hover {
   transform: scale(1.03);
 }
 
-/* ===== Centered Transparent Overlay Text ===== */
+/* ===== Caption Centered (Optional if using) ===== */
 figcaption {
   position: absolute;
   top: 50%;
@@ -213,6 +213,7 @@ figcaption {
   background: none;
   padding: 0;
   margin: 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* ===== Buttons ===== */
@@ -285,4 +286,17 @@ footer {
     gap: 0.75rem;
     padding-top: 0.5rem;
   }
+}
+
+/* ===== Force white everywhere (no dark vertical strips) ===== */
+body,
+.white-bg,
+main.container,
+.image-grid,
+.grid.two-column,
+.full-width-image,
+figure {
+  background: white !important;
+  background-image: none !important;
+  box-shadow: none !important;
 }
