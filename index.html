@@ -1,46 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AR Glasses</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    .nav-scale-wrapper {
-      transform: scale(0.75);
-      transform-origin: top right;
-      display: flex;
-      align-items: center;
-    }
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AR Glasses — The Future is Now</title>
+    <meta name="description" content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction." />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
 
-    nav.container-fluid {
-      text-transform: none; /* prevent forced uppercase */
-      flex-wrap: nowrap;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Navigation -->
-  <nav class="container-fluid dark-nav" id="navbar">
-    <ul>
-      <li>
-        <strong class="logo">
-          <img src="images/logo6.png" alt="AR Glasses Logo" />
-          AR Glasses
-        </strong>
-      </li>
-    </ul>
-
-    <!-- Scaled nav links -->
-    <div class="nav-scale-wrapper">
+    <!-- Navigation -->
+    <nav class="container-fluid dark-nav" id="navbar">
+      <ul>
+        <li>
+          <strong class="logo">
+            <img src="images/logo6.png" alt="AR Glasses Logo" />
+            AR Glasses
+          </strong>
+        </li>
+      </ul>
       <ul>
         <li><a href="#">Explore AR Glasses</a></li>
         <li><a href="#">Support</a></li>
         <li>
           <a href="#" class="icon-link" aria-label="Search">
-            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
@@ -48,8 +34,7 @@
         </li>
         <li>
           <a href="#" class="icon-link" aria-label="Login">
-            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
               <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
               <circle cx="12" cy="7" r="4" />
@@ -57,44 +42,89 @@
           </a>
         </li>
       </ul>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Page content -->
-  <main class="container">
+    <!-- Hero Section -->
     <section class="hero">
-      <img src="images/hero-background.jpg" alt="Hero Background" />
+      <img src="images/ar-glasses.png" alt="Person wearing AR glasses with digital overlay" />
       <div class="hero-content">
-        <h2>Next-Gen Augmented Reality</h2>
-        <h3>Experience the future, today.</h3>
-        <p class="brand">Powered by AR Glasses</p>
+        <p class="brand">ARGlasses.com™</p>
+        <h2>Welcome to AR Future</h2>
+        <h3>See the world through next-gen smart lenses</h3>
       </div>
     </section>
 
-    <section class="image-grid white-bg">
-      <div class="grid two-column">
-        <figure>
-          <img src="images/product1.jpg" alt="Product 1" />
-          <figcaption>Immersive Display</figcaption>
-        </figure>
-        <figure>
-          <img src="images/product2.jpg" alt="Product 2" />
-          <figcaption>All-Day Comfort</figcaption>
-        </figure>
-      </div>
-    </section>
+    <!-- White Background Content -->
+    <div class="white-bg">
+      <main class="container">
+        <!-- Image Grid -->
+        <section class="image-grid">
+          <div class="grid two-column">
+            <figure>
+              <img src="images/ARglasses-projection.png" alt="Augmented projection through AR Glasses" loading="lazy" />
+              <figcaption>Projection View</figcaption>
+            </figure>
+            <figure>
+              <img src="images/ARglasses-timeline.png" alt="AR Glasses development timeline graph" loading="lazy" />
+              <figcaption>Development Timeline</figcaption>
+            </figure>
+          </div>
 
-    <section class="full-width-image">
-      <figure>
-        <img src="images/full-width.jpg" alt="Full Width Feature" />
-        <figcaption>See Beyond Reality</figcaption>
-      </figure>
-    </section>
-  </main>
+          <div class="full-width-image">
+            <figure>
+              <img src="images/ARglasses-parklife.png" alt="People enjoying AR glasses in the park" loading="lazy" />
+              <figcaption>AR in Everyday Life</figcaption>
+            </figure>
+          </div>
+        </section>
+      </main>
 
-  <footer>
-    &copy; 2025 AR Glasses. All rights reserved.
-  </footer>
+      <!-- Subscribe Section -->
+      <section aria-label="Subscribe to updates">
+        <div class="container">
+          <article>
+            <hgroup>
+              <h2>Stay Ahead of the Curve</h2>
+              <h3>Subscribe for updates and breakthroughs in the world of AR</h3>
+            </hgroup>
+            <form class="grid" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+              <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
+              <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
+              <button type="submit">Subscribe</button>
+            </form>
+          </article>
+        </div>
+      </section>
 
-</body>
+      <!-- Footer -->
+      <footer class="container">
+        <small>
+          <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
+        </small>
+      </footer>
+    </div>
+
+    <!-- Navbar Scroll Behavior Script -->
+    <script>
+      const navbar = document.getElementById('navbar');
+      const heroSection = document.querySelector('.hero');
+
+      function updateNavbarTheme() {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
+
+        if (heroBottom <= 0) {
+          navbar.classList.remove('dark-nav');
+          navbar.classList.add('light-nav');
+        } else {
+          navbar.classList.remove('light-nav');
+          navbar.classList.add('dark-nav');
+        }
+      }
+
+      window.addEventListener('scroll', updateNavbarTheme);
+      window.addEventListener('DOMContentLoaded', updateNavbarTheme);
+    </script>
+  </body>
 </html>
+
+
