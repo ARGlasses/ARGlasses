@@ -31,6 +31,7 @@ nav.container-fluid {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 4rem; /* NEW: Increased spacing between logo and nav links */
   max-width: 1200px;
   margin-inline: auto;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -43,7 +44,7 @@ nav.container-fluid {
 nav ul {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2.5rem; /* NEW: Increased spacing between individual nav links */
   list-style: none;
   margin: 0;
   padding: 0;
@@ -283,6 +284,7 @@ footer {
     flex-direction: column;
     align-items: flex-start;
     padding-inline: 2rem;
+    gap: 2rem; /* Keep spacing consistent for mobile too */
   }
 
   nav ul {
