@@ -32,7 +32,7 @@ nav.container-fluid {
 .nav-inner {
   max-width: none;
   width: 100%;
-  padding: 0 96px; /* approx. 1 inch on each side */
+  padding: 0 144px; /* approx. 1 inch on each side */
   display: flex;
   justify-content: space-between;
   align-items: center;
