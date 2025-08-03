@@ -32,7 +32,7 @@ nav.container-fluid {
 .nav-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 0.75rem; /* Adjusted to move nav text closer to screen edge */
+  padding: 0 1.75rem; /* Adjusted to move nav text closer to screen edge */
   width: 100%;
   display: flex;
   justify-content: space-between;
