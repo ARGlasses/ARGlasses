@@ -30,10 +30,9 @@ nav.container-fluid {
 
 /* ===== Nav Inner ===== */
 .nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 3.75rem; /* Adjusted to move nav text closer to screen edge */
+  max-width: none;
   width: 100%;
+  padding: 0 96px; /* approx. 1 inch on each side */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -291,8 +290,6 @@ footer {
   }
 
   .nav-inner {
-    flex-direction: column;
-    align-items: flex-start;
     padding: 0 1rem;
   }
 
