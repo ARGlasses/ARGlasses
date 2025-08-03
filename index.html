@@ -4,45 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AR Glasses — The Future is Now</title>
-    <meta name="description" content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction." />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <meta
+      name="description"
+      content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction."
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-
     <!-- Navigation -->
     <nav class="container-fluid dark-nav" id="navbar">
-      <ul>
-        <li>
-          <strong class="logo">
-            <img src="images/logo6.png" alt="AR Glasses Logo" />
-            AR Glasses
-          </strong>
-        </li>
-      </ul>
-      <div class="nav-spacer"></div>
-      <ul>
-        <li><a href="#">Explore AR Glasses</a></li>
-        <li><a href="#">Support</a></li>
-        <li>
-          <a href="#" class="icon-link" aria-label="Search">
-            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="icon-link" aria-label="Login">
-            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </a>
-        </li>
-      </ul>
+      <div class="nav-inner">
+        <ul>
+          <li>
+            <strong class="logo">
+              <img src="images/logo6.png" alt="AR Glasses Logo" />
+              AR Glasses
+            </strong>
+          </li>
+        </ul>
+        <ul>
+          <li><a href="#">Explore AR Glasses</a></li>
+          <li><a href="#">Support</a></li>
+          <li>
+            <a href="#" class="icon-link" aria-label="Search">
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="icon-link" aria-label="Login">
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Hero Section -->
@@ -86,7 +115,6 @@
             <figcaption>Retail & Shopping</figcaption>
           </figure>
         </div>
-
       </section>
     </main>
 
@@ -98,9 +126,26 @@
             <h2>Stay Ahead of the Curve</h2>
             <h3>Subscribe for updates and breakthroughs in the world of AR</h3>
           </hgroup>
-          <form class="grid" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
-            <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
-            <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
+          <form
+            class="grid"
+            onsubmit="event.preventDefault(); alert('Thank you for subscribing!');"
+          >
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              placeholder="First name"
+              aria-label="First name"
+              required
+            />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email address"
+              aria-label="Email address"
+              required
+            />
             <button type="submit">Subscribe</button>
           </form>
         </article>
