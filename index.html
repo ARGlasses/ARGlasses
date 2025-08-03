@@ -25,21 +25,10 @@
         <li><a href="#">Explore AR Glasses</a></li>
         <li><a href="#">Support</a></li>
         <li>
-          <a href="#" class="icon-link" aria-label="Search">
-            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </a>
+          <a href="#" class="icon-link" aria-label="Search">🔍</a>
         </li>
         <li>
-          <a href="#" class="icon-link" aria-label="Login">
-            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </a>
+          <a href="#" class="icon-link" aria-label="Login">👤</a>
         </li>
       </ul>
     </nav>
@@ -54,55 +43,51 @@
       </div>
     </section>
 
-    <!-- White Background Content -->
-    <div class="white-bg">
-      <main class="container">
-        <!-- Image Grid -->
-        <section class="image-grid">
-          <div class="grid two-column">
-            <figure>
-              <img src="images/ARglasses-projection.png" alt="Augmented projection through AR Glasses" loading="lazy" />
-              <figcaption>Projection View</figcaption>
-            </figure>
-            <figure>
-              <img src="images/ARglasses-timeline.png" alt="AR Glasses development timeline graph" loading="lazy" />
-              <figcaption>Development Timeline</figcaption>
-            </figure>
-          </div>
-
-          <div class="full-width-image">
-            <figure>
-              <img src="images/ARglasses-parklife.png" alt="People enjoying AR glasses in the park" loading="lazy" />
-              <figcaption>AR in Everyday Life</figcaption>
-            </figure>
-          </div>
-        </section>
-      </main>
-
-      <!-- Subscribe Section -->
-      <section aria-label="Subscribe to updates">
-        <div class="container">
-          <article>
-            <hgroup>
-              <h2>Stay Ahead of the Curve</h2>
-              <h3>Subscribe for updates and breakthroughs in the world of AR</h3>
-            </hgroup>
-            <form class="grid" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
-              <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
-              <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
-              <button type="submit">Subscribe</button>
-            </form>
-          </article>
+    <!-- Content Section -->
+    <main class="container">
+      <section class="image-grid">
+        <div class="grid two-column">
+          <figure>
+            <img src="images/ARglasses-projection.png" alt="Augmented projection through AR Glasses" />
+            <figcaption>Projection View</figcaption>
+          </figure>
+          <figure>
+            <img src="images/ARglasses-timeline.png" alt="AR Glasses development timeline graph" />
+            <figcaption>Development Timeline</figcaption>
+          </figure>
+        </div>
+        <div class="full-width-image">
+          <figure>
+            <img src="images/ARglasses-parklife.png" alt="People enjoying AR glasses in the park" />
+            <figcaption>AR in Everyday Life</figcaption>
+          </figure>
         </div>
       </section>
+    </main>
 
-      <!-- Footer -->
-      <footer class="container">
-        <small>
-          <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
-        </small>
-      </footer>
-    </div>
+    <!-- Subscribe -->
+    <section aria-label="Subscribe to updates">
+      <div class="container">
+        <article>
+          <hgroup>
+            <h2>Stay Ahead of the Curve</h2>
+            <h3>Subscribe for updates and breakthroughs in the world of AR</h3>
+          </hgroup>
+          <form class="grid" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required />
+            <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container">
+      <small>
+        <a href="#">Privacy Policy</a> • <a href="#">Terms & Conditions</a>
+      </small>
+    </footer>
 
     <!-- Navbar Scroll Behavior Script -->
     <script>
@@ -111,7 +96,6 @@
 
       function updateNavbarTheme() {
         const heroBottom = heroSection.getBoundingClientRect().bottom;
-
         if (heroBottom <= 0) {
           navbar.classList.remove('dark-nav');
           navbar.classList.add('light-nav');
@@ -126,5 +110,3 @@
     </script>
   </body>
 </html>
-
-
