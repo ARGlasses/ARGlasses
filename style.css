@@ -109,6 +109,7 @@ nav.container-fluid.light-nav .icon {
 .hero {
   position: relative;
   width: 100vw;
+  height: 100svh;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -288,7 +289,6 @@ footer.container {
   color: #004f88;
 }
 
-/* Footer Logo Group */
 .footer-logo-group {
   display: flex;
   align-items: center;
@@ -398,5 +398,9 @@ footer.container {
   .footer-brand,
   .footer-links {
     width: 100%;
+  }
+
+  .hero-content {
+    margin-top: 200px;
   }
 }
