@@ -145,9 +145,10 @@ nav.container-fluid.light-nav .icon {
   color: #ffffffcc;
 }
 
-/* ===== Image Grid ===== */
+/* ===== Main Content Section ===== */
 main.container {
   padding: 0 2rem;
+  background-color: white;
 }
 
 .image-grid {
@@ -163,6 +164,7 @@ main.container {
 
 .full-width-image {
   margin-top: 2rem;
+  background: white;
 }
 
 figure {
@@ -170,6 +172,8 @@ figure {
   overflow: hidden;
   border-radius: 14px;
   background: white;
+  margin: 0;
+  padding: 0;
 }
 
 figure img {
@@ -200,7 +204,18 @@ figcaption {
   z-index: 2;
 }
 
-/* ===== Buttons & Footer ===== */
+/* ===== Subscribe Section ===== */
+section[aria-label="Subscribe to updates"] {
+  background-color: white;
+  padding: 2rem 0;
+}
+
+section[aria-label="Subscribe to updates"] input,
+section[aria-label="Subscribe to updates"] button {
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== Buttons ===== */
 button {
   background: #004f88;
   color: #fff;
@@ -211,26 +226,35 @@ button:hover {
   background: #006dd1;
 }
 
-footer {
+/* ===== Footer ===== */
+footer.container {
   margin-top: 3rem;
   padding-top: 1rem;
   border-top: 1px solid #ccc;
   text-align: center;
   font-size: 0.9rem;
-  background: white;
+  background-color: white !important;
+  color: #111 !important;
 }
 
-/* ===== Responsive ===== */
+/* ===== Force White Background Below Hero ===== */
+main.container,
+.image-grid,
+.full-width-image,
+figure,
+section[aria-label="Subscribe to updates"],
+footer.container {
+  background-color: white !important;
+  background-image: none !important;
+  color: #111 !important;
+  box-shadow: none !important;
+}
+
+/* ===== Dark Mode (no background override) ===== */
 @media (prefers-color-scheme: dark) {
   body {
     background: #111;
     color: #eee;
-  }
-
-  nav,
-  main,
-  footer {
-    background-color: #1e1e1e;
   }
 
   h1, h2, h3 {
@@ -245,8 +269,14 @@ footer {
   button:hover {
     background: #99ddff;
   }
+
+  figcaption {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    color: #fff;
+  }
 }
 
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .grid.two-column {
     grid-template-columns: 1fr !important;
