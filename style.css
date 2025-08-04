@@ -32,15 +32,11 @@ nav.container-fluid {
 .nav-inner {
   max-width: none;
   width: 100%;
-  padding: 0 224px; /* approx. 1 inch on each side */
+  padding: 0 224px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-}
-
-.nav-spacer {
-  display: none;
 }
 
 nav ul {
@@ -89,21 +85,13 @@ nav.container-fluid.dark-nav .icon {
   color: white !important;
 }
 
-nav.container-fluid.dark-nav .logo {
-  color: white !important;
-}
-
 nav.container-fluid.light-nav a,
 nav.container-fluid.light-nav strong,
 nav.container-fluid.light-nav .icon {
   color: #333 !important;
 }
 
-nav.container-fluid.light-nav .logo {
-  color: #333 !important;
-}
-
-/* ===== Hero Section ===== */
+/* ===== Hero Section with Video ===== */
 .hero {
   position: relative;
   width: 100vw;
@@ -117,7 +105,7 @@ nav.container-fluid.light-nav .logo {
   padding: 0;
 }
 
-.hero img {
+.hero-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -140,7 +128,7 @@ nav.container-fluid.light-nav .logo {
   z-index: 3;
   padding: 0;
   color: white;
-  margin-top: 600px;
+  margin-top: 400px;
 }
 
 .hero h2,
@@ -188,7 +176,6 @@ main.container {
   background: white;
 }
 
-/* ===== Final Image and Caption Styles ===== */
 figure {
   position: relative;
   overflow: hidden;
@@ -248,7 +235,7 @@ footer {
   background: white;
 }
 
-/* ===== Dark Mode Support ===== */
+/* ===== Dark Mode ===== */
 @media (prefers-color-scheme: dark) {
   body {
     background: #111;
@@ -280,7 +267,7 @@ footer {
   }
 }
 
-/* ===== Responsive Styles ===== */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .grid.two-column {
     grid-template-columns: 1fr !important;
@@ -304,17 +291,4 @@ footer {
   nav ul:last-of-type {
     margin-top: 0.75rem;
   }
-}
-
-/* ===== Force white everywhere ===== */
-body,
-.white-bg,
-main.container,
-.image-grid,
-.grid.two-column,
-.full-width-image,
-figure {
-  background: white !important;
-  background-image: none !important;
-  box-shadow: none !important;
 }
