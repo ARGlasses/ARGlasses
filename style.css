@@ -383,6 +383,24 @@ footer.container {
   .footer-brand,
   .footer-links,
   .footer-social {
+    .footer-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo-group img {
+  height: 40px;
+  width: auto;
+  margin: 0;
+}
+
+.footer-logo-group h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #004f88;
+}
+
     width: 100%;
   }
 }
