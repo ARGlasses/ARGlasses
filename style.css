@@ -256,7 +256,19 @@ footer.container {
   padding: 3rem 2rem 2rem;
   color: #111;
   border-top: 1px solid #ccc;
-  font-size: 0.3rem;
+  font-size: 0.8rem !important;
+}
+
+.professional-footer .footer-brand p {
+  font-size: 0.75rem !important;
+}
+
+.professional-footer .footer-links a {
+  font-size: 0.75rem !important;
+}
+
+.professional-footer .footer-bottom {
+  font-size: 0.7rem !important;
 }
 
 .footer-content {
@@ -276,7 +288,7 @@ footer.container {
   color: #004f88;
 }
 
-/* ➕ Footer Logo Alignment Fix */
+/* Footer Logo Group */
 .footer-logo-group {
   display: flex;
   align-items: center;
