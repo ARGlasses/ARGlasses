@@ -17,8 +17,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-
-    <!-- ✅ Favicon for browser tab -->
     <link rel="icon" href="images/logo7.png" type="image/png" />
   </head>
   <body>
@@ -76,9 +74,12 @@
       </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Video -->
     <section class="hero">
-      <img src="images/ar-glasses.png" alt="Person wearing AR glasses with digital overlay" />
+      <video autoplay muted loop playsinline class="hero-video">
+        <source src="images/ARglasses-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <div class="hero-content">
         <p class="brand">ARGlasses.com™</p>
         <h2>Welcome to AR Future</h2>
@@ -105,8 +106,6 @@
             <figcaption>Education & Training</figcaption>
           </figure>
         </div>
-
-        <!-- Newly Added Two Images -->
         <div class="grid two-column" style="margin-top: 2rem;">
           <figure>
             <img src="images/ARglasses-doctor.png" alt="Doctor using AR glasses in a clinical setting" />
