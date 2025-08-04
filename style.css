@@ -228,15 +228,7 @@ figcaption {
   z-index: 2;
 }
 
-/* ===== Subscribe Section ===== */
-section[aria-label="Subscribe to updates"] {
-  background-color: white !important;
-  padding: 2rem 0;
-}
 
-section[aria-label="Subscribe to updates"] input,
-section[aria-label="Subscribe to updates"] button {
-  font-family: "Poppins", sans-serif;
 }
 
 /* ===== Buttons ===== */
