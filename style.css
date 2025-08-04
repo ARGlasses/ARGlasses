@@ -312,3 +312,79 @@ footer.container {
     margin-top: 0.75rem;
   }
 }
+/* ===== Professional Footer ===== */
+.professional-footer {
+  background: white;
+  padding: 3rem 2rem 2rem;
+  color: #111;
+  border-top: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.footer-brand img {
+  height: 40px;
+  margin-bottom: 0.5rem;
+}
+
+.footer-brand h4 {
+  margin: 0.5rem 0 0;
+  color: #004f88;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #004f88;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-social .social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.footer-social a {
+  color: #004f88;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: #006dd1;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* ===== Responsive Footer ===== */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
