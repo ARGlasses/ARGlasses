@@ -1,12 +1,35 @@
 /* ===== Global Styles ===== */
-body {
-  background: white;
-  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #111;
-  overflow-x: hidden;
-  margin: 0;
+* {
+  box-sizing: border-box;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  background: white !important;
+  color: #111;
+  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===== Enforce full-white background on everything ===== */
+body,
+main,
+section,
+footer,
+.hero,
+.image-grid,
+.full-width-image,
+section[aria-label="Subscribe to updates"],
+footer.container,
+figure {
+  background-color: white !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #111 !important;
+}
+
+/* ===== Headings ===== */
 h1, h2, h3 {
   color: #004f88;
 }
@@ -145,15 +168,16 @@ nav.container-fluid.light-nav .icon {
   color: #ffffffcc;
 }
 
-/* ===== Main Content Section ===== */
+/* ===== Content Section ===== */
 main.container {
   padding: 0 2rem;
-  background-color: white;
+  background: white;
 }
 
 .image-grid {
   background: white;
   padding: 2rem 0;
+  width: 100%;
 }
 
 .image-grid .grid.two-column {
@@ -171,9 +195,9 @@ figure {
   position: relative;
   overflow: hidden;
   border-radius: 14px;
-  background: white;
   margin: 0;
   padding: 0;
+  background: white;
 }
 
 figure img {
@@ -206,7 +230,7 @@ figcaption {
 
 /* ===== Subscribe Section ===== */
 section[aria-label="Subscribe to updates"] {
-  background-color: white;
+  background-color: white !important;
   padding: 2rem 0;
 }
 
@@ -237,28 +261,15 @@ footer.container {
   color: #111 !important;
 }
 
-/* ===== Force White Background Below Hero ===== */
-main.container,
-.image-grid,
-.full-width-image,
-figure,
-section[aria-label="Subscribe to updates"],
-footer.container {
-  background-color: white !important;
-  background-image: none !important;
-  color: #111 !important;
-  box-shadow: none !important;
-}
-
-/* ===== Dark Mode (no background override) ===== */
+/* ===== Remove dark theme background overrides ===== */
 @media (prefers-color-scheme: dark) {
   body {
-    background: #111;
     color: #eee;
+    background: white !important;
   }
 
   h1, h2, h3 {
-    color: #66ccff;
+    color: #004f88;
   }
 
   button {
