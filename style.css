@@ -11,7 +11,7 @@ h1, h2, h3 {
   color: #004f88;
 }
 
-/* ===== Navigation Container ===== */
+/* ===== Navigation ===== */
 nav.container-fluid {
   position: fixed;
   top: 0;
@@ -19,18 +19,13 @@ nav.container-fluid {
   right: 0;
   z-index: 1000;
   background: transparent;
-  border-bottom: none;
   padding: 0.1rem 0;
-  width: 100%;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.2px;
 }
 
-/* ===== Nav Inner ===== */
 .nav-inner {
-  max-width: none;
   width: 100%;
   padding: 0 224px;
   display: flex;
@@ -46,14 +41,12 @@ nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  flex-wrap: wrap;
 }
 
 nav a {
   text-decoration: none;
   transition: color 0.3s ease;
   color: inherit;
-  font-size: 0.8rem;
 }
 
 .logo {
@@ -69,7 +62,6 @@ nav a {
 }
 
 .icon {
-  vertical-align: middle;
   stroke: currentColor;
 }
 
@@ -126,9 +118,8 @@ nav.container-fluid.light-nav .icon {
 .hero-content {
   position: relative;
   z-index: 3;
-  padding: 0;
-  color: white;
   margin-top: 400px;
+  color: white;
 }
 
 .hero h2,
@@ -154,12 +145,11 @@ nav.container-fluid.light-nav .icon {
   color: #ffffffcc;
 }
 
-/* ===== Main Container ===== */
+/* ===== Image Grid ===== */
 main.container {
   padding: 0 2rem;
 }
 
-/* ===== Image Grid ===== */
 .image-grid {
   background: white;
   padding: 2rem 0;
@@ -173,20 +163,16 @@ main.container {
 
 .full-width-image {
   margin-top: 2rem;
-  background: white;
 }
 
 figure {
   position: relative;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
   border-radius: 14px;
   background: white;
 }
 
 figure img {
-  display: block;
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -214,7 +200,7 @@ figcaption {
   z-index: 2;
 }
 
-/* ===== Buttons ===== */
+/* ===== Buttons & Footer ===== */
 button {
   background: #004f88;
   color: #fff;
@@ -225,7 +211,6 @@ button:hover {
   background: #006dd1;
 }
 
-/* ===== Footer ===== */
 footer {
   margin-top: 3rem;
   padding-top: 1rem;
@@ -235,7 +220,7 @@ footer {
   background: white;
 }
 
-/* ===== Dark Mode ===== */
+/* ===== Responsive ===== */
 @media (prefers-color-scheme: dark) {
   body {
     background: #111;
@@ -260,14 +245,8 @@ footer {
   button:hover {
     background: #99ddff;
   }
-
-  figcaption {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-    color: #fff;
-  }
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .grid.two-column {
     grid-template-columns: 1fr !important;
