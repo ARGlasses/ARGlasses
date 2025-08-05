@@ -4,19 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AR glasses — Changing how you see the world</title>
-    <meta name="description" content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction." />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <meta
+      name="description"
+      content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction."
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
     <style>
       .dropdown-menu {
         display: none;
         position: absolute;
-        background: white;
+        background: rgba(0, 0, 0, 0.85);
         padding: 0.5rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         list-style: none;
+        z-index: 999;
+        border-radius: 4px;
+        min-width: 180px;
       }
 
       .dropdown:hover .dropdown-menu {
@@ -25,23 +36,32 @@
 
       .dropdown-menu a {
         display: block;
-        padding: 0.25rem 0.5rem;
+        padding: 0.4rem 0.75rem;
+        color: white !important;
+        text-decoration: none;
+        white-space: nowrap;
+        font-weight: 400;
+        transition: background 0.2s ease, color 0.2s ease;
       }
 
       .dropdown-menu a:hover {
-        background: #f0f0f0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="container-fluid dark-nav" id="navbar">
+    <nav class="container-fluid light-nav" id="navbar">
       <div class="nav-inner">
         <ul>
           <li>
             <strong class="logo">
-              <img src="images/logo7.png" alt="AR Glasses Logo" />
-              AR glasses
+              <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none;">
+                <img src="images/logo7.png" alt="AR Glasses Logo" />
+                AR glasses
+              </a>
             </strong>
           </li>
         </ul>
@@ -56,8 +76,23 @@
               <li><a href="retail.html">Retail & Shopping</a></li>
             </ul>
           </li>
-          <li><a href="#" class="icon-link" aria-label="Search">🔍</a></li>
-          <li><a href="#" class="icon-link" aria-label="Login">👤</a></li>
+          <li>
+            <a href="#" class="icon-link" aria-label="Search">
+              <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="icon-link" aria-label="Login">
+              <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -79,27 +114,27 @@
       <section class="image-grid">
         <div class="grid two-column">
           <figure>
-            <img src="images/ARglasses-engineer.png" alt="Industrial AR" />
+            <img src="images/ARglasses-engineer.png" alt="Augmented projection through AR Glasses" />
             <figcaption><a href="industrial.html">Industrial & Fieldwork</a></figcaption>
           </figure>
           <figure>
-            <img src="images/ARglasses-collaboration.png" alt="Collaboration" />
+            <img src="images/ARglasses-collaboration.png" alt="AR Glasses development timeline graph" />
             <figcaption><a href="collaboration.html">Collaboration & Workspaces</a></figcaption>
           </figure>
         </div>
         <div class="full-width-image">
           <figure>
-            <img src="images/ARglasses-school.png" alt="Education AR" />
+            <img src="images/ARglasses-school.png" alt="People enjoying AR glasses in the park" />
             <figcaption><a href="education.html">Education & Training</a></figcaption>
           </figure>
         </div>
         <div class="grid two-column" style="margin-top: 2rem;">
           <figure>
-            <img src="images/ARglasses-doctor.png" alt="Healthcare AR" />
+            <img src="images/ARglasses-doctor.png" alt="Doctor using AR glasses in a clinical setting" />
             <figcaption><a href="healthcare.html">Healthcare & Surgery</a></figcaption>
           </figure>
           <figure>
-            <img src="images/ARglasses-reflection.png" alt="Retail AR" />
+            <img src="images/ARglasses-reflection.png" alt="AR interface reflecting on user glasses" />
             <figcaption><a href="retail.html">Retail & Shopping</a></figcaption>
           </figure>
         </div>
@@ -130,24 +165,5 @@
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
-
-    <script>
-      const navbar = document.getElementById('navbar');
-      const heroSection = document.querySelector('.hero');
-
-      function updateNavbarTheme() {
-        const heroBottom = heroSection.getBoundingClientRect().bottom;
-        if (heroBottom <= 0) {
-          navbar.classList.remove('dark-nav');
-          navbar.classList.add('light-nav');
-        } else {
-          navbar.classList.remove('light-nav');
-          navbar.classList.add('dark-nav');
-        }
-      }
-
-      window.addEventListener('scroll', updateNavbarTheme);
-      window.addEventListener('DOMContentLoaded', updateNavbarTheme);
-    </script>
   </body>
 </html>
