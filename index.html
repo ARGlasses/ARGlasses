@@ -4,20 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AR glasses — Changing how you see the world</title>
-    <meta
-      name="description"
-      content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction."
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="description" content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction." />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
+    <style>
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        background: white;
+        padding: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        list-style: none;
+      }
+
+      .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .dropdown-menu a:hover {
+        background: #f0f0f0;
+      }
+    </style>
   </head>
   <body>
     <!-- Navigation -->
@@ -32,24 +46,18 @@
           </li>
         </ul>
         <ul>
-          <li><a href="#">Explore</a></li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Search">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </a>
+          <li class="dropdown">
+            <a href="#">Explore</a>
+            <ul class="dropdown-menu">
+              <li><a href="industrial.html">Industrial & Fieldwork</a></li>
+              <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
+              <li><a href="education.html">Education & Training</a></li>
+              <li><a href="healthcare.html">Healthcare & Surgery</a></li>
+              <li><a href="retail.html">Retail & Shopping</a></li>
+            </ul>
           </li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Login">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </a>
-          </li>
+          <li><a href="#" class="icon-link" aria-label="Search">🔍</a></li>
+          <li><a href="#" class="icon-link" aria-label="Login">👤</a></li>
         </ul>
       </div>
     </nav>
@@ -71,28 +79,28 @@
       <section class="image-grid">
         <div class="grid two-column">
           <figure>
-            <img src="images/ARglasses-engineer.png" alt="Augmented projection through AR Glasses" />
-            <figcaption>Industrial & Fieldwork</figcaption>
+            <img src="images/ARglasses-engineer.png" alt="Industrial AR" />
+            <figcaption><a href="industrial.html">Industrial & Fieldwork</a></figcaption>
           </figure>
           <figure>
-            <img src="images/ARglasses-collaboration.png" alt="AR Glasses development timeline graph" />
-            <figcaption>Collaboration & Workspaces</figcaption>
+            <img src="images/ARglasses-collaboration.png" alt="Collaboration" />
+            <figcaption><a href="collaboration.html">Collaboration & Workspaces</a></figcaption>
           </figure>
         </div>
         <div class="full-width-image">
           <figure>
-            <img src="images/ARglasses-school.png" alt="People enjoying AR glasses in the park" />
-            <figcaption>Education & Training</figcaption>
+            <img src="images/ARglasses-school.png" alt="Education AR" />
+            <figcaption><a href="education.html">Education & Training</a></figcaption>
           </figure>
         </div>
         <div class="grid two-column" style="margin-top: 2rem;">
           <figure>
-            <img src="images/ARglasses-doctor.png" alt="Doctor using AR glasses in a clinical setting" />
-            <figcaption>Healthcare & Surgery</figcaption>
+            <img src="images/ARglasses-doctor.png" alt="Healthcare AR" />
+            <figcaption><a href="healthcare.html">Healthcare & Surgery</a></figcaption>
           </figure>
           <figure>
-            <img src="images/ARglasses-reflection.png" alt="AR interface reflecting on user glasses" />
-            <figcaption>Retail & Shopping</figcaption>
+            <img src="images/ARglasses-reflection.png" alt="Retail AR" />
+            <figcaption><a href="retail.html">Retail & Shopping</a></figcaption>
           </figure>
         </div>
       </section>
@@ -123,7 +131,6 @@
       </div>
     </footer>
 
-    <!-- Navbar Scroll Behavior Script -->
     <script>
       const navbar = document.getElementById('navbar');
       const heroSection = document.querySelector('.hero');
