@@ -364,19 +364,13 @@ footer.container {
 @media (max-width: 768px) {
   .nav-inner {
     padding: 0 1rem;
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
   }
 
   nav ul {
     flex-direction: row !important;
-    align-items: center;
     gap: 1rem;
-    margin: 0;
-    padding: 0;
     flex-wrap: wrap;
   }
 
