@@ -4,56 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AR glasses — Changing how you see the world</title>
-    <meta
-      name="description"
-      content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction."
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="description" content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction." />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
-    <style>
-      .dropdown-menu {
-        display: none;
-        position: absolute;
-        background: rgba(0, 0, 0, 0.85);
-        padding: 0.5rem;
-        list-style: none;
-        z-index: 999;
-        border-radius: 4px;
-        min-width: 180px;
-      }
-
-      .dropdown:hover .dropdown-menu {
-        display: block;
-      }
-
-      .dropdown-menu a {
-        display: block;
-        padding: 0.4rem 0.75rem;
-        color: white !important;
-        text-decoration: none;
-        white-space: nowrap;
-        font-weight: 400;
-        transition: background 0.2s ease, color 0.2s ease;
-      }
-
-      .dropdown-menu a:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        text-decoration: underline;
-      }
-    </style>
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="container-fluid light-nav" id="navbar">
+    <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
         <ul>
           <li>
@@ -114,28 +73,28 @@
       <section class="image-grid">
         <div class="grid two-column">
           <figure>
-            <img src="images/ARglasses-engineer.png" alt="Augmented projection through AR Glasses" />
-            <figcaption><a href="industrial.html">Industrial & Fieldwork</a></figcaption>
+            <a href="industrial.html"><img src="images/ARglasses-engineer.png" alt="Augmented projection through AR Glasses" /></a>
+            <figcaption>Industrial & Fieldwork</figcaption>
           </figure>
           <figure>
-            <img src="images/ARglasses-collaboration.png" alt="AR Glasses development timeline graph" />
-            <figcaption><a href="collaboration.html">Collaboration & Workspaces</a></figcaption>
+            <a href="collaboration.html"><img src="images/ARglasses-collaboration.png" alt="AR Glasses development timeline graph" /></a>
+            <figcaption>Collaboration & Workspaces</figcaption>
           </figure>
         </div>
         <div class="full-width-image">
           <figure>
-            <img src="images/ARglasses-school.png" alt="People enjoying AR glasses in the park" />
-            <figcaption><a href="education.html">Education & Training</a></figcaption>
+            <a href="education.html"><img src="images/ARglasses-school.png" alt="People enjoying AR glasses in the park" /></a>
+            <figcaption>Education & Training</figcaption>
           </figure>
         </div>
         <div class="grid two-column" style="margin-top: 2rem;">
           <figure>
-            <img src="images/ARglasses-doctor.png" alt="Doctor using AR glasses in a clinical setting" />
-            <figcaption><a href="healthcare.html">Healthcare & Surgery</a></figcaption>
+            <a href="healthcare.html"><img src="images/ARglasses-doctor.png" alt="Doctor using AR glasses in a clinical setting" /></a>
+            <figcaption>Healthcare & Surgery</figcaption>
           </figure>
           <figure>
-            <img src="images/ARglasses-reflection.png" alt="AR interface reflecting on user glasses" />
-            <figcaption><a href="retail.html">Retail & Shopping</a></figcaption>
+            <a href="retail.html"><img src="images/ARglasses-reflection.png" alt="AR interface reflecting on user glasses" /></a>
+            <figcaption>Retail & Shopping</figcaption>
           </figure>
         </div>
       </section>
@@ -165,5 +124,25 @@
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
+
+    <!-- Navbar Scroll Behavior -->
+    <script>
+      const navbar = document.getElementById('navbar');
+      const heroSection = document.querySelector('.hero');
+
+      function updateNavbarTheme() {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
+        if (heroBottom <= 0) {
+          navbar.classList.remove('dark-nav');
+          navbar.classList.add('light-nav');
+        } else {
+          navbar.classList.remove('light-nav');
+          navbar.classList.add('dark-nav');
+        }
+      }
+
+      window.addEventListener('scroll', updateNavbarTheme);
+      window.addEventListener('DOMContentLoaded', updateNavbarTheme);
+    </script>
   </body>
 </html>
