@@ -1,7 +1,8 @@
-/* GLOBAL RESET */
+/* === GLOBAL RESET === */
 * {
   box-sizing: border-box;
 }
+
 html, body {
   margin: 0;
   padding: 0;
@@ -11,12 +12,12 @@ html, body {
   overflow-x: hidden;
 }
 
-/* HEADINGS */
+/* === HEADINGS === */
 h1, h2, h3 {
   color: #004f88;
 }
 
-/* NAVIGATION */
+/* === NAVIGATION === */
 nav.container-fluid {
   position: fixed;
   top: 0;
@@ -66,40 +67,38 @@ nav a {
   width: auto;
 }
 
-/* DARK NAV THEME (default) */
 nav.container-fluid.dark-nav a,
 nav.container-fluid.dark-nav strong,
 nav.container-fluid.dark-nav .icon {
   color: white !important;
 }
 
-/* LIGHT NAV (after scrolling) */
 nav.container-fluid.light-nav {
   background: white;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
+
 nav.container-fluid.light-nav a,
 nav.container-fluid.light-nav strong,
 nav.container-fluid.light-nav .icon {
   color: #333 !important;
 }
 
-/* DROPDOWN FIX */
+/* === DROPDOWN MENU === */
 .dropdown {
   position: relative;
 }
 
-/* DROPDOWN MENU — LIGHT BACKGROUND */
 .dropdown-menu {
   display: none;
   position: absolute;
-  background: #ffffff;
+  background: white;
   padding: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   list-style: none;
-  z-index: 999;
   border-radius: 4px;
   min-width: 180px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 999;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -108,22 +107,19 @@ nav.container-fluid.light-nav .icon {
 
 .dropdown-menu a {
   display: block;
-  padding: 0.4rem 0.75rem;
+  padding: 0.25rem 0.5rem;
   color: #111 !important;
   text-decoration: none;
-  white-space: nowrap;
   font-weight: 500;
-  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
 }
 
 .dropdown-menu a:hover {
   background: #f0f0f0;
-  border-radius: 4px;
-  text-decoration: underline;
   color: #000 !important;
 }
 
-/* HERO SECTION */
+/* === HERO SECTION === */
 .hero {
   position: relative;
   width: 100vw;
@@ -161,21 +157,24 @@ nav.container-fluid.light-nav .icon {
   margin-top: 500px;
   color: white;
 }
+
 .hero h2,
 .hero h3 {
   color: white;
 }
+
 .hero h2 {
   font-size: 3rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
+
 .hero h3 {
   font-size: 1.75rem;
   font-weight: 300;
 }
 
-/* CONTENT & IMAGES */
+/* === MAIN CONTENT === */
 main.container {
   padding: 0 2rem;
   background: white;
@@ -212,6 +211,7 @@ figure img {
   transition: transform 0.4s ease;
   border-radius: 14px;
 }
+
 figure img:hover {
   transform: scale(1.03);
 }
@@ -232,7 +232,7 @@ figcaption {
   z-index: 2;
 }
 
-/* FOOTER */
+/* === FOOTER === */
 footer.container {
   margin-top: 3rem;
   padding-top: 1rem;
@@ -257,33 +257,41 @@ footer.container {
   justify-content: space-between;
   gap: 2rem;
 }
+
 .footer-logo-group {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
+
 .footer-logo-group img {
   height: 40px;
 }
+
 .footer-logo-group h4 {
   margin: 0;
   font-size: 1.25rem;
   color: #004f88;
 }
+
 .footer-links ul {
   list-style: none;
   padding: 0;
 }
+
 .footer-links li {
   margin-bottom: 0.5rem;
 }
+
 .footer-links a {
   text-decoration: none;
   color: #004f88;
 }
+
 .footer-links a:hover {
   text-decoration: underline;
 }
+
 .footer-bottom {
   text-align: center;
   margin-top: 2rem;
@@ -291,19 +299,22 @@ footer.container {
   color: #666;
 }
 
-/* RESPONSIVE */
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .nav-inner {
     padding: 0 1rem;
   }
+
   .grid.two-column {
     grid-template-columns: 1fr !important;
   }
+
   .footer-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
+
   .hero-content {
     margin-top: 200px;
   }
