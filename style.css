@@ -105,6 +105,41 @@ nav.container-fluid.light-nav .icon {
   color: #333 !important;
 }
 
+/* ===== Dropdown Menu ===== */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  background: white;
+  border-radius: 6px;
+  padding: 0.5rem 0;
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  z-index: 2000;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-menu li a:hover {
+  background: #f0f0f0;
+  color: #111;
+}
+
 /* ===== Hero Section with Video or Image ===== */
 .hero {
   position: relative;
@@ -388,7 +423,7 @@ footer.container {
   }
 }
 
-/* ===== Force Figcaption Text to White ===== */
+/* ===== Fix Figcaption to Force White Text ===== */
 figure figcaption {
   position: absolute;
   bottom: 0;
