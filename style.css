@@ -84,6 +84,11 @@ nav.container-fluid.light-nav .icon {
   color: #333 !important;
 }
 
+/* DROPDOWN FIX */
+.dropdown {
+  position: relative;
+}
+
 /* DROPDOWN MENU — LIGHT BACKGROUND */
 .dropdown-menu {
   display: none;
@@ -115,6 +120,7 @@ nav.container-fluid.light-nav .icon {
   background: #f0f0f0;
   border-radius: 4px;
   text-decoration: underline;
+  color: #000 !important;
 }
 
 /* HERO SECTION */
