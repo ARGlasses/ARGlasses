@@ -108,13 +108,27 @@ nav.container-fluid.light-nav .icon {
 .dropdown-menu a {
   display: block;
   padding: 0.25rem 0.5rem;
-  color: #111 !important;
+  color: #333 !important;
   text-decoration: none;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .dropdown-menu a:hover {
+  background: #f0f0f0;
+  color: #000 !important;
+}
+
+/* Override dark-nav styling for dropdown */
+nav.container-fluid.dark-nav .dropdown-menu {
+  background: white !important;
+}
+
+nav.container-fluid.dark-nav .dropdown-menu a {
+  color: #333 !important;
+}
+
+nav.container-fluid.dark-nav .dropdown-menu a:hover {
   background: #f0f0f0;
   color: #000 !important;
 }
@@ -318,13 +332,4 @@ footer.container {
   .hero-content {
     margin-top: 200px;
   }
-  nav.container-fluid.dark-nav .dropdown-menu a {
-  color: white !important;
-}
-
-nav.container-fluid.dark-nav .dropdown-menu a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white !important;
-}
-
 }
