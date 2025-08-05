@@ -318,4 +318,13 @@ footer.container {
   .hero-content {
     margin-top: 200px;
   }
+  nav.container-fluid.dark-nav .dropdown-menu a {
+  color: white !important;
+}
+
+nav.container-fluid.dark-nav .dropdown-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white !important;
+}
+
 }
