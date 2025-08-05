@@ -1,4 +1,4 @@
-/* ===== Global Styles ===== */
+/* === GLOBAL RESET === */
 * {
   box-sizing: border-box;
 }
@@ -6,34 +6,18 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: white !important;
+  font-family: "Poppins", sans-serif;
+  background: white;
   color: #111;
-  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   overflow-x: hidden;
 }
 
-/* ===== Force White Backgrounds ===== */
-body,
-main,
-section,
-footer,
-.hero,
-.image-grid,
-.full-width-image,
-footer.container,
-figure {
-  background-color: white !important;
-  color: #111 !important;
-  box-shadow: none !important;
-  background-image: none !important;
-}
-
-/* ===== Headings ===== */
+/* === HEADINGS === */
 h1, h2, h3 {
   color: #004f88;
 }
 
-/* ===== Navigation ===== */
+/* === NAVIGATION === */
 nav.container-fluid {
   position: fixed;
   top: 0;
@@ -83,20 +67,15 @@ nav a {
   width: auto;
 }
 
-.icon {
-  stroke: currentColor;
-}
-
-.icon-link {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem;
-}
-
 nav.container-fluid.dark-nav a,
 nav.container-fluid.dark-nav strong,
 nav.container-fluid.dark-nav .icon {
   color: white !important;
+}
+
+nav.container-fluid.light-nav {
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 nav.container-fluid.light-nav a,
@@ -105,7 +84,7 @@ nav.container-fluid.light-nav .icon {
   color: #333 !important;
 }
 
-/* ===== Dropdown Menu ===== */
+/* === DROPDOWN MENU === */
 .dropdown {
   position: relative;
 }
@@ -113,38 +92,51 @@ nav.container-fluid.light-nav .icon {
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 2rem;
-  left: 0;
   background: white;
-  border-radius: 6px;
-  padding: 0.5rem 0;
-  min-width: 200px;
+  padding: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   list-style: none;
-  z-index: 2000;
+  border-radius: 4px;
+  min-width: 180px;
+  z-index: 999;
 }
 
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
-.dropdown-menu li a {
+.dropdown-menu a {
   display: block;
-  padding: 0.5rem 1rem;
-  color: #333;
+  padding: 0.25rem 0.5rem;
+  color: #333 !important;
   text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.dropdown-menu li a:hover {
+.dropdown-menu a:hover {
   background: #f0f0f0;
-  color: #111;
+  color: #000 !important;
 }
 
-/* ===== Hero Section with Video or Image ===== */
+/* Override dark-nav styling for dropdown */
+nav.container-fluid.dark-nav .dropdown-menu {
+  background: white !important;
+}
+
+nav.container-fluid.dark-nav .dropdown-menu a {
+  color: #333 !important;
+}
+
+nav.container-fluid.dark-nav .dropdown-menu a:hover {
+  background: #f0f0f0;
+  color: #000 !important;
+}
+
+/* === HERO SECTION === */
 .hero {
   position: relative;
   width: 100vw;
-  height: 100svh;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -181,8 +173,7 @@ nav.container-fluid.light-nav .icon {
 }
 
 .hero h2,
-.hero h3,
-.hero p.brand {
+.hero h3 {
   color: white;
 }
 
@@ -197,13 +188,7 @@ nav.container-fluid.light-nav .icon {
   font-weight: 300;
 }
 
-.hero p.brand {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: #ffffffcc;
-}
-
-/* ===== Content Section ===== */
+/* === MAIN CONTENT === */
 main.container {
   padding: 0 2rem;
   background: white;
@@ -223,7 +208,6 @@ main.container {
 
 .full-width-image {
   margin-top: 2rem;
-  background: white;
 }
 
 figure {
@@ -232,7 +216,6 @@ figure {
   border-radius: 14px;
   margin: 0;
   padding: 0;
-  background: white;
 }
 
 figure img {
@@ -247,47 +230,39 @@ figure img:hover {
   transform: scale(1.03);
 }
 
-/* ===== Buttons ===== */
-button {
-  background: #004f88;
-  color: #fff;
-  border: none;
+figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  z-index: 2;
 }
 
-button:hover {
-  background: #006dd1;
-}
-
-/* ===== Footer ===== */
+/* === FOOTER === */
 footer.container {
   margin-top: 3rem;
   padding-top: 1rem;
   border-top: 1px solid #ccc;
   text-align: center;
   font-size: 0.9rem;
-  background-color: white !important;
-  color: #111 !important;
+  background: white;
+  color: #111;
 }
 
-/* ===== Professional Footer ===== */
 .professional-footer {
   background: white;
   padding: 3rem 2rem 2rem;
   color: #111;
   border-top: 1px solid #ccc;
-  font-size: 0.8rem !important;
-}
-
-.professional-footer .footer-brand p {
-  font-size: 0.75rem !important;
-}
-
-.professional-footer .footer-links a {
-  font-size: 0.75rem !important;
-}
-
-.professional-footer .footer-bottom {
-  font-size: 0.7rem !important;
+  font-size: 0.8rem;
 }
 
 .footer-content {
@@ -295,16 +270,6 @@ footer.container {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 2rem;
-}
-
-.footer-brand img {
-  height: 40px;
-  margin-bottom: 0.5rem;
-}
-
-.footer-brand h4 {
-  margin: 0.5rem 0 0;
-  color: #004f88;
 }
 
 .footer-logo-group {
@@ -315,8 +280,6 @@ footer.container {
 
 .footer-logo-group img {
   height: 40px;
-  width: auto;
-  margin: 0;
 }
 
 .footer-logo-group h4 {
@@ -328,7 +291,6 @@ footer.container {
 .footer-links ul {
   list-style: none;
   padding: 0;
-  margin: 0.5rem 0 0;
 }
 
 .footer-links li {
@@ -351,51 +313,10 @@ footer.container {
   color: #666;
 }
 
-/* ===== Dark Theme Override Fix ===== */
-@media (prefers-color-scheme: dark) {
-  body {
-    color: #eee;
-    background: white !important;
-  }
-
-  h1, h2, h3 {
-    color: #004f88;
-  }
-
-  button {
-    background: #66ccff;
-    color: #000;
-  }
-
-  button:hover {
-    background: #99ddff;
-  }
-
-  figcaption {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-    color: white !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  }
-}
-
-/* ===== Responsive Fixes ===== */
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .nav-inner {
     padding: 0 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  nav ul {
-    flex-direction: row !important;
-    align-items: center;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
-    flex-wrap: wrap;
   }
 
   .grid.two-column {
@@ -408,22 +329,13 @@ footer.container {
     text-align: center;
   }
 
-  .footer-links ul {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .footer-brand,
-  .footer-links {
-    width: 100%;
-  }
-
   .hero-content {
     margin-top: 200px;
   }
+  figcaption {
+  color: white !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
-
-/* ===== Fix Figcaption to Force White Text ===== */
 figure figcaption {
   position: absolute;
   bottom: 0;
@@ -439,4 +351,6 @@ figure figcaption {
   border-bottom-right-radius: 14px;
   z-index: 2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
 }
