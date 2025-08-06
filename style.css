@@ -256,7 +256,7 @@ footer.container {
   padding-top: 1rem;
   border-top: 1px solid #ccc;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   background: white;
   color: #111;
 }
@@ -313,7 +313,7 @@ footer.container {
 .footer-bottom {
   text-align: center;
   margin-top: 2rem;
-  font-size: 0.85rem;
+  font-size: 0.6rem;
   color: #666;
 }
 
