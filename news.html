@@ -6,19 +6,19 @@
     <title>News</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
+    <!-- Inline styles so you don't have to edit style.css -->
     <style>
-      /* ===== Base / layout ===== */
+      /* ===== Base / layout (scoped) ===== */
       html, body { height: 100%; margin: 0; }
       body {
-        overflow: hidden; /* no page scroll; we animate the track */
+        overflow: hidden; /* no page scroll; carousel handles movement */
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #000;
       }
 
-      /* ===== Transparent, fixed nav over content ===== */
+      /* ===== Transparent, fixed nav over content (keeps your nav HTML) ===== */
       #navbar {
         position: fixed;
         inset: 0 0 auto 0;
@@ -38,28 +38,22 @@
         height: 100svh;
         width: 100%;
         overflow: hidden;
-        perspective: 1600px; /* for subtle 3D */
+        perspective: 1600px; /* enables subtle 3D rotation for neighbors */
       }
-
-      .carousel {
-        position: relative;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-      }
+      .carousel { position: relative; height: 100%; width: 100%; overflow: hidden; }
 
       .track {
         --gap: 2rem;
-        --card-w: clamp(60vw, 72vw, 1100px);
+        --card-w: clamp(60vw, 72vw, 1100px); /* smaller than viewport so neighbors peek */
         height: 100%;
         display: flex;
         align-items: center;
         gap: var(--gap);
         will-change: transform;
         transition: transform 520ms cubic-bezier(.22, .74, .24, 1);
+        padding-inline: max(1rem, calc((100vw - var(--card-w)) / 2)); /* center active card */
       }
 
-      /* Slides */
       .slide {
         position: relative;
         width: var(--card-w);
@@ -70,19 +64,17 @@
         background: #111;
         box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
 
-        /* Base (non-active) look */
+        /* Base look for non-active */
         transform: translateZ(0) scale(.9);
         opacity: .75;
         transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s linear, filter .35s linear;
         isolate: isolate;
       }
-
       .slide img.bg {
         position: absolute; inset: 0;
         width: 100%; height: 100%;
         object-fit: cover; z-index: -2;
       }
-
       .slide::after {
         content: "";
         position: absolute; inset: 0;
@@ -95,7 +87,6 @@
         );
         z-index: -1;
       }
-
       .slide-content {
         position: absolute; inset: 0;
         display: grid; align-content: end;
@@ -107,10 +98,10 @@
       .teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
       .actions { margin-top: .75rem; }
 
-      /* Active & neighbor styling for “turning” feel */
+      /* Active & neighbors (carousel “turning” feel) */
       .slide.is-active { transform: translateZ(0) scale(1); opacity: 1; }
       .slide.is-prev   { transform: rotateY(12deg) translateX(-2%) scale(.92); opacity: .86; }
-      .slide.is-next   { transform: rotateY(-12deg) translateX(2%) scale(.92); opacity: .86; }
+      .slide.is-next   { transform: rotateY(-12deg) translateX(2%)  scale(.92); opacity: .86; }
       .slide.is-far    { transform: translateZ(-120px) scale(.86); opacity: .6; }
 
       /* Arrows */
@@ -126,7 +117,6 @@
       .arrow.left  { left: .75rem; }
       .arrow.right { right: .75rem; }
       .arrow:hover { transform: translateY(-50%) scale(1.05); }
-      .arrow[disabled] { opacity: .35; cursor: not-allowed; }
       .arrow svg { width: 22px; height: 22px; }
 
       /* Dots */
@@ -150,7 +140,7 @@
     </style>
   </head>
   <body>
-    <!-- Navigation (unchanged) -->
+    <!-- Navigation (unchanged HTML) -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
         <ul>
@@ -201,7 +191,7 @@
 
       <div class="carousel">
         <div class="track" id="track">
-          <!-- Slides (5 placeholders). JS will clone first/last to enable seamless loop -->
+          <!-- 5 placeholder slides -->
           <article class="slide">
             <img class="bg" src="images/ARglasses-parklife.png" alt="" />
             <div class="slide-content">
@@ -257,7 +247,7 @@
       <div class="dots" id="dots" aria-hidden="true"></div>
     </section>
 
-    <!-- Footer (unchanged, full) -->
+    <!-- Footer (unchanged) -->
     <footer class="container professional-footer">
       <div class="footer-content">
         <div class="footer-brand">
@@ -283,121 +273,116 @@
       </div>
     </footer>
 
+    <!-- Inline JS (no external CSS edits needed) -->
     <script>
       (function () {
-        const track = document.getElementById('track');
-        const leftBtn  = document.querySelector('.arrow.left');
-        const rightBtn = document.querySelector('.arrow.right');
-        const dotsWrap = document.getElementById('dots');
+        const track   = document.getElementById('track');
+        const leftBtn = document.querySelector('.arrow.left');
+        const rightBtn= document.querySelector('.arrow.right');
+        const dots    = document.getElementById('dots');
 
+        // Create seamless loop by cloning
         let slides = Array.from(track.children);
         const realCount = slides.length;
-
-        // Clone first and last for seamless loop
         const firstClone = slides[0].cloneNode(true);
         const lastClone  = slides[slides.length - 1].cloneNode(true);
         track.insertBefore(lastClone, slides[0]);
         track.appendChild(firstClone);
-
-        // Refresh slides NodeList
         slides = Array.from(track.children);
 
         // State
-        let current = 1;       // start on first real slide (after the prepended clone)
-        let animating = false; // lock during transitions to prevent double clicks
+        let current = 1;      // start at first real slide
+        let busy = false;     // lock during animation
 
-        // Build dots for the real slides only
+        // Build dots for real slides
         for (let i = 0; i < realCount; i++) {
           const b = document.createElement('button');
           b.type = 'button';
           b.setAttribute('aria-label', 'Go to story ' + (i + 1));
-          b.addEventListener('click', () => goTo(i + 1)); // +1 because of leading clone
-          dotsWrap.appendChild(b);
+          b.addEventListener('click', () => goTo(i + 1)); // +1 due to leading clone
+          dots.appendChild(b);
         }
 
-        // Get size helpers
-        function metrics() {
-          const any = slides[0].querySelector('.bg') || slides[0];
+        // Helpers
+        function getMetrics() {
           const slideW = slides[0].getBoundingClientRect().width;
           const gap = parseFloat(getComputedStyle(track).gap || 0);
           const containerW = track.parentElement.clientWidth;
           const centerOffset = (containerW - slideW) / 2;
           const step = slideW + gap;
-          return { slideW, gap, centerOffset, step };
+          return { step, centerOffset };
         }
 
-        function setTransform(noAnim = false) {
-          const { step, centerOffset } = metrics();
+        function applyTransform(noAnim=false) {
+          const { step, centerOffset } = getMetrics();
           if (noAnim) track.style.transition = 'none';
           const x = -(current * step - centerOffset);
           track.style.transform = `translateX(${x}px)`;
-          if (noAnim) { track.offsetHeight; track.style.transition = ''; } // force reflow, then restore
+          if (noAnim) { track.offsetHeight; track.style.transition = ''; }
         }
 
-        // Apply visual states to slides around current
-        function updateClasses() {
+        function setClasses() {
           slides.forEach(s => s.classList.remove('is-active','is-prev','is-next','is-far'));
           slides.forEach((s, i) => {
             const d = i - current;
             if (d === 0) s.classList.add('is-active');
             else if (d === -1) s.classList.add('is-prev');
-            else if (d === 1) s.classList.add('is-next');
+            else if (d === 1)  s.classList.add('is-next');
             else s.classList.add('is-far');
           });
         }
 
-        function updateDots() {
-          const realIndex = ((current - 1 + realCount) % realCount); // 0..realCount-1
-          dotsWrap.querySelectorAll('button').forEach((b, i) => {
+        function setDots() {
+          const realIndex = ((current - 1 + realCount) % realCount);
+          dots.querySelectorAll('button').forEach((b, i) => {
             b.setAttribute('aria-current', i === realIndex ? 'true' : 'false');
           });
         }
 
         function goTo(idx) {
-          if (animating) return;
-          animating = true;
+          if (busy) return;
+          busy = true;
           current = idx;
-          setTransform(false);
-          updateClasses();
+          applyTransform(false);
+          setClasses();
         }
 
         function next() { goTo(current + 1); }
         function prev() { goTo(current - 1); }
 
-        // Handle the seamless wrap after transition ends
+        // Handle loop continuity after transition
         track.addEventListener('transitionend', () => {
-          const lastRealIndex = realCount;
+          const lastReal = realCount;
           if (current === slides.length - 1) {
-            // We moved onto the trailing clone (clone of first) -> jump to first real
-            current = 1;
-            setTransform(true);
+            current = 1;           // moved to trailing clone -> jump to first real
+            applyTransform(true);
           } else if (current === 0) {
-            // We moved onto the leading clone (clone of last) -> jump to last real
-            current = lastRealIndex;
-            setTransform(true);
+            current = lastReal;    // moved to leading clone -> jump to last real
+            applyTransform(true);
           }
-          animating = false;
-          updateDots();
+          busy = false;
+          setDots();
         });
-
-        // Resize: keep the active centered
-        window.addEventListener('resize', () => setTransform(true));
 
         // Buttons
         rightBtn.addEventListener('click', next);
         leftBtn.addEventListener('click', prev);
 
-        // Keyboard left/right when page focused
+        // Keyboard arrows
         window.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
           if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
         });
 
-        // Init: jump to first real slide without animation and set classes/dots
-        setTransform(true);
-        updateClasses();
-        updateDots();
+        // Keep centered on resize
+        window.addEventListener('resize', () => applyTransform(true));
+
+        // Init
+        applyTransform(true);
+        setClasses();
+        setDots();
       })();
     </script>
   </body>
 </html>
+
