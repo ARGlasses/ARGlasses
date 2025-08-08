@@ -13,7 +13,8 @@
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
       body {
-        overflow: hidden; /* lock the page; we scroll horizontally in the rail */
+        /* overflow: hidden;  <-- removed so you can scroll to the footer */
+        overflow-x: hidden; /* keep horizontal overflow hidden only */
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #000;
       }
@@ -46,7 +47,8 @@
         height: 100%;
         width: 100%;
         gap: 1.25rem;                  /* gap creates the visible “peek” */
-        padding: 0 1rem;               /* padding so arrows/dots aren’t flush to edges */
+        /* padding: 0 1rem;  <-- replaced to allow centering of first/last card */
+        padding: 0 max(1rem, calc((100vw - min(85vw, 1100px)) / 2));
         overflow-x: auto;
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
@@ -66,7 +68,8 @@
         height: clamp(420px, 82svh, 900px);
         border-radius: 24px;
         overflow: hidden;
-        scroll-snap-align: start;
+        /* scroll-snap-align: start;  <-- changed to center */
+        scroll-snap-align: center;
         isolation: isolate;
         color: white;
         box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
@@ -313,15 +316,15 @@
         });
 
         function cardWidth() {
-          // width of a card + gap so each click moves to the next card neatly
           const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
           const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
           return w + gap;
         }
 
+        // Center the selected card
         function goTo(index) {
           const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
-          rail.scrollTo({ left: clampIndex * cardWidth(), behavior: 'smooth' });
+          cards[clampIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
 
         function atStart() { return rail.scrollLeft <= 2; }
@@ -330,17 +333,22 @@
           return rail.scrollLeft >= max;
         }
 
+        // Make dots reflect the card nearest the center of the rail
         function updateUI() {
           prev.disabled = atStart();
           next.disabled = atEnd();
 
-          // active dot based on nearest card to the left edge of rail
+          const railRect = rail.getBoundingClientRect();
+          const railCenter = railRect.left + railRect.width / 2;
+
           let active = 0, min = Infinity;
-          const railLeft = rail.getBoundingClientRect().left;
           cards.forEach((c, i) => {
-            const dist = Math.abs(c.getBoundingClientRect().left - railLeft);
+            const rect = c.getBoundingClientRect();
+            const center = rect.left + rect.width / 2;
+            const dist = Math.abs(center - railCenter);
             if (dist < min) { min = dist; active = i; }
           });
+
           dotsWrap.querySelectorAll('button').forEach((b, i) => {
             b.setAttribute('aria-current', i === active ? 'true' : 'false');
           });
