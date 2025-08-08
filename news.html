@@ -13,7 +13,7 @@
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
       body {
-        overflow: hidden; /* we scroll horizontally inside the rail */
+        overflow: hidden; /* no page scroll; we animate the track */
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #000;
       }
@@ -32,66 +32,60 @@
       #navbar img { height: 28px; width: auto; }
       #navbar .nav-inner { text-shadow: 0 2px 10px rgba(0,0,0,.5); }
 
-      /* ===== Viewport with perspective for the 3D tilt effect ===== */
-      .viewport {
+      /* ===== Stage / carousel ===== */
+      .stage {
         position: relative;
         height: 100svh;
         width: 100%;
         overflow: hidden;
-        perspective: 1600px; /* enables subtle 3D rotation */
+        perspective: 1600px; /* for subtle 3D */
       }
 
-      .rail {
+      .carousel {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .track {
         --gap: 2rem;
-        /* Card width less than viewport so neighbors peek in */
-        --card-w: clamp(65vw, 75vw, 1100px);
+        --card-w: clamp(60vw, 72vw, 1100px);
         height: 100%;
         display: flex;
         align-items: center;
         gap: var(--gap);
-        /* Center the first/last cards so the active one snaps to the middle */
-        padding-inline: max(1rem, calc((100vw - var(--card-w)) / 2));
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
+        will-change: transform;
+        transition: transform 520ms cubic-bezier(.22, .74, .24, 1);
       }
-      /* Hide scrollbars */
-      .rail::-webkit-scrollbar { display: none; }
-      .rail { scrollbar-width: none; -ms-overflow-style: none; }
 
-      /* ===== Stories ===== */
-      .story {
+      /* Slides */
+      .slide {
         position: relative;
         width: var(--card-w);
         height: clamp(420px, 80svh, 900px);
         border-radius: 24px;
         overflow: hidden;
-        scroll-snap-align: center; /* center snap! */
-        isolation: isolate;
         color: white;
         background: #111;
-        box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
+        box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
 
-        /* base state for off-center cards */
-        transform: translateZ(0) scale(0.9);
-        opacity: 0.75;
+        /* Base (non-active) look */
+        transform: translateZ(0) scale(.9);
+        opacity: .75;
         transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s linear, filter .35s linear;
-        will-change: transform;
+        isolate: isolate;
       }
-      .story img.bg {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -2;
+
+      .slide img.bg {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover; z-index: -2;
       }
-      .story::after {
+
+      .slide::after {
         content: "";
-        position: absolute;
-        inset: 0;
+        position: absolute; inset: 0;
         background: linear-gradient(
           to top,
           rgba(0,0,0,0.55) 0%,
@@ -101,73 +95,45 @@
         );
         z-index: -1;
       }
-      .story-content {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        align-content: end;
+
+      .slide-content {
+        position: absolute; inset: 0;
+        display: grid; align-content: end;
         padding: clamp(1rem, 4vw, 3rem);
-        gap: .5rem;
-        max-width: 100ch;
+        gap: .5rem; max-width: 100ch;
       }
-      .story-kicker { font-size: .95rem; opacity: .9; }
-      .story-title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
-      .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
-      .story-actions { margin-top: .75rem; }
+      .kicker { font-size: .95rem; opacity: .9; }
+      .title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
+      .teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
+      .actions { margin-top: .75rem; }
 
-      /* ===== Active / neighbors (carousel feel) ===== */
-      .story.is-active {
-        transform: translateZ(0) scale(1);
-        opacity: 1;
-        filter: none;
-      }
-      .story.is-prev {
-        transform: rotateY(12deg) translateX(-2%) scale(0.92);
-        opacity: 0.85;
-      }
-      .story.is-next {
-        transform: rotateY(-12deg) translateX(2%) scale(0.92);
-        opacity: 0.85;
-      }
-      /* further away ones get a touch smaller/fainter */
-      .story.is-far {
-        transform: translateZ(-120px) scale(0.86);
-        opacity: 0.6;
-      }
+      /* Active & neighbor styling for “turning” feel */
+      .slide.is-active { transform: translateZ(0) scale(1); opacity: 1; }
+      .slide.is-prev   { transform: rotateY(12deg) translateX(-2%) scale(.92); opacity: .86; }
+      .slide.is-next   { transform: rotateY(-12deg) translateX(2%) scale(.92); opacity: .86; }
+      .slide.is-far    { transform: translateZ(-120px) scale(.86); opacity: .6; }
 
-      /* ===== Side arrows ===== */
+      /* Arrows */
       .arrow {
-        position: absolute;
-        top: 50%;
-        translate: 0 -50%;
-        width: 3rem;
-        height: 3rem;
-        border-radius: 999px;
+        position: absolute; top: 50%; translate: 0 -50%;
+        width: 3rem; height: 3rem; border-radius: 999px;
         border: 1px solid rgba(255,255,255,.35);
-        background: rgba(0,0,0,.25);
-        backdrop-filter: blur(4px);
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        z-index: 60;
+        background: rgba(0,0,0,.25); backdrop-filter: blur(4px);
+        display: grid; place-items: center; cursor: pointer;
+        z-index: 60; color: #fff;
         transition: transform .12s ease, opacity .2s ease;
-        color: #fff;
       }
       .arrow.left  { left: .75rem; }
       .arrow.right { right: .75rem; }
+      .arrow:hover { transform: translateY(-50%) scale(1.05); }
       .arrow[disabled] { opacity: .35; cursor: not-allowed; }
-      .arrow:hover     { transform: translateY(-50%) scale(1.05); }
       .arrow svg { width: 22px; height: 22px; }
 
-      /* ===== Dots ===== */
+      /* Dots */
       .dots {
-        position: absolute;
-        left: 0; right: 0; bottom: 1.1rem;
-        display: flex;
-        gap: .45rem;
-        justify-content: center;
-        z-index: 55;
-        pointer-events: none;
+        position: absolute; left: 0; right: 0; bottom: 1.1rem;
+        display: flex; gap: .45rem; justify-content: center;
+        z-index: 55; pointer-events: none;
       }
       .dots button {
         pointer-events: auto;
@@ -175,8 +141,7 @@
         background: rgba(255,255,255,.45);
       }
       .dots button[aria-current="true"] {
-        width: 22px;
-        background: white;
+        width: 22px; background: white;
       }
 
       @media (min-width: 1200px) {
@@ -225,73 +190,71 @@
       </div>
     </nav>
 
-    <!-- Centered Carousel Stories -->
-    <section class="viewport" aria-label="Latest AR Glasses news">
-      <button class="arrow left" aria-label="Previous story" disabled>
+    <!-- Centered, looping carousel -->
+    <section class="stage" aria-label="Latest AR Glasses news">
+      <button class="arrow left" aria-label="Previous story">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <button class="arrow right" aria-label="Next story">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
 
-      <div class="rail" tabindex="0">
-        <!-- Story 1 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 1 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Company Update • 8 Aug 2025</div>
-            <h1 class="story-title">Story 1</h1>
-            <p class="story-teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
+      <div class="carousel">
+        <div class="track" id="track">
+          <!-- Slides (5 placeholders). JS will clone first/last to enable seamless loop -->
+          <article class="slide">
+            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+            <div class="slide-content">
+              <div class="kicker">Company Update • 8 Aug 2025</div>
+              <h1 class="title">Story 1</h1>
+              <p class="teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p>
+              <div class="actions"><a href="#" role="button">Read more</a></div>
+            </div>
+          </article>
 
-        <!-- Story 2 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 2 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Product • 7 Aug 2025</div>
-            <h1 class="story-title">Story 2</h1>
-            <p class="story-teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
+          <article class="slide">
+            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+            <div class="slide-content">
+              <div class="kicker">Product • 7 Aug 2025</div>
+              <h1 class="title">Story 2</h1>
+              <p class="teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p>
+              <div class="actions"><a href="#" role="button">Read more</a></div>
+            </div>
+          </article>
 
-        <!-- Story 3 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 3 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Partnerships • 6 Aug 2025</div>
-            <h1 class="story-title">Story 3</h1>
-            <p class="story-teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
+          <article class="slide">
+            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+            <div class="slide-content">
+              <div class="kicker">Partnerships • 6 Aug 2025</div>
+              <h1 class="title">Story 3</h1>
+              <p class="teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p>
+              <div class="actions"><a href="#" role="button">Read more</a></div>
+            </div>
+          </article>
 
-        <!-- Story 4 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 4 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Community • 5 Aug 2025</div>
-            <h1 class="story-title">Story 4</h1>
-            <p class="story-teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
+          <article class="slide">
+            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+            <div class="slide-content">
+              <div class="kicker">Community • 5 Aug 2025</div>
+              <h1 class="title">Story 4</h1>
+              <p class="teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p>
+              <div class="actions"><a href="#" role="button">Read more</a></div>
+            </div>
+          </article>
 
-        <!-- Story 5 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 5 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Feature Spotlight • 4 Aug 2025</div>
-            <h1 class="story-title">Story 5</h1>
-            <p class="story-teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
+          <article class="slide">
+            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+            <div class="slide-content">
+              <div class="kicker">Feature Spotlight • 4 Aug 2025</div>
+              <h1 class="title">Story 5</h1>
+              <p class="teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p>
+              <div class="actions"><a href="#" role="button">Read more</a></div>
+            </div>
+          </article>
+        </div>
       </div>
 
-      <div class="dots" aria-hidden="true"></div>
+      <div class="dots" id="dots" aria-hidden="true"></div>
     </section>
 
     <!-- Footer (unchanged, full) -->
@@ -322,112 +285,118 @@
 
     <script>
       (function () {
-        const rail = document.querySelector('.rail');
-        const prev = document.querySelector('.arrow.left');
-        const next = document.querySelector('.arrow.right');
-        const dotsWrap = document.querySelector('.dots');
-        const cards = Array.from(document.querySelectorAll('.story'));
-        if (!rail || cards.length === 0) return;
+        const track = document.getElementById('track');
+        const leftBtn  = document.querySelector('.arrow.left');
+        const rightBtn = document.querySelector('.arrow.right');
+        const dotsWrap = document.getElementById('dots');
 
-        let activeIndex = 0;
+        let slides = Array.from(track.children);
+        const realCount = slides.length;
 
-        // Build dots
-        cards.forEach((_, i) => {
+        // Clone first and last for seamless loop
+        const firstClone = slides[0].cloneNode(true);
+        const lastClone  = slides[slides.length - 1].cloneNode(true);
+        track.insertBefore(lastClone, slides[0]);
+        track.appendChild(firstClone);
+
+        // Refresh slides NodeList
+        slides = Array.from(track.children);
+
+        // State
+        let current = 1;       // start on first real slide (after the prepended clone)
+        let animating = false; // lock during transitions to prevent double clicks
+
+        // Build dots for the real slides only
+        for (let i = 0; i < realCount; i++) {
           const b = document.createElement('button');
           b.type = 'button';
           b.setAttribute('aria-label', 'Go to story ' + (i + 1));
-          b.addEventListener('click', () => goTo(i));
+          b.addEventListener('click', () => goTo(i + 1)); // +1 because of leading clone
           dotsWrap.appendChild(b);
-        });
-
-        function cardStep() {
-          // distance from one card center to the next:
-          const style = getComputedStyle(rail);
-          const gap = parseFloat(style.columnGap || style.gap || 32);
-          const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
-          return w + gap;
         }
 
-        function goTo(index) {
-          activeIndex = Math.max(0, Math.min(index, cards.length - 1));
-          // Snap the chosen card to center
-          cards[activeIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-          updateClasses();
-          updateUI();
+        // Get size helpers
+        function metrics() {
+          const any = slides[0].querySelector('.bg') || slides[0];
+          const slideW = slides[0].getBoundingClientRect().width;
+          const gap = parseFloat(getComputedStyle(track).gap || 0);
+          const containerW = track.parentElement.clientWidth;
+          const centerOffset = (containerW - slideW) / 2;
+          const step = slideW + gap;
+          return { slideW, gap, centerOffset, step };
         }
 
-        function neighborClasses() {
-          // Clear all
-          cards.forEach(c => c.classList.remove('is-active','is-prev','is-next','is-far'));
-          // Apply around active
-          cards.forEach((c, i) => {
-            const d = i - activeIndex;
-            if (d === 0) c.classList.add('is-active');
-            else if (d === -1) c.classList.add('is-prev');
-            else if (d === 1) c.classList.add('is-next');
-            else c.classList.add('is-far');
-          });
+        function setTransform(noAnim = false) {
+          const { step, centerOffset } = metrics();
+          if (noAnim) track.style.transition = 'none';
+          const x = -(current * step - centerOffset);
+          track.style.transform = `translateX(${x}px)`;
+          if (noAnim) { track.offsetHeight; track.style.transition = ''; } // force reflow, then restore
         }
 
-        function updateUI() {
-          // Enable/disable arrows
-          prev.disabled = activeIndex <= 0;
-          next.disabled = activeIndex >= cards.length - 1;
-
-          // Dots
-          const dots = dotsWrap.querySelectorAll('button');
-          dots.forEach((b, i) => b.setAttribute('aria-current', i === activeIndex ? 'true' : 'false'));
-        }
-
-        // Track nearest card to rail center on scroll (for manual swipes)
-        function updateActiveFromScroll() {
-          const railRect = rail.getBoundingClientRect();
-          const centerX = railRect.left + railRect.width / 2;
-          let min = Infinity;
-          let idx = activeIndex;
-          cards.forEach((c, i) => {
-            const rect = c.getBoundingClientRect();
-            const cardCenter = rect.left + rect.width / 2;
-            const dist = Math.abs(cardCenter - centerX);
-            if (dist < min) { min = dist; idx = i; }
-          });
-          if (idx !== activeIndex) {
-            activeIndex = idx;
-            neighborClasses();
-            updateUI();
-          }
-        }
-
+        // Apply visual states to slides around current
         function updateClasses() {
-          neighborClasses();
+          slides.forEach(s => s.classList.remove('is-active','is-prev','is-next','is-far'));
+          slides.forEach((s, i) => {
+            const d = i - current;
+            if (d === 0) s.classList.add('is-active');
+            else if (d === -1) s.classList.add('is-prev');
+            else if (d === 1) s.classList.add('is-next');
+            else s.classList.add('is-far');
+          });
         }
 
-        function scrollByStep(dir) {
-          goTo(activeIndex + dir);
+        function updateDots() {
+          const realIndex = ((current - 1 + realCount) % realCount); // 0..realCount-1
+          dotsWrap.querySelectorAll('button').forEach((b, i) => {
+            b.setAttribute('aria-current', i === realIndex ? 'true' : 'false');
+          });
         }
 
-        // Events
-        prev.addEventListener('click', () => scrollByStep(-1));
-        next.addEventListener('click', () => scrollByStep(1));
+        function goTo(idx) {
+          if (animating) return;
+          animating = true;
+          current = idx;
+          setTransform(false);
+          updateClasses();
+        }
 
-        // Keyboard arrows when rail is focused
-        rail.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
-          if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
+
+        // Handle the seamless wrap after transition ends
+        track.addEventListener('transitionend', () => {
+          const lastRealIndex = realCount;
+          if (current === slides.length - 1) {
+            // We moved onto the trailing clone (clone of first) -> jump to first real
+            current = 1;
+            setTransform(true);
+          } else if (current === 0) {
+            // We moved onto the leading clone (clone of last) -> jump to last real
+            current = lastRealIndex;
+            setTransform(true);
+          }
+          animating = false;
+          updateDots();
         });
 
-        rail.addEventListener('scroll', () => {
-          // Thrifty sync — just recalc nearest
-          updateActiveFromScroll();
-        }, { passive: true });
+        // Resize: keep the active centered
+        window.addEventListener('resize', () => setTransform(true));
 
-        window.addEventListener('resize', () => {
-          // Keep active centered after resizes
-          goTo(activeIndex);
+        // Buttons
+        rightBtn.addEventListener('click', next);
+        leftBtn.addEventListener('click', prev);
+
+        // Keyboard left/right when page focused
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+          if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
         });
 
-        // Init
-        goTo(0);
+        // Init: jump to first real slide without animation and set classes/dots
+        setTransform(true);
+        updateClasses();
+        updateDots();
       })();
     </script>
   </body>
