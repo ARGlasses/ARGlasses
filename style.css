@@ -425,47 +425,68 @@ figure figcaption {
     width: 100%;
   }
 }
-
-/* --- Mobile: keep logo fixed; make right menu scroll horizontally --- */
+/* --- Mobile: logo fixed left; right menu scrollable; hide search/login --- */
 @media (max-width: 768px) {
-  /* Keep the bar compact */
+  /* Compact top bar */
   #navbar { padding-block: .35rem; }
 
   /* One row, no wrapping */
   #navbar .nav-inner {
     display: flex;
     align-items: center;
-    gap: .5rem;
-    flex-wrap: nowrap; /* prevent the two <ul>s from stacking */
+    gap: .25rem;
+    flex-wrap: nowrap;
+    min-width: 0;
   }
 
-  /* Left <ul> (logo) stays fixed-size */
+  /* Left UL (logo) fixed width */
   #navbar .nav-inner > ul:first-of-type {
     flex: 0 0 auto;
     margin: 0;
   }
 
-  /* Right <ul> (links/icons) becomes a horizontally scrollable row */
+  /* Right UL scrollable */
   #navbar .nav-inner > ul:last-of-type {
     display: flex;
-    gap: .75rem;
-    flex: 1 1 auto;    /* take remaining space */
-    min-width: 0;      /* allow overflow-x to engage */
+    gap: .5rem;
+    flex: 1 1 auto;
+    min-width: 0;
     justify-content: flex-end;
-    overflow-x: auto;  /* swipe horizontally if needed */
+    overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
-    -webkit-overflow-scrolling: touch; /* smoother iOS scroll */
+    padding: 0 .5rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: .5rem;
+    scroll-padding-right: .5rem;
   }
 
-  /* Optional: slightly smaller logo/text to save height */
-  #navbar img { height: 22px; }
-  #navbar .logo a { font-size: 1rem; }
+  /* Keep each link from shrinking */
+  #navbar .nav-inner > ul:last-of-type > li {
+    flex: 0 0 auto;
+  }
 
-  /* Prevent dropdown trigger text from wrapping */
-  #navbar .dropdown { white-space: nowrap; }
+  /* No default UL margins */
+  #navbar ul { margin: 0; }
 
-  /* Hide scrollbar for a cleaner look (optional) */
+  /* Slightly smaller links to fit more */
+  #navbar .nav-inner a { font-size: .92rem; }
+
+  /* Optional fade effect on edges */
+  #navbar .nav-inner > ul:last-of-type {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 16px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 16px), transparent 100%);
+  }
+
+  /* Hide scrollbar */
   #navbar .nav-inner > ul:last-of-type::-webkit-scrollbar { display: none; }
   #navbar .nav-inner > ul:last-of-type { scrollbar-width: none; }
+
+  /* Hide search and login icons */
+  #navbar .nav-inner > ul:last-of-type li:nth-last-child(2),
+  #navbar .nav-inner > ul:last-of-type li:last-child {
+    display: none;
+  }
 }
+
 
