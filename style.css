@@ -425,3 +425,47 @@ figure figcaption {
     width: 100%;
   }
 }
+
+/* --- Mobile: keep logo fixed; make right menu scroll horizontally --- */
+@media (max-width: 768px) {
+  /* Keep the bar compact */
+  #navbar { padding-block: .35rem; }
+
+  /* One row, no wrapping */
+  #navbar .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: nowrap; /* prevent the two <ul>s from stacking */
+  }
+
+  /* Left <ul> (logo) stays fixed-size */
+  #navbar .nav-inner > ul:first-of-type {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  /* Right <ul> (links/icons) becomes a horizontally scrollable row */
+  #navbar .nav-inner > ul:last-of-type {
+    display: flex;
+    gap: .75rem;
+    flex: 1 1 auto;    /* take remaining space */
+    min-width: 0;      /* allow overflow-x to engage */
+    justify-content: flex-end;
+    overflow-x: auto;  /* swipe horizontally if needed */
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* smoother iOS scroll */
+  }
+
+  /* Optional: slightly smaller logo/text to save height */
+  #navbar img { height: 22px; }
+  #navbar .logo a { font-size: 1rem; }
+
+  /* Prevent dropdown trigger text from wrapping */
+  #navbar .dropdown { white-space: nowrap; }
+
+  /* Hide scrollbar for a cleaner look (optional) */
+  #navbar .nav-inner > ul:last-of-type::-webkit-scrollbar { display: none; }
+  #navbar .nav-inner > ul:last-of-type { scrollbar-width: none; }
+}
+
