@@ -13,25 +13,24 @@
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
       body {
-        /* overflow: hidden;  <-- removed so you can scroll to the footer */
-        overflow-x: hidden; /* keep horizontal overflow hidden only */
+        overflow-x: hidden;
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: #000;
+        background: #fff; /* white background behind images */
       }
 
-      /* ===== Transparent, fixed nav over content ===== */
+      /* ===== Nav with white background ===== */
       #navbar {
         position: fixed;
         inset: 0 0 auto 0;
         z-index: 50;
-        background: transparent !important;
+        background: white !important; /* white nav background */
         box-shadow: none !important;
         border: 0;
         padding-block: .5rem;
       }
-      #navbar .nav-inner a { color: white; }
+      #navbar .nav-inner a { color: black; } /* black nav text */
       #navbar img { height: 28px; width: auto; }
-      #navbar .nav-inner { text-shadow: 0 2px 10px rgba(0,0,0,.5); }
+      #navbar .nav-inner { text-shadow: none; }
 
       /* ===== Viewport area that holds the horizontal stories ===== */
       .viewport {
@@ -43,11 +42,10 @@
 
       .rail {
         display: flex;
-        align-items: center;           /* vertically center the card */
+        align-items: center;
         height: 100%;
         width: 100%;
-        gap: 1.25rem;                  /* gap creates the visible “peek” */
-        /* padding: 0 1rem;  <-- replaced to allow centering of first/last card */
+        gap: 1.25rem;
         padding: 0 max(1rem, calc((100vw - min(85vw, 1100px)) / 2));
         overflow-x: auto;
         overflow-y: hidden;
@@ -55,25 +53,21 @@
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
       }
-
-      /* Hide scrollbars, we’re using arrows/dots */
       .rail::-webkit-scrollbar { display: none; }
       .rail { scrollbar-width: none; -ms-overflow-style: none; }
 
-      /* ===== Story card (smaller than viewport, with rounded corners) ===== */
+      /* ===== Story card ===== */
       .story {
         position: relative;
-        /* Width less than 100% so the next/prev card peeks in */
         min-width: clamp(78%, 85vw, 1100px);
         height: clamp(420px, 82svh, 900px);
         border-radius: 24px;
         overflow: hidden;
-        /* scroll-snap-align: start;  <-- changed to center */
         scroll-snap-align: center;
         isolation: isolate;
         color: white;
         box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
-        background: #111; /* behind image during load */
+        background: #111;
       }
       .story img.bg {
         position: absolute;
@@ -83,7 +77,6 @@
         object-fit: cover;
         z-index: -2;
       }
-      /* Gentle gradient overlay for readability */
       .story::after {
         content: "";
         position: absolute;
@@ -162,7 +155,7 @@
     </style>
   </head>
   <body>
-    <!-- Navigation (unchanged) -->
+    <!-- Navigation -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
         <ul>
@@ -202,7 +195,7 @@
       </div>
     </nav>
 
-    <!-- Stories: slightly smaller, rounded, with side peeks -->
+    <!-- Stories -->
     <section class="viewport" aria-label="Latest AR Glasses news">
       <button class="arrow left" aria-label="Previous story" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -212,66 +205,18 @@
       </button>
 
       <div class="rail" tabindex="0">
-        <!-- Story 1 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 1 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Company Update • 8 Aug 2025</div>
-            <h1 class="story-title">Story 1</h1>
-            <p class="story-teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
-
-        <!-- Story 2 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 2 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Product • 7 Aug 2025</div>
-            <h1 class="story-title">Story 2</h1>
-            <p class="story-teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
-
-        <!-- Story 3 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 3 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Partnerships • 6 Aug 2025</div>
-            <h1 class="story-title">Story 3</h1>
-            <p class="story-teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
-
-        <!-- Story 4 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 4 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Community • 5 Aug 2025</div>
-            <h1 class="story-title">Story 4</h1>
-            <p class="story-teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
-
-        <!-- Story 5 -->
-        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 5 of 5">
-          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-          <div class="story-content">
-            <div class="story-kicker">Feature Spotlight • 4 Aug 2025</div>
-            <h1 class="story-title">Story 5</h1>
-            <p class="story-teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p>
-            <div class="story-actions"><a href="#" role="button">Read more</a></div>
-          </div>
-        </article>
+        <!-- Repeatable stories -->
+        <article class="story"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Company Update • 8 Aug 2025</div><h1 class="story-title">Story 1</h1><p class="story-teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <article class="story"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Product • 7 Aug 2025</div><h1 class="story-title">Story 2</h1><p class="story-teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <article class="story"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Partnerships • 6 Aug 2025</div><h1 class="story-title">Story 3</h1><p class="story-teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <article class="story"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Community • 5 Aug 2025</div><h1 class="story-title">Story 4</h1><p class="story-teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <article class="story"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Feature Spotlight • 4 Aug 2025</div><h1 class="story-title">Story 5</h1><p class="story-teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
       </div>
 
       <div class="dots" aria-hidden="true"></div>
     </section>
 
-    <!-- Footer (unchanged, full) -->
+    <!-- Footer -->
     <footer class="container professional-footer">
       <div class="footer-content">
         <div class="footer-brand">
@@ -306,7 +251,6 @@
         const cards = Array.from(document.querySelectorAll('.story'));
         if (!rail || cards.length === 0) return;
 
-        // Build dots
         cards.forEach((_, i) => {
           const b = document.createElement('button');
           b.type = 'button';
@@ -321,7 +265,6 @@
           return w + gap;
         }
 
-        // Center the selected card
         function goTo(index) {
           const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
           cards[clampIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
@@ -333,7 +276,6 @@
           return rail.scrollLeft >= max;
         }
 
-        // Make dots reflect the card nearest the center of the rail
         function updateUI() {
           prev.disabled = atStart();
           next.disabled = atEnd();
@@ -361,7 +303,6 @@
         prev.addEventListener('click', () => scrollByStep(-1));
         next.addEventListener('click', () => scrollByStep(1));
 
-        // Keyboard left/right when the rail has focus
         rail.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
           if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
