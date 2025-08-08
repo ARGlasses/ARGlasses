@@ -15,24 +15,24 @@
       body {
         overflow-x: hidden;
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: #fff; /* white background behind images */
+        background: #fff;
       }
 
-      /* ===== Nav with white background ===== */
+      /* ===== Nav with white background and grey text ===== */
       #navbar {
         position: fixed;
         inset: 0 0 auto 0;
         z-index: 50;
-        background: white !important; /* white nav background */
+        background: white !important;
         box-shadow: none !important;
         border: 0;
         padding-block: .5rem;
       }
-      #navbar .nav-inner a { color: #555; } /* grey nav text */
+      #navbar .nav-inner a { color: var(--nav-text-color, #555) !important; }
       #navbar img { height: 28px; width: auto; }
       #navbar .nav-inner { text-shadow: none; }
 
-      /* ===== Viewport area that holds the horizontal stories ===== */
+      /* ===== Viewport area ===== */
       .viewport {
         position: relative;
         height: 100svh;
@@ -56,7 +56,6 @@
       .rail::-webkit-scrollbar { display: none; }
       .rail { scrollbar-width: none; -ms-overflow-style: none; }
 
-      /* ===== Story card ===== */
       .story {
         position: relative;
         min-width: clamp(78%, 85vw, 1100px);
@@ -90,7 +89,6 @@
         );
         z-index: -1;
       }
-
       .story-content {
         position: absolute;
         inset: 0;
@@ -105,7 +103,6 @@
       .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
       .story-actions { margin-top: .75rem; }
 
-      /* ===== Side arrows ===== */
       .arrow {
         position: absolute;
         top: 50%;
@@ -129,7 +126,6 @@
       .arrow:hover     { transform: translateY(-50%) scale(1.05); }
       .arrow svg { width: 22px; height: 22px; }
 
-      /* ===== Dots ===== */
       .dots {
         position: absolute;
         left: 0; right: 0; bottom: 1.1rem;
@@ -148,7 +144,6 @@
         width: 22px;
         background: white;
       }
-
       @media (min-width: 1200px) {
         .arrow { width: 3.25rem; height: 3.25rem; }
       }
@@ -156,7 +151,7 @@
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="container-fluid dark-nav" id="navbar">
+    <nav class="container-fluid dark-nav" id="navbar" style="--nav-text-color:#555;">
       <div class="nav-inner">
         <ul>
           <li>
