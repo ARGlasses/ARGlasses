@@ -13,7 +13,7 @@
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
       body {
-        overflow: hidden; /* lock the page; we scroll horizontally in the rail */
+        overflow: hidden; /* we scroll horizontally inside the rail */
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #000;
       }
@@ -32,45 +32,53 @@
       #navbar img { height: 28px; width: auto; }
       #navbar .nav-inner { text-shadow: 0 2px 10px rgba(0,0,0,.5); }
 
-      /* ===== Viewport area that holds the horizontal stories ===== */
+      /* ===== Viewport with perspective for the 3D tilt effect ===== */
       .viewport {
         position: relative;
         height: 100svh;
         width: 100%;
         overflow: hidden;
+        perspective: 1600px; /* enables subtle 3D rotation */
       }
 
       .rail {
-        display: flex;
-        align-items: center;           /* vertically center the card */
+        --gap: 2rem;
+        /* Card width less than viewport so neighbors peek in */
+        --card-w: clamp(65vw, 75vw, 1100px);
         height: 100%;
-        width: 100%;
-        gap: 1.25rem;                  /* gap creates the visible “peek” */
-        padding: 0 1rem;               /* padding so arrows/dots aren’t flush to edges */
+        display: flex;
+        align-items: center;
+        gap: var(--gap);
+        /* Center the first/last cards so the active one snaps to the middle */
+        padding-inline: max(1rem, calc((100vw - var(--card-w)) / 2));
         overflow-x: auto;
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
       }
-
-      /* Hide scrollbars, we’re using arrows/dots */
+      /* Hide scrollbars */
       .rail::-webkit-scrollbar { display: none; }
       .rail { scrollbar-width: none; -ms-overflow-style: none; }
 
-      /* ===== Story card (smaller than viewport, with rounded corners) ===== */
+      /* ===== Stories ===== */
       .story {
         position: relative;
-        /* Width less than 100% so the next/prev card peeks in */
-        min-width: clamp(78%, 85vw, 1100px);
-        height: clamp(420px, 82svh, 900px);
+        width: var(--card-w);
+        height: clamp(420px, 80svh, 900px);
         border-radius: 24px;
         overflow: hidden;
-        scroll-snap-align: start;
+        scroll-snap-align: center; /* center snap! */
         isolation: isolate;
         color: white;
+        background: #111;
         box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
-        background: #111; /* behind image during load */
+
+        /* base state for off-center cards */
+        transform: translateZ(0) scale(0.9);
+        opacity: 0.75;
+        transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s linear, filter .35s linear;
+        will-change: transform;
       }
       .story img.bg {
         position: absolute;
@@ -80,7 +88,6 @@
         object-fit: cover;
         z-index: -2;
       }
-      /* Gentle gradient overlay for readability */
       .story::after {
         content: "";
         position: absolute;
@@ -94,7 +101,6 @@
         );
         z-index: -1;
       }
-
       .story-content {
         position: absolute;
         inset: 0;
@@ -108,6 +114,26 @@
       .story-title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
       .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
       .story-actions { margin-top: .75rem; }
+
+      /* ===== Active / neighbors (carousel feel) ===== */
+      .story.is-active {
+        transform: translateZ(0) scale(1);
+        opacity: 1;
+        filter: none;
+      }
+      .story.is-prev {
+        transform: rotateY(12deg) translateX(-2%) scale(0.92);
+        opacity: 0.85;
+      }
+      .story.is-next {
+        transform: rotateY(-12deg) translateX(2%) scale(0.92);
+        opacity: 0.85;
+      }
+      /* further away ones get a touch smaller/fainter */
+      .story.is-far {
+        transform: translateZ(-120px) scale(0.86);
+        opacity: 0.6;
+      }
 
       /* ===== Side arrows ===== */
       .arrow {
@@ -199,7 +225,7 @@
       </div>
     </nav>
 
-    <!-- Stories: slightly smaller, rounded, with side peeks -->
+    <!-- Centered Carousel Stories -->
     <section class="viewport" aria-label="Latest AR Glasses news">
       <button class="arrow left" aria-label="Previous story" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -303,6 +329,8 @@
         const cards = Array.from(document.querySelectorAll('.story'));
         if (!rail || cards.length === 0) return;
 
+        let activeIndex = 0;
+
         // Build dots
         cards.forEach((_, i) => {
           const b = document.createElement('button');
@@ -312,56 +340,94 @@
           dotsWrap.appendChild(b);
         });
 
-        function cardWidth() {
-          // width of a card + gap so each click moves to the next card neatly
+        function cardStep() {
+          // distance from one card center to the next:
+          const style = getComputedStyle(rail);
+          const gap = parseFloat(style.columnGap || style.gap || 32);
           const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
-          const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
           return w + gap;
         }
 
         function goTo(index) {
-          const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
-          rail.scrollTo({ left: clampIndex * cardWidth(), behavior: 'smooth' });
+          activeIndex = Math.max(0, Math.min(index, cards.length - 1));
+          // Snap the chosen card to center
+          cards[activeIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          updateClasses();
+          updateUI();
         }
 
-        function atStart() { return rail.scrollLeft <= 2; }
-        function atEnd() {
-          const max = rail.scrollWidth - rail.clientWidth - 2;
-          return rail.scrollLeft >= max;
+        function neighborClasses() {
+          // Clear all
+          cards.forEach(c => c.classList.remove('is-active','is-prev','is-next','is-far'));
+          // Apply around active
+          cards.forEach((c, i) => {
+            const d = i - activeIndex;
+            if (d === 0) c.classList.add('is-active');
+            else if (d === -1) c.classList.add('is-prev');
+            else if (d === 1) c.classList.add('is-next');
+            else c.classList.add('is-far');
+          });
         }
 
         function updateUI() {
-          prev.disabled = atStart();
-          next.disabled = atEnd();
+          // Enable/disable arrows
+          prev.disabled = activeIndex <= 0;
+          next.disabled = activeIndex >= cards.length - 1;
 
-          // active dot based on nearest card to the left edge of rail
-          let active = 0, min = Infinity;
-          const railLeft = rail.getBoundingClientRect().left;
+          // Dots
+          const dots = dotsWrap.querySelectorAll('button');
+          dots.forEach((b, i) => b.setAttribute('aria-current', i === activeIndex ? 'true' : 'false'));
+        }
+
+        // Track nearest card to rail center on scroll (for manual swipes)
+        function updateActiveFromScroll() {
+          const railRect = rail.getBoundingClientRect();
+          const centerX = railRect.left + railRect.width / 2;
+          let min = Infinity;
+          let idx = activeIndex;
           cards.forEach((c, i) => {
-            const dist = Math.abs(c.getBoundingClientRect().left - railLeft);
-            if (dist < min) { min = dist; active = i; }
+            const rect = c.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            const dist = Math.abs(cardCenter - centerX);
+            if (dist < min) { min = dist; idx = i; }
           });
-          dotsWrap.querySelectorAll('button').forEach((b, i) => {
-            b.setAttribute('aria-current', i === active ? 'true' : 'false');
-          });
+          if (idx !== activeIndex) {
+            activeIndex = idx;
+            neighborClasses();
+            updateUI();
+          }
+        }
+
+        function updateClasses() {
+          neighborClasses();
         }
 
         function scrollByStep(dir) {
-          rail.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
+          goTo(activeIndex + dir);
         }
 
+        // Events
         prev.addEventListener('click', () => scrollByStep(-1));
         next.addEventListener('click', () => scrollByStep(1));
 
-        // Keyboard left/right when the rail has focus
+        // Keyboard arrows when rail is focused
         rail.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
           if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
         });
 
-        rail.addEventListener('scroll', updateUI, { passive: true });
-        window.addEventListener('resize', updateUI);
-        updateUI();
+        rail.addEventListener('scroll', () => {
+          // Thrifty sync — just recalc nearest
+          updateActiveFromScroll();
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+          // Keep active centered after resizes
+          goTo(activeIndex);
+        });
+
+        // Init
+        goTo(0);
       })();
     </script>
   </body>
