@@ -6,19 +6,19 @@
     <title>News</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Inline styles so you don't have to edit style.css -->
     <style>
-      /* ===== Base / layout (scoped) ===== */
+      /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
       body {
-        overflow: hidden; /* no page scroll; carousel handles movement */
+        overflow: hidden; /* lock the page; we scroll horizontally in the rail */
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #000;
       }
 
-      /* ===== Transparent, fixed nav over content (keeps your nav HTML) ===== */
+      /* ===== Transparent, fixed nav over content ===== */
       #navbar {
         position: fixed;
         inset: 0 0 auto 0;
@@ -32,52 +32,59 @@
       #navbar img { height: 28px; width: auto; }
       #navbar .nav-inner { text-shadow: 0 2px 10px rgba(0,0,0,.5); }
 
-      /* ===== Stage / carousel ===== */
-      .stage {
+      /* ===== Viewport area that holds the horizontal stories ===== */
+      .viewport {
         position: relative;
         height: 100svh;
         width: 100%;
         overflow: hidden;
-        perspective: 1600px; /* enables subtle 3D rotation for neighbors */
       }
-      .carousel { position: relative; height: 100%; width: 100%; overflow: hidden; }
 
-      .track {
-        --gap: 2rem;
-        --card-w: clamp(60vw, 72vw, 1100px); /* smaller than viewport so neighbors peek */
-        height: 100%;
+      .rail {
         display: flex;
-        align-items: center;
-        gap: var(--gap);
-        will-change: transform;
-        transition: transform 520ms cubic-bezier(.22, .74, .24, 1);
-        padding-inline: max(1rem, calc((100vw - var(--card-w)) / 2)); /* center active card */
+        align-items: center;           /* vertically center the card */
+        height: 100%;
+        width: 100%;
+        gap: 1.25rem;                  /* gap creates the visible “peek” */
+        padding: 0 1rem;               /* padding so arrows/dots aren’t flush to edges */
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
       }
 
-      .slide {
+      /* Hide scrollbars, we’re using arrows/dots */
+      .rail::-webkit-scrollbar { display: none; }
+      .rail { scrollbar-width: none; -ms-overflow-style: none; }
+
+      /* ===== Story card (smaller than viewport, with rounded corners) ===== */
+      .story {
         position: relative;
-        width: var(--card-w);
-        height: clamp(420px, 80svh, 900px);
+        /* Width less than 100% so the next/prev card peeks in */
+        min-width: clamp(78%, 85vw, 1100px);
+        height: clamp(420px, 82svh, 900px);
         border-radius: 24px;
         overflow: hidden;
+        scroll-snap-align: start;
+        isolation: isolate;
         color: white;
-        background: #111;
-        box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
-
-        /* Base look for non-active */
-        transform: translateZ(0) scale(.9);
-        opacity: .75;
-        transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s linear, filter .35s linear;
-        isolate: isolate;
+        box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
+        background: #111; /* behind image during load */
       }
-      .slide img.bg {
-        position: absolute; inset: 0;
-        width: 100%; height: 100%;
-        object-fit: cover; z-index: -2;
+      .story img.bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
       }
-      .slide::after {
+      /* Gentle gradient overlay for readability */
+      .story::after {
         content: "";
-        position: absolute; inset: 0;
+        position: absolute;
+        inset: 0;
         background: linear-gradient(
           to top,
           rgba(0,0,0,0.55) 0%,
@@ -87,43 +94,54 @@
         );
         z-index: -1;
       }
-      .slide-content {
-        position: absolute; inset: 0;
-        display: grid; align-content: end;
+
+      .story-content {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        align-content: end;
         padding: clamp(1rem, 4vw, 3rem);
-        gap: .5rem; max-width: 100ch;
+        gap: .5rem;
+        max-width: 100ch;
       }
-      .kicker { font-size: .95rem; opacity: .9; }
-      .title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
-      .teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
-      .actions { margin-top: .75rem; }
+      .story-kicker { font-size: .95rem; opacity: .9; }
+      .story-title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
+      .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
+      .story-actions { margin-top: .75rem; }
 
-      /* Active & neighbors (carousel “turning” feel) */
-      .slide.is-active { transform: translateZ(0) scale(1); opacity: 1; }
-      .slide.is-prev   { transform: rotateY(12deg) translateX(-2%) scale(.92); opacity: .86; }
-      .slide.is-next   { transform: rotateY(-12deg) translateX(2%)  scale(.92); opacity: .86; }
-      .slide.is-far    { transform: translateZ(-120px) scale(.86); opacity: .6; }
-
-      /* Arrows */
+      /* ===== Side arrows ===== */
       .arrow {
-        position: absolute; top: 50%; translate: 0 -50%;
-        width: 3rem; height: 3rem; border-radius: 999px;
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 999px;
         border: 1px solid rgba(255,255,255,.35);
-        background: rgba(0,0,0,.25); backdrop-filter: blur(4px);
-        display: grid; place-items: center; cursor: pointer;
-        z-index: 60; color: #fff;
+        background: rgba(0,0,0,.25);
+        backdrop-filter: blur(4px);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        z-index: 60;
         transition: transform .12s ease, opacity .2s ease;
+        color: #fff;
       }
       .arrow.left  { left: .75rem; }
       .arrow.right { right: .75rem; }
-      .arrow:hover { transform: translateY(-50%) scale(1.05); }
+      .arrow[disabled] { opacity: .35; cursor: not-allowed; }
+      .arrow:hover     { transform: translateY(-50%) scale(1.05); }
       .arrow svg { width: 22px; height: 22px; }
 
-      /* Dots */
+      /* ===== Dots ===== */
       .dots {
-        position: absolute; left: 0; right: 0; bottom: 1.1rem;
-        display: flex; gap: .45rem; justify-content: center;
-        z-index: 55; pointer-events: none;
+        position: absolute;
+        left: 0; right: 0; bottom: 1.1rem;
+        display: flex;
+        gap: .45rem;
+        justify-content: center;
+        z-index: 55;
+        pointer-events: none;
       }
       .dots button {
         pointer-events: auto;
@@ -131,7 +149,8 @@
         background: rgba(255,255,255,.45);
       }
       .dots button[aria-current="true"] {
-        width: 22px; background: white;
+        width: 22px;
+        background: white;
       }
 
       @media (min-width: 1200px) {
@@ -140,7 +159,7 @@
     </style>
   </head>
   <body>
-    <!-- Navigation (unchanged HTML) -->
+    <!-- Navigation (unchanged) -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
         <ul>
@@ -180,74 +199,76 @@
       </div>
     </nav>
 
-    <!-- Centered, looping carousel -->
-    <section class="stage" aria-label="Latest AR Glasses news">
-      <button class="arrow left" aria-label="Previous story">
+    <!-- Stories: slightly smaller, rounded, with side peeks -->
+    <section class="viewport" aria-label="Latest AR Glasses news">
+      <button class="arrow left" aria-label="Previous story" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <button class="arrow right" aria-label="Next story">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
 
-      <div class="carousel">
-        <div class="track" id="track">
-          <!-- 5 placeholder slides -->
-          <article class="slide">
-            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-            <div class="slide-content">
-              <div class="kicker">Company Update • 8 Aug 2025</div>
-              <h1 class="title">Story 1</h1>
-              <p class="teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p>
-              <div class="actions"><a href="#" role="button">Read more</a></div>
-            </div>
-          </article>
+      <div class="rail" tabindex="0">
+        <!-- Story 1 -->
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 1 of 5">
+          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+          <div class="story-content">
+            <div class="story-kicker">Company Update • 8 Aug 2025</div>
+            <h1 class="story-title">Story 1</h1>
+            <p class="story-teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p>
+            <div class="story-actions"><a href="#" role="button">Read more</a></div>
+          </div>
+        </article>
 
-          <article class="slide">
-            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-            <div class="slide-content">
-              <div class="kicker">Product • 7 Aug 2025</div>
-              <h1 class="title">Story 2</h1>
-              <p class="teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p>
-              <div class="actions"><a href="#" role="button">Read more</a></div>
-            </div>
-          </article>
+        <!-- Story 2 -->
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 2 of 5">
+          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+          <div class="story-content">
+            <div class="story-kicker">Product • 7 Aug 2025</div>
+            <h1 class="story-title">Story 2</h1>
+            <p class="story-teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p>
+            <div class="story-actions"><a href="#" role="button">Read more</a></div>
+          </div>
+        </article>
 
-          <article class="slide">
-            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-            <div class="slide-content">
-              <div class="kicker">Partnerships • 6 Aug 2025</div>
-              <h1 class="title">Story 3</h1>
-              <p class="teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p>
-              <div class="actions"><a href="#" role="button">Read more</a></div>
-            </div>
-          </article>
+        <!-- Story 3 -->
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 3 of 5">
+          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+          <div class="story-content">
+            <div class="story-kicker">Partnerships • 6 Aug 2025</div>
+            <h1 class="story-title">Story 3</h1>
+            <p class="story-teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p>
+            <div class="story-actions"><a href="#" role="button">Read more</a></div>
+          </div>
+        </article>
 
-          <article class="slide">
-            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-            <div class="slide-content">
-              <div class="kicker">Community • 5 Aug 2025</div>
-              <h1 class="title">Story 4</h1>
-              <p class="teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p>
-              <div class="actions"><a href="#" role="button">Read more</a></div>
-            </div>
-          </article>
+        <!-- Story 4 -->
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 4 of 5">
+          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+          <div class="story-content">
+            <div class="story-kicker">Community • 5 Aug 2025</div>
+            <h1 class="story-title">Story 4</h1>
+            <p class="story-teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p>
+            <div class="story-actions"><a href="#" role="button">Read more</a></div>
+          </div>
+        </article>
 
-          <article class="slide">
-            <img class="bg" src="images/ARglasses-parklife.png" alt="" />
-            <div class="slide-content">
-              <div class="kicker">Feature Spotlight • 4 Aug 2025</div>
-              <h1 class="title">Story 5</h1>
-              <p class="teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p>
-              <div class="actions"><a href="#" role="button">Read more</a></div>
-            </div>
-          </article>
-        </div>
+        <!-- Story 5 -->
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 5 of 5">
+          <img class="bg" src="images/ARglasses-parklife.png" alt="" />
+          <div class="story-content">
+            <div class="story-kicker">Feature Spotlight • 4 Aug 2025</div>
+            <h1 class="story-title">Story 5</h1>
+            <p class="story-teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p>
+            <div class="story-actions"><a href="#" role="button">Read more</a></div>
+          </div>
+        </article>
       </div>
 
-      <div class="dots" id="dots" aria-hidden="true"></div>
+      <div class="dots" aria-hidden="true"></div>
     </section>
 
-    <!-- Footer (unchanged) -->
+    <!-- Footer (unchanged, full) -->
     <footer class="container professional-footer">
       <div class="footer-content">
         <div class="footer-brand">
@@ -273,116 +294,75 @@
       </div>
     </footer>
 
-    <!-- Inline JS (no external CSS edits needed) -->
     <script>
       (function () {
-        const track   = document.getElementById('track');
-        const leftBtn = document.querySelector('.arrow.left');
-        const rightBtn= document.querySelector('.arrow.right');
-        const dots    = document.getElementById('dots');
+        const rail = document.querySelector('.rail');
+        const prev = document.querySelector('.arrow.left');
+        const next = document.querySelector('.arrow.right');
+        const dotsWrap = document.querySelector('.dots');
+        const cards = Array.from(document.querySelectorAll('.story'));
+        if (!rail || cards.length === 0) return;
 
-        // Create seamless loop by cloning
-        let slides = Array.from(track.children);
-        const realCount = slides.length;
-        const firstClone = slides[0].cloneNode(true);
-        const lastClone  = slides[slides.length - 1].cloneNode(true);
-        track.insertBefore(lastClone, slides[0]);
-        track.appendChild(firstClone);
-        slides = Array.from(track.children);
-
-        // State
-        let current = 1;      // start at first real slide
-        let busy = false;     // lock during animation
-
-        // Build dots for real slides
-        for (let i = 0; i < realCount; i++) {
+        // Build dots
+        cards.forEach((_, i) => {
           const b = document.createElement('button');
           b.type = 'button';
           b.setAttribute('aria-label', 'Go to story ' + (i + 1));
-          b.addEventListener('click', () => goTo(i + 1)); // +1 due to leading clone
-          dots.appendChild(b);
+          b.addEventListener('click', () => goTo(i));
+          dotsWrap.appendChild(b);
+        });
+
+        function cardWidth() {
+          // width of a card + gap so each click moves to the next card neatly
+          const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
+          const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
+          return w + gap;
         }
 
-        // Helpers
-        function getMetrics() {
-          const slideW = slides[0].getBoundingClientRect().width;
-          const gap = parseFloat(getComputedStyle(track).gap || 0);
-          const containerW = track.parentElement.clientWidth;
-          const centerOffset = (containerW - slideW) / 2;
-          const step = slideW + gap;
-          return { step, centerOffset };
+        function goTo(index) {
+          const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
+          rail.scrollTo({ left: clampIndex * cardWidth(), behavior: 'smooth' });
         }
 
-        function applyTransform(noAnim=false) {
-          const { step, centerOffset } = getMetrics();
-          if (noAnim) track.style.transition = 'none';
-          const x = -(current * step - centerOffset);
-          track.style.transform = `translateX(${x}px)`;
-          if (noAnim) { track.offsetHeight; track.style.transition = ''; }
+        function atStart() { return rail.scrollLeft <= 2; }
+        function atEnd() {
+          const max = rail.scrollWidth - rail.clientWidth - 2;
+          return rail.scrollLeft >= max;
         }
 
-        function setClasses() {
-          slides.forEach(s => s.classList.remove('is-active','is-prev','is-next','is-far'));
-          slides.forEach((s, i) => {
-            const d = i - current;
-            if (d === 0) s.classList.add('is-active');
-            else if (d === -1) s.classList.add('is-prev');
-            else if (d === 1)  s.classList.add('is-next');
-            else s.classList.add('is-far');
+        function updateUI() {
+          prev.disabled = atStart();
+          next.disabled = atEnd();
+
+          // active dot based on nearest card to the left edge of rail
+          let active = 0, min = Infinity;
+          const railLeft = rail.getBoundingClientRect().left;
+          cards.forEach((c, i) => {
+            const dist = Math.abs(c.getBoundingClientRect().left - railLeft);
+            if (dist < min) { min = dist; active = i; }
+          });
+          dotsWrap.querySelectorAll('button').forEach((b, i) => {
+            b.setAttribute('aria-current', i === active ? 'true' : 'false');
           });
         }
 
-        function setDots() {
-          const realIndex = ((current - 1 + realCount) % realCount);
-          dots.querySelectorAll('button').forEach((b, i) => {
-            b.setAttribute('aria-current', i === realIndex ? 'true' : 'false');
-          });
+        function scrollByStep(dir) {
+          rail.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
         }
 
-        function goTo(idx) {
-          if (busy) return;
-          busy = true;
-          current = idx;
-          applyTransform(false);
-          setClasses();
-        }
+        prev.addEventListener('click', () => scrollByStep(-1));
+        next.addEventListener('click', () => scrollByStep(1));
 
-        function next() { goTo(current + 1); }
-        function prev() { goTo(current - 1); }
-
-        // Handle loop continuity after transition
-        track.addEventListener('transitionend', () => {
-          const lastReal = realCount;
-          if (current === slides.length - 1) {
-            current = 1;           // moved to trailing clone -> jump to first real
-            applyTransform(true);
-          } else if (current === 0) {
-            current = lastReal;    // moved to leading clone -> jump to last real
-            applyTransform(true);
-          }
-          busy = false;
-          setDots();
+        // Keyboard left/right when the rail has focus
+        rail.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
+          if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
         });
 
-        // Buttons
-        rightBtn.addEventListener('click', next);
-        leftBtn.addEventListener('click', prev);
-
-        // Keyboard arrows
-        window.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
-          if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
-        });
-
-        // Keep centered on resize
-        window.addEventListener('resize', () => applyTransform(true));
-
-        // Init
-        applyTransform(true);
-        setClasses();
-        setDots();
+        rail.addEventListener('scroll', updateUI, { passive: true });
+        window.addEventListener('resize', updateUI);
+        updateUI();
       })();
     </script>
   </body>
 </html>
-
