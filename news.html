@@ -10,18 +10,15 @@
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
     <style>
-      /* ===== Layout resets & helpers ===== */
-      html, body {
-        height: 100%;
-        margin: 0;
-      }
+      /* ===== Base / layout ===== */
+      html, body { height: 100%; margin: 0; }
       body {
-        overflow: hidden;
+        overflow: hidden; /* lock the page; we scroll horizontally in the rail */
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #000;
       }
 
-      /* ===== Transparent, fixed nav over images ===== */
+      /* ===== Transparent, fixed nav over content ===== */
       #navbar {
         position: fixed;
         inset: 0 0 auto 0;
@@ -35,33 +32,45 @@
       #navbar img { height: 28px; width: auto; }
       #navbar .nav-inner { text-shadow: 0 2px 10px rgba(0,0,0,.5); }
 
-      /* ===== Full-bleed horizontal stories carousel ===== */
+      /* ===== Viewport area that holds the horizontal stories ===== */
       .viewport {
         position: relative;
         height: 100svh;
         width: 100%;
         overflow: hidden;
       }
+
       .rail {
         display: flex;
+        align-items: center;           /* vertically center the card */
         height: 100%;
         width: 100%;
+        gap: 1.25rem;                  /* gap creates the visible “peek” */
+        padding: 0 1rem;               /* padding so arrows/dots aren’t flush to edges */
         overflow-x: auto;
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
       }
+
+      /* Hide scrollbars, we’re using arrows/dots */
       .rail::-webkit-scrollbar { display: none; }
       .rail { scrollbar-width: none; -ms-overflow-style: none; }
 
+      /* ===== Story card (smaller than viewport, with rounded corners) ===== */
       .story {
         position: relative;
-        min-width: 100%;
-        height: 100%;
+        /* Width less than 100% so the next/prev card peeks in */
+        min-width: clamp(78%, 85vw, 1100px);
+        height: clamp(420px, 82svh, 900px);
+        border-radius: 24px;
+        overflow: hidden;
         scroll-snap-align: start;
         isolation: isolate;
         color: white;
+        box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
+        background: #111; /* behind image during load */
       }
       .story img.bg {
         position: absolute;
@@ -71,6 +80,7 @@
         object-fit: cover;
         z-index: -2;
       }
+      /* Gentle gradient overlay for readability */
       .story::after {
         content: "";
         position: absolute;
@@ -79,36 +89,24 @@
           to top,
           rgba(0,0,0,0.55) 0%,
           rgba(0,0,0,0.25) 40%,
-          rgba(0,0,0,0.15) 65%,
-          rgba(0,0,0,0.35) 100%
+          rgba(0,0,0,0.10) 65%,
+          rgba(0,0,0,0.30) 100%
         );
         z-index: -1;
       }
+
       .story-content {
         position: absolute;
         inset: 0;
         display: grid;
         align-content: end;
-        padding: clamp(1rem, 4vw, 3.5rem);
+        padding: clamp(1rem, 4vw, 3rem);
         gap: .5rem;
         max-width: 100ch;
       }
-      .story-kicker {
-        font-size: .95rem;
-        opacity: .9;
-      }
-      .story-title {
-        font-size: clamp(1.8rem, 5vw, 3rem);
-        line-height: 1.1;
-        margin: 0;
-        font-weight: 600;
-      }
-      .story-teaser {
-        font-size: clamp(1rem, 1.8vw, 1.15rem);
-        margin: .25rem 0 0;
-        max-width: 65ch;
-        opacity: .95;
-      }
+      .story-kicker { font-size: .95rem; opacity: .9; }
+      .story-title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
+      .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
       .story-actions { margin-top: .75rem; }
 
       /* ===== Side arrows ===== */
@@ -129,10 +127,10 @@
         transition: transform .12s ease, opacity .2s ease;
         color: #fff;
       }
-      .arrow[disabled] { opacity: .4; cursor: not-allowed; }
-      .arrow:hover { transform: translateY(-50%) scale(1.05); }
-      .arrow.left  { left: 1rem; }
-      .arrow.right { right: 1rem; }
+      .arrow.left  { left: .75rem; }
+      .arrow.right { right: .75rem; }
+      .arrow[disabled] { opacity: .35; cursor: not-allowed; }
+      .arrow:hover     { transform: translateY(-50%) scale(1.05); }
       .arrow svg { width: 22px; height: 22px; }
 
       /* ===== Dots ===== */
@@ -154,13 +152,14 @@
         width: 22px;
         background: white;
       }
+
       @media (min-width: 1200px) {
         .arrow { width: 3.25rem; height: 3.25rem; }
       }
     </style>
   </head>
   <body>
-    <!-- Navigation -->
+    <!-- Navigation (unchanged) -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
         <ul>
@@ -200,7 +199,7 @@
       </div>
     </nav>
 
-    <!-- Full-bleed Stories -->
+    <!-- Stories: slightly smaller, rounded, with side peeks -->
     <section class="viewport" aria-label="Latest AR Glasses news">
       <button class="arrow left" aria-label="Previous story" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -210,10 +209,8 @@
       </button>
 
       <div class="rail" tabindex="0">
-        <!-- 5 placeholder stories -->
-        <!-- Story blocks identical to what we had earlier -->
         <!-- Story 1 -->
-        <article class="story">
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 1 of 5">
           <img class="bg" src="images/ARglasses-parklife.png" alt="" />
           <div class="story-content">
             <div class="story-kicker">Company Update • 8 Aug 2025</div>
@@ -222,8 +219,9 @@
             <div class="story-actions"><a href="#" role="button">Read more</a></div>
           </div>
         </article>
+
         <!-- Story 2 -->
-        <article class="story">
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 2 of 5">
           <img class="bg" src="images/ARglasses-parklife.png" alt="" />
           <div class="story-content">
             <div class="story-kicker">Product • 7 Aug 2025</div>
@@ -232,8 +230,9 @@
             <div class="story-actions"><a href="#" role="button">Read more</a></div>
           </div>
         </article>
+
         <!-- Story 3 -->
-        <article class="story">
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 3 of 5">
           <img class="bg" src="images/ARglasses-parklife.png" alt="" />
           <div class="story-content">
             <div class="story-kicker">Partnerships • 6 Aug 2025</div>
@@ -242,8 +241,9 @@
             <div class="story-actions"><a href="#" role="button">Read more</a></div>
           </div>
         </article>
+
         <!-- Story 4 -->
-        <article class="story">
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 4 of 5">
           <img class="bg" src="images/ARglasses-parklife.png" alt="" />
           <div class="story-content">
             <div class="story-kicker">Community • 5 Aug 2025</div>
@@ -252,8 +252,9 @@
             <div class="story-actions"><a href="#" role="button">Read more</a></div>
           </div>
         </article>
+
         <!-- Story 5 -->
-        <article class="story">
+        <article class="story" role="group" aria-roledescription="slide" aria-label="Story 5 of 5">
           <img class="bg" src="images/ARglasses-parklife.png" alt="" />
           <div class="story-content">
             <div class="story-kicker">Feature Spotlight • 4 Aug 2025</div>
@@ -263,10 +264,11 @@
           </div>
         </article>
       </div>
+
       <div class="dots" aria-hidden="true"></div>
     </section>
 
-    <!-- Footer (full original) -->
+    <!-- Footer (unchanged, full) -->
     <footer class="container professional-footer">
       <div class="footer-content">
         <div class="footer-brand">
@@ -299,7 +301,6 @@
         const next = document.querySelector('.arrow.right');
         const dotsWrap = document.querySelector('.dots');
         const cards = Array.from(document.querySelectorAll('.story'));
-
         if (!rail || cards.length === 0) return;
 
         // Build dots
@@ -312,19 +313,28 @@
         });
 
         function cardWidth() {
-          return cards[0]?.getBoundingClientRect().width || rail.clientWidth;
+          // width of a card + gap so each click moves to the next card neatly
+          const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
+          const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
+          return w + gap;
         }
+
         function goTo(index) {
-          rail.scrollTo({ left: index * cardWidth(), behavior: 'smooth' });
+          const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
+          rail.scrollTo({ left: clampIndex * cardWidth(), behavior: 'smooth' });
         }
+
         function atStart() { return rail.scrollLeft <= 2; }
         function atEnd() {
           const max = rail.scrollWidth - rail.clientWidth - 2;
           return rail.scrollLeft >= max;
         }
+
         function updateUI() {
           prev.disabled = atStart();
           next.disabled = atEnd();
+
+          // active dot based on nearest card to the left edge of rail
           let active = 0, min = Infinity;
           const railLeft = rail.getBoundingClientRect().left;
           cards.forEach((c, i) => {
@@ -335,15 +345,20 @@
             b.setAttribute('aria-current', i === active ? 'true' : 'false');
           });
         }
+
         function scrollByStep(dir) {
           rail.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
         }
+
         prev.addEventListener('click', () => scrollByStep(-1));
         next.addEventListener('click', () => scrollByStep(1));
+
+        // Keyboard left/right when the rail has focus
         rail.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
-          if (e.key === 'ArrowLeft') { e.preventDefault(); scrollByStep(-1); }
+          if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
         });
+
         rail.addEventListener('scroll', updateUI, { passive: true });
         window.addEventListener('resize', updateUI);
         updateUI();
