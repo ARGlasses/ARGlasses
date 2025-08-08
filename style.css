@@ -179,7 +179,7 @@ nav.container-fluid.dark-nav .dropdown-menu a:hover {
   font-size: 3rem; /* match hero h2 */
   font-weight: 200;
   margin-bottom: 1rem;
-  color: white;
+  color: #ffffff !important;
 }
 .hero h2,
 .hero h3 {
