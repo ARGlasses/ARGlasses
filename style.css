@@ -425,68 +425,60 @@ figure figcaption {
     width: 100%;
   }
 }
-/* --- Mobile: logo fixed left; right menu scrollable; hide search/login --- */
+/* --- Mobile: logo fixed left; right menu visible & scrollable; hide icons --- */
 @media (max-width: 768px) {
-  /* Compact top bar */
   #navbar { padding-block: .35rem; }
 
-  /* One row, no wrapping */
+  /* One row, no wrap */
   #navbar .nav-inner {
     display: flex;
     align-items: center;
     gap: .25rem;
     flex-wrap: nowrap;
-    min-width: 0;
+    min-width: 0; /* allow children to overflow properly */
   }
 
-  /* Left UL (logo) fixed width */
+  /* Left UL (logo) fixed size */
   #navbar .nav-inner > ul:first-of-type {
     flex: 0 0 auto;
     margin: 0;
   }
 
-  /* Right UL scrollable */
+  /* Right UL (links/icons) — left-aligned, scrolls if needed */
   #navbar .nav-inner > ul:last-of-type {
     display: flex;
-    gap: .5rem;
+    gap: .6rem;
     flex: 1 1 auto;
     min-width: 0;
-    justify-content: flex-end;
+    justify-content: flex-start;   /* <-- key: start at the left so "Explore" is visible */
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    padding: 0 .5rem;
+    padding-left: .5rem;           /* small space away from logo */
     -webkit-overflow-scrolling: touch;
-    scroll-padding-left: .5rem;
-    scroll-padding-right: .5rem;
+    scrollbar-gutter: stable both-edges;
   }
 
-  /* Keep each link from shrinking */
+  /* Make sure items don't shrink to zero */
   #navbar .nav-inner > ul:last-of-type > li {
     flex: 0 0 auto;
   }
 
-  /* No default UL margins */
+  /* Remove default UL margins that can clip the first item */
   #navbar ul { margin: 0; }
 
-  /* Slightly smaller links to fit more */
+  /* Slightly smaller text to fit more */
   #navbar .nav-inner a { font-size: .92rem; }
 
-  /* Optional fade effect on edges */
-  #navbar .nav-inner > ul:last-of-type {
-    -webkit-mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 16px), transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 16px), transparent 100%);
-  }
-
-  /* Hide scrollbar */
+  /* Hide scrollbars (optional) */
   #navbar .nav-inner > ul:last-of-type::-webkit-scrollbar { display: none; }
   #navbar .nav-inner > ul:last-of-type { scrollbar-width: none; }
 
-  /* Hide search and login icons */
+  /* Hide search and login icons on mobile */
   #navbar .nav-inner > ul:last-of-type li:nth-last-child(2),
   #navbar .nav-inner > ul:last-of-type li:last-child {
     display: none;
   }
 }
 
-
+/* --- Mobile: logo fixed left; right menu scrollable; hide search/login --- */
