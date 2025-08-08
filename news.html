@@ -8,6 +8,142 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
+
+    <!-- Inline styles for the news rail (kept here so the page is self-contained) -->
+    <style>
+      /* --- News Rail --- */
+      .news-rail {
+        --gap: 1rem;
+        margin-block: 2rem 3rem;
+      }
+
+      .rail-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--gap);
+        margin-bottom: 0.5rem;
+      }
+
+      .rail-controls {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .rail-btn {
+        display: grid;
+        place-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 1px solid var(--muted-border-color, #d0d0d0);
+        border-radius: 999px;
+        background: var(--card-background-color, #fff);
+        cursor: pointer;
+      }
+      .rail-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+      .rail {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: min(85%, 24rem); /* card width */
+        gap: var(--gap);
+        overflow-x: auto;
+        padding: 0.25rem;
+        scroll-snap-type: inline mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+      @media (min-width: 1200px) {
+        .rail { grid-auto-columns: 28rem; }
+      }
+
+      .story {
+        scroll-snap-align: start;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--muted-border-color, #e5e5e5);
+        background: var(--card-background-color, #fff);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      }
+
+      .story-link {
+        display: grid;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .story-img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+      }
+
+      .story-body {
+        padding: 0.9rem 1rem 1.1rem;
+      }
+
+      .story-title {
+        margin: 0 0 0.35rem;
+        line-height: 1.2;
+      }
+
+      .story-meta {
+        margin: 0 0 0.5rem;
+        opacity: 0.7;
+        font-size: 0.9rem;
+      }
+
+      .story-teaser {
+        margin: 0;
+      }
+
+      .rail::-webkit-scrollbar { height: 10px; }
+      .rail::-webkit-scrollbar-thumb {
+        background: color-mix(in oklab, currentColor 20%, transparent);
+        border-radius: 999px;
+      }
+
+      /* dots */
+      .rail-dots {
+        display: flex;
+        gap: 0.4rem;
+        justify-content: center;
+        margin-top: 0.75rem;
+      }
+      .rail-dots button {
+        width: 7px; height: 7px; border-radius: 999px; border: 0;
+        background: color-mix(in oklab, currentColor 25%, transparent);
+      }
+      .rail-dots button[aria-current="true"] {
+        width: 18px; border-radius: 999px;
+        background: currentColor;
+      }
+
+      /* Minor tweaks to your hero so text sits nicely over video */
+      .hero {
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-video {
+        width: 100%;
+        height: clamp(240px, 40vw, 520px);
+        object-fit: cover;
+        display: block;
+      }
+      .hero-content {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        color: white;
+        text-shadow: 0 2px 16px rgba(0,0,0,.45);
+        padding: 1rem;
+      }
+      .hero-content h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 3rem); }
+      .hero-content h2 { margin: .25rem 0 0; font-weight: 400; opacity: .95; }
+    </style>
   </head>
   <body>
     <!-- Navigation -->
@@ -34,8 +170,8 @@
               <li><a href="retail.html">Retail & Shopping</a></li>
             </ul>
           </li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="products.html">Products</a></li>
+          <li><a href="news.html" aria-current="page">News</a></li>
+          <li><a href="products.html">Products</a></li>
           <li>
             <a href="#" class="icon-link" aria-label="Search">
               <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -43,7 +179,7 @@
           </li>
           <li>
             <a href="#" class="icon-link" aria-label="Login">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-3-3.87" /><path d="M4 21v-2a4 4 0 0 1 3-3.87" /><circle cx="12" cy="7" r="4" /></svg>
+              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-3-3.87" /><path d="M4 21v-2a 4 4 0 0 1 3-3.87" /><circle cx="12" cy="7" r="4" /></svg>
             </a>
           </li>
         </ul>
@@ -51,37 +187,107 @@
     </nav>
 
     <!-- Hero Section -->
-
     <section class="hero">
-      <video autoplay muted playsinline class="hero-video">
+      <video autoplay muted playsinline loop class="hero-video">
         <source src="images/ARglasses-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div class="hero-content">
-        <h1>AR Glasses</h1>   
+        <h1>AR Glasses</h1>
         <h2>News & Updates</h2>
-   
       </div>
     </section>
 
     <!-- Page Content -->
     <main class="container">
-      <p>
+      <section aria-labelledby="news-heading">
+        <h1 id="news-heading">AR Glasses News</h1>
 
-          <section>
+        <!-- News Rail -->
+        <section class="news-rail" aria-label="Latest AR Glasses news">
+          <header class="rail-header">
+            <h2>Latest Stories</h2>
+            <div class="rail-controls">
+              <button class="rail-btn prev" aria-label="Previous story" disabled>
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="rail-btn next" aria-label="Next story">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </header>
 
-<section id="cookie-policy">
-  <h1>AR Glasses News</h1>
-  
+          <div class="rail" tabindex="0">
+            <!-- STORY 1 -->
+            <article class="story" role="group" aria-roledescription="slide" aria-label="1 of 5">
+              <a class="story-link" href="#" aria-label="Read Story 1">
+                <img src="images/ARglasses-parklife.png" alt="AR glasses promotional scene" class="story-img" />
+                <div class="story-body">
+                  <h3 class="story-title">Story 1</h3>
+                  <p class="story-meta">8 Aug 2025 • Company Update</p>
+                  <p class="story-teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p>
+                </div>
+              </a>
+            </article>
 
-</section>
+            <!-- STORY 2 -->
+            <article class="story" role="group" aria-roledescription="slide" aria-label="2 of 5">
+              <a class="story-link" href="#" aria-label="Read Story 2">
+                <img src="images/ARglasses-parklife.png" alt="AR glasses promotional scene" class="story-img" />
+                <div class="story-body">
+                  <h3 class="story-title">Story 2</h3>
+                  <p class="story-meta">7 Aug 2025 • Product</p>
+                  <p class="story-teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p>
+                </div>
+              </a>
+            </article>
 
+            <!-- STORY 3 -->
+            <article class="story" role="group" aria-roledescription="slide" aria-label="3 of 5">
+              <a class="story-link" href="#" aria-label="Read Story 3">
+                <img src="images/ARglasses-parklife.png" alt="AR glasses promotional scene" class="story-img" />
+                <div class="story-body">
+                  <h3 class="story-title">Story 3</h3>
+                  <p class="story-meta">6 Aug 2025 • Partnerships</p>
+                  <p class="story-teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p>
+                </div>
+              </a>
+            </article>
 
-</p>
+            <!-- STORY 4 -->
+            <article class="story" role="group" aria-roledescription="slide" aria-label="4 of 5">
+              <a class="story-link" href="#" aria-label="Read Story 4">
+                <img src="images/ARglasses-parklife.png" alt="AR glasses promotional scene" class="story-img" />
+                <div class="story-body">
+                  <h3 class="story-title">Story 4</h3>
+                  <p class="story-meta">5 Aug 2025 • Community</p>
+                  <p class="story-teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p>
+                </div>
+              </a>
+            </article>
 
+            <!-- STORY 5 -->
+            <article class="story" role="group" aria-roledescription="slide" aria-label="5 of 5">
+              <a class="story-link" href="#" aria-label="Read Story 5">
+                <img src="images/ARglasses-parklife.png" alt="AR glasses promotional scene" class="story-img" />
+                <div class="story-body">
+                  <h3 class="story-title">Story 5</h3>
+                  <p class="story-meta">4 Aug 2025 • Feature Spotlight</p>
+                  <p class="story-teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p>
+                </div>
+              </a>
+            </article>
+          </div>
 
-      </p>
-      <p><a href="index.html">← Back to Home</a></p>
+          <div class="rail-dots" aria-hidden="true"></div>
+        </section>
+
+        <p><a href="index.html">← Back to Home</a></p>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -98,9 +304,9 @@
           <strong>Quick Links</strong>
           <ul>
             <li><a href="#">Explore</a></li>
-            <li><a href="contact.html">Contact</a></li>            
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
-            <li><a href="Cookie-Policy.html">Cookie Policy</a></li>     
+            <li><a href="Cookie-Policy.html">Cookie Policy</a></li>
             <li><a href="terms.html">Terms & Conditions</a></li>
           </ul>
         </div>
@@ -109,5 +315,78 @@
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
+
+    <!-- Rail Controller Script -->
+    <script>
+      (function () {
+        const rail = document.querySelector('.news-rail .rail');
+        const prev = document.querySelector('.news-rail .prev');
+        const next = document.querySelector('.news-rail .next');
+        const dotsWrap = document.querySelector('.news-rail .rail-dots');
+
+        if (!rail) return;
+
+        const cards = Array.from(rail.querySelectorAll('.story'));
+
+        // Build dots dynamically
+        cards.forEach((_, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', 'Go to story ' + (i + 1));
+          b.addEventListener('click', () => {
+            rail.scrollTo({ left: cards[i].offsetLeft - rail.offsetLeft, behavior: 'smooth' });
+          });
+          dotsWrap.appendChild(b);
+        });
+
+        const step = () => cards[0]?.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).gap || 16);
+
+        function updateUI() {
+          const scrollLeft = rail.scrollLeft;
+          const max = rail.scrollWidth - rail.clientWidth - 1;
+          prev.disabled = scrollLeft <= 1;
+          next.disabled = scrollLeft >= max;
+
+          // active dot
+          let activeIndex = 0;
+          const railLeft = rail.getBoundingClientRect().left;
+          let minDist = Infinity;
+          cards.forEach((card, i) => {
+            const dist = Math.abs(card.getBoundingClientRect().left - railLeft);
+            if (dist < minDist) { minDist = dist; activeIndex = i; }
+          });
+          dotsWrap.querySelectorAll('button').forEach((b, i) => {
+            b.setAttribute('aria-current', i === activeIndex ? 'true' : 'false');
+          });
+        }
+
+        function scrollByStep(dir) {
+          const amount = step() || rail.clientWidth * 0.9;
+          rail.scrollBy({ left: dir * amount, behavior: 'smooth' });
+        }
+
+        // Buttons
+        prev.addEventListener('click', () => scrollByStep(-1));
+        next.addEventListener('click', () => scrollByStep(1));
+
+        // Keyboard (when rail focused)
+        rail.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); scrollByStep(-1); }
+        });
+
+        // Horizontal wheel snapping (ignores vertical)
+        rail.addEventListener('wheel', (e) => {
+          if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) return;
+          e.preventDefault();
+          scrollByStep(e.deltaX > 0 ? 1 : -1);
+        }, { passive: false });
+
+        // Update on scroll/resize
+        rail.addEventListener('scroll', updateUI, { passive: true });
+        window.addEventListener('resize', updateUI);
+        updateUI();
+      })();
+    </script>
   </body>
 </html>
