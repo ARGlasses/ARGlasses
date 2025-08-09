@@ -3,175 +3,192 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Collaboration & Workspaces</title>
+    <title>Collaboration &amp; Workspaces</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
-  </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="container-fluid dark-nav" id="navbar">
-      <div class="nav-inner">
-        <ul>
-          <li>
-            <strong class="logo">
-              <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none;">
-                <img src="images/logo7.png" alt="AR Glasses Logo" />
-                AR glasses
-              </a>
-            </strong>
-          </li>
-        </ul>
-        <ul>
-          <li class="dropdown">
-            <a href="#">Explore</a>
-            <ul class="dropdown-menu">
-              <li><a href="industrial.html">Industrial & Fieldwork</a></li>
-              <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
-              <li><a href="education.html">Education & Training</a></li>
-              <li><a href="healthcare.html">Healthcare & Surgery</a></li>
-              <li><a href="retail.html">Retail & Shopping</a></li>
-            </ul>
-          </li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="products.html">Products</a></li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Search">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Login">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-3-3.87" /><path d="M4 21v-2a4 4 0 0 1 3-3.87" /><circle cx="12" cy="7" r="4" /></svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" style="background-image: url('images/ARglasses-collaboration.png'); background-size: cover; background-position: center;">
+    <!-- Load shared header behavior (cache-busted). OK if this races; fallback below handles it. -->
+    <script src="./header.js?v=5" defer></script>
+  </head>
+
+  <body>
+    <!-- Shared header mount (populated by header.html) -->
+    <div id="site-header"></div>
+
+    <!-- Hero Section (uses background image) -->
+    <section
+      class="hero"
+      style="background-image: url('images/ARglasses-collaboration.png'); background-size: cover; background-position: center;"
+    >
       <div class="hero-content">
-        <h1>AR Glasses for</h1>    
-        <h2>Collaboration & Workspaces</h2>
+        <h1>AR Glasses for</h1>
+        <h2>Collaboration &amp; Workspaces</h2>
         <h3>Connecting teams with augmented presence</h3>
       </div>
     </section>
 
     <!-- Page Content -->
-    <main class="container">
-      <p>
+    <main class="container" style="max-width: 900px;">
+      <section aria-labelledby="collab-heading">
+        <h2 id="collab-heading">How AR Glasses and AI Will Advance Collaboration and Workspaces</h2>
 
-          <section>
-  <h2>How AR Glasses and AI Will Advance Collaboration and Workspaces</h2>
+        <h2>Introduction</h2>
+        <p>
+          In the coming 5 to 10 years—from now until roughly 2030–2035—<strong>augmented reality (AR) glasses</strong> integrated with
+          <strong>advanced artificial intelligence (AI)</strong> will redefine collaboration and workplace design. Together, they’ll enable richer
+          communication, smarter workflows, and seamless blending of physical and virtual space. This evolution will impact not only remote teams but
+          also on-site collaboration, human-robot cooperation, and creative problem-solving.
+        </p>
 
-  <h2>Introduction</h2>
-  <p>In the coming 5 to 10 years—from now until roughly 2030–2035—<strong>augmented reality (AR) glasses</strong> integrated with <strong>advanced artificial intelligence (AI)</strong> will redefine collaboration and workplace design. Together, they’ll enable richer communication, smarter workflows, and seamless blending of physical and virtual space. This evolution will impact not only remote teams but also on-site collaboration, human-robot cooperation, and creative problem-solving.</p>
+        <h2>1. The Technological Foundation</h2>
+        <h3>a. AR Glasses: from novelty to essential wearable</h3>
+        <p>
+          By 2025, AR glasses are rapidly evolving—from early models like Ray-Ban Meta and Vuzix to more immersive devices such as Apple Vision Pro,
+          HoloLens, and Google’s Android XR platform devices (e.g., Project Moohan). Meta is expected to launch versions of its Ray-Ban glasses with
+          in-lens displays by mid-2025, adding AI-driven notification overlays. Meanwhile, research prototypes are pushing toward ultra-thin mixed
+          reality optics using AI holographic stacks that dramatically reduce weight and size.
+        </p>
 
-  <h2>1. The Technological Foundation</h2>
-  <h3>a. AR Glasses: from novelty to essential wearable</h3>
-  <p>By 2025, AR glasses are rapidly evolving—from early models like Ray-Ban Meta and Vuzix to more immersive devices such as Apple Vision Pro, HoloLens, and Google’s Android XR platform devices (e.g. Project Moohan). Meta is expected to launch versions of its Ray-Ban glasses with in-lens displays by mid-2025, adding AI-driven notification overlays. Meanwhile, research prototypes are pushing toward ultra-thin mixed reality optics using AI holographic stacks that dramatically reduce weight and size.</p>
+        <h3>b. AI: contextual, multimodal, team-aware</h3>
+        <p>
+          AI assistants in AR glasses are gaining multimodal capabilities—voice, vision, gesture, and real-time translation. New academic work
+          envisions <strong>spatially aware AI agents</strong> that adapt content placement to users and their environment, adapting in real time to
+          movements and collaboration needs. Meta’s “personal superintelligence” strategy suggests deeply personalized AI assistants combining vision,
+          context and proactive task support.
+        </p>
 
-  <h3>b. AI: contextual, multimodal, team-aware</h3>
-  <p>AI assistants in AR glasses are gaining multimodal capabilities—voice, vision, gesture, and real-time translation. New academic work envisions <strong>spatially aware AI agents</strong> that adapt content placement to users and their environment, adapting in real time to movements and collaboration needs. Meta’s “personal superintelligence” strategy suggests deeply personalized AI assistant combining vision, context and proactive task support.</p>
+        <h2>2. Collaboration in Hybrid and Remote Teams</h2>
+        <h3>a. Immersive Virtual Meetings</h3>
+        <p>
+          AR glasses will enable “holographic overlays” during virtual meetings—participants can appear life-size and life-like in your environment.
+          Remote teams will manipulate documents, prototypes, and spatial data as if present together.
+        </p>
 
-  <h2>2. Collaboration in Hybrid and Remote Teams</h2>
-  <h3>a. Immersive Virtual Meetings</h3>
-  <p>AR glasses will enable “holographic overlays” during virtual meetings—participants can appear life-size and life-like in your environment. Remote teams will manipulate documents, prototypes, and spatial data as if present together.</p>
+        <h3>b. Real-time Document &amp; Data Sharing</h3>
+        <p>
+          With AI assist, you could gesture at a physical object (e.g., a machine part), have the AI pull up diagrams, specs or error logs, and share
+          annotations across team members—even remote—without switching screens.
+        </p>
 
-  <h3>b. Real-time Document & Data Sharing</h3>
-  <p>With AI assist, you could gesture at a physical object (e.g. a machine part), have the AI pull up diagrams, specs or error logs, and share annotations across team members—even remote—without switching screens.</p>
+        <h3>c. Language Translation and Contextual Assistance</h3>
+        <p>
+          Immediate language translation and object recognition will break international barriers. AI will identify objects and translate conversation
+          in real time, helping multi-lingual teams collaborate as naturally as native speakers.
+        </p>
 
-  <h3>c. Language Translation and Contextual Assistance</h3>
-  <p>Immediate language translation and object recognition will break international barriers. AI will identify objects and translate conversation in real time, helping multi-lingual teams collaborate as naturally as native speakers.</p>
+        <h2>3. Enhancing Physical Workspaces and Hybrid Zones</h2>
+        <h3>a. Smart Overlays for Task Guidance</h3>
+        <p>
+          Workers in technical or industrial roles can wear AR glasses that overlay step-by-step guidance during assembly, maintenance or quality
+          inspection. These systems reduce error, shorten onboarding, and free both hands for physical tasks.
+        </p>
 
-  <h2>3. Enhancing Physical Workspaces and Hybrid Zones</h2>
-  <h3>a. Smart Overlays for Task Guidance</h3>
-  <p>Workers in technical or industrial roles can wear AR glasses that overlay step-by-step guidance during assembly, maintenance or quality inspection. These systems reduce error, shorten onboarding, and free both hands for physical tasks.</p>
+        <h3>b. Reconfigurable Hybrid Workspaces</h3>
+        <p>
+          Inspired by environments like “Dataspace,” future offices will fluidly mix physical furniture and digital overlays, adapting to project
+          needs on demand. Dynamic AR smart content placement via AI agents will help minimize clutter, optimize visibility and ease cognitive load
+          during collaboration.
+        </p>
 
-  <h3>b. Reconfigurable Hybrid Workspaces</h3>
-  <p>Inspired by environments like “Dataspace,” future offices will fluidly mix physical furniture and digital overlays, adapting to project needs on demand. Dynamic AR smart content placement via AI agents will help minimize clutter, optimize visibility and ease cognitive load during collaboration.</p>
+        <h3>c. Contextual Knowledge and Memory</h3>
+        <p>
+          AI agents can remember where shared whiteboard notes appeared, what was last discussed or annotated, and reintegrate that spatially when the
+          team reconvenes—boosting continuity between sessions and locations.
+        </p>
 
-  <h3>c. Contextual Knowledge and Memory</h3>
-  <p>AI agents can remember where shared whiteboard notes appeared, what was last discussed or annotated, and reintegrate that spatially when the team reconvenes—boosting continuity between sessions and locations.</p>
+        <h2>4. The Role of AI as a Virtual Team Member</h2>
+        <h3>a. Spatially Aware AI Agents</h3>
+        <p>
+          Future AI embedded in AR glasses could proactively propose resources: generate virtual whiteboards during brainstorming, highlight conflicts
+          across timelines, or prompt overlooked issues based on prior data analysis.
+        </p>
 
-  <h2>4. The Role of AI as a Virtual Team Member</h2>
-  <h3>a. Spatially Aware AI Agents</h3>
-  <p>Future AI embedded in AR glasses could proactively propose resources: generate virtual whiteboards during brainstorming, highlight conflicts across timelines, or prompt overlooked issues based on prior data analysis.</p>
+        <h3>b. Predictive and Adaptive Support</h3>
+        <p>
+          By analyzing workflows and team behavior, AI can suggest next steps, surface relevant documents, or anticipate roadblocks. This could
+          accelerate project execution and improve team synchronization across remote or hybrid contexts.
+        </p>
 
-  <h3>b. Predictive and Adaptive Support</h3>
-  <p>By analyzing workflows and team behavior, AI can suggest next steps, surface relevant documents, or anticipate roadblocks. This could accelerate project execution and improve team synchronization across remote or hybrid contexts.</p>
+        <h2>5. Future Scenarios: 2025–2035</h2>
+        <h3>Near Term (2025–2027)</h3>
+        <ul>
+          <li>Ray-Ban Meta AI glasses with displays, media capture, and voice control.</li>
+          <li>Project Orion prototypes deliver mixed-reality overlays.</li>
+          <li>Google’s Android XR + Gemini enables multimodal control and live translation.</li>
+        </ul>
 
-  <h2>5. Future Scenarios: 2025–2035</h2>
-  <h3>Near Term (2025–2027)</h3>
-  <ul>
-    <li>Ray-Ban Meta AI glasses with displays, media capture, and voice control.</li>
-    <li>Project Orion prototypes deliver mixed-reality overlays.</li>
-    <li>Google’s Android XR + Gemini enables multimodal control and live translation.</li>
-  </ul>
+        <h3>Medium Term (2028–2030)</h3>
+        <ul>
+          <li>Lightweight holographic AR glasses go mainstream.</li>
+          <li>AI agents evolve into team-aware collaborators.</li>
+          <li>Hybrid offices mix physical and AR infrastructure.</li>
+        </ul>
 
-  <h3>Medium Term (2028–2030)</h3>
-  <ul>
-    <li>Lightweight holographic AR glasses go mainstream.</li>
-    <li>AI agents evolve into team-aware collaborators.</li>
-    <li>Hybrid offices mix physical and AR infrastructure.</li>
-  </ul>
+        <h3>Longer Term (2030–2035)</h3>
+        <ul>
+          <li>AR-AI glasses become dominant computing interfaces.</li>
+          <li>AI becomes deeply personalized and proactive.</li>
+          <li>Spatial computing normalizes cross-location collaboration.</li>
+        </ul>
 
-  <h3>Longer Term (2030–2035)</h3>
-  <ul>
-    <li>AR-AI glasses become dominant computing interfaces.</li>
-    <li>AI becomes deeply personalized and proactive.</li>
-    <li>Spatial computing normalizes cross-location collaboration.</li>
-  </ul>
+        <h2>6. Advantages for Collaboration and Workspaces</h2>
+        <ul>
+          <li><strong>Higher Productivity:</strong> automation and live assistance reduce friction.</li>
+          <li><strong>Improved Understanding:</strong> spatial memory aids continuity and comprehension.</li>
+          <li><strong>Equalized Participation:</strong> remote participants feel present and heard.</li>
+          <li><strong>Hands-Free Contextual Access:</strong> ideal for field or multitasking roles.</li>
+          <li><strong>Creative Boost:</strong> immersive tools enable ideation beyond the screen.</li>
+        </ul>
 
-  <h2>6. Advantages for Collaboration and Workspaces</h2>
-  <ul>
-    <li><strong>Higher Productivity:</strong> automation and live assistance reduce friction.</li>
-    <li><strong>Improved Understanding:</strong> spatial memory aids continuity and comprehension.</li>
-    <li><strong>Equalized Participation:</strong> remote participants feel present and heard.</li>
-    <li><strong>Hands-Free Contextual Access:</strong> ideal for field or multitasking roles.</li>
-    <li><strong>Creative Boost:</strong> immersive tools enable ideation beyond the screen.</li>
-  </ul>
+        <h2>7. Challenges &amp; Considerations</h2>
+        <h3>a. Privacy and Surveillance</h3>
+        <p>Always-on AI may raise ethical and regulatory questions about privacy in collaborative settings.</p>
 
-  <h2>7. Challenges & Considerations</h2>
-  <h3>a. Privacy and Surveillance</h3>
-  <p>Always-on AI may raise ethical and regulatory questions about privacy in collaborative settings.</p>
+        <h3>b. Ergonomics and Comfort</h3>
+        <p>Device weight, battery life, and optical health impacts must be addressed as wearables evolve.</p>
 
-  <h3>b. Ergonomics and Comfort</h3>
-  <p>Device weight, battery life, and optical health impacts must be addressed as wearables evolve.</p>
+        <h3>c. Cost and Learning Curve</h3>
+        <p>Widespread adoption may require subsidies, tiered pricing, and simpler onboarding for teams.</p>
 
-  <h3>c. Cost and Learning Curve</h3>
-  <p>Widespread adoption may require subsidies, tiered pricing, and simpler onboarding for teams.</p>
+        <h3>d. Technical Limitations</h3>
+        <p>Latency, field of view, and real-time rendering still pose challenges to seamless user experience.</p>
 
-  <h3>d. Technical Limitations</h3>
-  <p>Latency, field of view, and real-time rendering still pose challenges to seamless user experience.</p>
+        <h2>8. Case Studies &amp; Use-Cases</h2>
+        <ul>
+          <li><strong>Design Teams:</strong> collaborate around 3D models spatially with AI annotations.</li>
+          <li><strong>Field Technicians:</strong> get step-by-step repair instructions overlaid in view.</li>
+          <li><strong>Hybrid Offices:</strong> share persistent whiteboards and AR workflows across teams.</li>
+          <li><strong>Medical Collaboration:</strong> share AI-guided visuals for surgery or diagnostics.</li>
+        </ul>
 
-  <h2>8. Case Studies & Use-Cases</h2>
-  <ul>
-    <li><strong>Design Teams:</strong> collaborate around 3D models spatially with AI annotations.</li>
-    <li><strong>Field Technicians:</strong> get step-by-step repair instructions overlaid in view.</li>
-    <li><strong>Hybrid Offices:</strong> share persistent whiteboards and AR workflows across teams.</li>
-    <li><strong>Medical Collaboration:</strong> share AI-guided visuals for surgery or diagnostics.</li>
-  </ul>
+        <h2>9. Ethical &amp; Organizational Strategies</h2>
+        <ul>
+          <li>Establish clear privacy and data capture protocols.</li>
+          <li>Provide training and support for hybrid work with AR/AI tools.</li>
+          <li>Ensure ergonomic, inclusive hardware design.</li>
+          <li>Address AI bias and safety in team-critical contexts.</li>
+        </ul>
 
-  <h2>9. Ethical & Organizational Strategies</h2>
-  <ul>
-    <li>Establish clear privacy and data capture protocols.</li>
-    <li>Provide training and support for hybrid work with AR/AI tools.</li>
-    <li>Ensure ergonomic, inclusive hardware design.</li>
-    <li>Address AI bias and safety in team-critical contexts.</li>
-  </ul>
+        <h2>10. Future Outlook &amp; Vision</h2>
+        <p>
+          By 2035, AR and AI will co-evolve into an integrated productivity platform. Offices will become intelligent, reconfigurable ecosystems where
+          real-world and digital collaboration occur side-by-side. AI will become not only a tool, but a trusted collaborative partner. Businesses that
+          embrace this shift will lead innovation in the new era of spatial computing.
+        </p>
 
-  <h2>10. Future Outlook & Vision</h2>
-  <p>By 2035, AR and AI will co-evolve into an integrated productivity platform. Offices will become intelligent, reconfigurable ecosystems where real-world and digital collaboration occur side-by-side. AI will become not only a tool, but a trusted collaborative partner. Businesses that embrace this shift will lead innovation in the new era of spatial computing.</p>
+        <h2>Conclusion</h2>
+        <p>
+          The convergence of AR glasses and AI offers a compelling vision of the future of work. While challenges remain, the benefits—from immersive
+          collaboration to intelligent task support—will transform how we work, communicate, and create. By the early 2030s, these tools won’t just
+          enhance productivity—they’ll redefine it.
+        </p>
 
-  <h2>Conclusion</h2>
-  <p>The convergence of AR glasses and AI offers a compelling vision of the future of work. While challenges remain, the benefits—from immersive collaboration to intelligent task support—will transform how we work, communicate, and create. By the early 2030s, these tools won’t just enhance productivity—they’ll redefine it.</p>
-</article>
-
-      </p>
-      <p><a href="index.html">← Back to Home</a></p>
+        <p style="margin-top: 1rem;"><a href="index.html">← Back to Home</a></p>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -188,10 +205,10 @@
           <strong>Quick Links</strong>
           <ul>
             <li><a href="#">Explore</a></li>
-            <li><a href="contact.html">Contact</a></li>            
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
             <li><a href="Cookie-Policy.html">Cookie Policy</a></li>
-            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
           </ul>
         </div>
       </div>
@@ -199,5 +216,87 @@
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
+
+    <!-- Inject shared header, then initialize + FALLBACK binding -->
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const mount = document.getElementById("site-header");
+
+        // 1) Inject header.html (cache-busted)
+        fetch("./header.html?v=5")
+          .then(r => r.text())
+          .then(html => {
+            mount.innerHTML = html;
+
+            // 2) Primary init from header.js if available
+            if (typeof window.__initHeader === "function") {
+              try { window.__initHeader(); } catch (_) {}
+            }
+
+            // 3) Fallback bindings (ensures hamburger + submenu always work)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+              const dropdown = menu ? menu.querySelector(".dropdown") : null;
+              const chevron  = menu ? menu.querySelector(".submenu-toggle") : null;
+              const submenu  = menu ? menu.querySelector(".dropdown-menu") : null;
+
+              if (!menu || !toggle || !backdrop) return;
+
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                if (dropdown) dropdown.classList.remove("open");
+                if (chevron) chevron.setAttribute("aria-expanded","false");
+                if (submenu) submenu.style.display = "";
+              }
+
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+              function toggleSubmenu(e){
+                if (!isMobile()) return;
+                e.preventDefault();
+                const li = e.currentTarget.closest(".dropdown");
+                if (!li) return;
+                const menuEl = li.querySelector(".dropdown-menu");
+                const chevEl = li.querySelector(".submenu-toggle");
+                const isOpen = li.classList.contains("open");
+                li.classList.toggle("open", !isOpen);
+                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+              }
+              if (dropdown){
+                const label = dropdown.querySelector(".has-submenu");
+                const chev  = dropdown.querySelector(".submenu-toggle");
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              }
+
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
+            // 4) Optional event for any other listeners
+            window.dispatchEvent(new Event("header:ready"));
+          })
+          .catch(err => console.error("Failed to load header.html:", err));
+      });
+    </script>
   </body>
 </html>
