@@ -15,11 +15,16 @@
     <!-- Navigation -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
+        <!-- Hamburger (left) -->
+        <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+
         <!-- Brand -->
-        <ul>
+        <ul class="logo-wrapper">
           <li>
             <strong class="logo">
-              <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none;">
+              <a href="index.html" class="logo-link">
                 <img src="images/logo7.png" alt="AR Glasses Logo" />
                 AR glasses
               </a>
@@ -27,15 +32,10 @@
           </li>
         </ul>
 
-        <!-- Hamburger button (mobile) -->
-        <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
-
         <!-- Primary navigation -->
         <ul id="primary-nav">
           <li class="dropdown">
-            <a href="#">Explore</a>
+            <a href="#" class="has-submenu">Explore</a>
             <ul class="dropdown-menu">
               <li><a href="industrial.html">Industrial & Fieldwork</a></li>
               <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
@@ -194,31 +194,47 @@
       window.addEventListener('DOMContentLoaded', updateNavbarTheme);
     </script>
 
-    <!-- Hamburger Menu Script -->
+    <!-- Hamburger + mobile submenu Script -->
     <script>
       (function () {
         const toggle = document.getElementById('menu-toggle');
         const menu = document.getElementById('primary-nav');
+        const dropdownToggles = menu.querySelectorAll('.dropdown > .has-submenu');
+        const mq = window.matchMedia('(max-width: 768px)');
 
         function closeMenu() {
           menu.classList.remove('open');
           toggle.setAttribute('aria-expanded', 'false');
+          // collapse any open mobile submenus
+          menu.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
         }
 
-        // Toggle on click
+        // Toggle main menu
         toggle.addEventListener('click', () => {
           const isOpen = menu.classList.toggle('open');
           toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
 
-        // Close on any link click (useful on mobile)
+        // Mobile: toggle submenus by tapping "Explore"
+        dropdownToggles.forEach(anchor => {
+          anchor.addEventListener('click', (e) => {
+            if (mq.matches) {
+              e.preventDefault();
+              anchor.parentElement.classList.toggle('open');
+            }
+          });
+        });
+
+        // Close on any link click inside the dropdown list (mobile)
         menu.addEventListener('click', (e) => {
-          if (e.target.tagName === 'A') closeMenu();
+          if (mq.matches && e.target.tagName === 'A' && e.target.closest('.dropdown-menu')) {
+            closeMenu();
+          }
         });
 
         // Close if resizing to desktop
         window.addEventListener('resize', () => {
-          if (window.innerWidth > 768) closeMenu();
+          if (!mq.matches) closeMenu();
         });
       })();
     </script>
