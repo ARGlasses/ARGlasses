@@ -1,3 +1,4 @@
+// header.js (v4)
 (function () {
   if (window.__headerInit) return;
   window.__headerInit = true;
@@ -20,7 +21,7 @@
     menu.querySelectorAll('.dropdown-menu').forEach(ul => ul.style.display = '');
   }
 
-  // Robust click handling via delegation
+  // Delegated clicks: hamburger, backdrop, close, submenu
   function bindDelegatedClicks(){
     document.addEventListener('click', function(e){
       const menu     = document.getElementById('primary-nav');
@@ -28,35 +29,33 @@
       const backdrop = document.getElementById('backdrop');
       if (!menu || !backdrop) return;
 
-      // Hamburger toggle (works regardless of width; CSS hides on desktop)
-      const hitToggle = e.target.closest('#menu-toggle');
-      if (hitToggle){
+      // Hamburger (works regardless of width; CSS hides it on desktop)
+      if (e.target.closest('#menu-toggle')){
         e.preventDefault();
         menu.classList.contains('open') ? closeDrawer(menu, backdrop, toggle) : openDrawer(menu, backdrop, toggle);
         return;
       }
 
-      // Backdrop click
+      // Backdrop
       if (e.target === backdrop){
         closeDrawer(menu, backdrop, toggle);
         return;
       }
 
-      // Drawer close “X”
-      const hitClose = e.target.closest('.drawer-close');
-      if (hitClose){
+      // Drawer close “×”
+      if (e.target.closest('.drawer-close')){
         e.preventDefault();
         closeDrawer(menu, backdrop, toggle);
         return;
       }
 
-      // Submenu toggle (Explore)
-      const trigger = e.target.closest('.has-submenu, .submenu-toggle');
-      if (trigger){
-        // on desktop, dropdown is hover-driven; click accordion only on mobile widths
-        if (window.matchMedia('(max-width: 768px)').matches) {
+      // Submenu (Explore) — only behave like accordion on mobile widths
+      const submenuTrigger = e.target.closest('.has-submenu, .submenu-toggle');
+      if (submenuTrigger){
+        if (window.matchMedia('(max-width: 768px)').matches){
           e.preventDefault();
-          const li = trigger.closest('.dropdown');
+          e.stopPropagation();
+          const li = submenuTrigger.closest('.dropdown');
           if (!li) return;
           const submenu = li.querySelector('.dropdown-menu');
           const isOpen = li.classList.contains('open');
@@ -65,10 +64,11 @@
           if (chev) chev.setAttribute('aria-expanded', (!isOpen).toString());
           if (submenu) submenu.style.display = !isOpen ? 'block' : 'none';
         }
+        return;
       }
     });
 
-    // ESC key
+    // ESC to close drawer
     window.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
       const menu     = document.getElementById('primary-nav');
@@ -78,7 +78,7 @@
       if (menu.classList.contains('open')) closeDrawer(menu, backdrop, toggle);
     });
 
-    // Resize closes drawer when leaving mobile
+    // Close drawer when leaving mobile width
     window.addEventListener('resize', () => {
       const menu     = document.getElementById('primary-nav');
       const backdrop = document.getElementById('backdrop');
@@ -88,7 +88,7 @@
     });
   }
 
-  // Optional: light/dark swap when a .hero exists
+  // Optional: dark/light flip over hero
   function initNavbarScrollTheme() {
     const navbar = document.getElementById('navbar');
     const heroSection = document.querySelector('.hero');
@@ -125,6 +125,6 @@
   // Public init for after-injection calls
   window.__initHeader = function(){ init(); };
 
-  // Try to init right now (safe if header already present)
+  // Try to init immediately (safe if header is already present)
   init();
 })();
