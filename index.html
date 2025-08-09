@@ -121,7 +121,7 @@
       });
     </script>
 
-    <!-- Inject shared header, then init -->
+    <!-- Inject shared header, then init (+ robust fallback binder) -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
@@ -129,14 +129,78 @@
           .then(r => r.text())
           .then(html => {
             mount.innerHTML = html;
+
+            // Primary init from header.js (if present and loaded)
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
+
+            // Fallback bindings (ensures hamburger + submenu always work)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+              const dropdown = menu ? menu.querySelector(".dropdown") : null;
+
+              if (!menu || !toggle || !backdrop) return;
+
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                if (dropdown) dropdown.classList.remove("open");
+                const chev = menu.querySelector(".submenu-toggle");
+                const subm = menu.querySelector(".dropdown-menu");
+                if (chev) chev.setAttribute("aria-expanded","false");
+                if (subm) subm.style.display = "";
+              }
+
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+              function toggleSubmenu(e){
+                if (!isMobile()) return;
+                e.preventDefault();
+                const li = e.currentTarget.closest(".dropdown");
+                if (!li) return;
+                const menuEl = li.querySelector(".dropdown-menu");
+                const chevEl = li.querySelector(".submenu-toggle");
+                const isOpen = li.classList.contains("open");
+                li.classList.toggle("open", !isOpen);
+                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+              }
+              if (dropdown){
+                const label = dropdown.querySelector(".has-submenu");
+                const chev  = dropdown.querySelector(".submenu-toggle");
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              }
+
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
             window.dispatchEvent(new Event("header:ready"));
           })
-          .catch(console.error);
+          .catch(err => console.error("Failed to load header.html:", err));
       });
     </script>
+
+    <!-- Behavior (must match version used above) -->
     <script src="./header.js?v=6" defer></script>
   </body>
 </html>
