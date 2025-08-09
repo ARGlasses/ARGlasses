@@ -10,9 +10,8 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
   </head>
-
   <body>
-    <!-- Shared header mount (populated by /header.html) -->
+    <!-- Shared header mount (replaces the old inline <nav>) -->
     <div id="site-header"></div>
 
     <!-- Hero Section -->
@@ -87,27 +86,20 @@
       </div>
     </footer>
 
-    <!-- 1) Load shared behavior (listeners available early) -->
+    <!-- Load shared header behavior -->
     <script src="/header.js" defer></script>
 
-    <!-- 2) Inject shared header after DOM is ready, then init -->
+    <!-- Inject shared header markup, then init -->
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
 
-        // If your site isn't at the domain root, change to "./header.html"
+        // If your site is not at the domain root, change both to "./header.html" and "./header.js"
         fetch("/header.html")
           .then((r) => r.text())
           .then((html) => {
             mount.innerHTML = html;
-
-            // Call public init to bind events immediately
-            if (typeof window.__initHeader === "function") {
-              window.__initHeader();
-            }
-
-            // Also dispatch event for any listeners
-            window.dispatchEvent(new Event("header:ready"));
+            if (typeof window.__initHeader === "function") window.__initHeader();
           })
           .catch((err) => console.error("Failed to load header.html:", err));
       });
