@@ -154,19 +154,22 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     gap: 4px;
     border: none !important;
     background: transparent !important;
-    color: #333 !important;
     cursor: pointer;
     z-index: 1101; /* keep above drawer/backdrop */
   }
-  nav.container-fluid.dark-nav .hamburger { color: #fff !important; }
+  /* Force the three lines to switch color with theme */
   .hamburger span {
     display: block !important;
     width: 20px; height: 2px;
-    background: currentColor !important;
     border-radius: 2px;
     margin: 0 !important;
     padding: 0 !important;
+    background: #666 !important; /* default for light */
   }
+  nav.container-fluid.dark-nav .hamburger span { background: #fff !important; }
+  nav.container-fluid.light-nav .hamburger span { background: #666 !important; }
+
+  /* Animated "X" state */
   .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
@@ -191,34 +194,44 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   .drawer-brand img { height: 28px; width: auto; }
   .drawer-close { background: transparent; border: none; color: #333; font-size: 28px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
 
-  /* Drawer items; make parent reliably positioning context */
+  /* Drawer items; keep row and align center */
   #primary-nav > li {
     width: 100%;
     display: flex;
     align-items: center;
     position: relative !important;
   }
+
+  /* Make top-level link text a flex child that can shrink/grow.
+     IMPORTANT: remove the 100% width so the chevron can sit on the same line. */
   #primary-nav > li > a,
   #primary-nav > li > .has-submenu {
-    display: inline-flex; align-items: center; justify-content: flex-start;
-    width: 100%; padding: 12px 44px 12px 14px; /* space reserved for right-side control */
-    color: #333 !important; font-size: 0.95rem; text-align: left;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto !important;             /* ← was 100%: forces wrap */
+    flex: 1 1 auto;
+    padding: 12px 14px;                 /* base padding; chevron has its own space */
+    color: #333 !important;
+    font-size: 0.95rem;
+    text-align: left;
+    white-space: nowrap;                /* avoid wrapping the label */
   }
   #primary-nav > li > a:hover,
   #primary-nav > li > .has-submenu:hover { background: #f5f7fa; }
 
-  /* ✅ Submenu chevron pinned to the right as a normal flex child */
-  #primary-nav > li > .has-submenu { flex: 1 1 auto; }
+  /* Submenu chevron pinned to the right as a normal flex child */
   .submenu-toggle {
     display: inline-flex !important;
-    position: static !important;   /* no absolute positioning */
-    margin-left: auto;             /* push to right edge */
+    position: static !important;        /* no absolute positioning */
+    margin-left: auto;                  /* push to right edge */
+    align-self: center;
     width: 32px !important;
     height: 32px !important;
     transform: rotate(0deg) !important;
     background: none !important;
     border: none !important;
-    padding: 0 !important;
+    padding: 0 10px 0 6px !important;   /* a bit of right spacing */
     color: #666 !important;
     cursor: pointer;
     border-radius: 8px;
@@ -228,7 +241,7 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   .dropdown.open > .submenu-toggle { transform: rotate(90deg) !important; }
 
   /* Submenu directly below Explore */
-  #primary-nav > li.dropdown { display: block; width: 100%; }
+  #primary-nav > li.dropdown { display: flex; width: 100%; }
   #primary-nav .dropdown { position: static !important; }
   #primary-nav .dropdown-menu {
     position: static !important; inset: auto !important; transform: none !important;
