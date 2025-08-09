@@ -238,7 +238,7 @@
           menu.querySelectorAll('.submenu-toggle[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
         }
 
-        // Only active on mobile
+        // Drawer open/close
         toggle.addEventListener('click', () => {
           if (!mq.matches) return;
           menu.classList.contains('open') ? closeDrawer() : openDrawer();
@@ -249,10 +249,10 @@
         const closeBtn = document.querySelector('.drawer-close');
         if (closeBtn) closeBtn.addEventListener('click', () => { if (mq.matches) closeDrawer(); });
 
-        // Mobile submenu toggling: both label and chevron
+        // Submenu open/close (label + chevron)
         const dropdown = menu.querySelector('.dropdown');
         if (dropdown) {
-          const anchor = dropdown.querySelector('.has-submenu');
+          const anchor  = dropdown.querySelector('.has-submenu');
           const chevron = dropdown.querySelector('.submenu-toggle');
           const submenu = dropdown.querySelector('.dropdown-menu');
 
@@ -260,17 +260,11 @@
             if (!mq.matches) return;      // desktop uses hover
             e.preventDefault();
             e.stopPropagation();
-
             const isOpen = dropdown.classList.contains('open');
             dropdown.classList.toggle('open', !isOpen);
-            chevron.setAttribute('aria-expanded', (!isOpen).toString());
-
-            // Ensure submenu is visible below the label (no off-screen)
-            if (!isOpen) {
-              submenu.style.display = 'block';
-            } else {
-              submenu.style.display = 'none';
-            }
+            if (chevron) chevron.setAttribute('aria-expanded', (!isOpen).toString());
+            // ensure it sits below and collapses properly
+            submenu.style.display = !isOpen ? 'block' : 'none';
           }
 
           if (anchor)  anchor.addEventListener('click', toggleSubmenu);
