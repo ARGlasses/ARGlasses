@@ -15,27 +15,33 @@
     <!-- Navigation -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
-        <!-- Hamburger (left) -->
-        <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu">
+        <!-- Hamburger (boxed, top-left) -->
+        <button id="menu-toggle"
+                class="hamburger"
+                aria-controls="primary-nav"
+                aria-expanded="false"
+                aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
 
         <!-- Brand -->
-        <ul class="logo-wrapper">
-          <li>
-            <strong class="logo">
-              <a href="index.html" class="logo-link">
-                <img src="images/logo7.png" alt="AR Glasses Logo" />
-                AR glasses
-              </a>
-            </strong>
-          </li>
-        </ul>
+        <a href="index.html" class="logo-link">
+          <img src="images/logo7.png" alt="AR Glasses Logo" />
+          <strong class="logo-text">AR glasses</strong>
+        </a>
 
-        <!-- Primary navigation -->
-        <ul id="primary-nav">
+        <!-- Primary navigation (desktop inline, mobile becomes drawer) -->
+        <ul id="primary-nav" class="nav-list">
           <li class="dropdown">
             <a href="#" class="has-submenu">Explore</a>
+
+            <!-- Chevron toggle button for mobile -->
+            <button class="submenu-toggle" aria-label="Toggle Explore submenu" aria-expanded="false">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
             <ul class="dropdown-menu">
               <li><a href="industrial.html">Industrial & Fieldwork</a></li>
               <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
@@ -44,8 +50,10 @@
               <li><a href="retail.html">Retail & Shopping</a></li>
             </ul>
           </li>
+
           <li><a href="news.html">News</a></li>
           <li><a href="products.html">Products</a></li>
+
           <li>
             <a href="#" class="icon-link" aria-label="Search">
               <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -66,6 +74,9 @@
         </ul>
       </div>
     </nav>
+
+    <!-- Backdrop for the off-canvas drawer -->
+    <div id="backdrop" aria-hidden="true"></div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -194,47 +205,61 @@
       window.addEventListener('DOMContentLoaded', updateNavbarTheme);
     </script>
 
-    <!-- Hamburger + mobile submenu Script -->
+    <!-- Drawer + Submenu Script -->
     <script>
       (function () {
         const toggle = document.getElementById('menu-toggle');
         const menu = document.getElementById('primary-nav');
-        const dropdownToggles = menu.querySelectorAll('.dropdown > .has-submenu');
+        const backdrop = document.getElementById('backdrop');
         const mq = window.matchMedia('(max-width: 768px)');
 
-        function closeMenu() {
-          menu.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
-          // collapse any open mobile submenus
-          menu.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+        function openDrawer() {
+          menu.classList.add('open');
+          backdrop.classList.add('show');
+          toggle.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
         }
 
-        // Toggle main menu
+        function closeDrawer() {
+          menu.classList.remove('open');
+          backdrop.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+          // collapse any open submenus
+          menu.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+          menu.querySelectorAll('.submenu-toggle[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+        }
+
         toggle.addEventListener('click', () => {
-          const isOpen = menu.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-
-        // Mobile: toggle submenus by tapping "Explore"
-        dropdownToggles.forEach(anchor => {
-          anchor.addEventListener('click', (e) => {
-            if (mq.matches) {
-              e.preventDefault();
-              anchor.parentElement.classList.toggle('open');
-            }
-          });
-        });
-
-        // Close on any link click inside the dropdown list (mobile)
-        menu.addEventListener('click', (e) => {
-          if (mq.matches && e.target.tagName === 'A' && e.target.closest('.dropdown-menu')) {
-            closeMenu();
+          if (mq.matches) {
+            const isOpen = menu.classList.contains('open');
+            isOpen ? closeDrawer() : openDrawer();
           }
         });
 
-        // Close if resizing to desktop
+        backdrop.addEventListener('click', closeDrawer);
+
+        // Submenu toggles (mobile)
+        menu.querySelectorAll('.submenu-toggle').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            if (!mq.matches) return; // desktop handled by hover
+            const li = btn.closest('.dropdown');
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            li.classList.toggle('open', !expanded);
+          });
+        });
+
+        // Close on ESC
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mq.matches && menu.classList.contains('open')) {
+            closeDrawer();
+          }
+        });
+
+        // Close when resizing to desktop
         window.addEventListener('resize', () => {
-          if (!mq.matches) closeMenu();
+          if (!mq.matches) closeDrawer();
         });
       })();
     </script>
