@@ -314,3 +314,31 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   .footer-content { flex-direction: column; align-items: center; text-align: center; }
   .hero-content { margin-top: 200px; }
 }
+
+/* Shared dropdown list styling for News and Products */
+#news-submenu,
+#products-submenu {
+  display: block;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#news-submenu li,
+#products-submenu li {
+  display: block;       /* Stack items vertically */
+  width: 100%;          /* Take up full menu width */
+}
+
+#news-submenu li a,
+#products-submenu li a {
+  display: block;       /* Clickable area spans the full row */
+  padding: 0.5rem 1rem; /* Adjust spacing */
+  text-decoration: none;
+  color: inherit;       /* Inherit text color from theme */
+}
+
+#news-submenu li a:hover,
+#products-submenu li a:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* Light hover background */
+}
