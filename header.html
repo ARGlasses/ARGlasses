@@ -46,7 +46,7 @@
         </ul>
       </li>
 
-      <!-- News (auto-populated) -->
+      <!-- News (auto: first 5 <article> H1s from news.html) -->
       <li class="dropdown">
         <a href="news.html" class="has-submenu">News</a>
         <button class="submenu-toggle" aria-label="Toggle News submenu" aria-expanded="false">
@@ -57,14 +57,14 @@
         <ul
           class="dropdown-menu"
           id="news-submenu"
-          data-news-single="./news.html"
-          data-news-title-selector=".story-title"
-          data-news-article-selector=".story">
+          data-page="./news.html"
+          data-article-selector="article"
+          data-title-selector="h1">
           <!-- Filled at runtime -->
         </ul>
       </li>
 
-      <!-- Products (multi-page build using product pages' <h1>) -->
+      <!-- Products (auto: first 5 <article> H1s from products.html) -->
       <li class="dropdown">
         <a href="products.html" class="has-submenu">Products</a>
         <button class="submenu-toggle" aria-label="Toggle Products submenu" aria-expanded="false">
@@ -75,9 +75,9 @@
         <ul
           class="dropdown-menu"
           id="products-submenu"
-          data-products-index="./products.html"
-          data-products-link-selector=".product a"
-          data-products-title-page-selector="h1">
+          data-page="./products.html"
+          data-article-selector="article"
+          data-title-selector="h1">
           <!-- Filled at runtime -->
         </ul>
       </li>
