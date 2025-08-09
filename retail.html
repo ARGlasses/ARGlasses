@@ -8,47 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
+
+    <!-- Load shared header behavior (cache-busted). OK if this races; fallback below handles it. -->
+    <script src="./header.js?v=5" defer></script>
   </head>
   <body>
-    <!-- Navigation -->
-    <nav class="container-fluid dark-nav" id="navbar">
-      <div class="nav-inner">
-        <ul>
-          <li>
-            <strong class="logo">
-              <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none;">
-                <img src="images/logo7.png" alt="AR Glasses Logo" />
-                AR glasses
-              </a>
-            </strong>
-          </li>
-        </ul>
-        <ul>
-          <li class="dropdown">
-            <a href="#">Explore</a>
-            <ul class="dropdown-menu">
-              <li><a href="industrial.html">Industrial & Fieldwork</a></li>
-              <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
-              <li><a href="education.html">Education & Training</a></li>
-              <li><a href="healthcare.html">Healthcare & Surgery</a></li>
-              <li><a href="retail.html">Retail & Shopping</a></li>
-            </ul>
-          </li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="products.html">Products</a></li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Search">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Login">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-3-3.87" /><path d="M4 21v-2a4 4 0 0 1 3-3.87" /><circle cx="12" cy="7" r="4" /></svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <!-- Shared header mount (populated by header.html) -->
+    <div id="site-header"></div>
 
     <!-- Hero Section -->
     <section class="hero" style="background-image: url('images/ARglasses-reflection.png'); background-size: cover; background-position: center;">
@@ -67,23 +33,23 @@
 
   <h2>1. Introduction</h2>
   <p>
-    In the coming half‑decade to decade, the fusion of <strong>augmented reality (AR) glasses</strong> and <strong>artificial intelligence (AI)</strong> is poised to redefine how we shop—both online and in physical stores. From seamless virtual try‑ons and hyper‑personalized recommendations to fully autonomous “agentic” shopping assistants, this new paradigm offers the potential for richer experiences, greater convenience, and operational efficiency. Fundamentally, AR glasses will serve as a new personal UI—overlaying digital insights onto our real world—while AI will provide context‑aware intelligence based on user behavior, inventory data, and more. Together, they can transform both consumer experiences and retail operations at scale.
+    In the coming half-decade to decade, the fusion of <strong>augmented reality (AR) glasses</strong> and <strong>artificial intelligence (AI)</strong> is poised to redefine how we shop—both online and in physical stores. From seamless virtual try-ons and hyper-personalized recommendations to fully autonomous “agentic” shopping assistants, this new paradigm offers the potential for richer experiences, greater convenience, and operational efficiency. Fundamentally, AR glasses will serve as a new personal UI—overlaying digital insights onto our real world—while AI will provide context-aware intelligence based on user behavior, inventory data, and more. Together, they can transform both consumer experiences and retail operations at scale.
   </p>
 
   <h2>2. Evolution of AR Glasses & AI</h2>
   <h3>AR Glasses: sleek, lightweight, mainstream</h3>
   <p>
-    By 2025, AR glasses are already transitioning from bulky prototypes to sleek eyewear that rival regular glasses in comfort and design. Analysts foresee these wearable devices becoming ubiquitous within the next 5–10 years, offering smartphone‑level capabilities embedded in refined frames. Meta, Google, Apple and Snap are competing rapidly: Meta’s Ray‑Ban AI glasses sold over 2 million units, and new models like “Orion” and Snap’s AR Specs (set to launch in 2026) promise improved interfaces, eye tracking, neural‑based controls, and full AI integration. Over 30 new AI/AR glasses models were released in just one year, showing the rapid pace of innovation.
+    By 2025, AR glasses are already transitioning from bulky prototypes to sleek eyewear that rival regular glasses in comfort and design. Analysts foresee these wearable devices becoming ubiquitous within the next 5–10 years, offering smartphone-level capabilities embedded in refined frames. Meta, Google, Apple and Snap are competing rapidly: Meta’s Ray-Ban AI glasses sold over 2 million units, and new models like “Orion” and Snap’s AR Specs (set to launch in 2026) promise improved interfaces, eye tracking, neural-based controls, and full AI integration. Over 30 new AI/AR glasses models were released in just one year, showing the rapid pace of innovation.
   </p>
 
-  <h3>AI Advancement: real‑time, agentic and context‑aware</h3>
+  <h3>AI Advancement: real-time, agentic and context-aware</h3>
   <p>
-    AI in retail is moving beyond passive recommendations. “Agentic” AI systems are emerging—AI that can act on behalf of the user, making purchases, managing returns, or negotiating refunds within set parameters. AI is also powering hyper‑personalized marketing, predictive inventory systems, dynamic pricing, fraud prevention, and autonomous customer support chatbots.
+    AI in retail is moving beyond passive recommendations. “Agentic” AI systems are emerging—AI that can act on behalf of the user, making purchases, managing returns, or negotiating refunds within set parameters. AI is also powering hyper-personalized marketing, predictive inventory systems, dynamic pricing, fraud prevention, and autonomous customer support chatbots.
   </p>
 
   <h2>3. Key Use Cases in Retail & Shopping</h2>
 
-  <h3>A. Virtual Try‑On & Style Assistance</h3>
+  <h3>A. Virtual Try-On & Style Assistance</h3>
   <p>
     AR glasses can project 3D virtual garments, eyewear or accessories directly onto your reflection or field of vision. When combined with AI vision models, the eyewear system can adjust color, fit and lighting in real time. Over the next decade, the experience will become seamless—glasses that “know” your measurements, you see your body wearing clothing or accessories instantly, and AI offers real-time suggestions—reducing returns and boosting conversion.
   </p>
@@ -98,9 +64,9 @@
     Agentic AI can take the shopping journey from insight to action: once you set travel or wardrobe preferences, the glasses select, place orders, choose sellers for best price/shipping, or even negotiate returns.
   </p>
 
-  <h3>D. Inventory & Supply‑Chain Optimization</h3>
+  <h3>D. Inventory & Supply-Chain Optimization</h3>
   <p>
-    Behind the scenes, AI integrated with AR wearables (for staff) can streamline inventory checks, stock replenishment, price tags and planogram compliance. AR glasses in warehouses or shops display picking instructions, expected stock levels, or real‑time demand alerts.
+    Behind the scenes, AI integrated with AR wearables (for staff) can streamline inventory checks, stock replenishment, price tags and planogram compliance. AR glasses in warehouses or shops display picking instructions, expected stock levels, or real-time demand alerts.
   </p>
 
   <h3>E. Inclusive & Accessible Shopping</h3>
@@ -112,22 +78,22 @@
 
   <h3>Advanced Vision & Object Recognition</h3>
   <p>
-    Generative AI models like Shap‑E combined with object segmentation enable real‑time 3D modeling and object recognition—even from a single camera feed.
+    Generative AI models like Shap-E combined with object segmentation enable real-time 3D modeling and object recognition—even from a single camera feed.
   </p>
 
   <h3>Dynamic AR content placement</h3>
   <p>
-    AI systems that adapt placement based on user movement and surroundings—placing overlays where they’re visible yet non‑intrusive—reduce cognitive load and ensure intuitive interaction.
+    AI systems that adapt placement based on user movement and surroundings—placing overlays where they’re visible yet non-intrusive—reduce cognitive load and ensure intuitive interaction.
   </p>
 
   <h3>Edge & Cloud Infrastructure</h3>
   <p>
-    5G, edge computing and cloud servers enable low‑latency AR rendering and AI inference. Edge devices process vision tasks locally; cloud handles deep personalization.
+    5G, edge computing and cloud servers enable low-latency AR rendering and AI inference. Edge devices process vision tasks locally; cloud handles deep personalization.
   </p>
 
-  <h3>UX innovations: gesture, eye‑tracking, neural interfaces</h3>
+  <h3>UX innovations: gesture, eye-tracking, neural interfaces</h3>
   <p>
-    Next‑gen control via eye tracking, gestures or even wrist‑based neural interfaces will enable hands-free interaction and seamless engagement.
+    Next-gen control via eye tracking, gestures or even wrist-based neural interfaces will enable hands-free interaction and seamless engagement.
   </p>
 
   <h3>Privacy & ethical design</h3>
@@ -140,7 +106,7 @@
   <h3>For consumers</h3>
   <ul>
     <li><strong>Confidence and reduced returns</strong> via virtual try-ons</li>
-    <li><strong>Effortless personalization</strong>, curated choices, on‑demand AI stylists</li>
+    <li><strong>Effortless personalization</strong>, curated choices, on-demand AI stylists</li>
     <li><strong>Time-saving autonomy</strong>: agentic AI shops within your preferences</li>
     <li><strong>Seamless omnichannel</strong>: the same lens whether online or in-store</li>
   </ul>
@@ -150,12 +116,12 @@
     <li><strong>Higher conversion and lower return costs</strong></li>
     <li><strong>Dynamic pricing and inventory optimization</strong> leveraging real-time data</li>
     <li><strong>Reduced staffing costs</strong> and improved compliance via wearable guidance</li>
-    <li><strong>New revenue streams</strong>: premium AI features, subscription‑based virtual assistants</li>
+    <li><strong>New revenue streams</strong>: premium AI features, subscription-based virtual assistants</li>
   </ul>
 
   <h3>Economic & competitive shift</h3>
   <p>
-    By 2029, forecasts suggest nearly 9 million AR glasses sold with ~47% CAGR. Gartner and analysts highlight agentic AI systems as strategic differentiators—brands adopting them early will lead in loyalty and efficiency.
+    By 2029, forecasts suggest nearly 9 million AR glasses sold with ~47% CAGR. Gartner and analysts highlight agentic AI systems as strategic differentiators—brands adopting them early will lead in loyalty and efficiency.
   </p>
 
   <h2>6. Challenges & Risks</h2>
@@ -177,14 +143,14 @@
 
   <h2>7. Roadmap: Phase by Phase</h2>
   <ul>
-    <li><strong>2025–2027:</strong> AR try‑on pilots, in-store glasses for staff, early adopters testing AI stylists.</li>
+    <li><strong>2025–2027:</strong> AR try-on pilots, in-store glasses for staff, early adopters testing AI stylists.</li>
     <li><strong>2027–2029:</strong> Mass-market rollout of affordable glasses, agentic AI integration.</li>
     <li><strong>2029–2030+:</strong> Glasses as main computing interface, full retail agentic automation, ethical AI norms established.</li>
   </ul>
 
   <h2>8. Conclusion</h2>
   <p>
-    Over the next 5 to 10 years, AR glasses combined with AI will catalyze a profound transformation in retail and shopping. Consumers will benefit from immersive virtual try‑on, intelligent assistants, and autonomous shopping capabilities. Retailers will harness real‑time analytics, personalized marketing, and operational efficiencies. Yet the path forward demands careful attention to design, privacy, fairness, and usability.
+    Over the next 5 to 10 years, AR glasses combined with AI will catalyze a profound transformation in retail and shopping. Consumers will benefit from immersive virtual try-on, intelligent assistants, and autonomous shopping capabilities. Retailers will harness real-time analytics, personalized marketing, and operational efficiencies. Yet the path forward demands careful attention to design, privacy, fairness, and usability.
   </p>
   <p>
     This era is not about replacing human engagement—it’s about augmenting it. AI and AR will extend shopper confidence, streamline operations, and personalize experiences at scale. Retailers who invest thoughtfully now stand to lead the new retail frontier.
@@ -220,5 +186,87 @@
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
+
+    <!-- Inject shared header, then initialize + FALLBACK binding -->
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const mount = document.getElementById("site-header");
+
+        // 1) Inject header.html (cache-busted)
+        fetch("./header.html?v=5")
+          .then(r => r.text())
+          .then(html => {
+            mount.innerHTML = html;
+
+            // 2) Primary init from header.js if available
+            if (typeof window.__initHeader === "function") {
+              try { window.__initHeader(); } catch (_) {}
+            }
+
+            // 3) Fallback bindings (ensures hamburger + submenu always work)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+              const dropdown = menu ? menu.querySelector(".dropdown") : null;
+              const chevron  = menu ? menu.querySelector(".submenu-toggle") : null;
+              const submenu  = menu ? menu.querySelector(".dropdown-menu") : null;
+
+              if (!menu || !toggle || !backdrop) return;
+
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                if (dropdown) dropdown.classList.remove("open");
+                if (chevron) chevron.setAttribute("aria-expanded","false");
+                if (submenu) submenu.style.display = "";
+              }
+
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+              function toggleSubmenu(e){
+                if (!isMobile()) return;
+                e.preventDefault();
+                const li = e.currentTarget.closest(".dropdown");
+                if (!li) return;
+                const menuEl = li.querySelector(".dropdown-menu");
+                const chevEl = li.querySelector(".submenu-toggle");
+                const isOpen = li.classList.contains("open");
+                li.classList.toggle("open", !isOpen);
+                if (chevEl) chevron.setAttribute("aria-expanded", (!isOpen).toString());
+                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+              }
+              if (dropdown){
+                const label = dropdown.querySelector(".has-submenu");
+                const chev  = dropdown.querySelector(".submenu-toggle");
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              }
+
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
+            // 4) Optional event for any other listeners
+            window.dispatchEvent(new Event("header:ready"));
+          })
+          .catch(err => console.error("Failed to load header.html:", err));
+      });
+    </script>
   </body>
 </html>
