@@ -58,7 +58,7 @@ nav a {
 .logo img { height: 32px; width: auto; }
 
 /* Hide mobile-only elements on desktop */
-.hamburger, .submenu-toggle { display: none; }
+.hamburger, .submenu-toggle, .drawer-close-item { display: none; }
 
 /* Theme states (unchanged) */
 nav.container-fluid.dark-nav a,
@@ -88,7 +88,6 @@ nav.container-fluid.light-nav .icon { color: #333 !important; }
   color: #333 !important; text-decoration: none; font-weight: 500; white-space: nowrap;
 }
 .dropdown-menu a:hover { background: #f0f0f0; color: #000 !important; }
-/* readable on dark-nav */
 nav.container-fluid.dark-nav .dropdown-menu { background: #fff !important; }
 nav.container-fluid.dark-nav .dropdown-menu a { color: #333 !important; }
 nav.container-fluid.dark-nav .dropdown-menu a:hover { background: #f0f0f0; color: #000 !important; }
@@ -164,7 +163,6 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
 
 /* =========================================================
    MOBILE-ONLY HAMBURGER & OFF-CANVAS DRAWER
-   (Desktop is completely unchanged)
    ========================================================= */
 @media (max-width: 768px) {
   .nav-inner { padding: 0 1rem; }
@@ -172,23 +170,23 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   /* Hamburger: visible, 3 bars (no dot) */
   .hamburger {
     display: inline-flex;
-    flex-direction: column;           /* stack bars */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 4px;                         /* spacing between bars */
+    gap: 4px;
     width: 36px; height: 36px;
     border-radius: 10px;
     border: 1px solid rgba(0,0,0,0.12);
     background: #fff;
     box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     margin-right: 8px;
-    color: #333;                      /* bars use currentColor */
+    color: #333;
     cursor: pointer;
   }
   .hamburger span {
     display: block !important;
     width: 20px; height: 2px;
-    margin: 0;                        /* gap handles spacing */
+    margin: 0;
     background: currentColor !important;
     border-radius: 2px;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -210,24 +208,51 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     z-index: 1000;
     display: flex;
     flex-direction: column;
+    align-items: stretch;             /* ensure full-width items */
     gap: 8px;
-    text-align: left;                 /* left-align everything */
+    text-align: left;                 /* default left */
   }
   #primary-nav.open { transform: translateX(0); }
 
-  /* Left-align and readable links */
-  #primary-nav > li,
-  #primary-nav a,
-  #primary-nav .has-submenu {
+  /* X close button (top-right of drawer) */
+  .drawer-close-item { 
+    display: block; 
+    position: relative;
+    height: 0;                        /* no vertical space */
+  }
+  .drawer-close {
+    position: absolute;
+    top: 6px; right: 6px;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: #fff;
+    color: #333;
+    font-size: 20px; line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+
+  /* Left-align and make items full width */
+  #primary-nav > li { width: 100%; display: flex; align-items: center; }
+  #primary-nav > li > a,
+  #primary-nav > li > .has-submenu {
+    display: inline-flex;
+    align-items: center;
     justify-content: flex-start !important;
-    text-align: left !important;
+    width: 100%;
+    padding: 10px 10px;
+    border-radius: 10px;
     color: #333 !important;
     font-size: 0.95rem;
+    text-align: left !important;
   }
+  #primary-nav > li > a:hover,
+  #primary-nav > li > .has-submenu:hover { background: #f5f7fa; }
 
   /* Submenu accordion with chevron */
   .submenu-toggle {
-    display: inline-flex;             /* visible on mobile only */
+    display: inline-flex;             /* visible only on mobile */
     margin-left: 8px;
     background: none; border: none; padding: 6px;
     align-items: center; justify-content: center;
@@ -237,7 +262,7 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   .submenu-toggle[aria-expanded="true"] { transform: rotate(180deg); }
   .submenu-toggle:hover { background: #f3f4f6; }
 
-  .dropdown { position: static; }
+  .dropdown { position: static; width: 100%; }
   .dropdown-menu {
     position: static;
     display: none;
