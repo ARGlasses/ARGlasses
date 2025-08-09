@@ -1,4 +1,4 @@
-// header.js (v5)
+// header.js (v6)
 (function () {
   if (window.__headerInit) return;
   window.__headerInit = true;
@@ -29,27 +29,24 @@
       const backdrop = document.getElementById('backdrop');
       if (!menu || !backdrop) return;
 
-      // Hamburger (works regardless of width; CSS hides it on desktop)
       if (e.target.closest('#menu-toggle')){
         e.preventDefault();
         menu.classList.contains('open') ? closeDrawer(menu, backdrop, toggle) : openDrawer(menu, backdrop, toggle);
         return;
       }
 
-      // Backdrop
       if (e.target === backdrop){
         closeDrawer(menu, backdrop, toggle);
         return;
       }
 
-      // Drawer close “×”
       if (e.target.closest('.drawer-close')){
         e.preventDefault();
         closeDrawer(menu, backdrop, toggle);
         return;
       }
 
-      // Submenu (accordion on mobile widths only)
+      // Mobile accordion behavior
       const submenuTrigger = e.target.closest('.has-submenu, .submenu-toggle');
       if (submenuTrigger){
         if (window.matchMedia('(max-width: 768px)').matches){
@@ -68,7 +65,6 @@
       }
     });
 
-    // ESC to close drawer
     window.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
       const menu     = document.getElementById('primary-nav');
@@ -78,7 +74,6 @@
       if (menu.classList.contains('open')) closeDrawer(menu, backdrop, toggle);
     });
 
-    // Close drawer when leaving mobile width
     window.addEventListener('resize', () => {
       const menu     = document.getElementById('primary-nav');
       const backdrop = document.getElementById('backdrop');
@@ -116,58 +111,49 @@
     });
   }
 
-  // ---- NEW: Build News submenu from each story's <h1> ----
-  function buildNewsSubmenu() {
+  // -------- Build News submenu FROM news.html --------
+  function buildNewsSubmenuFromSinglePage() {
     const list = document.getElementById('news-submenu');
     if (!list) return;
 
-    // Cache so we only fetch once until you bump the version
-    const CACHE_KEY = 'newsSubmenu:v1';
+    const pageHref = list.getAttribute('data-news-single') || 'news.html';
+    const titleSel = list.getAttribute('data-news-title-selector') || '.story-title';
+    const articleSel = list.getAttribute('data-news-article-selector') || '.story';
+
+    // Cache (bump version when stories change to force refresh)
+    const CACHE_KEY = 'newsSubmenu:single:v1';
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) {
       try {
         const items = JSON.parse(cached);
-        renderNewsItems(list, items);
+        render(items);
         return;
       } catch (_) {}
     }
 
-    // Read story URLs from data attribute
-    let urls = [];
-    try {
-      const raw = list.getAttribute('data-news-manifest') || '[]';
-      urls = JSON.parse(raw);
-    } catch (_) {
-      urls = [];
-    }
-    if (!Array.isArray(urls) || urls.length === 0) return;
-
-    Promise.all(urls.map(fetchTitleFor))
-      .then(items => {
-        const ok = items.filter(Boolean).slice(0, 5); // keep max 5
-        renderNewsItems(list, ok);
-        localStorage.setItem(CACHE_KEY, JSON.stringify(ok));
+    fetch(pageHref, { credentials: 'same-origin' })
+      .then(r => r.text())
+      .then(html => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const articles = Array.from(doc.querySelectorAll(articleSel));
+        const items = articles.slice(0, 5).map((article, i) => {
+          // Ensure an ID exists, derive if missing
+          let id = article.getAttribute('id');
+          if (!id) id = `story-${i+1}`;
+          const titleEl = article.querySelector(titleSel);
+          const title = (titleEl ? titleEl.textContent : article.querySelector('h1')?.textContent || `Story ${i+1}`).trim();
+          return { href: `${pageHref}#${id}`, title };
+        });
+        render(items);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(items));
       })
       .catch(() => {
-        // optional: add a single fallback link
+        // optional fallback:
         // list.innerHTML = '<li><a href="news.html">All stories →</a></li>';
       });
 
-    function fetchTitleFor(href) {
-      return fetch(href, { credentials: 'same-origin' })
-        .then(r => r.text())
-        .then(html => {
-          const doc = new DOMParser().parseFromString(html, 'text/html');
-          const h1El = doc.querySelector('h1');
-          const title = h1El ? h1El.textContent.trim() : (doc.title ? doc.title.trim() : null);
-          if (!title) return null;
-          return { href, title };
-        })
-        .catch(() => null);
-    }
-
-    function renderNewsItems(ul, items) {
-      ul.innerHTML = items.map(({ href, title }) =>
+    function render(items) {
+      list.innerHTML = items.map(({ href, title }) =>
         `<li><a href="${href}">${escapeHtml(title)}</a></li>`
       ).join('');
     }
@@ -176,13 +162,13 @@
       return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
   }
-  // --------------------------------------------------------
+  // ---------------------------------------------------
 
   function init(){
     bindDelegatedClicks();
     initNavbarScrollTheme();
     highlightActiveLink();
-    buildNewsSubmenu(); // activate dynamic News submenu
+    buildNewsSubmenuFromSinglePage(); // ← dynamic News items
   }
 
   // Public init for after-injection calls
