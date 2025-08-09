@@ -15,6 +15,7 @@
     <!-- Navigation -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
+        <!-- Brand -->
         <ul>
           <li>
             <strong class="logo">
@@ -25,7 +26,14 @@
             </strong>
           </li>
         </ul>
-        <ul>
+
+        <!-- Hamburger button (mobile) -->
+        <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <!-- Primary navigation -->
+        <ul id="primary-nav">
           <li class="dropdown">
             <a href="#">Explore</a>
             <ul class="dropdown-menu">
@@ -36,8 +44,8 @@
               <li><a href="retail.html">Retail & Shopping</a></li>
             </ul>
           </li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="products.html">Products</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="products.html">Products</a></li>
           <li>
             <a href="#" class="icon-link" aria-label="Search">
               <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -66,7 +74,7 @@
         Your browser does not support the video tag.
       </video>
       <div class="hero-content">
-        <h1>AR Glasses</h1>    
+        <h1>AR Glasses</h1>
         <h2>Augmented Reality is our Future</h2>
         <h3>See the world through AR glasses</h3>
       </div>
@@ -152,9 +160,7 @@
         const declineBtn = document.getElementById("decline-cookies");
         const consent = localStorage.getItem("cookieConsent");
 
-        if (!consent) {
-          banner.style.display = "block";
-        }
+        if (!consent) banner.style.display = "block";
 
         acceptBtn.addEventListener("click", () => {
           localStorage.setItem("cookieConsent", "accepted");
@@ -186,6 +192,35 @@
 
       window.addEventListener('scroll', updateNavbarTheme);
       window.addEventListener('DOMContentLoaded', updateNavbarTheme);
+    </script>
+
+    <!-- Hamburger Menu Script -->
+    <script>
+      (function () {
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('primary-nav');
+
+        function closeMenu() {
+          menu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        // Toggle on click
+        toggle.addEventListener('click', () => {
+          const isOpen = menu.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close on any link click (useful on mobile)
+        menu.addEventListener('click', (e) => {
+          if (e.target.tagName === 'A') closeMenu();
+        });
+
+        // Close if resizing to desktop
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 768) closeMenu();
+        });
+      })();
     </script>
   </body>
 </html>
