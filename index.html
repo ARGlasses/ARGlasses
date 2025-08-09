@@ -20,7 +20,7 @@
           <span></span><span></span><span></span>
         </button>
 
-        <!-- Left: Logo (unchanged) -->
+        <!-- Left: Logo (desktop unchanged) -->
         <ul>
           <li>
             <strong class="logo">
@@ -32,10 +32,14 @@
           </li>
         </ul>
 
-        <!-- Right: Nav (unchanged structure; becomes drawer on mobile) -->
+        <!-- Right: Nav (desktop unchanged; becomes drawer on mobile) -->
         <ul id="primary-nav">
-          <!-- Mobile-only close button (X) -->
-          <li class="drawer-close-item">
+          <!-- Drawer header (mobile only) -->
+          <li class="drawer-header">
+            <div class="drawer-brand">
+              <img src="images/logo7.png" alt="AR Glasses Logo" />
+              <span>AR glasses</span>
+            </div>
             <button class="drawer-close" aria-label="Close menu">&times;</button>
           </li>
 
@@ -229,6 +233,7 @@
           backdrop.classList.remove('show');
           toggle.setAttribute('aria-expanded', 'false');
           document.body.style.overflow = '';
+          // collapse any open submenus
           menu.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
           menu.querySelectorAll('.submenu-toggle[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
         }
@@ -240,28 +245,37 @@
         });
         backdrop.addEventListener('click', () => { if (mq.matches) closeDrawer(); });
 
+        // X close button (mobile)
+        const closeBtn = document.querySelector('.drawer-close');
+        if (closeBtn) closeBtn.addEventListener('click', () => { if (mq.matches) closeDrawer(); });
+
         // Mobile submenu toggling: both label and chevron
         const dropdown = menu.querySelector('.dropdown');
         if (dropdown) {
           const anchor = dropdown.querySelector('.has-submenu');
           const chevron = dropdown.querySelector('.submenu-toggle');
+          const submenu = dropdown.querySelector('.dropdown-menu');
 
           function toggleSubmenu(e) {
             if (!mq.matches) return;      // desktop uses hover
             e.preventDefault();
             e.stopPropagation();
+
             const isOpen = dropdown.classList.contains('open');
             dropdown.classList.toggle('open', !isOpen);
-            chevron.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+            chevron.setAttribute('aria-expanded', (!isOpen).toString());
+
+            // Ensure submenu is visible below the label (no off-screen)
+            if (!isOpen) {
+              submenu.style.display = 'block';
+            } else {
+              submenu.style.display = 'none';
+            }
           }
 
           if (anchor)  anchor.addEventListener('click', toggleSubmenu);
           if (chevron) chevron.addEventListener('click', toggleSubmenu);
         }
-
-        // X close button
-        const closeBtn = document.querySelector('.drawer-close');
-        if (closeBtn) closeBtn.addEventListener('click', () => { if (mq.matches) closeDrawer(); });
 
         // ESC to close (mobile)
         window.addEventListener('keydown', (e) => {
