@@ -15,7 +15,7 @@
     <!-- Navigation (DESKTOP UNCHANGED) -->
     <nav class="container-fluid dark-nav" id="navbar">
       <div class="nav-inner">
-        <!-- Mobile hamburger (hidden on desktop; shown only ≤768px) -->
+        <!-- Mobile hamburger (hidden on desktop via CSS) -->
         <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
@@ -36,7 +36,7 @@
         <ul id="primary-nav">
           <li class="dropdown">
             <a href="#" class="has-submenu">Explore</a>
-            <!-- Mobile-only chevron (hidden on desktop) -->
+            <!-- Mobile-only chevron (hidden on desktop via CSS) -->
             <button class="submenu-toggle" aria-label="Toggle Explore submenu" aria-expanded="false">
               <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -73,7 +73,7 @@
       </div>
     </nav>
 
-    <!-- Backdrop for mobile drawer (no effect on desktop) -->
+    <!-- Backdrop for mobile drawer -->
     <div id="backdrop" aria-hidden="true"></div>
 
     <!-- Hero Section -->
@@ -217,7 +217,6 @@
           toggle.setAttribute('aria-expanded', 'true');
           document.body.style.overflow = 'hidden';
         }
-
         function closeDrawer() {
           menu.classList.remove('open');
           backdrop.classList.remove('show');
@@ -234,22 +233,29 @@
         });
         backdrop.addEventListener('click', () => { if (mq.matches) closeDrawer(); });
 
-        // Submenu toggles (mobile)
-        menu.querySelectorAll('.submenu-toggle').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            if (!mq.matches) return; // desktop uses hover
-            const li = btn.closest('.dropdown');
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-            li.classList.toggle('open', !expanded);
-          });
-        });
+        // Mobile submenu toggling: both label and chevron
+        const dropdown = menu.querySelector('.dropdown');
+        if (dropdown) {
+          const anchor = dropdown.querySelector('.has-submenu');
+          const chevron = dropdown.querySelector('.submenu-toggle');
 
-        // ESC to close
+          function toggleSubmenu(e) {
+            if (!mq.matches) return;      // desktop uses hover
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = dropdown.classList.contains('open');
+            dropdown.classList.toggle('open', !isOpen);
+            chevron.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+          }
+
+          if (anchor)  anchor.addEventListener('click', toggleSubmenu);
+          if (chevron) chevron.addEventListener('click', toggleSubmenu);
+        }
+
+        // ESC to close (mobile)
         window.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && mq.matches && menu.classList.contains('open')) closeDrawer();
         });
-
         // Close if resizing to desktop
         window.addEventListener('resize', () => { if (!mq.matches) closeDrawer(); });
       })();
