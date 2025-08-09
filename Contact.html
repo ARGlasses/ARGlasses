@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Load shared header behavior (v=4 cache-bust) -->
-    <script src="./header.js?v=4" defer></script>
+    <!-- Load shared behavior (cache-busted). It's OK if this fails; we have a fallback below. -->
+    <script src="./header.js?v=5" defer></script>
   </head>
 
   <body>
@@ -42,7 +42,7 @@
             <input type="text" name="name" placeholder="Jane Doe" autocomplete="name" required />
           </label>
 
-          <label>
+        <label>
             <span>Your Email</span>
             <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
           </label>
@@ -91,24 +91,88 @@
       </div>
     </footer>
 
-    <!-- Inject shared header markup, then initialize -->
+    <!-- Inject shared header, then initialize + FALLBACK binding -->
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
-        fetch("./header.html?v=4")
-          .then((r) => r.text())
-          .then((html) => {
+
+        // 1) Inject header.html (cache-busted)
+        fetch("./header.html?v=5")
+          .then(r => r.text())
+          .then(html => {
             mount.innerHTML = html;
 
-            // Bind events immediately (from header.js v4)
+            // 2) Primary init from header.js if available
             if (typeof window.__initHeader === "function") {
-              window.__initHeader();
+              try { window.__initHeader(); } catch (_) {}
             }
 
-            // Optional: also emit event for any passive listeners
+            // 3) Fallback bindings (work even if header.js is cached/missing)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+              const dropdown = menu ? menu.querySelector(".dropdown") : null;
+              const chevron  = menu ? menu.querySelector(".submenu-toggle") : null;
+              const submenu  = menu ? menu.querySelector(".dropdown-menu") : null;
+
+              if (!menu || !toggle || !backdrop) return; // header not injected? bail
+
+              // Drawer open/close (no media-query checks; CSS hides on desktop)
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                if (dropdown) dropdown.classList.remove("open");
+                if (chevron) chevron.setAttribute("aria-expanded","false");
+                if (submenu) submenu.style.display = "";
+              }
+
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+
+              // Submenu toggle (Explore) — only act like accordion on mobile widths
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+              function toggleSubmenu(e){
+                if (!isMobile()) return;
+                e.preventDefault();
+                const li = e.currentTarget.closest(".dropdown");
+                if (!li) return;
+                const menuEl = li.querySelector(".dropdown-menu");
+                const chevEl = li.querySelector(".submenu-toggle");
+                const isOpen = li.classList.contains("open");
+                li.classList.toggle("open", !isOpen);
+                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+              }
+              if (dropdown){
+                const label = dropdown.querySelector(".has-submenu");
+                const chev  = dropdown.querySelector(".submenu-toggle");
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              }
+
+              // ESC & resize safety
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
+            // 4) (Optional) also broadcast for any other listeners
             window.dispatchEvent(new Event("header:ready"));
           })
-          .catch((err) => console.error("Failed to load header.html:", err));
+          .catch(err => console.error("Failed to load header.html:", err));
       });
     </script>
   </body>
