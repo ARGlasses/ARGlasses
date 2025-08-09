@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact</title>
 
+    <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Load behavior early (deferred). v=3 busts cache -->
-    <script src="/header.js?v=3" defer></script>
+    <!-- Load shared header behavior (v=4 cache-bust) -->
+    <script src="./header.js?v=4" defer></script>
   </head>
 
   <body>
-    <!-- Shared header mount (populated by /header.html) -->
+    <!-- Shared header mount (populated by header.html) -->
     <div id="site-header"></div>
 
     <!-- Hero Section -->
@@ -51,8 +52,12 @@
             <textarea name="message" placeholder="How can we help?" rows="6" required></textarea>
           </label>
 
+          <!-- Anti-spam (hidden) -->
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+          <!-- Optional redirect -->
           <input type="hidden" name="_redirect" value="https://arglasses.com/thank-you.html" />
+
           <button type="submit">Send</button>
         </form>
 
@@ -86,50 +91,24 @@
       </div>
     </footer>
 
-    <!-- Inject shared header, then init. v=3 busts cache -->
+    <!-- Inject shared header markup, then initialize -->
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
-
-        fetch("/header.html?v=3")
-          .then(r => {
-            if (!r.ok) throw new Error("header.html not found");
-            return r.text();
-          })
-          .then(html => {
+        fetch("./header.html?v=4")
+          .then((r) => r.text())
+          .then((html) => {
             mount.innerHTML = html;
 
-            // Primary init (from header.js)
+            // Bind events immediately (from header.js v4)
             if (typeof window.__initHeader === "function") {
               window.__initHeader();
             }
 
-            // Fallback: direct minimal toggle binding in case of any race/caching weirdness
-            (function fallbackBind(){
-              const menu   = document.getElementById("primary-nav");
-              const btn    = document.getElementById("menu-toggle");
-              const shade  = document.getElementById("backdrop");
-              if (!menu || !btn || !shade) return;
-
-              btn.addEventListener("click", function (e) {
-                e.preventDefault();
-                menu.classList.toggle("open");
-                shade.classList.toggle("show");
-                btn.setAttribute("aria-expanded", menu.classList.contains("open") ? "true" : "false");
-                document.body.style.overflow = menu.classList.contains("open") ? "hidden" : "";
-              });
-
-              shade.addEventListener("click", function () {
-                menu.classList.remove("open");
-                shade.classList.remove("show");
-                btn.setAttribute("aria-expanded","false");
-                document.body.style.overflow = "";
-              });
-            })();
+            // Optional: also emit event for any passive listeners
+            window.dispatchEvent(new Event("header:ready"));
           })
-          .catch(err => {
-            console.error(err);
-          });
+          .catch((err) => console.error("Failed to load header.html:", err));
       });
     </script>
   </body>
