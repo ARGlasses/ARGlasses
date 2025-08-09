@@ -2,7 +2,7 @@
   if (window.__headerInit) return;
   window.__headerInit = true;
 
-  // Helper: open/close drawer
+  // Helpers
   function openDrawer(menu, backdrop, toggle){
     menu.classList.add('open');
     backdrop.classList.add('show');
@@ -23,16 +23,14 @@
   // Robust click handling via delegation
   function bindDelegatedClicks(){
     document.addEventListener('click', function(e){
-      const mq = window.matchMedia('(max-width: 768px)');
       const menu     = document.getElementById('primary-nav');
       const toggle   = document.getElementById('menu-toggle');
       const backdrop = document.getElementById('backdrop');
       if (!menu || !backdrop) return;
 
-      // Hamburger toggle
+      // Hamburger toggle (works regardless of width; CSS hides on desktop)
       const hitToggle = e.target.closest('#menu-toggle');
       if (hitToggle){
-        if (!mq.matches) return;
         e.preventDefault();
         menu.classList.contains('open') ? closeDrawer(menu, backdrop, toggle) : openDrawer(menu, backdrop, toggle);
         return;
@@ -40,7 +38,6 @@
 
       // Backdrop click
       if (e.target === backdrop){
-        if (!mq.matches) return;
         closeDrawer(menu, backdrop, toggle);
         return;
       }
@@ -48,7 +45,6 @@
       // Drawer close “X”
       const hitClose = e.target.closest('.drawer-close');
       if (hitClose){
-        if (!mq.matches) return;
         e.preventDefault();
         closeDrawer(menu, backdrop, toggle);
         return;
@@ -57,42 +53,42 @@
       // Submenu toggle (Explore)
       const trigger = e.target.closest('.has-submenu, .submenu-toggle');
       if (trigger){
-        if (!mq.matches) return; // desktop uses hover
-        e.preventDefault();
-        const li = trigger.closest('.dropdown');
-        if (!li) return;
-        const submenu = li.querySelector('.dropdown-menu');
-        const isOpen = li.classList.contains('open');
-        li.classList.toggle('open', !isOpen);
-        const chev = li.querySelector('.submenu-toggle');
-        if (chev) chev.setAttribute('aria-expanded', (!isOpen).toString());
-        if (submenu) submenu.style.display = !isOpen ? 'block' : 'none';
+        // on desktop, dropdown is hover-driven; click accordion only on mobile widths
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          e.preventDefault();
+          const li = trigger.closest('.dropdown');
+          if (!li) return;
+          const submenu = li.querySelector('.dropdown-menu');
+          const isOpen = li.classList.contains('open');
+          li.classList.toggle('open', !isOpen);
+          const chev = li.querySelector('.submenu-toggle');
+          if (chev) chev.setAttribute('aria-expanded', (!isOpen).toString());
+          if (submenu) submenu.style.display = !isOpen ? 'block' : 'none';
+        }
       }
     });
 
     // ESC key
     window.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
-      const mq = window.matchMedia('(max-width: 768px)');
-      const menu     = document.getElementById('primary-nav');
-      const backdrop = document.getElementById('backdrop');
-      const toggle   = document.getElementById('menu-toggle');
-      if (!mq.matches || !menu || !backdrop) return;
-      if (menu.classList.contains('open')) closeDrawer(menu, backdrop, toggle);
-    });
-
-    // Resize closes drawer
-    window.addEventListener('resize', () => {
-      const mq = window.matchMedia('(max-width: 768px)');
       const menu     = document.getElementById('primary-nav');
       const backdrop = document.getElementById('backdrop');
       const toggle   = document.getElementById('menu-toggle');
       if (!menu || !backdrop) return;
-      if (!mq.matches) closeDrawer(menu, backdrop, toggle);
+      if (menu.classList.contains('open')) closeDrawer(menu, backdrop, toggle);
+    });
+
+    // Resize closes drawer when leaving mobile
+    window.addEventListener('resize', () => {
+      const menu     = document.getElementById('primary-nav');
+      const backdrop = document.getElementById('backdrop');
+      const toggle   = document.getElementById('menu-toggle');
+      if (!menu || !backdrop) return;
+      if (!window.matchMedia('(max-width: 768px)').matches) closeDrawer(menu, backdrop, toggle);
     });
   }
 
-  // Optional: light/dark swap when a .hero exists on the page
+  // Optional: light/dark swap when a .hero exists
   function initNavbarScrollTheme() {
     const navbar = document.getElementById('navbar');
     const heroSection = document.querySelector('.hero');
