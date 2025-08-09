@@ -64,7 +64,7 @@ nav a {
   line-height: 1.2;
 }
 
-/* Theme states */
+/* Theme states for the bar itself */
 nav.container-fluid.dark-nav a,
 nav.container-fluid.dark-nav strong,
 nav.container-fluid.dark-nav .icon { color: white !important; }
@@ -134,7 +134,7 @@ nav.container-fluid.light-nav .icon { color: #333 !important; }
   color: #000 !important;
 }
 
-/* Ensure dark-nav still shows readable dropdowns */
+/* Ensure dropdowns readable even when nav bar is dark */
 nav.container-fluid.dark-nav .dropdown-menu { background: #ffffff !important; }
 nav.container-fluid.dark-nav .dropdown-menu a { color: #333 !important; }
 
@@ -213,12 +213,26 @@ footer.container {
 @media (max-width: 768px) {
   .nav-inner {
     padding: 0 1rem;
-    justify-content: flex-start; /* keep hamburger left, then logo */
-    gap: 0.75rem;
+    justify-content: flex-start;  /* keep hamburger left, then logo */
+    gap: 0.5rem;                  /* tighter spacing to prevent wrap */
+    padding-right: 0.75rem;
   }
 
-  /* Show hamburger on mobile */
-  .hamburger { display: inline-block; }
+  /* Show hamburger on mobile, smaller hitbox so it doesn't push logo */
+  .hamburger {
+    display: inline-flex;
+    padding: 0.25rem;             /* reduced tap area */
+    margin-left: -0.25rem;        /* reclaim a bit of space on the left */
+    align-items: center;
+    justify-content: center;
+  }
+  .hamburger span {
+    width: 20px;                  /* slightly slimmer */
+    margin: 4px 0;
+  }
+
+  /* Prevent brand wrapping onto two lines */
+  .logo, .logo-link { white-space: nowrap; }
 
   /* Primary nav becomes an overlay panel under the bar */
   #primary-nav {
@@ -233,6 +247,7 @@ footer.container {
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    color: #333;                  /* base text color inside panel */
   }
   #primary-nav.open { display: flex; }
 
@@ -290,3 +305,16 @@ figure figcaption {
   #cookie-banner .container { flex-direction: column; align-items: flex-start; }
   #cookie-banner button { width: 100%; }
 }
+
+/* === ALWAYS-FORCE GREY TEXT INSIDE THE MENU (mobile & desktop dropdowns) === */
+#primary-nav a,
+#primary-nav .dropdown-menu a {
+  color: #333 !important;        /* enforce dark grey inside the panel */
+}
+#primary-nav .dropdown-menu a:hover {
+  background: #f0f0f0;
+  color: #000 !important;
+}
+/* Also ensure all dropdowns render on white with grey text even when bar is dark */
+nav.container-fluid .dropdown-menu { background: #fff !important; }
+nav.container-fluid .dropdown-menu a { color: #333 !important; }
