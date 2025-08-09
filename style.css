@@ -141,9 +141,10 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
    MOBILE (≤768px)
    ========================================================= */
 @media (max-width: 768px) {
-  .nav-inner { padding: 0 1rem; }
+  /* ensure nav area is a positioning context */
+  .nav-inner { padding: 0 1rem; position: relative; }
 
-  /* Hamburger — force visibility against Pico defaults */
+  /* Hamburger — visible and above everything */
   .hamburger {
     display: inline-flex !important;
     width: 32px; height: 32px;
@@ -155,6 +156,7 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     background: transparent !important;
     color: #333 !important;
     cursor: pointer;
+    z-index: 1101; /* keep above drawer/backdrop */
   }
   nav.container-fluid.dark-nav .hamburger { color: #fff !important; }
   .hamburger span {
@@ -194,26 +196,26 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     width: 100%;
     display: flex;
     align-items: center;
-    position: relative !important; /* ensure absolute chevron anchors here */
+    position: relative !important;
   }
   #primary-nav > li > a,
   #primary-nav > li > .has-submenu {
     display: inline-flex; align-items: center; justify-content: flex-start;
-    width: 100%; padding: 12px 44px 12px 14px; /* space for right chevron */
+    width: 100%; padding: 12px 44px 12px 14px; /* space reserved for right-side control */
     color: #333 !important; font-size: 0.95rem; text-align: left;
   }
   #primary-nav > li > a:hover,
   #primary-nav > li > .has-submenu:hover { background: #f5f7fa; }
 
-  /* Inline chevron – pin to right, never centered */
+  /* ✅ Submenu chevron pinned to the right as a normal flex child */
+  #primary-nav > li > .has-submenu { flex: 1 1 auto; }
   .submenu-toggle {
     display: inline-flex !important;
-    position: absolute !important;
-    right: 10px !important;
-    top: 50% !important;
+    position: static !important;   /* no absolute positioning */
+    margin-left: auto;             /* push to right edge */
     width: 32px !important;
     height: 32px !important;
-    transform: translateY(-50%) rotate(0deg) !important;
+    transform: rotate(0deg) !important;
     background: none !important;
     border: none !important;
     padding: 0 !important;
@@ -223,7 +225,7 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     z-index: 1;
   }
   .submenu-toggle .chev { display: block !important; }
-  .dropdown.open > .submenu-toggle { transform: translateY(-50%) rotate(90deg) !important; }
+  .dropdown.open > .submenu-toggle { transform: rotate(90deg) !important; }
 
   /* Submenu directly below Explore */
   #primary-nav > li.dropdown { display: block; width: 100%; }
