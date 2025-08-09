@@ -141,10 +141,9 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
    MOBILE (≤768px)
    ========================================================= */
 @media (max-width: 768px) {
-  /* ensure nav area is a positioning context */
   .nav-inner { padding: 0 1rem; position: relative; }
 
-  /* Hamburger — visible and above everything */
+  /* HAMBURGER — always visible, theme-aware */
   .hamburger {
     display: inline-flex !important;
     width: 32px; height: 32px;
@@ -154,27 +153,25 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     gap: 4px;
     border: none !important;
     background: transparent !important;
+    appearance: none !important;
     cursor: pointer;
-    z-index: 1101; /* keep above drawer/backdrop */
+    z-index: 1101;
   }
-  /* Force the three lines to switch color with theme */
   .hamburger span {
     display: block !important;
-    width: 20px; height: 2px;
+    width: 22px; height: 2px;
     border-radius: 2px;
     margin: 0 !important;
     padding: 0 !important;
-    background: #666 !important; /* default for light */
+    background: #666 !important;              /* default for light */
   }
-  nav.container-fluid.dark-nav .hamburger span { background: #fff !important; }
-  nav.container-fluid.light-nav .hamburger span { background: #666 !important; }
+  nav.container-fluid.dark-nav .hamburger span { background: #fff !important; }  /* white on dark */
+  nav.container-fluid.light-nav .hamburger span { background: #666 !important; } /* grey on light */
 
-  /* Animated "X" state */
   .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-  /* Slightly reduce logo height for perfect vertical match */
   .logo img { height: 30px; }
 
   /* Drawer */
@@ -184,8 +181,8 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     padding: 0; background: #fff;
     box-shadow: 8px 0 24px rgba(0,0,0,0.15);
     transform: translateX(-100%); transition: transform 0.28s ease;
-    z-index: 1000; display: flex; flex-direction: column; align-items: stretch;
-    gap: 0; text-align: left;
+    z-index: 1000; display: block;              /* block so submenu stacks below */
+    text-align: left;
   }
   #primary-nav.open { transform: translateX(0); }
 
@@ -194,54 +191,44 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   .drawer-brand img { height: 28px; width: auto; }
   .drawer-close { background: transparent; border: none; color: #333; font-size: 28px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
 
-  /* Drawer items; keep row and align center */
+  /* Top-level items: block layout so submenu appears BELOW, not to the right */
   #primary-nav > li {
     width: 100%;
-    display: flex;
-    align-items: center;
     position: relative !important;
+    display: block !important;                 /* <- critical */
   }
-
-  /* Make top-level link text a flex child that can shrink/grow.
-     IMPORTANT: remove the 100% width so the chevron can sit on the same line. */
   #primary-nav > li > a,
   #primary-nav > li > .has-submenu {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: auto !important;             /* ← was 100%: forces wrap */
-    flex: 1 1 auto;
-    padding: 12px 14px;                 /* base padding; chevron has its own space */
+    display: block;                             /* full-row label */
+    width: 100%;
+    padding: 12px 44px 12px 14px;               /* space for right chevron */
     color: #333 !important;
     font-size: 0.95rem;
     text-align: left;
-    white-space: nowrap;                /* avoid wrapping the label */
   }
   #primary-nav > li > a:hover,
   #primary-nav > li > .has-submenu:hover { background: #f5f7fa; }
 
-  /* Submenu chevron pinned to the right as a normal flex child */
+  /* Chevron: same line, right-aligned */
   .submenu-toggle {
     display: inline-flex !important;
-    position: static !important;        /* no absolute positioning */
-    margin-left: auto;                  /* push to right edge */
-    align-self: center;
-    width: 32px !important;
-    height: 32px !important;
-    transform: rotate(0deg) !important;
+    position: absolute !important;              /* pin to right of the row */
+    right: 10px !important;
+    top: 50% !important;
+    transform: translateY(-50%) rotate(0deg) !important;
     background: none !important;
     border: none !important;
-    padding: 0 10px 0 6px !important;   /* a bit of right spacing */
+    padding: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
     color: #666 !important;
     cursor: pointer;
     border-radius: 8px;
     z-index: 1;
   }
-  .submenu-toggle .chev { display: block !important; }
-  .dropdown.open > .submenu-toggle { transform: rotate(90deg) !important; }
+  .dropdown.open > .submenu-toggle { transform: translateY(-50%) rotate(90deg) !important; }
 
-  /* Submenu directly below Explore */
-  #primary-nav > li.dropdown { display: flex; width: 100%; }
+  /* Submenu: below header row */
   #primary-nav .dropdown { position: static !important; }
   #primary-nav .dropdown-menu {
     position: static !important; inset: auto !important; transform: none !important;
@@ -258,7 +245,7 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   #backdrop.show { opacity: 1; pointer-events: auto; }
 
   /* Other responsive tweaks */
-  .grid.two-column { grid-template-columns: 1fr !important; }
+  .image-grid .grid.two-column { grid-template-columns: 1fr !important; }
   .footer-content { flex-direction: column; align-items: center; text-align: center; }
   .hero-content { margin-top: 200px; }
 }
