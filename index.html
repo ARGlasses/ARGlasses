@@ -236,7 +236,6 @@
           document.body.style.overflow = '';
           menu.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
           menu.querySelectorAll('.submenu-toggle[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
-          // ensure any submenu is hidden after closing
           menu.querySelectorAll('.dropdown-menu').forEach(ul => ul.style.display = 'none');
         }
 
