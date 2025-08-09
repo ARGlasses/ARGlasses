@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact</title>
 
+    <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
   </head>
+
   <body>
-    <!-- Shared header mount (replaces the old inline <nav>) -->
+    <!-- Shared header mount (populated by /header.html) -->
     <div id="site-header"></div>
 
     <!-- Hero Section -->
@@ -86,20 +88,25 @@
       </div>
     </footer>
 
-    <!-- Load shared header behavior -->
+    <!-- Load shared behavior first so listeners exist -->
     <script src="/header.js" defer></script>
 
-    <!-- Inject shared header markup, then init -->
+    <!-- Inject shared header, then initialize -->
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
-
-        // If your site is not at the domain root, change both to "./header.html" and "./header.js"
         fetch("/header.html")
           .then((r) => r.text())
           .then((html) => {
             mount.innerHTML = html;
-            if (typeof window.__initHeader === "function") window.__initHeader();
+
+            // Bind events immediately (avoids race conditions)
+            if (typeof window.__initHeader === "function") {
+              window.__initHeader();
+            }
+
+            // Optional: also emit the event in case anything else listens for it
+            window.dispatchEvent(new Event("header:ready"));
           })
           .catch((err) => console.error("Failed to load header.html:", err));
       });
