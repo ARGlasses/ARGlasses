@@ -8,123 +8,81 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
+
+    <!-- Load shared header behavior (cache-busted). OK if this races; fallback below handles it. -->
+    <script src="./header.js?v=5" defer></script>
   </head>
   <body>
-    <!-- Navigation -->
-    <nav class="container-fluid dark-nav" id="navbar">
-      <div class="nav-inner">
-        <ul>
-          <li>
-            <strong class="logo">
-              <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none;">
-                <img src="images/logo7.png" alt="AR Glasses Logo" />
-                AR glasses
-              </a>
-            </strong>
-          </li>
-        </ul>
-        <ul>
-          <li class="dropdown">
-            <a href="#">Explore</a>
-            <ul class="dropdown-menu">
-              <li><a href="industrial.html">Industrial & Fieldwork</a></li>
-              <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
-              <li><a href="education.html">Education & Training</a></li>
-              <li><a href="healthcare.html">Healthcare & Surgery</a></li>
-              <li><a href="retail.html">Retail & Shopping</a></li>
-            </ul>
-          </li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="products.html">Products</a></li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Search">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Login">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-3-3.87" /><path d="M4 21v-2a4 4 0 0 1 3-3.87" /><circle cx="12" cy="7" r="4" /></svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <!-- Shared header mount (populated by header.html) -->
+    <div id="site-header"></div>
 
     <!-- Hero Section -->
-
-            <section class="hero">
+    <section class="hero">
       <video autoplay muted playsinline class="hero-video">
         <source src="images/ARglasses-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-                    <div class="hero-content">
+      <div class="hero-content">
         <h1>AR Glasses</h1>                       
         <h2>Terms and Conditions</h2>
-
       </div>
     </section>
 
     <!-- Page Content -->
     <main class="container">
       <p>
+        <section>
+          <h1>Terms and Conditions for AR Glasses</h1>
+          <p><strong>Effective Date:</strong> August 6, 2025</p>
+          <p><strong>Website:</strong> <a href="https://www.arglassees.com">https://www.arglassees.com</a></p>
 
-          <section>
+          <p>These Terms and Conditions ("Terms") govern your use of the website operated by AR Glasses ("we", "us", or "our"). By accessing or using this website, you agree to be bound by these Terms. If you do not agree with any part of the Terms, please do not use our Site.</p>
 
+          <h2>1. Use of the Site</h2>
+          <p>You agree to use the Site only for lawful purposes and in accordance with these Terms. You may not use the Site in a manner that could damage, disable, overburden, or impair it, or interfere with any other party’s use of the Site.</p>
 
-<h1>Terms and Conditions for AR Glasses</h1>
-<p><strong>Effective Date:</strong> August 6, 2025</p>
-<p><strong>Website:</strong> <a href="https://www.arglassees.com">https://www.arglassees.com</a></p>
+          <h2>2. Intellectual Property</h2>
+          <p>All content on this website—including text, graphics, logos, images, and software—is the property of AR Glasses or its licensors and is protected by applicable intellectual property laws. You may not copy, modify, distribute, or reproduce any content without our prior written consent.</p>
 
-<p>These Terms and Conditions ("Terms") govern your use of the website operated by AR Glasses ("we", "us", or "our"). By accessing or using this website, you agree to be bound by these Terms. If you do not agree with any part of the Terms, please do not use our Site.</p>
+          <h2>3. Products and Services</h2>
+          <p>Descriptions and prices of our products are subject to change without notice. We reserve the right to discontinue or modify any product or service at any time. All purchases are subject to our <a href="#refund-policy">Refund Policy</a>.</p>
 
-<h2>1. Use of the Site</h2>
-<p>You agree to use the Site only for lawful purposes and in accordance with these Terms. You may not use the Site in a manner that could damage, disable, overburden, or impair it, or interfere with any other party’s use of the Site.</p>
+          <h2>4. User Accounts</h2>
+          <p>To access certain features, you may need to register an account. You agree to provide accurate, current, and complete information. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
 
-<h2>2. Intellectual Property</h2>
-<p>All content on this website—including text, graphics, logos, images, and software—is the property of AR Glasses or its licensors and is protected by applicable intellectual property laws. You may not copy, modify, distribute, or reproduce any content without our prior written consent.</p>
+          <h2>5. Payment and Billing</h2>
+          <p>All payments are processed through third-party providers (e.g., Stripe, PayPal). We do not store your credit card information. You agree to pay all applicable fees and taxes associated with your purchase.</p>
 
-<h2>3. Products and Services</h2>
-<p>Descriptions and prices of our products are subject to change without notice. We reserve the right to discontinue or modify any product or service at any time. All purchases are subject to our <a href="#refund-policy">Refund Policy</a>.</p>
+          <h2>6. Refund Policy</h2>
+          <p><strong id="refund-policy">Refunds</strong> may be issued according to our separate <a href="/refund-policy.html">Refund Policy</a> (if applicable). We reserve the right to refuse refund requests that violate the terms stated therein.</p>
 
-<h2>4. User Accounts</h2>
-<p>To access certain features, you may need to register an account. You agree to provide accurate, current, and complete information. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+          <h2>7. Links to Other Sites</h2>
+          <p>Our Site may contain links to third-party websites. We are not responsible for the content, privacy practices, or policies of these external sites. Use them at your own risk.</p>
 
-<h2>5. Payment and Billing</h2>
-<p>All payments are processed through third-party providers (e.g., Stripe, PayPal). We do not store your credit card information. You agree to pay all applicable fees and taxes associated with your purchase.</p>
+          <h2>8. Disclaimer of Warranties</h2>
+          <p>This site is provided on an "as-is" and "as-available" basis. We make no warranties, expressed or implied, about the accuracy, reliability, or availability of the Site or its content. Your use of the Site is at your sole risk.</p>
 
-<h2>6. Refund Policy</h2>
-<p><strong id="refund-policy">Refunds</strong> may be issued according to our separate <a href="/refund-policy.html">Refund Policy</a> (if applicable). We reserve the right to refuse refund requests that violate the terms stated therein.</p>
+          <h2>9. Limitation of Liability</h2>
+          <p>To the fullest extent permitted by law, AR Glasses shall not be liable for any indirect, incidental, special, or consequential damages, or any loss of data or profits, arising from your use or inability to use the Site or products.</p>
 
-<h2>7. Links to Other Sites</h2>
-<p>Our Site may contain links to third-party websites. We are not responsible for the content, privacy practices, or policies of these external sites. Use them at your own risk.</p>
+          <h2>10. Indemnification</h2>
+          <p>You agree to indemnify and hold harmless AR Glasses, its affiliates, and its employees from any claims, liabilities, damages, losses, and expenses arising out of your violation of these Terms or your misuse of the Site.</p>
 
-<h2>8. Disclaimer of Warranties</h2>
-<p>This site is provided on an "as-is" and "as-available" basis. We make no warranties, expressed or implied, about the accuracy, reliability, or availability of the Site or its content. Your use of the Site is at your sole risk.</p>
+          <h2>11. Governing Law</h2>
+          <p>These Terms are governed by and construed in accordance with the laws of the United Kingdom, without regard to its conflict of law principles. You agree to submit to the jurisdiction of the courts located in the UK for any legal proceedings.</p>
 
-<h2>9. Limitation of Liability</h2>
-<p>To the fullest extent permitted by law, AR Glasses shall not be liable for any indirect, incidental, special, or consequential damages, or any loss of data or profits, arising from your use or inability to use the Site or products.</p>
+          <h2>12. Changes to These Terms</h2>
+          <p>We reserve the right to update or modify these Terms at any time. Changes will be effective immediately upon posting. Your continued use of the Site after changes are posted constitutes your acceptance of the new Terms.</p>
 
-<h2>10. Indemnification</h2>
-<p>You agree to indemnify and hold harmless AR Glasses, its affiliates, and its employees from any claims, liabilities, damages, losses, and expenses arising out of your violation of these Terms or your misuse of the Site.</p>
-
-<h2>11. Governing Law</h2>
-<p>These Terms are governed by and construed in accordance with the laws of the United Kingdom, without regard to its conflict of law principles. You agree to submit to the jurisdiction of the courts located in the UK for any legal proceedings.</p>
-
-<h2>12. Changes to These Terms</h2>
-<p>We reserve the right to update or modify these Terms at any time. Changes will be effective immediately upon posting. Your continued use of the Site after changes are posted constitutes your acceptance of the new Terms.</p>
-
-<h2>13. Contact Information</h2>
-<p>If you have any questions about these Terms, please contact us:</p>
-<p>
-<strong>AR Glasses</strong><br>
-Website: <a href="https://www.arglassees.com">https://www.arglassees.com</a>
-</p>
-
-
-</p>
-
-
+          <h2>13. Contact Information</h2>
+          <p>If you have any questions about these Terms, please contact us:</p>
+          <p>
+            <strong>AR Glasses</strong><br>
+            Website: <a href="https://www.arglassees.com">https://www.arglassees.com</a>
+          </p>
+        </section>
       </p>
+
       <p><a href="index.html">← Back to Home</a></p>
     </main>
 
@@ -153,5 +111,87 @@ Website: <a href="https://www.arglassees.com">https://www.arglassees.com</a>
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
+
+    <!-- Inject shared header, then initialize + FALLBACK binding -->
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const mount = document.getElementById("site-header");
+
+        // 1) Inject header.html (cache-busted)
+        fetch("./header.html?v=5")
+          .then(r => r.text())
+          .then(html => {
+            mount.innerHTML = html;
+
+            // 2) Primary init from header.js if available
+            if (typeof window.__initHeader === "function") {
+              try { window.__initHeader(); } catch (_) {}
+            }
+
+            // 3) Fallback bindings (ensures hamburger + submenu always work)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+              const dropdown = menu ? menu.querySelector(".dropdown") : null;
+              const chevron  = menu ? menu.querySelector(".submenu-toggle") : null;
+              const submenu  = menu ? menu.querySelector(".dropdown-menu") : null;
+
+              if (!menu || !toggle || !backdrop) return;
+
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                if (dropdown) dropdown.classList.remove("open");
+                if (chevron) chevron.setAttribute("aria-expanded","false");
+                if (submenu) submenu.style.display = "";
+              }
+
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+              function toggleSubmenu(e){
+                if (!isMobile()) return;
+                e.preventDefault();
+                const li = e.currentTarget.closest(".dropdown");
+                if (!li) return;
+                const menuEl = li.querySelector(".dropdown-menu");
+                const chevEl = li.querySelector(".submenu-toggle");
+                const isOpen = li.classList.contains("open");
+                li.classList.toggle("open", !isOpen);
+                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+              }
+              if (dropdown){
+                const label = dropdown.querySelector(".has-submenu");
+                const chev  = dropdown.querySelector(".submenu-toggle");
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              }
+
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
+            // 4) Optional event for any other listeners
+            window.dispatchEvent(new Event("header:ready"));
+          })
+          .catch(err => console.error("Failed to load header.html:", err));
+      });
+    </script>
   </body>
 </html>
