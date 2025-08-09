@@ -1,4 +1,4 @@
-// header.js (v4)
+// header.js (v5)
 (function () {
   if (window.__headerInit) return;
   window.__headerInit = true;
@@ -49,7 +49,7 @@
         return;
       }
 
-      // Submenu (Explore) — only behave like accordion on mobile widths
+      // Submenu (accordion on mobile widths only)
       const submenuTrigger = e.target.closest('.has-submenu, .submenu-toggle');
       if (submenuTrigger){
         if (window.matchMedia('(max-width: 768px)').matches){
@@ -116,10 +116,73 @@
     });
   }
 
+  // ---- NEW: Build News submenu from each story's <h1> ----
+  function buildNewsSubmenu() {
+    const list = document.getElementById('news-submenu');
+    if (!list) return;
+
+    // Cache so we only fetch once until you bump the version
+    const CACHE_KEY = 'newsSubmenu:v1';
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      try {
+        const items = JSON.parse(cached);
+        renderNewsItems(list, items);
+        return;
+      } catch (_) {}
+    }
+
+    // Read story URLs from data attribute
+    let urls = [];
+    try {
+      const raw = list.getAttribute('data-news-manifest') || '[]';
+      urls = JSON.parse(raw);
+    } catch (_) {
+      urls = [];
+    }
+    if (!Array.isArray(urls) || urls.length === 0) return;
+
+    Promise.all(urls.map(fetchTitleFor))
+      .then(items => {
+        const ok = items.filter(Boolean).slice(0, 5); // keep max 5
+        renderNewsItems(list, ok);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(ok));
+      })
+      .catch(() => {
+        // optional: add a single fallback link
+        // list.innerHTML = '<li><a href="news.html">All stories →</a></li>';
+      });
+
+    function fetchTitleFor(href) {
+      return fetch(href, { credentials: 'same-origin' })
+        .then(r => r.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const h1El = doc.querySelector('h1');
+          const title = h1El ? h1El.textContent.trim() : (doc.title ? doc.title.trim() : null);
+          if (!title) return null;
+          return { href, title };
+        })
+        .catch(() => null);
+    }
+
+    function renderNewsItems(ul, items) {
+      ul.innerHTML = items.map(({ href, title }) =>
+        `<li><a href="${href}">${escapeHtml(title)}</a></li>`
+      ).join('');
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+  }
+  // --------------------------------------------------------
+
   function init(){
     bindDelegatedClicks();
     initNavbarScrollTheme();
     highlightActiveLink();
+    buildNewsSubmenu(); // activate dynamic News submenu
   }
 
   // Public init for after-injection calls
