@@ -9,20 +9,14 @@
       name="description"
       content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction."
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
   </head>
 
   <body>
-    <!-- Shared header mount (populated by /header.html) -->
+    <!-- Shared header mount (populated by header.html) -->
     <div id="site-header"></div>
 
     <!-- Hero Section -->
@@ -43,49 +37,29 @@
       <section class="image-grid">
         <div class="grid two-column">
           <figure>
-            <a href="industrial.html"
-              ><img
-                src="images/ARglasses-engineer.png"
-                alt="Augmented projection through AR Glasses"
-            /></a>
+            <a href="industrial.html"><img src="images/ARglasses-engineer.png" alt="Augmented projection through AR Glasses" /></a>
             <figcaption>Industrial & Fieldwork</figcaption>
           </figure>
           <figure>
-            <a href="collaboration.html"
-              ><img
-                src="images/ARglasses-collaboration.png"
-                alt="AR Glasses development timeline graph"
-            /></a>
+            <a href="collaboration.html"><img src="images/ARglasses-collaboration.png" alt="AR Glasses development timeline graph" /></a>
             <figcaption>Collaboration & Workspaces</figcaption>
           </figure>
         </div>
 
         <div class="full-width-image">
           <figure>
-            <a href="education.html"
-              ><img
-                src="images/ARglasses-school.png"
-                alt="People enjoying AR glasses in the park"
-            /></a>
+            <a href="education.html"><img src="images/ARglasses-school.png" alt="People enjoying AR glasses in the park" /></a>
             <figcaption>Education & Training</figcaption>
           </figure>
         </div>
 
         <div class="grid two-column" style="margin-top: 2rem">
           <figure>
-            <a href="healthcare.html"
-              ><img
-                src="images/ARglasses-doctor.png"
-                alt="Doctor using AR glasses in a clinical setting"
-            /></a>
+            <a href="healthcare.html"><img src="images/ARglasses-doctor.png" alt="Doctor using AR glasses in a clinical setting" /></a>
             <figcaption>Healthcare & Surgery</figcaption>
           </figure>
           <figure>
-            <a href="retail.html"
-              ><img
-                src="images/ARglasses-reflection.png"
-                alt="AR interface reflecting on user glasses"
-            /></a>
+            <a href="retail.html"><img src="images/ARglasses-reflection.png" alt="AR interface reflecting on user glasses" /></a>
             <figcaption>Retail & Shopping</figcaption>
           </figure>
         </div>
@@ -141,35 +115,28 @@
         const acceptBtn = document.getElementById("accept-cookies");
         const declineBtn = document.getElementById("decline-cookies");
         const consent = localStorage.getItem("cookieConsent");
-
         if (!consent) banner.style.display = "block";
-
-        acceptBtn.addEventListener("click", () => {
-          localStorage.setItem("cookieConsent", "accepted");
-          banner.style.display = "none";
-        });
-
-        declineBtn.addEventListener("click", () => {
-          localStorage.setItem("cookieConsent", "declined");
-          banner.style.display = "none";
-        });
+        acceptBtn.addEventListener("click", () => { localStorage.setItem("cookieConsent", "accepted"); banner.style.display = "none"; });
+        declineBtn.addEventListener("click", () => { localStorage.setItem("cookieConsent", "declined"); banner.style.display = "none"; });
       });
     </script>
 
-    <!-- Load shared header markup, then init behavior -->
+    <!-- Inject shared header, then init -->
     <script>
-      (function () {
+      document.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
-        fetch("/header.html")
-          .then((r) => r.text())
-          .then((html) => {
+        fetch("./header.html?v=6")
+          .then(r => r.text())
+          .then(html => {
             mount.innerHTML = html;
-            // Let /header.js know the header exists in the DOM
+            if (typeof window.__initHeader === "function") {
+              try { window.__initHeader(); } catch (_) {}
+            }
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(console.error);
-      })();
+      });
     </script>
-    <script src="/header.js" defer></script>
+    <script src="./header.js?v=6" defer></script>
   </body>
 </html>
