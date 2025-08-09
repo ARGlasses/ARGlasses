@@ -1,4 +1,3 @@
-<script>
 (function () {
   // Prevent double-initialization
   if (window.__headerInit) return;
@@ -50,7 +49,7 @@
 
     // Drawer toggle
     toggle.addEventListener('click', () => {
-      if (!mq.matches) return;
+      if (!mq.matches) return; // hamburger is only visible on mobile
       menu.classList.contains('open') ? closeDrawer() : openDrawer();
     });
     // Backdrop click closes
@@ -76,7 +75,6 @@
       const chevron = li.querySelector('.submenu-toggle');
       if (chevron) chevron.setAttribute('aria-expanded', (!open).toString());
 
-      // ensure visible on mobile
       submenu.style.display = !open ? 'block' : 'none';
     });
 
@@ -103,8 +101,12 @@
     highlightActiveLink();
   }
 
-  // If header is present now, init; otherwise wait for injection signal
+  // Public init so the loader can call it after injection (avoids race)
+  window.__initHeader = function () { init(); };
+
+  // Also try to init if header already exists (e.g., server include)
   if (document.getElementById('primary-nav')) init();
+
+  // Listen for the custom event as a secondary path
   window.addEventListener('header:ready', init);
 })();
-</script>
