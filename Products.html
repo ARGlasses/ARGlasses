@@ -3,84 +3,183 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Products</title>
+    <title>News</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
+
+    <!-- Keep your News page-specific styles -->
+    <style>
+      /* ===== Base / layout ===== */
+      html, body { height: 100%; margin: 0; }
+      body {
+        overflow-x: hidden;
+        font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: #fff;
+      }
+
+      /* When this page loads the shared header, force light theme + grey text */
+      body.news-page #navbar {
+        background: white !important;
+        box-shadow: none !important;
+        border: 0;
+        padding-block: .5rem;
+      }
+      body.news-page #navbar .nav-inner a { color: var(--nav-text-color, #555) !important; }
+      body.news-page #navbar img { height: 28px; width: auto; }
+      body.news-page #navbar .nav-inner { text-shadow: none; }
+
+      /* ===== Viewport area ===== */
+      .viewport {
+        position: relative;
+        height: 100svh;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .rail {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        gap: 1.25rem;
+        padding: 0 max(1rem, calc((100vw - min(85vw, 1100px)) / 2));
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+      .rail::-webkit-scrollbar { display: none; }
+      .rail { scrollbar-width: none; -ms-overflow-style: none; }
+
+      .story {
+        position: relative;
+        min-width: clamp(78%, 85vw, 1100px);
+        height: clamp(420px, 82svh, 900px);
+        border-radius: 24px;
+        overflow: hidden;
+        scroll-snap-align: center;
+        isolation: isolate;
+        color: white;
+        box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
+        background: #111;
+      }
+      .story img.bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+      }
+      .story::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0,0,0,0.55) 0%,
+          rgba(0,0,0,0.25) 40%,
+          rgba(0,0,0,0.10) 65%,
+          rgba(0,0,0,0.30) 100%
+        );
+        z-index: -1;
+      }
+      .story-content {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        align-content: end;
+        padding: clamp(1rem, 4vw, 3rem);
+        gap: .5rem;
+        max-width: 100ch;
+      }
+      .story-kicker { font-size: .95rem; opacity: .9; }
+      .story-title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
+      .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
+      .story-actions { margin-top: .75rem; }
+
+      .arrow {
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.35);
+        background: rgba(0,0,0,.25);
+        backdrop-filter: blur(4px);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        z-index: 60;
+        transition: transform .12s ease, opacity .2s ease;
+        color: #fff;
+      }
+      .arrow.left  { left: .75rem; }
+      .arrow.right { right: .75rem; }
+      .arrow[disabled] { opacity: .35; cursor: not-allowed; }
+      .arrow:hover     { transform: translateY(-50%) scale(1.05); }
+      .arrow svg { width: 22px; height: 22px; }
+
+      .dots {
+        position: absolute;
+        left: 0; right: 0; bottom: 1.1rem;
+        display: flex;
+        gap: .45rem;
+        justify-content: center;
+        z-index: 55;
+        pointer-events: none;
+      }
+      .dots button {
+        pointer-events: auto;
+        width: 8px; height: 8px; border-radius: 999px; border: 0;
+        background: rgba(255,255,255,.45);
+      }
+      .dots button[aria-current="true"] {
+        width: 22px;
+        background: white;
+      }
+      @media (min-width: 1200px) {
+        .arrow { width: 3.25rem; height: 3.25rem; }
+      }
+    </style>
+
+    <!-- Shared header behavior -->
+    <script src="./header.js?v=6" defer></script>
   </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="container-fluid dark-nav" id="navbar">
-      <div class="nav-inner">
-        <ul>
-          <li>
-            <strong class="logo">
-              <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none;">
-                <img src="images/logo7.png" alt="AR Glasses Logo" />
-                AR glasses
-              </a>
-            </strong>
-          </li>
-        </ul>
-        <ul>
-          <li class="dropdown">
-            <a href="#">Explore</a>
-            <ul class="dropdown-menu">
-              <li><a href="industrial.html">Industrial & Fieldwork</a></li>
-              <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
-              <li><a href="education.html">Education & Training</a></li>
-              <li><a href="healthcare.html">Healthcare & Surgery</a></li>
-              <li><a href="retail.html">Retail & Shopping</a></li>
-            </ul>
-          </li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="products.html">Products</a></li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Search">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Login">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-3-3.87" /><path d="M4 21v-2a4 4 0 0 1 3-3.87" /><circle cx="12" cy="7" r="4" /></svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  <body class="news-page">
+    <!-- Shared header mount -->
+    <div id="site-header"></div>
 
-    <!-- Hero Section -->
+    <!-- Stories -->
+    <section class="viewport" aria-label="Latest AR Glasses news">
+      <button class="arrow left" aria-label="Previous story" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="arrow right" aria-label="Next story">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
 
-    <section class="hero">
-      <video autoplay muted playsinline class="hero-video">
-        <source src="images/ARglasses-video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div class="hero-content">
-        <h1>AR Glasses</h1>   
-        <h2>Products</h2>
-   
+      <div class="rail" tabindex="0">
+        <!-- Story 1 -->
+        <article class="story" id="story-1"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Company Update • 8 Aug 2025</div><h1 class="story-title">Meta Platforms AI Glasses</h1><p class="story-teaser">A brief update about AR glasses and our latest progress. We’ll share key highlights and what’s coming next.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <!-- Story 2 -->
+        <article class="story" id="story-2"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Product • 7 Aug 2025</div><h1 class="story-title">Apple AR Glasses Development</h1><p class="story-teaser">An overview of recent product improvements and refinements. Expect smoother performance and a cleaner UI.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <!-- Story 3 -->
+        <article class="story" id="story-3"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Partnerships • 6 Aug 2025</div><h1 class="story-title">Google in Collaboration with Samsung</h1><p class="story-teaser">We’re collaborating with new partners to expand use cases. More details soon on pilots and deployments.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <!-- Story 4 -->
+        <article class="story" id="story-4"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Community • 5 Aug 2025</div><h1 class="story-title">Snap Inc. Spectacles</h1><p class="story-teaser">Highlights from the community and early adopters. Feedback is shaping our roadmap in meaningful ways.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
+        <!-- Story 5 -->
+        <article class="story" id="story-5"><img class="bg" src="images/ARglasses-parklife.png" alt="" /><div class="story-content"><div class="story-kicker">Feature Spotlight • 4 Aug 2025</div><h1 class="story-title">Vuzix AR Headsets</h1><p class="story-teaser">A quick look at a feature designed to make everyday tasks easier. Simple to use, powerful when you need it.</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
       </div>
+
+      <div class="dots" aria-hidden="true"></div>
     </section>
-
-    <!-- Page Content -->
-    <main class="container">
-      <p>
-
-          <section>
-
-<section id="cookie-policy">
-  <h1>AR Glasses Products</h1>
- 
-
-
-</p>
-
-
-      </p>
-      <p><a href="index.html">← Back to Home</a></p>
-    </main>
 
     <!-- Footer -->
     <footer class="container professional-footer">
@@ -96,10 +195,10 @@
           <strong>Quick Links</strong>
           <ul>
             <li><a href="#">Explore</a></li>
-            <li><a href="contact.html">Contact</a></li>            
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
-            <li><a href="Cookie-Policy.html">Cookie Policy</a></li>     
-            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="Cookie-Policy.html">Cookie Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
           </ul>
         </div>
       </div>
@@ -107,5 +206,101 @@
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
+
+    <!-- Inject shared header -->
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const mount = document.getElementById("site-header");
+        fetch("./header.html?v=6")
+          .then(r => r.text())
+          .then(html => {
+            mount.innerHTML = html;
+            if (typeof window.__initHeader === "function") {
+              try { window.__initHeader(); } catch (_) {}
+            }
+            const navbar = document.getElementById("navbar");
+            if (navbar) {
+              navbar.classList.remove("dark-nav");
+              navbar.classList.add("light-nav");
+              navbar.style.setProperty("--nav-text-color", "#555");
+            }
+            window.dispatchEvent(new Event("header:ready"));
+          })
+          .catch(err => console.error("Failed to load header.html:", err));
+      });
+    </script>
+
+    <!-- News carousel behavior (unchanged) -->
+    <script>
+      (function () {
+        const rail = document.querySelector('.rail');
+        const prev = document.querySelector('.arrow.left');
+        const next = document.querySelector('.arrow.right');
+        const dotsWrap = document.querySelector('.dots');
+        const cards = Array.from(document.querySelectorAll('.story'));
+        if (!rail || cards.length === 0) return;
+
+        cards.forEach((_, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', 'Go to story ' + (i + 1));
+          b.addEventListener('click', () => goTo(i));
+          dotsWrap.appendChild(b);
+        });
+
+        function cardWidth() {
+          const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
+          const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
+          return w + gap;
+        }
+
+        function goTo(index) {
+          const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
+          cards[clampIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        function atStart() { return rail.scrollLeft <= 2; }
+        function atEnd() {
+          const max = rail.scrollWidth - rail.clientWidth - 2;
+          return rail.scrollLeft >= max;
+        }
+
+        function updateUI() {
+          prev.disabled = atStart();
+          next.disabled = atEnd();
+
+          const railRect = rail.getBoundingClientRect();
+          const railCenter = railRect.left + railRect.width / 2;
+
+          let active = 0, min = Infinity;
+          cards.forEach((c, i) => {
+            const rect = c.getBoundingClientRect();
+            const center = rect.left + rect.width / 2;
+            const dist = Math.abs(center - railCenter);
+            if (dist < min) { min = dist; active = i; }
+          });
+
+          dotsWrap.querySelectorAll('button').forEach((b, i) => {
+            b.setAttribute('aria-current', i === active ? 'true' : 'false');
+          });
+        }
+
+        function scrollByStep(dir) {
+          rail.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
+        }
+
+        prev.addEventListener('click', () => scrollByStep(-1));
+        next.addEventListener('click', () => scrollByStep(1));
+
+        rail.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
+          if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
+        });
+
+        rail.addEventListener('scroll', updateUI, { passive: true });
+        window.addEventListener('resize', updateUI);
+        updateUI();
+      })();
+    </script>
   </body>
 </html>
