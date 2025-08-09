@@ -46,7 +46,7 @@
         </ul>
       </li>
 
-      <!-- News (auto-populated from news.html) -->
+      <!-- News (auto-populated from news.html by header.js v6.1) -->
       <li class="dropdown">
         <a href="news.html" class="has-submenu">News</a>
         <button class="submenu-toggle" aria-label="Toggle News submenu" aria-expanded="false">
@@ -54,11 +54,13 @@
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </button>
-        <ul class="dropdown-menu"
-            id="news-submenu"
-            data-news-single="news.html"
-            data-news-title-selector=".story-title"
-            data-news-article-selector=".story">
+        <ul
+          class="dropdown-menu"
+          id="news-submenu"
+          data-news-single="./news.html"
+          data-news-title-selector=".story-title"
+          data-news-article-selector=".story">
+          <!-- Filled at runtime -->
         </ul>
       </li>
 
