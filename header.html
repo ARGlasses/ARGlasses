@@ -46,7 +46,7 @@
         </ul>
       </li>
 
-      <!-- News (submenu items populated dynamically from each story's <h1>) -->
+      <!-- News (auto-populated from news.html) -->
       <li class="dropdown">
         <a href="news.html" class="has-submenu">News</a>
         <button class="submenu-toggle" aria-label="Toggle News submenu" aria-expanded="false">
@@ -54,13 +54,11 @@
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </button>
-        <ul class="dropdown-menu" id="news-submenu" data-news-manifest='[
-          "story-1.html",
-          "story-2.html",
-          "story-3.html",
-          "story-4.html",
-          "story-5.html"
-        ]'>
+        <!-- Script reads titles from this page and builds items -->
+        <ul class="dropdown-menu" id="news-submenu"
+            data-news-single="news.html"
+            data-news-title-selector=".story-title"
+            data-news-article-selector=".story">
           <!-- Optional fallback:
           <li><a href="news.html">All stories →</a></li>
           -->
