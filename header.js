@@ -1,3 +1,4 @@
+// header.js (init-safe; builds dropdowns from H1s in <article> on target pages)
 (function () {
   if (window.__headerInit) return;
   window.__headerInit = true;
@@ -102,93 +103,71 @@
     });
   }
 
-  // ----- News submenu builder -----
-  function buildNewsSubmenuFromSinglePage() {
-    const list = document.getElementById('news-submenu');
-    if (!list) return;
-    const pageHref = new URL(list.getAttribute('data-news-single') || './news.html', location.href).toString();
-    const titleSel = list.getAttribute('data-news-title-selector') || '.story-title';
-    const articleSel = list.getAttribute('data-news-article-selector') || '.story';
+  // ----- Generic submenu builder: uses H1 in each <article> on a given page -----
+  function buildSubmenuFromPage(listEl) {
+    if (!listEl) return;
+
+    const pageHref = new URL(listEl.getAttribute('data-page') || '.', location.href).toString();
+    const articleSel = listEl.getAttribute('data-article-selector') || 'article';
+    const titleSel = listEl.getAttribute('data-title-selector') || 'h1';
 
     fetch(pageHref, { credentials: 'same-origin' })
-      .then(r => r.text())
-      .then(html => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const articles = Array.from(doc.querySelectorAll(articleSel)).slice(0, 5);
-        const items = articles.map((article, i) => {
-          const id = article.getAttribute('id') || `story-${i+1}`;
-          const titleEl = article.querySelector(titleSel) || article.querySelector('h1, h2');
-          const title = (titleEl ? titleEl.textContent : `Story ${i+1}`).trim();
-          return { href: `${pageHref}#${id}`, title };
-        });
-        list.innerHTML = items.length
-          ? items.map(({ href, title }) => `<li><a href="${href}">${escapeHtml(title)}</a></li>`).join('')
-          : `<li><a href="news.html">All stories →</a></li>`;
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching ' + pageHref);
+        return r.text();
       })
-      .catch(() => list.innerHTML = `<li><a href="news.html">All stories →</a></li>`);
-
-    function escapeHtml(s) {
-      return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    }
-  }
-
-  // ----- Products submenu builder (multi-page) -----
-  function buildProductsSubmenu() {
-    const list = document.getElementById('products-submenu');
-    if (!list) return;
-    const indexHref = new URL(list.getAttribute('data-products-index') || './products.html', location.href).toString();
-    const linkSel = list.getAttribute('data-products-link-selector') || '.product a';
-    const titlePageSel = list.getAttribute('data-products-title-page-selector') || 'h1';
-
-    fetch(indexHref, { credentials: 'same-origin' })
-      .then(r => r.text())
       .then(html => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
-        const links = Array.from(doc.querySelectorAll(linkSel))
-          .map(a => a.getAttribute('href'))
-          .filter(Boolean)
-          .map(href => new URL(href, indexHref).toString())
-          .slice(0, 5);
-
-        if (!links.length) {
-          list.innerHTML = `<li><a href="${indexHref}">All products →</a></li>`;
+        const nodes = Array.from(doc.querySelectorAll(articleSel)).slice(0, 5);
+        if (!nodes.length) {
+          listEl.innerHTML = `<li><a href="${pageHref}">All items →</a></li>`;
           return;
         }
-
-        return Promise.all(links.map(href =>
-          fetch(href, { credentials: 'same-origin' })
-            .then(r => r.text())
-            .then(phtml => {
-              const pdoc = new DOMParser().parseFromString(phtml, 'text/html');
-              const titleEl = pdoc.querySelector(titlePageSel) || pdoc.querySelector('h1, h2');
-              const title = (titleEl ? titleEl.textContent : href).trim();
-              return { href, title };
-            })
-            .catch(() => null)
-        ));
+        const items = nodes.map((el, i) => {
+          const id = el.getAttribute('id') || `item-${i+1}`;
+          const t = el.querySelector(titleSel) || el.querySelector('h1, h2, [role="heading"]');
+          const title = (t ? t.textContent : `Item ${i+1}`).trim();
+          return { href: `${pageHref}#${id}`, title };
+        });
+        listEl.innerHTML = items.map(({ href, title }) =>
+          `<li><a href="${href}">${escapeHtml(title)}</a></li>`
+        ).join('');
       })
-      .then(items => {
-        if (!items || !items.length) return;
-        const clean = items.filter(Boolean);
-        list.innerHTML = clean.length
-          ? clean.map(({ href, title }) => `<li><a href="${href}">${escapeHtml(title)}</a></li>`).join('')
-          : `<li><a href="products.html">All products →</a></li>`;
-      })
-      .catch(() => list.innerHTML = `<li><a href="products.html">All products →</a></li>`);
+      .catch(err => {
+        console.error('[header] submenu build failed for', pageHref, err);
+        listEl.innerHTML = `<li><a href="${pageHref}">All items →</a></li>`;
+      });
 
     function escapeHtml(s) {
-      return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
   }
 
-  // ----- Init -----
+  // ----- Init (safe to call multiple times) -----
   function init() {
+    // Only proceed if the header is actually in the DOM
+    if (!document.getElementById('primary-nav')) return;
+
     bindDelegatedClicks();
     initNavbarScrollTheme();
     highlightActiveLink();
-    buildNewsSubmenuFromSinglePage();
-    buildProductsSubmenu();
+
+    // Build News + Products from their pages using H1s
+    buildSubmenuFromPage(document.getElementById('news-submenu'));
+    buildSubmenuFromPage(document.getElementById('products-submenu'));
   }
 
-  init();
+  // Expose for pages that inject header.html then call __initHeader()
+  window.__initHeader = init;
+
+  // Also, if someone dispatches a custom event after injecting the header:
+  window.addEventListener('header:ready', init);
+
+  // If the header is already on the page at parse time (no injection), run once on DOM ready
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    // Slight delay to let any sync injections finish
+    setTimeout(init, 0);
+  } else {
+    window.addEventListener('DOMContentLoaded', init);
+  }
 })();
