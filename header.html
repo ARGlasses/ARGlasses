@@ -46,7 +46,7 @@
         </ul>
       </li>
 
-      <!-- News (auto-populated from news.html by header.js) -->
+      <!-- News (auto-populated) -->
       <li class="dropdown">
         <a href="news.html" class="has-submenu">News</a>
         <button class="submenu-toggle" aria-label="Toggle News submenu" aria-expanded="false">
@@ -64,7 +64,7 @@
         </ul>
       </li>
 
-      <!-- Products (auto-populated from products.html by header.js) -->
+      <!-- Products (multi-page build using product pages' <h1>) -->
       <li class="dropdown">
         <a href="products.html" class="has-submenu">Products</a>
         <button class="submenu-toggle" aria-label="Toggle Products submenu" aria-expanded="false">
@@ -75,9 +75,9 @@
         <ul
           class="dropdown-menu"
           id="products-submenu"
-          data-products-single="./products.html"
-          data-products-title-selector=".product-title"
-          data-products-article-selector=".product">
+          data-products-index="./products.html"
+          data-products-link-selector=".product a"
+          data-products-title-page-selector="h1">
           <!-- Filled at runtime -->
         </ul>
       </li>
