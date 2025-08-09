@@ -1,4 +1,4 @@
-// header.js (v6)
+// header.js (v6.1 - debug friendly)
 (function () {
   if (window.__headerInit) return;
   window.__headerInit = true;
@@ -31,12 +31,10 @@
         menu.classList.contains('open') ? closeDrawer(menu, backdrop, toggle) : openDrawer(menu, backdrop, toggle);
         return;
       }
-
       if (e.target === backdrop){
         closeDrawer(menu, backdrop, toggle);
         return;
       }
-
       if (e.target.closest('.drawer-close')){
         e.preventDefault();
         closeDrawer(menu, backdrop, toggle);
@@ -106,44 +104,58 @@
     });
   }
 
+  // Build News submenu from news.html (single page with multiple stories)
   function buildNewsSubmenuFromSinglePage() {
     const list = document.getElementById('news-submenu');
     if (!list) return;
 
-    const pageHref   = list.getAttribute('data-news-single') || 'news.html';
-    const titleSel   = list.getAttribute('data-news-title-selector') || '.story-title';
-    const articleSel = list.getAttribute('data-news-article-selector') || '.story';
+    // Use a robust, absolute URL based on the current page
+    const rawHref   = list.getAttribute('data-news-single') || './news.html';
+    const pageHref  = new URL(rawHref, location.href).toString();
+    const titleSel  = list.getAttribute('data-news-title-selector') || '.story-title';
+    const articleSel= list.getAttribute('data-news-article-selector') || '.story';
 
-    const CACHE_KEY = 'newsSubmenu:single:v1';
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-      try { render(JSON.parse(cached)); return; } catch(_) {}
-    }
+    // Disable cache while debugging
+    // localStorage.removeItem('newsSubmenu:single:v1');
+
+    console.info('[header] Building News submenu from', pageHref);
 
     fetch(pageHref, { credentials: 'same-origin' })
       .then(r => {
-        if (!r.ok) throw new Error('Failed to fetch news.html');
+        if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching ' + pageHref);
         return r.text();
       })
       .then(html => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
         const articles = Array.from(doc.querySelectorAll(articleSel));
+        if (!articles.length) {
+          console.warn('[header] No articles found with selector:', articleSel);
+        }
         const items = articles.slice(0, 5).map((article, i) => {
           let id = article.getAttribute('id') || `story-${i+1}`;
           const titleEl = article.querySelector(titleSel) || article.querySelector('h1');
-          const title = (titleEl ? titleEl.textContent : `Story ${i+1}`).trim();
+          const rawTitle = titleEl ? titleEl.textContent : `Story ${i+1}`;
+          const title = String(rawTitle).trim();
           return { href: `${pageHref}#${id}`, title };
         });
-        render(items);
-        localStorage.setItem(CACHE_KEY, JSON.stringify(items));
-      })
-      .catch(err => console.error('[header] News submenu error:', err));
 
-    function render(items) {
-      list.innerHTML = items.map(({ href, title }) =>
-        `<li><a href="${href}">${escapeHtml(title)}</a></li>`
-      ).join('');
-    }
+        if (!items.length) {
+          // Fallback: at least show the News page
+          list.innerHTML = `<li><a href="news.html">All stories →</a></li>`;
+          console.warn('[header] No items built; using fallback link.');
+          return;
+        }
+
+        list.innerHTML = items.map(({ href, title }) =>
+          `<li><a href="${href}">${escapeHtml(title)}</a></li>`
+        ).join('');
+        console.info('[header] News submenu items:', items);
+      })
+      .catch(err => {
+        console.error('[header] News submenu error:', err);
+        // Fallback
+        list.innerHTML = `<li><a href="news.html">All stories →</a></li>`;
+      });
 
     function escapeHtml(s) {
       return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
