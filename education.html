@@ -3,153 +3,150 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Education & Training</title>
+    <title>Education &amp; Training</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
+
+    <!-- Load shared header behavior (cache-busted). OK if this races; fallback below handles it. -->
+    <script src="./header.js?v=5" defer></script>
   </head>
+
   <body>
-    <!-- Navigation -->
-    <nav class="container-fluid dark-nav" id="navbar">
-      <div class="nav-inner">
-        <ul>
-          <li>
-            <strong class="logo">
-              <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none;">
-                <img src="images/logo7.png" alt="AR Glasses Logo" />
-                AR glasses
-              </a>
-            </strong>
-          </li>
-        </ul>
-        <ul>
-          <li class="dropdown">
-            <a href="#">Explore</a>
-            <ul class="dropdown-menu">
-              <li><a href="industrial.html">Industrial & Fieldwork</a></li>
-              <li><a href="collaboration.html">Collaboration & Workspaces</a></li>
-              <li><a href="education.html">Education & Training</a></li>
-              <li><a href="healthcare.html">Healthcare & Surgery</a></li>
-              <li><a href="retail.html">Retail & Shopping</a></li>
-            </ul>
-          </li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="products.html">Products</a></li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Search">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="icon-link" aria-label="Login">
-              <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-3-3.87" /><path d="M4 21v-2a4 4 0 0 1 3-3.87" /><circle cx="12" cy="7" r="4" /></svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <!-- Shared header mount (populated by header.html) -->
+    <div id="site-header"></div>
 
     <!-- Hero Section -->
-    <section class="hero" style="background-image: url('images/ARglasses-school.png'); background-size: cover; background-position: center;">
+    <section
+      class="hero"
+      style="background-image: url('images/ARglasses-school.png'); background-size: cover; background-position: center;"
+    >
       <div class="hero-content">
-        <h1>AR Glasses for</h1>            
-        <h2>Education & Training</h2>
+        <h1>AR Glasses for</h1>
+        <h2>Education &amp; Training</h2>
         <h3>Immersive learning powered by AR</h3>
       </div>
     </section>
 
     <!-- Page Content -->
-    <main class="container">
-      <p>
+    <main class="container" style="max-width: 900px;">
+      <section aria-labelledby="edu-heading">
+        <h2 id="edu-heading">How AR Glasses and AI Will Advance Education and Training</h2>
 
         <section>
-  <h2>How AR Glasses and AI Will Advance Education and Training</h2>
+          <h2>1. Introduction</h2>
+          <p>
+            In the coming decade, the fusion of <strong>augmented reality glasses</strong> and <strong>artificial intelligence</strong> promises a
+            paradigm shift in how we teach, learn, and train. Combining immersive visuals, context-aware AI assistants, and hands-free wearable
+            devices, this technology can elevate learning into an active, personalized, and inclusive experience. As AR glasses become sleeker and more
+            affordable, and AI becomes more powerful yet embedded, the next five to ten years could usher in profound advances across all educational
+            levels—K–12, higher education, and corporate training.
+          </p>
+        </section>
 
-  <section>
-    <h2>1. Introduction</h2>
-    <p>In the coming decade, the fusion of <strong>augmented reality glasses</strong> and <strong>artificial intelligence</strong> promises a paradigm shift in how we teach, learn, and train. Combining immersive visuals, context-aware AI assistants, and hands-free wearable devices, this technology can elevate learning into an active, personalized, and inclusive experience. As AR glasses become sleeker and more affordable, and AI becomes more powerful yet embedded, the next five to ten years could usher in profound advances across all educational levels—K–12, higher education, and corporate training.</p>
-  </section>
+        <section>
+          <h2>2. Current Landscape: AR &amp; AI Convergence</h2>
 
-  <section>
-    <h2>2. Current Landscape: AR & AI Convergence</h2>
+          <h3>AR Glasses Today</h3>
+          <p>
+            Smart AR glasses from vendors like Meta’s Ray-Ban AI glasses, XREAL, RayNeo, and prototypes like Meta’s Orion already combine wearability,
+            real-time digital overlays, voice input, eye- and hand-tracking, and AI services. Mark Zuckerberg described them as the future interface
+            for AI—a “personal superintelligence” platform that will replace smartphones and confer cognitive advantage.
+          </p>
 
-    <h3>AR Glasses Today</h3>
-    <p>Smart AR glasses from vendors like Meta’s Ray-Ban AI glasses, XREAL, RayNeo, and prototypes like Meta’s Orion already combine wearability, real-time digital overlays, voice input, eye- and hand-tracking, and AI services. Mark Zuckerberg described them as the future interface for AI—a “personal superintelligence” platform that will replace smartphones and confer cognitive advantage.</p>
+          <h3>AI Integration</h3>
+          <p>
+            Projects like AiGet and academic work on adaptive AR demonstrate how AI glasses already deliver proactive, context-aware learning by
+            analyzing gaze, environment, and emotional cues to offer educational suggestions during daily life.
+          </p>
+        </section>
 
-    <h3>AI Integration</h3>
-    <p>Projects like AiGet and academic work on adaptive AR demonstrate how AI glasses already deliver proactive, context-aware learning by analyzing gaze, environment, and emotional cues to offer educational suggestions during daily life.</p>
-  </section>
+        <section>
+          <h2>3. Transforming Education and Training (5-Year Horizon)</h2>
 
-  <section>
-    <h2>3. Transforming Education and Training (5-Year Horizon)</h2>
+          <h3>A. K–12 and Higher Education</h3>
+          <ul>
+            <li><strong>Immersive, Experiential Learning:</strong> Students interact with 3D models of molecules, historical events, and anatomical structures in real-world space.</li>
+            <li><strong>Real-Time Tutoring and Feedback:</strong> AI assistants analyze gestures or verbal responses and offer instant corrective feedback or suggestions.</li>
+            <li><strong>Assistive Access &amp; Inclusion:</strong> AR glasses support learners with disabilities by describing scenes, reading content aloud, or offering real-time translation.</li>
+            <li><strong>Language Learning &amp; Field Trips:</strong> Learners explore foreign environments, receive context-aware overlays, and engage with real-world content in real time.</li>
+          </ul>
 
-    <h3>A. K–12 and Higher Education</h3>
-    <ul>
-      <li><strong>Immersive, Experiential Learning:</strong> Students interact with 3D models of molecules, historical events, and anatomical structures in real-world space.</li>
-      <li><strong>Real-Time Tutoring and Feedback:</strong> AI assistants analyze gestures or verbal responses and offer instant corrective feedback or suggestions.</li>
-      <li><strong>Assistive Access & Inclusion:</strong> AR glasses support learners with disabilities by describing scenes, reading content aloud, or offering real-time translation.</li>
-      <li><strong>Language Learning & Field Trips:</strong> Learners explore foreign environments, receive context-aware overlays, and engage with real-world content in real time.</li>
-    </ul>
+          <h3>B. Vocational &amp; Corporate Training</h3>
+          <ul>
+            <li><strong>On-the-Job AR Assistance:</strong> Workers see step-by-step procedures overlaid directly onto machinery or tools.</li>
+            <li><strong>Scenario Simulations &amp; Soft-Skill Coaching:</strong> Simulated environments with AI avatars help employees train for emergencies or leadership tasks.</li>
+            <li><strong>Regulatory Compliance Training:</strong> AR can ensure checklists and safety instructions are followed visually in real-time.</li>
+          </ul>
+        </section>
 
-    <h3>B. Vocational & Corporate Training</h3>
-    <ul>
-      <li><strong>On-the-Job AR Assistance:</strong> Workers see step-by-step procedures overlaid directly onto machinery or tools.</li>
-      <li><strong>Scenario Simulations & Soft-Skill Coaching:</strong> Simulated environments with AI avatars help employees train for emergencies or leadership tasks.</li>
-      <li><strong>Regulatory Compliance Training:</strong> AR can ensure checklists and safety instructions are followed visually in real-time.</li>
-    </ul>
-  </section>
+        <section>
+          <h2>4. Mid-Term Evolution (5–10 Years)</h2>
 
-  <section>
-    <h2>4. Mid-Term Evolution (5–10 Years)</h2>
+          <h3>A. Ubiquitous, Personalized Learning</h3>
+          <p>AI-powered AR glasses will adapt learning content based on pace, performance, and even mood. Learning will occur anywhere—via contextual triggers and overlays.</p>
 
-    <h3>A. Ubiquitous, Personalized Learning</h3>
-    <p>AI-powered AR glasses will adapt learning content based on pace, performance, and even mood. Learning will occur anywhere—while walking, exploring, or even shopping—via contextual triggers and overlays.</p>
+          <h3>B. Teacher Training &amp; Professional Development</h3>
+          <p>AI-generated virtual student simulations will allow trainee teachers to practice instruction, behavior management, and lesson delivery in immersive, feedback-rich environments.</p>
 
-    <h3>B. Teacher Training & Professional Development</h3>
-    <p>AI-generated virtual student simulations will allow trainee teachers to practice instruction, behavior management, and lesson delivery in immersive, feedback-rich environments.</p>
+          <h3>C. Accessibility, Equity &amp; Inclusion</h3>
+          <p>
+            Cheaper, thinner AR glasses with edge AI will help low-income schools integrate immersive learning. Features like translation, audio prompts, and smart content adjustment will support neurodiverse and multilingual learners.
+          </p>
+        </section>
 
-    <h3>C. Accessibility, Equity & Inclusion</h3>
-    <p>Cheaper, thinner AR glasses with edge AI will help low-income schools integrate immersive learning. Features like translation, audio prompts, and smart content adjustment will support neurodiverse and multilingual learners.</p>
-  </section>
+        <section>
+          <h2>5. Key Enablers and Ongoing Technical Trends</h2>
 
-  <section>
-    <h2>5. Key Enablers and Ongoing Technical Trends</h2>
+          <h3>A. Hardware Miniaturization &amp; Optical Progress</h3>
+          <p>
+            New holographic displays and lighter battery technologies are driving down size and improving wearability, making all-day use of AR glasses
+            viable in classrooms and workplaces.
+          </p>
 
-    <h3>A. Hardware Miniaturization & Optical Progress</h3>
-    <p>New holographic displays and lighter battery technologies are driving down size and improving wearability, making all-day use of AR glasses viable in classrooms and workplaces.</p>
+          <h3>B. On-Device AI &amp; Contextual Intelligence</h3>
+          <p>
+            New chipsets enable real-time inference—gaze detection, object recognition, translation—without needing cloud services, improving privacy
+            and speed.
+          </p>
 
-    <h3>B. On-Device AI & Contextual Intelligence</h3>
-    <p>New chipsets enable real-time inference—gaze detection, object recognition, translation—without needing cloud services, improving privacy and speed.</p>
+          <h3>C. Curriculum Integration &amp; Teacher Readiness</h3>
+          <p>
+            AR and AI must be matched with pedagogical goals, curriculum standards, and robust training for educators to ensure meaningful adoption.
+          </p>
+        </section>
 
-    <h3>C. Curriculum Integration & Teacher Readiness</h3>
-    <p>AR and AI must be matched with pedagogical goals, curriculum standards, and robust training for educators to ensure meaningful adoption.</p>
-  </section>
+        <section>
+          <h2>6. Challenges &amp; Risk Management</h2>
 
-  <section>
-    <h2>6. Challenges & Risk Management</h2>
+          <h3>A. Cost, Access, Equity</h3>
+          <p>Widespread adoption will depend on cost reductions, policy support, and equitable deployment in underserved communities.</p>
 
-    <h3>A. Cost, Access, Equity</h3>
-    <p>Widespread adoption will depend on cost reductions, policy support, and equitable deployment in underserved communities.</p>
+          <h3>B. Privacy, Ethics &amp; Surveillance</h3>
+          <p>As devices track eye movements and surroundings, robust data protection, opt-in mechanisms, and ethical use policies are critical.</p>
 
-    <h3>B. Privacy, Ethics & Surveillance</h3>
-    <p>As devices track eye movements and surroundings, robust data protection protocols, opt-in mechanisms, and ethical use policies are critical.</p>
+          <h3>C. Cognitive Load &amp; Pedagogical Fit</h3>
+          <p>AR must avoid overwhelming learners. “Graduated Realism” frameworks can help scaffold immersive learning while managing mental strain.</p>
 
-    <h3>C. Cognitive Load & Pedagogical Fit</h3>
-    <p>AR must avoid overwhelming learners. “Graduated Realism” frameworks can help scaffold immersive learning while managing mental strain.</p>
+          <h3>D. Technical Reliability &amp; User Comfort</h3>
+          <p>Comfort, battery life, and software stability remain essential. Continued R&amp;D is needed to optimize user experience for all-day education use.</p>
+        </section>
 
-    <h3>D. Technical Reliability & User Comfort</h3>
-    <p>Comfort, battery life, and software stability remain essential. Continued R&D is needed to optimize user experience for all-day education use.</p>
-  </section>
+        <section>
+          <h2>7. Conclusion: Toward a Human-Empowering Future</h2>
+          <p>
+            Over the next decade, AR glasses powered by AI will transform how people learn and grow—from schoolchildren to professionals. With
+            real-time feedback, immersive exploration, and personalized instruction, these technologies will empower both learners and educators to
+            reach new heights. If we align innovation with equity and ethics, we can enable a future where learning is as dynamic and diverse as the
+            world itself.
+          </p>
+        </section>
 
-  <section>
-    <h2>7. Conclusion: Toward a Human-Empowering Future</h2>
-    <p>Over the next decade, AR glasses powered by AI will transform how people learn and grow—from schoolchildren to professionals. With real-time feedback, immersive exploration, and personalized instruction, these technologies will empower both learners and educators to reach new heights. The future of education is not just digital—it is embodied, visual, adaptive, and deeply human-centered. If we align innovation with equity and ethics, we can enable a future where learning is as dynamic and diverse as the world itself.</p>
-  </section>
-</section>
-
-      </p>
-      <p><a href="index.html">← Back to Home</a></p>
+        <p style="margin-top: 1rem;"><a href="index.html">← Back to Home</a></p>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -166,10 +163,10 @@
           <strong>Quick Links</strong>
           <ul>
             <li><a href="#">Explore</a></li>
-            <li><a href="contact.html">Contact</a></li>            
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
             <li><a href="Cookie-Policy.html">Cookie Policy</a></li>
-            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
           </ul>
         </div>
       </div>
@@ -177,5 +174,87 @@
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
+
+    <!-- Inject shared header, then initialize + FALLBACK binding -->
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const mount = document.getElementById("site-header");
+
+        // 1) Inject header.html (cache-busted)
+        fetch("./header.html?v=5")
+          .then(r => r.text())
+          .then(html => {
+            mount.innerHTML = html;
+
+            // 2) Primary init from header.js if available
+            if (typeof window.__initHeader === "function") {
+              try { window.__initHeader(); } catch (_) {}
+            }
+
+            // 3) Fallback bindings (ensures hamburger + submenu always work)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+              const dropdown = menu ? menu.querySelector(".dropdown") : null;
+              const chevron  = menu ? menu.querySelector(".submenu-toggle") : null;
+              const submenu  = menu ? menu.querySelector(".dropdown-menu") : null;
+
+              if (!menu || !toggle || !backdrop) return;
+
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                if (dropdown) dropdown.classList.remove("open");
+                if (chevron) chevron.setAttribute("aria-expanded","false");
+                if (submenu) submenu.style.display = "";
+              }
+
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+              function toggleSubmenu(e){
+                if (!isMobile()) return;
+                e.preventDefault();
+                const li = e.currentTarget.closest(".dropdown");
+                if (!li) return;
+                const menuEl = li.querySelector(".dropdown-menu");
+                const chevEl = li.querySelector(".submenu-toggle");
+                const isOpen = li.classList.contains("open");
+                li.classList.toggle("open", !isOpen);
+                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+              }
+              if (dropdown){
+                const label = dropdown.querySelector(".has-submenu");
+                const chev  = dropdown.querySelector(".submenu-toggle");
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              }
+
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
+            // 4) Optional event for any other listeners
+            window.dispatchEvent(new Event("header:ready"));
+          })
+          .catch(err => console.error("Failed to load header.html:", err));
+      });
+    </script>
   </body>
 </html>
