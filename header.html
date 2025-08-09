@@ -29,7 +29,7 @@
         <button class="drawer-close" aria-label="Close menu" aria-controls="primary-nav">&times;</button>
       </li>
 
-      <!-- Explore (unchanged) -->
+      <!-- Explore -->
       <li class="dropdown">
         <a href="#" class="has-submenu">Explore</a>
         <button class="submenu-toggle" aria-label="Toggle Explore submenu" aria-expanded="false">
@@ -54,14 +54,11 @@
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </button>
-        <!-- Script reads titles from this page and builds items -->
-        <ul class="dropdown-menu" id="news-submenu"
+        <ul class="dropdown-menu"
+            id="news-submenu"
             data-news-single="news.html"
             data-news-title-selector=".story-title"
             data-news-article-selector=".story">
-          <!-- Optional fallback:
-          <li><a href="news.html">All stories →</a></li>
-          -->
         </ul>
       </li>
 
