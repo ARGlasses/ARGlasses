@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Keep your News page-specific styles -->
+    <!-- Keep your page-specific styles -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -21,7 +21,7 @@
         background: #fff;
       }
 
-      /* When this page loads the shared header, force light theme + grey text */
+      /* Force light theme + grey text for shared header on this page */
       body.news-page #navbar {
         background: white !important;
         box-shadow: none !important;
@@ -215,15 +215,80 @@
           .then(r => r.text())
           .then(html => {
             mount.innerHTML = html;
+
+            // Primary init from header.js if available
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
+
+            // Fallback bindings (ensures hamburger + ALL submenus always work)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+
+              if (!menu || !toggle || !backdrop) return;
+
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                // collapse all submenus
+                menu.querySelectorAll(".dropdown").forEach(li => li.classList.remove("open"));
+                menu.querySelectorAll(".submenu-toggle[aria-expanded='true']").forEach(btn => btn.setAttribute("aria-expanded","false"));
+                menu.querySelectorAll(".dropdown-menu").forEach(ul => ul.style.display = "");
+              }
+
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+
+              // Bind ALL dropdowns (Explore, News, Products, etc.)
+              const dropdowns = menu.querySelectorAll(".dropdown");
+              dropdowns.forEach((li) => {
+                const label = li.querySelector(".has-submenu");
+                const chev  = li.querySelector(".submenu-toggle");
+
+                function toggleSubmenu(e){
+                  if (!isMobile()) return;
+                  e.preventDefault();
+                  const menuEl = li.querySelector(".dropdown-menu");
+                  const chevEl = li.querySelector(".submenu-toggle");
+                  const isOpen = li.classList.contains("open");
+                  li.classList.toggle("open", !isOpen);
+                  if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                  if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+                }
+
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              });
+
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
+            // Page-specific header tweaks
             const navbar = document.getElementById("navbar");
             if (navbar) {
               navbar.classList.remove("dark-nav");
               navbar.classList.add("light-nav");
               navbar.style.setProperty("--nav-text-color", "#555");
             }
+
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
