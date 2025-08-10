@@ -62,12 +62,11 @@
             return { href: `${pageHref}#${id}`, title };
           });
 
-          let htmlList = `<li><a href="${pageHref}"><strong>View all →</strong></a></li>`;
-          htmlList += items.map(it => `<li><a href="${it.href}">${it.title}</a></li>`).join('');
+          const htmlList = items.map(it => `<li><a href="${it.href}">${it.title}</a></li>`).join('');
           listEl.innerHTML = htmlList;
         })
         .catch(() => {
-          listEl.innerHTML = `<li><a href="${pageHref}"><strong>View all →</strong></a></li>`;
+          listEl.innerHTML = '';
         });
     });
   }
