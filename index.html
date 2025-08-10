@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
   <head>
@@ -136,13 +135,12 @@
               try { window.__initHeader(); } catch (_) {}
             }
 
-            // Fallback bindings (ensures hamburger + submenu always work)
+            // Fallback bindings (ensures hamburger + ALL submenus always work)
             (function bindFallback(){
               const menu     = document.getElementById("primary-nav");
               const toggle   = document.getElementById("menu-toggle");
               const backdrop = document.getElementById("backdrop");
               const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
-              const dropdown = menu ? menu.querySelector(".dropdown") : null;
 
               if (!menu || !toggle || !backdrop) return;
 
@@ -157,11 +155,10 @@
                 backdrop.classList.remove("show");
                 toggle.setAttribute("aria-expanded","false");
                 document.body.style.overflow = "";
-                if (dropdown) dropdown.classList.remove("open");
-                const chev = menu.querySelector(".submenu-toggle");
-                const subm = menu.querySelector(".dropdown-menu");
-                if (chev) chev.setAttribute("aria-expanded","false");
-                if (subm) subm.style.display = "";
+                // collapse all submenus
+                menu.querySelectorAll(".dropdown").forEach(li => li.classList.remove("open"));
+                menu.querySelectorAll(".submenu-toggle[aria-expanded='true']").forEach(btn => btn.setAttribute("aria-expanded","false"));
+                menu.querySelectorAll(".dropdown-menu").forEach(ul => ul.style.display = "");
               }
 
               toggle.addEventListener("click", function(e){
@@ -172,24 +169,27 @@
               if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
 
               function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
-              function toggleSubmenu(e){
-                if (!isMobile()) return;
-                e.preventDefault();
-                const li = e.currentTarget.closest(".dropdown");
-                if (!li) return;
-                const menuEl = li.querySelector(".dropdown-menu");
-                const chevEl = li.querySelector(".submenu-toggle");
-                const isOpen = li.classList.contains("open");
-                li.classList.toggle("open", !isOpen);
-                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
-                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
-              }
-              if (dropdown){
-                const label = dropdown.querySelector(".has-submenu");
-                const chev  = dropdown.querySelector(".submenu-toggle");
+
+              // Bind ALL dropdowns (not just the first)
+              const dropdowns = menu.querySelectorAll(".dropdown");
+              dropdowns.forEach((li) => {
+                const label = li.querySelector(".has-submenu");
+                const chev  = li.querySelector(".submenu-toggle");
+
+                function toggleSubmenu(e){
+                  if (!isMobile()) return;
+                  e.preventDefault();
+                  const menuEl = li.querySelector(".dropdown-menu");
+                  const chevEl = li.querySelector(".submenu-toggle");
+                  const isOpen = li.classList.contains("open");
+                  li.classList.toggle("open", !isOpen);
+                  if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                  if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+                }
+
                 if (label) label.addEventListener("click", toggleSubmenu);
                 if (chev)  chev.addEventListener("click", toggleSubmenu);
-              }
+              });
 
               window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
               window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
