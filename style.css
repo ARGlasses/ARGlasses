@@ -354,14 +354,29 @@ body.news-page .story-content,
 body.news-page .story-content * {
   color: white !important;
 }
-/* === NEWS PAGE FIX: Remove micro-scroll and show full image === */
-body.news-page .viewport {
-  /* Make viewport exactly fill below fixed nav */
-  --nav-h: 64px; /* adjust if your header height differs */
+/* === UNIVERSAL FIX for carousel pages (News + article pages) === */
+/* Assumes a fixed header; adjust --nav-h if your header height differs */
+:root { --nav-h: 64px; }
+
+/* Make the viewport fill the screen *below* the fixed header */
+.viewport {
   height: calc(100svh - var(--nav-h)) !important;
+  overflow: hidden; /* ensure no micro vertical scroll */
 }
 
-body.news-page .story {
+/* Ensure each story fits fully within the viewport area with room for shadows/dots */
+.viewport .story {
+  height: clamp(420px, 75svh, 900px) !important;
+}
+
+/* Safety: no vertical padding on the rail so cards don't get nudged off-screen */
+.viewport .rail {
+  padding-block: 0 !important;
+}
+
+/* Optional: give the dots a touch more breathing room without causing overflow */
+.viewport .dots { bottom: 1rem; }
+
   /* Slightly shorter so it fits fully on screen with shadows/padding */
   height: clamp(420px, 75svh, 900px) !important;
 }
