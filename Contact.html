@@ -10,9 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
-
-    <!-- Load shared behavior (cache-busted). It's OK if this fails; we have a fallback below. -->
-    <script src="./header.js?v=5" defer></script>
   </head>
 
   <body>
@@ -42,7 +39,7 @@
             <input type="text" name="name" placeholder="Jane Doe" autocomplete="name" required />
           </label>
 
-        <label>
+          <label>
             <span>Your Email</span>
             <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
           </label>
@@ -91,35 +88,29 @@
       </div>
     </footer>
 
-    <!-- Inject shared header, then initialize + FALLBACK binding -->
+    <!-- Inject shared header, then init (+ robust fallback binder) -->
     <script>
-      window.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
-
-        // 1) Inject header.html (cache-busted)
-        fetch("./header.html?v=5")
+        fetch("./header.html?v=6")
           .then(r => r.text())
           .then(html => {
             mount.innerHTML = html;
 
-            // 2) Primary init from header.js if available
+            // Primary init from header.js (if present and loaded)
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
 
-            // 3) Fallback bindings (work even if header.js is cached/missing)
+            // Fallback bindings (ensures hamburger + ALL submenus always work)
             (function bindFallback(){
               const menu     = document.getElementById("primary-nav");
               const toggle   = document.getElementById("menu-toggle");
               const backdrop = document.getElementById("backdrop");
               const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
-              const dropdown = menu ? menu.querySelector(".dropdown") : null;
-              const chevron  = menu ? menu.querySelector(".submenu-toggle") : null;
-              const submenu  = menu ? menu.querySelector(".dropdown-menu") : null;
 
-              if (!menu || !toggle || !backdrop) return; // header not injected? bail
+              if (!menu || !toggle || !backdrop) return;
 
-              // Drawer open/close (no media-query checks; CSS hides on desktop)
               function openDrawer(){
                 menu.classList.add("open");
                 backdrop.classList.add("show");
@@ -131,9 +122,10 @@
                 backdrop.classList.remove("show");
                 toggle.setAttribute("aria-expanded","false");
                 document.body.style.overflow = "";
-                if (dropdown) dropdown.classList.remove("open");
-                if (chevron) chevron.setAttribute("aria-expanded","false");
-                if (submenu) submenu.style.display = "";
+                // collapse all submenus
+                menu.querySelectorAll(".dropdown").forEach(li => li.classList.remove("open"));
+                menu.querySelectorAll(".submenu-toggle[aria-expanded='true']").forEach(btn => btn.setAttribute("aria-expanded","false"));
+                menu.querySelectorAll(".dropdown-menu").forEach(ul => ul.style.display = "");
               }
 
               toggle.addEventListener("click", function(e){
@@ -143,37 +135,41 @@
               backdrop.addEventListener("click", closeDrawer);
               if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
 
-              // Submenu toggle (Explore) — only act like accordion on mobile widths
               function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
-              function toggleSubmenu(e){
-                if (!isMobile()) return;
-                e.preventDefault();
-                const li = e.currentTarget.closest(".dropdown");
-                if (!li) return;
-                const menuEl = li.querySelector(".dropdown-menu");
-                const chevEl = li.querySelector(".submenu-toggle");
-                const isOpen = li.classList.contains("open");
-                li.classList.toggle("open", !isOpen);
-                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
-                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
-              }
-              if (dropdown){
-                const label = dropdown.querySelector(".has-submenu");
-                const chev  = dropdown.querySelector(".submenu-toggle");
+
+              // Bind ALL dropdowns (News, Products, Explore, etc.)
+              const dropdowns = menu.querySelectorAll(".dropdown");
+              dropdowns.forEach((li) => {
+                const label = li.querySelector(".has-submenu");
+                const chev  = li.querySelector(".submenu-toggle");
+
+                function toggleSubmenu(e){
+                  if (!isMobile()) return;
+                  e.preventDefault();
+                  const menuEl = li.querySelector(".dropdown-menu");
+                  const chevEl = li.querySelector(".submenu-toggle");
+                  const isOpen = li.classList.contains("open");
+                  li.classList.toggle("open", !isOpen);
+                  if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                  if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+                }
+
                 if (label) label.addEventListener("click", toggleSubmenu);
                 if (chev)  chev.addEventListener("click", toggleSubmenu);
-              }
+              });
 
-              // ESC & resize safety
               window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
               window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
             })();
 
-            // 4) (Optional) also broadcast for any other listeners
+            // Let others hook into header-ready if needed
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
       });
     </script>
+
+    <!-- Behavior (match version used above) -->
+    <script src="./header.js?v=6" defer></script>
   </body>
 </html>
