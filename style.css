@@ -354,34 +354,6 @@ body.news-page .story-content,
 body.news-page .story-content * {
   color: white !important;
 }
-/* === UNIVERSAL FIX: make cards fully visible everywhere the carousel appears === */
-
-/* 1) Treat header as fixed; adjust if your header differs */
-:root { --nav-h: 64px; }
-
-/* 2) Viewport should fill the space below the fixed header */
-html body .viewport {
-  /* Prefer dynamic viewport; fall back to small viewport */
-  height: calc(100dvh - var(--nav-h)) !important;
-  height: calc(100svh - var(--nav-h)) !important; /* fallback */
-  overflow: hidden !important;
-  position: relative;
-}
-
-/* 3) Cards: shorter so shadows/dots fit without vertical scroll */
-html body .viewport .story {
-  height: clamp(420px, 70svh, 900px) !important;   /* was 82svh → 70svh */
-  /* in case article pages use dvh internally */
-  height: clamp(420px, 70dvh, 900px) !important;
-}
-
-/* 4) Rail: no vertical padding; keep only horizontal padding */
-html body .viewport .rail {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  overflow-y: hidden !important;
-}
-
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
