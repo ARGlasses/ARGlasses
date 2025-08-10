@@ -1,81 +1,129 @@
-// header.js (init-safe; builds dropdowns from H1s in <article> on target pages)
+// header.js — mobile-friendly dropdowns + off-canvas
 (function () {
   if (window.__headerInit) return;
   window.__headerInit = true;
 
-  // ----- Drawer open/close helpers -----
-  function openDrawer(menu, backdrop, toggle) {
+  // ---------- Helpers ----------
+  const mqMobile = '(max-width: 768px)';
+  const isMobile = () => window.matchMedia(mqMobile).matches;
+
+  function qs(sel, root = document) { return root.querySelector(sel); }
+  function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
+
+  function openDrawer() {
+    const menu = qs('#primary-nav');
+    const backdrop = qs('#backdrop');
+    const toggle = qs('#menu-toggle');
+    if (!menu || !backdrop) return;
     menu.classList.add('open');
     backdrop.classList.add('show');
     if (toggle) toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
-  function closeDrawer(menu, backdrop, toggle) {
+
+  function closeDrawer() {
+    const menu = qs('#primary-nav');
+    const backdrop = qs('#backdrop');
+    const toggle = qs('#menu-toggle');
+    if (!menu || !backdrop) return;
     menu.classList.remove('open');
     backdrop.classList.remove('show');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    menu.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
-    menu.querySelectorAll('.submenu-toggle[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+    // also collapse any open submenus
+    qsa('#primary-nav .dropdown.open').forEach(li => li.classList.remove('open'));
+    qsa('#primary-nav .submenu-toggle[aria-expanded="true"]').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }
 
-  function bindDelegatedClicks() {
-    document.addEventListener('click', function (e) {
-      const menu = document.getElementById('primary-nav');
-      const toggle = document.getElementById('menu-toggle');
-      const backdrop = document.getElementById('backdrop');
-      if (!menu || !backdrop) return;
+  function toggleSubmenuFrom(el) {
+    const li = el.closest('.dropdown');
+    if (!li) return;
+    const btn = li.querySelector('.submenu-toggle');
+    const isOpen = li.classList.toggle('open');
+    if (btn) btn.setAttribute('aria-expanded', String(isOpen));
+  }
 
-      if (e.target.closest('#menu-toggle')) {
+  // ---------- Populate dynamic submenus (Products/News) ----------
+  function populateDynamicLists() {
+    qsa('#primary-nav .dropdown-menu[data-page]').forEach(listEl => {
+      const pageHref = new URL(listEl.getAttribute('data-page'), location.href).toString();
+      const articleSel = listEl.getAttribute('data-article-selector') || 'article';
+      const titleSel = listEl.getAttribute('data-title-selector') || 'h1';
+
+      fetch(pageHref, { credentials: 'same-origin' })
+        .then(r => r.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const nodes = Array.from(doc.querySelectorAll(articleSel)).slice(0, 5);
+          const items = nodes.map((el, i) => {
+            const id = el.getAttribute('id') || `item-${i+1}`;
+            const t = el.querySelector(titleSel) || el.querySelector('h1, h2, [role="heading"]');
+            const title = (t ? t.textContent : `Item ${i+1}`).trim();
+            return { href: `${pageHref}#${id}`, title };
+          });
+
+          // “View all” always present
+          let htmlList = `<li><a href="${pageHref}"><strong>View all →</strong></a></li>`;
+          htmlList += items.map(it => `<li><a href="${it.href}">${it.title}</a></li>`).join('');
+          listEl.innerHTML = htmlList;
+        })
+        .catch(() => {
+          listEl.innerHTML = `<li><a href="${pageHref}"><strong>View all →</strong></a></li>`;
+        });
+    });
+  }
+
+  // ---------- Event wiring (click + touch) ----------
+  function bindEvents() {
+    const backdrop = qs('#backdrop');
+    const menu = qs('#primary-nav');
+
+    // Open/close drawer
+    document.addEventListener('click', (e) => {
+      const toggle = e.target.closest('#menu-toggle');
+      if (toggle) {
         e.preventDefault();
-        menu.classList.contains('open') ? closeDrawer(menu, backdrop, toggle) : openDrawer(menu, backdrop, toggle);
-        return;
-      }
-      if (e.target === backdrop) {
-        closeDrawer(menu, backdrop, toggle);
-        return;
-      }
-      if (e.target.closest('.drawer-close')) {
-        e.preventDefault();
-        closeDrawer(menu, backdrop, toggle);
+        if (menu && menu.classList.contains('open')) closeDrawer(); else openDrawer();
         return;
       }
 
+      if (backdrop && e.target === backdrop) {
+        closeDrawer();
+        return;
+      }
+
+      // Submenu handling on mobile
       const submenuTrigger = e.target.closest('.has-submenu, .submenu-toggle');
-      if (submenuTrigger) {
-        if (window.matchMedia('(max-width: 768px)').matches) {
-          e.preventDefault();
-          e.stopPropagation();
-          const li = submenuTrigger.closest('.dropdown');
-          if (!li) return;
-          const isOpen = li.classList.contains('open');
-          li.classList.toggle('open', !isOpen);
-          const chev = li.querySelector('.submenu-toggle');
-          if (chev) chev.setAttribute('aria-expanded', (!isOpen).toString());
-        }
+      if (submenuTrigger && isMobile()) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSubmenuFrom(submenuTrigger);
         return;
       }
-    });
 
+      // Clicking a link inside the open drawer should not close it pre-emptively
+      if (isMobile() && e.target.closest('#primary-nav a')) {
+        return;
+      }
+    }, { passive: false });
+
+    // Touch support (some devices are finicky with click)
+    document.addEventListener('touchend', (e) => {
+      const submenuTrigger = e.target.closest('.has-submenu, .submenu-toggle');
+      if (submenuTrigger && isMobile()) {
+        e.preventDefault();
+        toggleSubmenuFrom(submenuTrigger);
+      }
+    }, { passive: false });
+
+    // Keyboard + resize
     window.addEventListener('keydown', (e) => {
-      if (e.key !== 'Escape') return;
-      const menu = document.getElementById('primary-nav');
-      const backdrop = document.getElementById('backdrop');
-      const toggle = document.getElementById('menu-toggle');
-      if (!menu || !backdrop) return;
-      if (menu.classList.contains('open')) closeDrawer(menu, backdrop, toggle);
+      if (e.key === 'Escape' && menu && menu.classList.contains('open')) closeDrawer();
     });
-
-    window.addEventListener('resize', () => {
-      const menu = document.getElementById('primary-nav');
-      const backdrop = document.getElementById('backdrop');
-      const toggle = document.getElementById('menu-toggle');
-      if (!menu || !backdrop) return;
-      if (!window.matchMedia('(max-width: 768px)').matches) closeDrawer(menu, backdrop, toggle);
-    });
+    window.addEventListener('resize', () => { if (!isMobile()) closeDrawer(); });
   }
 
-  // ----- Theme switch on scroll -----
+  // ---------- Theme switch (same behavior) ----------
   function initNavbarScrollTheme() {
     const navbar = document.getElementById('navbar');
     const heroSection = document.querySelector('.hero');
@@ -94,78 +142,17 @@
     window.addEventListener('DOMContentLoaded', updateNavbarTheme);
   }
 
-  function highlightActiveLink() {
-    const here = location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('#primary-nav a[href]').forEach(a => {
-      const href = a.getAttribute('href');
-      if (!href || href.startsWith('#')) return;
-      if (href === here) a.classList.add('active');
-    });
-  }
-
-  // ----- Generic submenu builder: uses H1 in each <article> on a given page -----
-  function buildSubmenuFromPage(listEl) {
-    if (!listEl) return;
-
-    const pageHref = new URL(listEl.getAttribute('data-page') || '.', location.href).toString();
-    const articleSel = listEl.getAttribute('data-article-selector') || 'article';
-    const titleSel = listEl.getAttribute('data-title-selector') || 'h1';
-
-    fetch(pageHref, { credentials: 'same-origin' })
-      .then(r => {
-        if (!r.ok) throw new Error('HTTP ' + r.status + ' fetching ' + pageHref);
-        return r.text();
-      })
-      .then(html => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const nodes = Array.from(doc.querySelectorAll(articleSel)).slice(0, 5);
-        if (!nodes.length) {
-          listEl.innerHTML = `<li><a href="${pageHref}">All items →</a></li>`;
-          return;
-        }
-        const items = nodes.map((el, i) => {
-          const id = el.getAttribute('id') || `item-${i+1}`;
-          const t = el.querySelector(titleSel) || el.querySelector('h1, h2, [role="heading"]');
-          const title = (t ? t.textContent : `Item ${i+1}`).trim();
-          return { href: `${pageHref}#${id}`, title };
-        });
-        listEl.innerHTML = items.map(({ href, title }) =>
-          `<li><a href="${href}">${escapeHtml(title)}</a></li>`
-        ).join('');
-      })
-      .catch(err => {
-        console.error('[header] submenu build failed for', pageHref, err);
-        listEl.innerHTML = `<li><a href="${pageHref}">All items →</a></li>`;
-      });
-
-    function escapeHtml(s) {
-      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    }
-  }
-
-  // ----- Init (safe to call multiple times) -----
   function init() {
-    // Only proceed if the header is actually in the DOM
     if (!document.getElementById('primary-nav')) return;
-
-    bindDelegatedClicks();
+    populateDynamicLists();
+    bindEvents();
     initNavbarScrollTheme();
-    highlightActiveLink();
-
-    // Build News + Products from their pages using H1s
-    buildSubmenuFromPage(document.getElementById('news-submenu'));
-    buildSubmenuFromPage(document.getElementById('products-submenu'));
   }
 
-  // Expose for pages that inject header.html then call __initHeader()
+  // Run when header is injected or DOM is ready
   window.__initHeader = init;
-
-  // Also, if someone dispatches a custom event after injecting the header:
   window.addEventListener('header:ready', init);
-
-  // If the header is already on the page at parse time (no injection), run once on DOM ready
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    // Slight delay to let any sync injections finish
     setTimeout(init, 0);
   } else {
     window.addEventListener('DOMContentLoaded', init);
