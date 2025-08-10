@@ -30,7 +30,7 @@
     backdrop.classList.remove('show');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    // also collapse any open submenus
+    // collapse any open submenus
     qsa('#primary-nav .dropdown.open').forEach(li => li.classList.remove('open'));
     qsa('#primary-nav .submenu-toggle[aria-expanded="true"]').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }
@@ -101,7 +101,7 @@
         return;
       }
 
-      // Clicking a link inside the open drawer should not close it pre-emptively
+      // Clicking a link inside the open drawer: let navigation proceed
       if (isMobile() && e.target.closest('#primary-nav a')) {
         return;
       }
@@ -123,7 +123,7 @@
     window.addEventListener('resize', () => { if (!isMobile()) closeDrawer(); });
   }
 
-  // ---------- Theme switch (same behavior) ----------
+  // ---------- Theme switch (optional) ----------
   function initNavbarScrollTheme() {
     const navbar = document.getElementById('navbar');
     const heroSection = document.querySelector('.hero');
