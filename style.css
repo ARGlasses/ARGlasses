@@ -348,3 +348,9 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
 #products-submenu li a:hover {
   background-color: rgba(0, 0, 0, 0.05); /* Hover effect */
 }
+
+/* === NEWS PAGE OVERRIDES === */
+body.news-page .story-content,
+body.news-page .story-content * {
+  color: white !important;
+}
