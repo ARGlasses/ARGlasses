@@ -1,101 +1,207 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="msvalidate.01" content="7BE76CF327E069EAB79A085EC840FB95" />
     <title>AR glasses — Changing how you see the world</title>
+    <meta
+      name="description"
+      content="Discover the future of augmented reality with AR Glasses – smart lenses that redefine your digital interaction."
+    />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
   </head>
-  <body>
-    <!-- Header mount point -->
-    <header id="site-header"></header>
 
+  <body>
+    <!-- Shared header mount (populated by header.html) -->
+    <div id="site-header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <video autoplay muted playsinline class="hero-video">
+        <source src="images/ARglasses-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="hero-content">
+        <h1>AR Glasses</h1>
+        <h2>Augmented Reality is our Future</h2>
+        <h3>See the world through AR glasses</h3>
+      </div>
+    </section>
+
+    <!-- Content Section -->
     <main class="container">
-      <section class="hero">
-        <h1>Welcome to AR Glasses</h1>
-        <p>Discover the future of augmented reality.</p>
+      <section class="image-grid">
+        <div class="grid two-column">
+          <figure>
+            <a href="industrial.html"><img src="images/ARglasses-engineer.png" alt="Augmented projection through AR Glasses" /></a>
+            <figcaption>Industrial & Fieldwork</figcaption>
+          </figure>
+          <figure>
+            <a href="collaboration.html"><img src="images/ARglasses-collaboration.png" alt="AR Glasses development timeline graph" /></a>
+            <figcaption>Collaboration & Workspaces</figcaption>
+          </figure>
+        </div>
+
+        <div class="full-width-image">
+          <figure>
+            <a href="education.html"><img src="images/ARglasses-school.png" alt="People enjoying AR glasses in the park" /></a>
+            <figcaption>Education & Training</figcaption>
+          </figure>
+        </div>
+
+        <div class="grid two-column" style="margin-top: 2rem">
+          <figure>
+            <a href="healthcare.html"><img src="images/ARglasses-doctor.png" alt="Doctor using AR glasses in a clinical setting" /></a>
+            <figcaption>Healthcare & Surgery</figcaption>
+          </figure>
+          <figure>
+            <a href="retail.html"><img src="images/ARglasses-reflection.png" alt="AR interface reflecting on user glasses" /></a>
+            <figcaption>Retail & Shopping</figcaption>
+          </figure>
+        </div>
       </section>
-      <!-- ... your content ... -->
     </main>
 
-    <!-- Inject header.html, then init header.js; run fallback ONLY if header.js didn’t init -->
+    <!-- Footer -->
+    <footer class="container professional-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo-group">
+            <img src="images/logo7.png" alt="AR Glasses Logo" />
+            <h4>AR glasses</h4>
+          </div>
+          <p>Changing how you see the world</p>
+        </div>
+        <div class="footer-links">
+          <strong>Quick Links</strong>
+          <ul>
+            <li><a href="#">Explore</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
+            <li><a href="Cookie-Policy.html">Cookie Policy</a></li>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <small>&copy; 2025 ARglasses.com • All rights reserved</small>
+      </div>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner">
+      <div class="container">
+        <p>
+          We use cookies to improve your experience, analyze traffic, and
+          enhance content. By clicking "Accept", you agree to our use of
+          non-essential cookies.
+          <a href="Cookie-Policy.html">Learn more</a>.
+        </p>
+        <div>
+          <button class="contrast" id="accept-cookies">Accept</button>
+          <button class="secondary" id="decline-cookies">Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cookie Consent Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const banner = document.getElementById("cookie-banner");
+        const acceptBtn = document.getElementById("accept-cookies");
+        const declineBtn = document.getElementById("decline-cookies");
+        const consent = localStorage.getItem("cookieConsent");
+        if (!consent) banner.style.display = "block";
+        acceptBtn.addEventListener("click", () => { localStorage.setItem("cookieConsent", "accepted"); banner.style.display = "none"; });
+        declineBtn.addEventListener("click", () => { localStorage.setItem("cookieConsent", "declined"); banner.style.display = "none"; });
+      });
+    </script>
+
+    <!-- Inject shared header, then init (+ robust fallback binder) -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
-        // bump the query string when you change header.html to bust cache
         fetch("./header.html?v=6")
           .then(r => r.text())
           .then(html => {
             mount.innerHTML = html;
 
-            // Try primary init from header.js (if loaded)
+            // Primary init from header.js (if present and loaded)
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
 
-            // Fallback ONLY if header.js did not set the guard
-            if (!window.__headerInit) {
-              (function bindFallback(){
-                const menu     = document.getElementById("primary-nav");
-                const toggle   = document.getElementById("menu-toggle");
-                const backdrop = document.getElementById("backdrop");
-                if (!menu || !toggle || !backdrop) return;
+            // Fallback bindings (ensures hamburger + submenu always work)
+            (function bindFallback(){
+              const menu     = document.getElementById("primary-nav");
+              const toggle   = document.getElementById("menu-toggle");
+              const backdrop = document.getElementById("backdrop");
+              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+              const dropdown = menu ? menu.querySelector(".dropdown") : null;
 
-                const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+              if (!menu || !toggle || !backdrop) return;
 
-                function openDrawer(){
-                  menu.classList.add("open");
-                  backdrop.classList.add("show");
-                  toggle.setAttribute("aria-expanded","true");
-                  document.body.style.overflow = "hidden";
-                }
-                function closeDrawer(){
-                  menu.classList.remove("open");
-                  backdrop.classList.remove("show");
-                  toggle.setAttribute("aria-expanded","false");
-                  document.body.style.overflow = "";
-                  // collapse any open submenus
-                  menu.querySelectorAll(".dropdown.open").forEach(li => li.classList.remove("open"));
-                  menu.querySelectorAll(".submenu-toggle[aria-expanded='true']").forEach(b => b.setAttribute("aria-expanded","false"));
-                }
+              function openDrawer(){
+                menu.classList.add("open");
+                backdrop.classList.add("show");
+                toggle.setAttribute("aria-expanded","true");
+                document.body.style.overflow = "hidden";
+              }
+              function closeDrawer(){
+                menu.classList.remove("open");
+                backdrop.classList.remove("show");
+                toggle.setAttribute("aria-expanded","false");
+                document.body.style.overflow = "";
+                if (dropdown) dropdown.classList.remove("open");
+                const chev = menu.querySelector(".submenu-toggle");
+                const subm = menu.querySelector(".dropdown-menu");
+                if (chev) chev.setAttribute("aria-expanded","false");
+                if (subm) subm.style.display = "";
+              }
 
-                document.addEventListener("click", (e) => {
-                  if (e.target.closest("#menu-toggle")) {
-                    e.preventDefault();
-                    menu.classList.contains("open") ? closeDrawer() : openDrawer();
-                    return;
-                  }
-                  if (e.target === backdrop) {
-                    closeDrawer();
-                    return;
-                  }
-                  const subTrigger = e.target.closest(".has-submenu, .submenu-toggle");
-                  if (subTrigger && isMobile()) {
-                    e.preventDefault();
-                    const li  = subTrigger.closest(".dropdown");
-                    const btn = li && li.querySelector(".submenu-toggle");
-                    const open = li && li.classList.toggle("open");
-                    if (btn) btn.setAttribute("aria-expanded", String(open));
-                  }
-                }, { passive: false });
+              toggle.addEventListener("click", function(e){
+                e.preventDefault();
+                menu.classList.contains("open") ? closeDrawer() : openDrawer();
+              });
+              backdrop.addEventListener("click", closeDrawer);
+              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
 
-                window.addEventListener("keydown", (e) => {
-                  if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer();
-                });
-                window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
-              })();
-            }
+              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+              function toggleSubmenu(e){
+                if (!isMobile()) return;
+                e.preventDefault();
+                const li = e.currentTarget.closest(".dropdown");
+                if (!li) return;
+                const menuEl = li.querySelector(".dropdown-menu");
+                const chevEl = li.querySelector(".submenu-toggle");
+                const isOpen = li.classList.contains("open");
+                li.classList.toggle("open", !isOpen);
+                if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
+                if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
+              }
+              if (dropdown){
+                const label = dropdown.querySelector(".has-submenu");
+                const chev  = dropdown.querySelector(".submenu-toggle");
+                if (label) label.addEventListener("click", toggleSubmenu);
+                if (chev)  chev.addEventListener("click", toggleSubmenu);
+              }
 
-            // Let header.js listen if it wants to
+              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
+              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
+            })();
+
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
       });
     </script>
 
-    <!-- Bump ?v= when you deploy a change to avoid cache issues -->
-    <script src="./header.js?v=7" defer></script>
+    <!-- Behavior (must match version used above) -->
+    <script src="./header.js?v=6" defer></script>
   </body>
 </html>
