@@ -354,3 +354,14 @@ body.news-page .story-content,
 body.news-page .story-content * {
   color: white !important;
 }
+/* === NEWS PAGE FIX: Remove micro-scroll and show full image === */
+body.news-page .viewport {
+  /* Make viewport exactly fill below fixed nav */
+  --nav-h: 64px; /* adjust if your header height differs */
+  height: calc(100svh - var(--nav-h)) !important;
+}
+
+body.news-page .story {
+  /* Slightly shorter so it fits fully on screen with shadows/padding */
+  height: clamp(420px, 75svh, 900px) !important;
+}
