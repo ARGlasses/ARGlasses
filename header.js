@@ -1,4 +1,4 @@
-// header.js — mobile-friendly dropdowns + off-canvas
+// header.js — mobile-friendly dropdowns + off-canvas (no touchend double-fire)
 (function () {
   if (window.__headerInit) return;
   window.__headerInit = true;
@@ -62,7 +62,6 @@
             return { href: `${pageHref}#${id}`, title };
           });
 
-          // “View all” always present
           let htmlList = `<li><a href="${pageHref}"><strong>View all →</strong></a></li>`;
           htmlList += items.map(it => `<li><a href="${it.href}">${it.title}</a></li>`).join('');
           listEl.innerHTML = htmlList;
@@ -73,12 +72,12 @@
     });
   }
 
-  // ---------- Event wiring (click + touch) ----------
+  // ---------- Event wiring (click only) ----------
   function bindEvents() {
     const backdrop = qs('#backdrop');
     const menu = qs('#primary-nav');
 
-    // Open/close drawer
+    // Open/close drawer and handle submenu toggles
     document.addEventListener('click', (e) => {
       const toggle = e.target.closest('#menu-toggle');
       if (toggle) {
@@ -92,7 +91,7 @@
         return;
       }
 
-      // Submenu handling on mobile
+      // Submenu handling on mobile (chevron or label)
       const submenuTrigger = e.target.closest('.has-submenu, .submenu-toggle');
       if (submenuTrigger && isMobile()) {
         e.preventDefault();
@@ -104,15 +103,6 @@
       // Clicking a link inside the open drawer: let navigation proceed
       if (isMobile() && e.target.closest('#primary-nav a')) {
         return;
-      }
-    }, { passive: false });
-
-    // Touch support (some devices are finicky with click)
-    document.addEventListener('touchend', (e) => {
-      const submenuTrigger = e.target.closest('.has-submenu, .submenu-toggle');
-      if (submenuTrigger && isMobile()) {
-        e.preventDefault();
-        toggleSubmenuFrom(submenuTrigger);
       }
     }, { passive: false });
 
