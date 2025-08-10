@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AR glasses — Changing how you see the world</title>
-
-    <!-- Your styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
@@ -14,7 +12,6 @@
     <!-- Header mount point -->
     <header id="site-header"></header>
 
-    <!-- Page content -->
     <main class="container">
       <section class="hero">
         <h1>Welcome to AR Glasses</h1>
@@ -27,17 +24,18 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
+        // bump the query string when you change header.html to bust cache
         fetch("./header.html?v=6")
           .then(r => r.text())
           .then(html => {
             mount.innerHTML = html;
 
-            // Primary init from header.js (if present and loaded)
+            // Try primary init from header.js (if loaded)
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
 
-            // Fallback ONLY if header.js did not run
+            // Fallback ONLY if header.js did not set the guard
             if (!window.__headerInit) {
               (function bindFallback(){
                 const menu     = document.getElementById("primary-nav");
@@ -90,14 +88,13 @@
               })();
             }
 
-            // Let header.js listen if needed
+            // Let header.js listen if it wants to
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
       });
     </script>
 
-    <!-- Main behavior (must be after the injector) -->
     <!-- Bump ?v= when you deploy a change to avoid cache issues -->
     <script src="./header.js?v=7" defer></script>
   </body>
