@@ -362,6 +362,13 @@ html body .viewport .dots { bottom: 1rem !important; }
 main.container {
   padding-top: 4rem; /* space above the text */
 }
+/* === Anchor offset for fixed navbar === */
+:root { --nav-offset: 72px; } /* default; JS below will update this */
+
+.ar-essay > section[id] {
+  /* When scrolled to via #hash, keep content below the fixed nav */
+  scroll-margin-top: var(--nav-offset);
+}
 
 
 
