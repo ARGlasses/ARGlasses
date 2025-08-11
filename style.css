@@ -377,11 +377,6 @@ html body .viewport .dots { bottom: 1rem !important; }
   z-index: auto !important;
 }
 
-/* Remove the gradient overlay that was covering the entire card */
-.story::after {
-  content: none !important;
-}
-
 /* Let your existing title/teaser block sit under the image (not over it) */
 .story-content {
   position: static !important;      /* was absolute */
