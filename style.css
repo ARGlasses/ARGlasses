@@ -395,12 +395,31 @@ body.news-page #navbar .dropdown-menu {
   body.products-page #primary-nav,
   body.news-page #primary-nav { background: #fff; }
 }
-/* Force navbar text/icons white on Products & News pages */
-body.products-page #navbar .nav-inner a,
-body.news-page #navbar .nav-inner a,
-body.products-page #navbar strong,
-body.news-page #navbar strong,
-body.products-page #navbar .icon,
-body.news-page #navbar .icon {
+/* Force white nav text on Products & News (overrides page inline rules) */
+body.products-page #navbar#navbar .nav-inner a,
+body.news-page    #navbar#navbar .nav-inner a,
+body.products-page #navbar#navbar .nav-inner a:hover,
+body.news-page    #navbar#navbar .nav-inner a:hover,
+body.products-page #navbar#navbar .nav-inner a:focus,
+body.news-page    #navbar#navbar .nav-inner a:focus,
+body.products-page #navbar#navbar .nav-inner a:active,
+body.news-page    #navbar#navbar .nav-inner a:active,
+body.products-page #navbar#navbar .nav-inner a:visited,
+body.news-page    #navbar#navbar .nav-inner a:visited {
   color: #fff !important;
 }
+
+/* Icons / <strong> inside the nav */
+body.products-page #navbar#navbar .icon,
+body.news-page    #navbar#navbar .icon,
+body.products-page #navbar#navbar strong,
+body.news-page    #navbar#navbar strong {
+  color: #fff !important;
+}
+
+/* (Optional) inherit white from the nav element too */
+body.products-page #navbar#navbar,
+body.news-page    #navbar#navbar {
+  color: #fff !important; /* helps if any items use currentColor */
+}
+
