@@ -354,6 +354,15 @@ body.news-page .story-content,
 body.news-page .story-content * {
   color: white !important;
 }
-/* 5) Give the dots a little room without forcing overflow */
+
+/* Ensure dots don’t get clipped on short viewports */
 html body .viewport .dots { bottom: 1rem !important; }
 
+/* Optional: a hardcoded fallback if JS fails to set --nav-h
+   (adjust value if your header is taller/shorter) */
+@supports not (height: calc(100svh - var(--nav-h))) {
+  body.news-page .viewport {
+    margin-top: 64px;
+    height: calc(100svh - 64px);
+  }
+}
