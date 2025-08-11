@@ -10,6 +10,9 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Inform the browser where to stop anchor/focus scrolling */
+html { scroll-padding-top: var(--nav-h, 0px); }
+
 /* === HEADINGS === */
 h1, h2, h3 { color: #004f88; }
 
@@ -167,7 +170,6 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
 @media (max-width: 768px) {
   .nav-inner { padding: 0 1rem; }
 
-  /* Transparent hamburger; bars stay visible */
   .hamburger {
     display: inline-flex;
     flex-direction: column;
@@ -200,7 +202,7 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     position: fixed;
     top: 0; left: 0;
     height: 100vh; width: 280px;
-    padding: 0;                         /* header has padding */
+    padding: 0;
     background: #ffffff;
     box-shadow: 8px 0 24px rgba(0,0,0,0.15);
     transform: translateX(-100%);
@@ -214,7 +216,6 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   }
   #primary-nav.open { transform: translateX(0); }
 
-  /* Drawer header with brand + X */
   .drawer-header {
     display: flex;
     align-items: center;
@@ -242,7 +243,6 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     cursor: pointer;
   }
 
-  /* Left-align items and make full width */
   #primary-nav > li { width: 100%; display: flex; align-items: center; }
   #primary-nav > li > a,
   #primary-nav > li > .has-submenu {
@@ -261,7 +261,6 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   #primary-nav > li > a:hover,
   #primary-nav > li > .has-submenu:hover { background: #f5f7fa; }
 
-  /* Submenu appears directly under Explore (no absolute positioning) */
   #primary-nav > li.dropdown { display: block; width: 100%; }
   #primary-nav .dropdown { position: static !important; }
 
@@ -277,7 +276,7 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   .submenu-toggle:hover { background: #f3f4f6; }
 
   #primary-nav .dropdown-menu {
-    position: static !important;   /* override desktop absolute */
+    position: static !important;
     inset: auto !important;
     transform: none !important;
     width: 100% !important;
@@ -286,20 +285,19 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
     background: transparent !important;
     box-shadow: none !important;
     border-radius: 0;
-    display: none;                 /* collapsed by default */
+    display: none;
   }
   #primary-nav .dropdown.open > .dropdown-menu { display: block !important; }
 
   .dropdown-menu a {
     display: block;
-    padding: 10px 14px 10px 22px;  /* indent sub items */
+    padding: 10px 14px 10px 22px;
     border-radius: 8px;
     color: #333 !important;
     text-align: left !important;
   }
   .dropdown-menu a:hover { background: #f5f7fa; }
 
-  /* Backdrop */
   #backdrop {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.4);
@@ -309,18 +307,15 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
   }
   #backdrop.show { opacity: 1; pointer-events: auto; }
 
-  /* Stack grid etc. */
   .grid.two-column { grid-template-columns: 1fr !important; }
   .footer-content { flex-direction: column; align-items: center; text-align: center; }
   .hero-content { margin-top: 200px; }
 }
 
 /* Shared dropdown list styling for News and Products */
-
-/* Apply styles only when the dropdown is visible */
 .dropdown.open > .dropdown-menu,
 .dropdown:hover > .dropdown-menu {
-  display: block; /* Let your existing script/CSS control visibility */
+  display: block;
 }
 
 #news-submenu,
@@ -332,37 +327,29 @@ footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #c
 
 #news-submenu li,
 #products-submenu li {
-  display: block;       /* Stack vertically */
-  width: 100%;          /* Fill dropdown width */
+  display: block;
+  width: 100%;
 }
 
 #news-submenu li a,
 #products-submenu li a {
-  display: block;       /* Full clickable row */
-  padding: 0.5rem 1rem; /* Spacing */
+  display: block;
+  padding: 0.5rem 1rem;
   text-decoration: none;
-  color: inherit;       /* Match nav text color */
+  color: inherit;
 }
 
 #news-submenu li a:hover,
 #products-submenu li a:hover {
-  background-color: rgba(0, 0, 0, 0.05); /* Hover effect */
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* === NEWS PAGE OVERRIDES === */
 body.news-page .story-content,
-body.news-page .story-content * {
-  color: white !important;
-}
-
-/* Ensure dots don’t get clipped on short viewports */
+body.news-page .story-content * { color: white !important; }
 html body .viewport .dots { bottom: 1rem !important; }
 
-/* Optional: a hardcoded fallback if JS fails to set --nav-h
-   (adjust value if your header is taller/shorter) */
-@supports not (height: calc(100svh - var(--nav-h))) {
-  body.news-page .viewport {
-    margin-top: 64px;
-    height: calc(100svh - 64px);
-  }
+/* JS-off fallback for header spacing */
+@supports not (padding-top: var(--nav-h)) {
+  body.news-page { padding-top: 64px; }
 }
