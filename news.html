@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- News page-specific styles -->
+    <!-- Keep your News page-specific styles -->
     <style>
+      /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
       body {
         overflow-x: hidden;
@@ -20,7 +21,7 @@
         background: #fff;
       }
 
-      /* Force light nav visuals on this page */
+      /* When this page loads the shared header, force light theme + grey text */
       body.news-page #navbar {
         background: white !important;
         box-shadow: none !important;
@@ -31,11 +32,7 @@
       body.news-page #navbar img { height: 28px; width: auto; }
       body.news-page #navbar .nav-inner { text-shadow: none; }
 
-      /* Reserve space for the fixed header globally on this page */
-      html { scroll-padding-top: var(--nav-h, 0px); }
-      body.news-page { padding-top: var(--nav-h, 0px); }
-
-      /* Viewport just fills the screen; header space is handled by body padding */
+      /* ===== Viewport area ===== */
       .viewport {
         position: relative;
         height: 100svh;
@@ -217,8 +214,6 @@
           .then(r => r.text())
           .then(html => {
             mount.innerHTML = html;
-
-            // Initialize header if available
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
@@ -229,29 +224,6 @@
               navbar.classList.remove("dark-nav");
               navbar.classList.add("light-nav");
               navbar.style.setProperty("--nav-text-color", "#555");
-            }
-
-            // === Set and maintain --nav-h (header height) ===
-            function setNavHeightVar() {
-              const nb = document.getElementById("navbar");
-              if (!nb) return;
-              const h = Math.round(nb.getBoundingClientRect().height);
-              document.documentElement.style.setProperty("--nav-h", h + "px");
-            }
-            setNavHeightVar();
-            window.addEventListener("resize", () => requestAnimationFrame(setNavHeightVar));
-            window.addEventListener("load", setNavHeightVar);
-            if (navbar && "ResizeObserver" in window) {
-              const ro = new ResizeObserver(setNavHeightVar);
-              ro.observe(navbar);
-            }
-
-            // === Prevent hash-jumps from placeholder links in the header ===
-            if (navbar) {
-              navbar.addEventListener("click", (e) => {
-                const a = e.target.closest('a[href="#"]');
-                if (a) { e.preventDefault(); e.stopPropagation(); }
-              }, true);
             }
 
             // --- Robust fallback: bind ALL dropdowns & drawer controls ---
@@ -394,3 +366,5 @@
     </script>
   </body>
 </html>
+
+
