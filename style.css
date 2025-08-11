@@ -357,8 +357,7 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 }
-
-html {
-  scroll-padding-top: 64px; /* match your nav height */
+/* Make in-page anchor jumps stop *before* the element, below the fixed nav */
+.ar-essay section { 
+  scroll-margin-top: 80px;   /* try 64–96px depending on your navbar height */
 }
-
