@@ -147,3 +147,27 @@
     window.addEventListener('DOMContentLoaded', init);
   }
 })();
+
+<script>
+  (function () {
+    function setNavOffset() {
+      const nav = document.getElementById('navbar');
+      // Add a small cushion (e.g., 12px) so the heading isn’t jammed against the nav
+      const offset = (nav ? nav.offsetHeight : 0) + 12;
+      document.documentElement.style.setProperty('--nav-offset', offset + 'px');
+    }
+
+    // Run when your header finishes loading (your code already dispatches 'header:ready')
+    window.addEventListener('header:ready', setNavOffset);
+
+    // Also run on resize in case the nav height changes (mobile vs desktop)
+    window.addEventListener('resize', setNavOffset);
+
+    // Safety: run once on DOM ready in case the event timing differs
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setNavOffset);
+    } else {
+      setNavOffset();
+    }
+  })();
+</script>
