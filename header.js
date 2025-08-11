@@ -54,7 +54,7 @@
         .then(r => r.text())
         .then(html => {
           const doc = new DOMParser().parseFromString(html, 'text/html');
-          const nodes = Array.from(doc.querySelectorAll(articleSel)).slice(0, 5);
+          const nodes = Array.from(doc.querySelectorAll(articleSel)).slice(0, 9);
           const items = nodes.map((el, i) => {
             const id = el.getAttribute('id') || `item-${i+1}`;
             const t = el.querySelector(titleSel) || el.querySelector('h1, h2, [role="heading"]');
