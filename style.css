@@ -357,15 +357,13 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 }
-/* Hide nav first, then slide it in after 10 minutes */
-#navbar {
+/* Hide nav by default on the products/news page */
+body.news-page #navbar {
   transform: translateY(-100%);
-  animation: showNav 0.3s ease forwards;
-  animation-delay: 600s; /* 600 seconds = 10 minutes */
+  transition: transform .28s ease;
 }
 
-@keyframes showNav {
-  to {
-    transform: translateY(0);
-  }
+/* When the URL has a hash and a target is active, show the nav */
+html:has(:target) body.news-page #navbar {
+  transform: translateY(0);
 }
