@@ -357,5 +357,4 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 }
-/* Helps some browsers position anchor targets below a fixed header */
-html { scroll-padding-top: 72px; } /* adjust if your nav isn't ~72px tall */
+
