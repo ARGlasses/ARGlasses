@@ -56,13 +56,13 @@
           const doc = new DOMParser().parseFromString(html, 'text/html');
           const nodes = Array.from(doc.querySelectorAll(articleSel)).slice(0, 9);
           const items = nodes.map((el, i) => {
-            const id = el.getAttribute('id') || item-${i+1};
+            const id = el.getAttribute('id') || `item-${i + 1}`;
             const t = el.querySelector(titleSel) || el.querySelector('h1, h2, [role="heading"]');
-            const title = (t ? t.textContent : Item ${i+1}).trim();
-            return { href: ${pageHref}#${id}, title };
+            const title = (t ? t.textContent : `Item ${i + 1}`).trim();
+            return { href: `${pageHref}#${id}`, title };
           });
 
-          const htmlList = items.map(it => <li><a href="${it.href}">${it.title}</a></li>).join('');
+          const htmlList = items.map(it => `<li><a href="${it.href}">${it.title}</a></li>`).join('');
           listEl.innerHTML = htmlList;
         })
         .catch(() => {
