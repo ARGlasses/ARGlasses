@@ -357,3 +357,11 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
+
+:root { --nav-h: 64px; }          /* adjust if your navbar is taller */
+html { scroll-padding-top: calc(var(--nav-h) + 12px); }
+
+/* make sure section anchors also respect the offset when scrolled via JS */
+.ar-essay section[id] { scroll-margin-top: calc(var(--nav-h) + 12px); }
+
+
