@@ -454,71 +454,7 @@
 
         rail.addEventListener('scroll', updateUI, { passive: true });
         window.addEventListener('resize', updateUI);
-        updateUI();
-
-        <!-- existing scripts -->
-<script src="./header.js?v=6" defer></script>
-
-<!-- your page’s carousel / other scripts -->
-<script src="./carousel.js"></script>
-
-<!-- anchor offset fix -->
-<script>
-  (function () {
-    function navH() {
-      const nav = document.getElementById('navbar');
-      return nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
-    }
-
-    function scrollToId(id, smooth = false) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const y = el.getBoundingClientRect().top + window.pageYOffset - (navH() + 12);
-      window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
-    }
-
-    function handleInitialHash() {
-      if (!location.hash) return;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        scrollToId(location.hash.slice(1), false);
-      }));
-    }
-
-    function handleHashChange() {
-      const id = location.hash.slice(1);
-      if (!id) return;
-      scrollToId(id, false);
-    }
-
-    function interceptInPageLinks() {
-      document.addEventListener('click', (e) => {
-        const a = e.target.closest('a[href^="#"]');
-        if (!a) return;
-        const id = a.getAttribute('href').slice(1);
-        if (!id) return;
-        const el = document.getElementById(id);
-        if (!el) return;
-        e.preventDefault();
-        history.pushState(null, "", "#" + id);
-        scrollToId(id, true);
-      }, { passive: false });
-    }
-
-    function init() {
-      interceptInPageLinks();
-      handleInitialHash();
-      window.addEventListener('hashchange', handleHashChange);
-      window.addEventListener('resize', () => {
-        if (location.hash) scrollToId(location.hash.slice(1), false);
-      });
-    }
-
-    window.addEventListener('header:ready', init);
-    window.addEventListener('load', init);
-  })();
-</script>
-
-        
+        updateUI();     
       })();
     </script>
   </body>
