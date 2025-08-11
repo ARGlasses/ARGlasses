@@ -357,23 +357,3 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
-
-:root {
-  --nav-offset: 64px; /* desktop nav height */
-}
-
-@media (max-width: 768px) {
-  :root {
-    --nav-offset: 56px; /* mobile nav height */
-  }
-}
-
-body {
-  padding-top: var(--nav-offset);
-}
-
-html {
-  scroll-padding-top: var(--nav-offset);
-}
-
-
