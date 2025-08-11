@@ -357,3 +357,41 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
+/* Transparent navbar on Products & News (beats page rules) */
+body.products-page #site-header,
+body.news-page #site-header,
+body.products-page #navbar,
+body.news-page #navbar,
+body.products-page #navbar.light-nav,
+body.news-page #navbar.light-nav {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* Ensure readable text/icons over imagery */
+body.products-page #navbar .nav-inner a,
+body.news-page #navbar .nav-inner a,
+body.products-page #navbar strong,
+body.news-page #navbar strong,
+body.products-page #navbar .icon,
+body.news-page #navbar .icon {
+  color: #fff !important;
+}
+
+/* Optional: flip dark logos for contrast */
+body.products-page #navbar img,
+body.news-page #navbar img {
+  filter: brightness(0) invert(1);
+}
+
+/* Keep dropdowns readable and mobile drawer solid */
+body.products-page #navbar .dropdown-menu,
+body.news-page #navbar .dropdown-menu {
+  background: rgba(255,255,255,.98) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15) !important;
+}
+@media (max-width: 768px) {
+  body.products-page #primary-nav,
+  body.news-page #primary-nav { background: #fff; }
+}
