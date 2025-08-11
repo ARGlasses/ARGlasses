@@ -377,15 +377,6 @@ html body .viewport .dots { bottom: 1rem !important; }
   z-index: auto !important;
 }
 
-/* Let your existing title/teaser block sit under the image (not over it) */
-.story-content {
-  position: static !important;      /* was absolute */
-  inset: auto !important;
-  padding: 1rem !important;
-  color: #111 !important;           /* darker text since no dark overlay */
-  text-shadow: none !important;
-}
-
 /* Your new section will now render BELOW the picture+content */
 .story-extra {
   padding: 1rem !important;
