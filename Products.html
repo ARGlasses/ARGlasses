@@ -288,10 +288,50 @@
               navbar.style.setProperty("--nav-text-color", "#555");
             }
 
+            // Signal that header is mounted
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
       });
+    </script>
+
+    <!-- Dynamic overlap guard: only offsets content if it sits under the fixed navbar -->
+    <script>
+      (function installNavOverlapGuard() {
+        function firstContentRoot() {
+          // Choose the first obvious page-root element after the header
+          return document.querySelector('.viewport, main, .page-root, .container');
+        }
+
+        function fixIfOverlapping() {
+          const navbar = document.getElementById('navbar');
+          const root = firstContentRoot();
+          if (!navbar || !root) return;
+
+          const navRect = navbar.getBoundingClientRect();
+          const rootRect = root.getBoundingClientRect();
+
+          // If the first content element starts under the nav, nudge it down.
+          const isOverlapping = rootRect.top < navRect.bottom - 1;
+
+          if (isOverlapping) {
+            const h = Math.ceil(navRect.height);
+            root.style.marginTop = h + 'px';
+            root.style.scrollMarginTop = h + 'px';
+          } else {
+            root.style.marginTop = '';
+            root.style.scrollMarginTop = '';
+          }
+        }
+
+        // Run when the header is ready, on load, and on resize (nav height can vary)
+        window.addEventListener('header:ready', fixIfOverlapping);
+        window.addEventListener('load', fixIfOverlapping);
+        window.addEventListener('resize', fixIfOverlapping);
+
+        // Also correct after brief delay to catch late font/layout shifts
+        setTimeout(fixIfOverlapping, 200);
+      })();
     </script>
 
     <!-- News carousel behavior (unchanged) -->
