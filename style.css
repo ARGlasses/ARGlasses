@@ -354,10 +354,11 @@ body.news-page .story-content,
 body.news-page .story-content * {
   color: white !important;
 }
+/* 5) Give the dots a little room without forcing overflow */
+html body .viewport .dots { bottom: 1rem !important; }
+}
+
 html {
   scroll-padding-top: 64px; /* match your nav height */
 }
 
-/* 5) Give the dots a little room without forcing overflow */
-html body .viewport .dots { bottom: 1rem !important; }
-}
