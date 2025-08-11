@@ -359,11 +359,13 @@ html body .viewport .dots { bottom: 1rem !important; }
 
 .story-extra {
   padding: 1rem;
-  background: white;
+  background: #fff;
   color: #333;
   font-size: 0.95rem;
+  border-top: 1px solid #eee;
 }
 .story-extra p {
   margin: 0;
 }
+
 
