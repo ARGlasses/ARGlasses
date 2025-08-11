@@ -395,3 +395,12 @@ body.news-page #navbar .dropdown-menu {
   body.products-page #primary-nav,
   body.news-page #primary-nav { background: #fff; }
 }
+/* Force navbar text/icons white on Products & News pages */
+body.products-page #navbar .nav-inner a,
+body.news-page #navbar .nav-inner a,
+body.products-page #navbar strong,
+body.news-page #navbar strong,
+body.products-page #navbar .icon,
+body.news-page #navbar .icon {
+  color: #fff !important;
+}
