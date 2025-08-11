@@ -365,18 +365,6 @@ html body .viewport .dots { bottom: 1rem !important; }
   overflow: hidden;                 /* keep rounded corners/shadows intact */
 }
 
-/* Turn the background image into a normal image at the top */
-.story img.bg {
-  position: static !important;      /* was absolute */
-  inset: auto !important;
-  width: 100% !important;
-  height: auto !important;
-  display: block !important;
-  object-fit: cover !important;
-  aspect-ratio: 16 / 9;             /* controls picture height; tweak if you like */
-  z-index: auto !important;
-}
-
 /* Your new section will now render BELOW the picture+content */
 .story-extra {
   padding: 1rem !important;
