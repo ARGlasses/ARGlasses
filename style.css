@@ -357,17 +357,45 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
-/* Force extra section below the image background layer */
-.story-extra {
-  position: relative;           /* Take it out of the overlay stacking */
-  z-index: 5;                    /* Above the background image but below overlays */
-  background: #fff;              /* Solid background so text isn't on top of image */
-  color: #333;
-  padding: 1rem;
-  margin-top: calc(100% - 40px); /* Push it below the image height, adjust as needed */
+/* --- Make the story card flow top-to-bottom so extra text is visible --- */
+.story {
+  height: auto !important;          /* allow the card to grow */
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden;                 /* keep rounded corners/shadows intact */
 }
 
-.story-extra p {
-  margin: 0;
+/* Turn the background image into a normal image at the top */
+.story img.bg {
+  position: static !important;      /* was absolute */
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  object-fit: cover !important;
+  aspect-ratio: 16 / 9;             /* controls picture height; tweak if you like */
+  z-index: auto !important;
+}
+
+/* Remove the gradient overlay that was covering the entire card */
+.story::after {
+  content: none !important;
+}
+
+/* Let your existing title/teaser block sit under the image (not over it) */
+.story-content {
+  position: static !important;      /* was absolute */
+  inset: auto !important;
+  padding: 1rem !important;
+  color: #111 !important;           /* darker text since no dark overlay */
+  text-shadow: none !important;
+}
+
+/* Your new section will now render BELOW the picture+content */
+.story-extra {
+  padding: 1rem !important;
+  background: #fff !important;
+  color: #333 !important;
+  border-top: 1px solid #eee !important;
 }
 
