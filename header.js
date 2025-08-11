@@ -147,5 +147,3 @@
     window.addEventListener('DOMContentLoaded', init);
   }
 })();
-
-
