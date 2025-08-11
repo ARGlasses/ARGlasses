@@ -357,12 +357,6 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
-/* --- Make the story card flow top-to-bottom so extra text is visible --- */
-.story {
-  height: auto !important;          /* allow the card to grow */
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden;                 /* keep rounded corners/shadows intact */
 }
 
 /* Your new section will now render BELOW the picture+content */
