@@ -457,90 +457,44 @@
         updateUI();     
       })();
     </script>
-      <script>
-(function () {
-  const STYLE_ID = 'anchor-offset-style';
 
-  function navH() {
-    const nav = document.getElementById('navbar');
-    return nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
-  }
+    <!-- Anchor offset + body padding fix -->
+    <script>
+      (function () {
+        const STYLE_ID = 'nav-offset-padder';
 
-  function ensureStyle(h) {
-    const px = h + 12; // a little breathing room
-    let tag = document.getElementById(STYLE_ID);
-    const css = `
-      :root { --anchor-offset: ${px}px; }
-      html { scroll-padding-top: var(--anchor-offset); }
-      /* Default jumps and #hash targets land with room below the fixed header */
-      :target { scroll-margin-top: var(--anchor-offset); }
-      /* Also help explicit sections we know about */
-      .ar-essay section[id] { scroll-margin-top: var(--anchor-offset); }
-    `;
-    if (!tag) {
-      tag = document.createElement('style');
-      tag.id = STYLE_ID;
-      document.head.appendChild(tag);
-    }
-    if (tag.textContent !== css) tag.textContent = css;
-  }
+        function navH() {
+          const nav = document.getElementById('navbar');
+          return nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
+        }
 
-  function repositionToHash() {
-    if (!location.hash) return;
-    const id = location.hash.slice(1);
-    const el = document.getElementById(id);
-    if (!el) return;
-    // Force-correct the final position (in case the browser jumped earlier)
-    const y = el.getBoundingClientRect().top + window.pageYOffset - (navH() + 12);
-    window.scrollTo({ top: y, behavior: 'auto' });
-  }
+        function apply(h) {
+          let tag = document.getElementById(STYLE_ID);
+          if (!tag) {
+            tag = document.createElement('style');
+            tag.id = STYLE_ID;
+            document.head.appendChild(tag);
+          }
+          tag.textContent = `
+            :root { --nav-offset: ${h}px; }
+            body { padding-top: var(--nav-offset); }
+            html { scroll-padding-top: calc(var(--nav-offset) + 12px); }
+            .ar-essay section[id], :target { scroll-margin-top: calc(var(--nav-offset) + 12px); }
+          `;
+        }
 
-  function updateAndReposition() {
-    ensureStyle(navH());
-    // Double RAF lets layout settle (fonts/images), then we correct
-    requestAnimationFrame(() => requestAnimationFrame(repositionToHash));
-  }
+        function update() { apply(navH()); }
 
-  function init() {
-    updateAndReposition();
+        // Recalculate when header is ready, on load, resize, and after fonts settle
+        window.addEventListener('header:ready', update);
+        window.addEventListener('load', update);
+        window.addEventListener('resize', update);
+        if (document.fonts && document.fonts.ready) { document.fonts.ready.then(update); }
 
-    // Re-run when the header finishes injecting
-    window.addEventListener('header:ready', updateAndReposition);
-
-    // Re-run on resize (mobile/desktop header height changes)
-    window.addEventListener('resize', updateAndReposition);
-
-    // After all resources load
-    window.addEventListener('load', updateAndReposition);
-
-    // After web fonts settle (if supported)
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(updateAndReposition);
-    }
-
-    // If the hash changes later (e.g., user clicks “Meta”)
-    window.addEventListener('hashchange', updateAndReposition);
-
-    // Smooth-intercept in-page # links so we control the offset immediately
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href^="#"]');
-      if (!a) return;
-      const id = a.getAttribute('href').slice(1);
-      if (!id) return;
-      const el = document.getElementById(id);
-      if (!el) return;
-      e.preventDefault();
-      history.pushState(null, "", "#" + id);
-      ensureStyle(navH());
-      const y = el.getBoundingClientRect().top + window.pageYOffset - (navH() + 12);
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }, { passive: false });
-  }
-
-  // Kick off
-  init();
-})();
-</script>
+        // Initial kick
+        update();
+      })();
+    </script>
 
   </body>
 </html>
