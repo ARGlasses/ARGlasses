@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Page-specific styles (kept) -->
+    <!-- Keep your News page-specific styles -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -21,7 +21,7 @@
         background: #fff;
       }
 
-      /* Light header treatment on this page */
+      /* When this page loads the shared header, force light theme + grey text */
       body.news-page #navbar {
         background: white !important;
         box-shadow: none !important;
@@ -218,7 +218,7 @@
               try { window.__initHeader(); } catch (_) {}
             }
 
-            // Light navbar for this page
+            // Light navbar treatment for news page
             const navbar = document.getElementById("navbar");
             if (navbar) {
               navbar.classList.remove("dark-nav");
@@ -226,7 +226,7 @@
               navbar.style.setProperty("--nav-text-color", "#555");
             }
 
-            // Fallback bindings
+            // --- Robust fallback: bind ALL dropdowns & drawer controls ---
             (function bindFallback(){
               const menu     = document.getElementById("primary-nav");
               const toggle   = document.getElementById("menu-toggle");
@@ -261,7 +261,7 @@
 
               function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
 
-              // Bind ALL dropdowns
+              // Bind ALL dropdowns (Explore, News, Products, etc.)
               const dropdowns = menu.querySelectorAll(".dropdown");
               dropdowns.forEach((li) => {
                 const label = li.querySelector(".has-submenu");
@@ -286,99 +286,13 @@
               window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
             })();
 
-            // Signal header ready
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
       });
     </script>
 
-    <!-- Robust dynamic overlap guard -->
-    <script>
-      (function installNavOverlapGuard() {
-        let lastApplied = null;
-
-        function firstContentRoot() {
-          return document.querySelector('.viewport, main, .page-root, .container');
-        }
-
-        function applyOffset(px) {
-          const root = firstContentRoot();
-          if (!root) return;
-          if (px && px !== lastApplied) {
-            root.style.marginTop = px + 'px';
-            root.style.scrollMarginTop = px + 'px';
-            lastApplied = px;
-          } else if (!px && lastApplied !== null) {
-            root.style.marginTop = '';
-            root.style.scrollMarginTop = '';
-            lastApplied = null;
-          }
-        }
-
-        function computeNeededOffset() {
-          const navbar = document.getElementById('navbar');
-          const root = firstContentRoot();
-          if (!navbar || !root) return 0;
-
-          const navRect = navbar.getBoundingClientRect();
-          const rootRect = root.getBoundingClientRect();
-          const overlapping = rootRect.top < navRect.bottom - 1;
-          return overlapping ? Math.ceil(navRect.height) : 0;
-        }
-
-        function fixIfOverlapping() {
-          requestAnimationFrame(() => applyOffset(computeNeededOffset()));
-        }
-
-        // Initial runs
-        window.addEventListener('header:ready', fixIfOverlapping);
-        window.addEventListener('load', fixIfOverlapping);
-
-        // BFCache + late shifts
-        window.addEventListener('pageshow', (e) => {
-          if (e.persisted) fixIfOverlapping();
-          setTimeout(fixIfOverlapping, 0);
-          setTimeout(fixIfOverlapping, 200);
-          setTimeout(fixIfOverlapping, 600);
-        });
-
-        // Reflow triggers
-        window.addEventListener('resize', fixIfOverlapping);
-        window.addEventListener('hashchange', fixIfOverlapping);
-        document.addEventListener('visibilitychange', () => { if (!document.hidden) fixIfOverlapping(); });
-
-        // Link clicks (same-page links, soft navs)
-        document.addEventListener('click', (e) => {
-          const a = e.target.closest('a');
-          if (!a) return;
-          setTimeout(fixIfOverlapping, 0);
-          setTimeout(fixIfOverlapping, 150);
-          setTimeout(fixIfOverlapping, 500);
-        });
-
-        // Observe navbar size/class changes
-        function observeNavbar() {
-          const navbar = document.getElementById('navbar');
-          if (!navbar) return;
-          if ('ResizeObserver' in window) {
-            const ro = new ResizeObserver(() => fixIfOverlapping());
-            ro.observe(navbar);
-          }
-          if ('MutationObserver' in window) {
-            const mo = new MutationObserver(() => fixIfOverlapping());
-            mo.observe(navbar, { attributes: true, attributeFilter: ['class', 'style'] });
-          }
-        }
-        observeNavbar();
-
-        // Safety passes
-        setTimeout(fixIfOverlapping, 200);
-        setTimeout(fixIfOverlapping, 1000);
-      })();
-    </script>
-
-    <!-- News carousel (unchanged) -->
+    <!-- News carousel behavior (unchanged) -->
     <script>
       (function () {
         const rail = document.querySelector('.rail');
