@@ -226,6 +226,42 @@
               navbar.style.setProperty("--nav-text-color", "#555");
             }
 
+            // --- TEMPORARY LOAD SPACER (no permanent padding) ---
+            // 1) Measure header height
+            const nb = document.getElementById("navbar");
+            const h = nb ? Math.round(nb.getBoundingClientRect().height) : 0;
+
+            // 2) Insert a spacer BEFORE the viewport so the page lands fully visible
+            const viewport = document.querySelector(".viewport");
+            let spacer = null;
+            if (viewport && h > 0) {
+              spacer = document.createElement("div");
+              spacer.id = "initial-offset";
+              spacer.style.cssText = "height:" + h + "px; width:100%;";
+              viewport.parentNode.insertBefore(spacer, viewport);
+            }
+
+            // 3) Remove the spacer on first user interaction (before scrolling),
+            //    so no extra space is visible when scrolling back to the top.
+            function removeSpacerEarly() {
+              if (!spacer || !spacer.parentNode) return;
+              spacer.parentNode.removeChild(spacer);
+              spacer = null;
+              detachEarlyListeners();
+            }
+            function detachEarlyListeners() {
+              window.removeEventListener("pointerdown", removeSpacerEarly, true);
+              window.removeEventListener("keydown", removeSpacerEarly, true);
+              window.removeEventListener("touchstart", removeSpacerEarly, true);
+            }
+            window.addEventListener("pointerdown", removeSpacerEarly, true);
+            window.addEventListener("keydown", removeSpacerEarly, true);
+            window.addEventListener("touchstart", removeSpacerEarly, true);
+
+            // 4) Failsafe: if user somehow doesn't interact, remove after short delay
+            //    to avoid layout oddities on super slow loads.
+            setTimeout(removeSpacerEarly, 1200);
+
             // --- Robust fallback: bind ALL dropdowns & drawer controls ---
             (function bindFallback(){
               const menu     = document.getElementById("primary-nav");
@@ -366,5 +402,3 @@
     </script>
   </body>
 </html>
-
-
