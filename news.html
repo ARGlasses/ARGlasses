@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Keep your News page-specific styles -->
+    <!-- News page-specific styles -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -32,12 +32,15 @@
       body.news-page #navbar img { height: 28px; width: auto; }
       body.news-page #navbar .nav-inner { text-shadow: none; }
 
-      /* ===== Viewport area ===== */
+      /* ===== Viewport area =====
+         NOTE: these two lines fix the "micro-scroll to reveal" issue by
+         offsetting for the fixed header height. JS sets --nav-h dynamically. */
       .viewport {
         position: relative;
-        height: 100svh;
+        height: calc(100svh - var(--nav-h, 0px));
         width: 100%;
         overflow: hidden;
+        margin-top: var(--nav-h, 0px);
       }
 
       .rail {
@@ -214,6 +217,8 @@
           .then(r => r.text())
           .then(html => {
             mount.innerHTML = html;
+
+            // Initialize header if available
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
@@ -224,6 +229,27 @@
               navbar.classList.remove("dark-nav");
               navbar.classList.add("light-nav");
               navbar.style.setProperty("--nav-text-color", "#555");
+            }
+
+            // === FIX: set CSS var for nav height and keep it updated ===
+            function setNavHeightVar() {
+              const nb = document.getElementById("navbar");
+              if (!nb) return;
+              const h = Math.round(nb.getBoundingClientRect().height);
+              document.documentElement.style.setProperty("--nav-h", h + "px");
+            }
+            setNavHeightVar();
+
+            // Update on resize, load (fonts), and any header size changes
+            let navResizeRaf;
+            window.addEventListener("resize", () => {
+              cancelAnimationFrame(navResizeRaf);
+              navResizeRaf = requestAnimationFrame(setNavHeightVar);
+            });
+            window.addEventListener("load", setNavHeightVar);
+            if (navbar && "ResizeObserver" in window) {
+              const ro = new ResizeObserver(() => setNavHeightVar());
+              ro.observe(navbar);
             }
 
             // --- Robust fallback: bind ALL dropdowns & drawer controls ---
