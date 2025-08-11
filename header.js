@@ -43,44 +43,6 @@
     if (btn) btn.setAttribute('aria-expanded', String(isOpen));
   }
 
-  // ---------- Anchor offset helpers (NEW) ----------
-  function navHeight() {
-    const nav = document.getElementById('navbar');
-    return nav ? nav.offsetHeight : 0;
-  }
-
-  function smoothScrollToTarget(targetEl, pushHash = true) {
-    if (!targetEl) return;
-    // Distance from top of document to the element, minus the nav height and a small buffer
-    const y = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight() - 8;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-    if (pushHash) history.pushState(null, '', '#' + targetEl.id);
-  }
-
-  function isSamePageAnchorLink(a) {
-    if (!a) return false;
-    const href = a.getAttribute('href') || '';
-    if (href.startsWith('#')) return true; // pure hash link
-    try {
-      const url = new URL(href, location.href);
-      return (url.origin === location.origin && url.pathname === location.pathname && !!url.hash);
-    } catch (_) {
-      return false;
-    }
-  }
-
-  function fixInitialHashPosition() {
-    if (!location.hash) return;
-    const target = document.querySelector(location.hash);
-    if (!target) return;
-    // Wait one frame so the injected header is definitely in layout, then correct the scroll
-    requestAnimationFrame(() => {
-      // Use instant jump here to avoid fighting the browser's own anchor animation; it's already on target
-      const y = target.getBoundingClientRect().top + window.pageYOffset - navHeight() - 8;
-      window.scrollTo({ top: y, behavior: 'instant' in window ? 'instant' : 'auto' });
-    });
-  }
-
   // ---------- Populate dynamic submenus (Products/News) ----------
   function populateDynamicLists() {
     qsa('#primary-nav .dropdown-menu[data-page]').forEach(listEl => {
@@ -94,13 +56,13 @@
           const doc = new DOMParser().parseFromString(html, 'text/html');
           const nodes = Array.from(doc.querySelectorAll(articleSel)).slice(0, 9);
           const items = nodes.map((el, i) => {
-            const id = el.getAttribute('id') || `item-${i+1}`;
+            const id = el.getAttribute('id') || item-${i+1};
             const t = el.querySelector(titleSel) || el.querySelector('h1, h2, [role="heading"]');
-            const title = (t ? t.textContent : `Item ${i+1}`).trim();
-            return { href: `${pageHref}#${id}`, title };
+            const title = (t ? t.textContent : Item ${i+1}).trim();
+            return { href: ${pageHref}#${id}, title };
           });
 
-          const htmlList = items.map(it => `<li><a href="${it.href}">${it.title}</a></li>`).join('');
+          const htmlList = items.map(it => <li><a href="${it.href}">${it.title}</a></li>).join('');
           listEl.innerHTML = htmlList;
         })
         .catch(() => {
@@ -137,22 +99,7 @@
         return;
       }
 
-      // ----- NEW: Smooth, offset scrolling for same-page anchor links -----
-      const anchor = e.target.closest && e.target.closest('a[href]');
-      if (anchor && isSamePageAnchorLink(anchor)) {
-        const href = anchor.getAttribute('href');
-        const hash = href.startsWith('#') ? href : new URL(href, location.href).hash;
-        const target = document.querySelector(hash);
-        if (target) {
-          e.preventDefault();
-          // If the mobile drawer is open, close it before scrolling
-          if (menu && menu.classList.contains('open')) closeDrawer();
-          smoothScrollToTarget(target, true);
-          return;
-        }
-      }
-
-      // Clicking a link inside the open drawer that navigates away: let navigation proceed
+      // Clicking a link inside the open drawer: let navigation proceed
       if (isMobile() && e.target.closest('#primary-nav a')) {
         return;
       }
@@ -162,18 +109,7 @@
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menu && menu.classList.contains('open')) closeDrawer();
     });
-
-    // If the viewport/nav height changes, keep hash-aligned
-    window.addEventListener('resize', () => {
-      if (!location.hash) return;
-      const t = document.querySelector(location.hash);
-      if (t) {
-        // Reposition instantly to avoid jank during resize
-        const y = t.getBoundingClientRect().top + window.pageYOffset - navHeight() - 8;
-        window.scrollTo({ top: y, behavior: 'auto' });
-      }
-      if (!isMobile()) closeDrawer();
-    });
+    window.addEventListener('resize', () => { if (!isMobile()) closeDrawer(); });
   }
 
   // ---------- Theme switch (optional) ----------
@@ -191,7 +127,7 @@
         navbar.classList.add('dark-nav');
       }
     }
-    window.addEventListener('scroll', updateNavbarTheme, { passive: true });
+    window.addEventListener('scroll', updateNavbarTheme);
     window.addEventListener('DOMContentLoaded', updateNavbarTheme);
   }
 
@@ -200,8 +136,6 @@
     populateDynamicLists();
     bindEvents();
     initNavbarScrollTheme();
-    // After everything is wired (and header is in the DOM), correct initial hash position
-    fixInitialHashPosition();
   }
 
   // Run when header is injected or DOM is ready
@@ -213,3 +147,5 @@
     window.addEventListener('DOMContentLoaded', init);
   }
 })();
+
+
