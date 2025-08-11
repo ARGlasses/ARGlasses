@@ -357,22 +357,3 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
-/* Transparent navbar on Products & News pages */
-body.products-page #navbar,
-body.news-page #navbar {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-}
-
-/* Make nav links white for contrast over hero/background images */
-body.products-page #navbar .nav-inner a,
-body.news-page #navbar .nav-inner a {
-  color: white !important;
-}
-
-/* Optional: invert logo on dark backgrounds */
-body.products-page #navbar img,
-body.news-page #navbar img {
-  filter: brightness(0) invert(1);
-}
