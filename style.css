@@ -357,3 +357,15 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 }
+/* Hide nav first, then slide it in after 10 minutes */
+#navbar {
+  transform: translateY(-100%);
+  animation: showNav 0.3s ease forwards;
+  animation-delay: 600s; /* 600 seconds = 10 minutes */
+}
+
+@keyframes showNav {
+  to {
+    transform: translateY(0);
+  }
+}
