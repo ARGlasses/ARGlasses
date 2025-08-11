@@ -357,3 +357,13 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
+/* Ensure header dropdowns appear above the hero carousel */
+#navbar { 
+  position: relative;   /* keep your current positioning; this just creates a stacking context */
+  z-index: 9999;        /* higher than .arrow/.dots on the carousel */
+}
+
+#navbar .dropdown-menu {
+  position: absolute;   /* typical for menus; retains existing layout */
+  z-index: 10000;       /* higher than the navbar itself */
+}
