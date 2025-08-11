@@ -13,7 +13,6 @@
 
     <!-- News page-specific styles -->
     <style>
-      /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
       body {
         overflow-x: hidden;
@@ -21,7 +20,7 @@
         background: #fff;
       }
 
-      /* When this page loads the shared header, force light theme + grey text */
+      /* Force light nav visuals on this page */
       body.news-page #navbar {
         background: white !important;
         box-shadow: none !important;
@@ -32,15 +31,16 @@
       body.news-page #navbar img { height: 28px; width: auto; }
       body.news-page #navbar .nav-inner { text-shadow: none; }
 
-      /* ===== Viewport area =====
-         NOTE: these two lines fix the "micro-scroll to reveal" issue by
-         offsetting for the fixed header height. JS sets --nav-h dynamically. */
+      /* Reserve space for the fixed header globally on this page */
+      html { scroll-padding-top: var(--nav-h, 0px); }
+      body.news-page { padding-top: var(--nav-h, 0px); }
+
+      /* Viewport just fills the screen; header space is handled by body padding */
       .viewport {
         position: relative;
-        height: calc(100svh - var(--nav-h, 0px));
+        height: 100svh;
         width: 100%;
         overflow: hidden;
-        margin-top: var(--nav-h, 0px);
       }
 
       .rail {
@@ -231,7 +231,7 @@
               navbar.style.setProperty("--nav-text-color", "#555");
             }
 
-            // === FIX: set CSS var for nav height and keep it updated ===
+            // === Set and maintain --nav-h (header height) ===
             function setNavHeightVar() {
               const nb = document.getElementById("navbar");
               if (!nb) return;
@@ -239,17 +239,19 @@
               document.documentElement.style.setProperty("--nav-h", h + "px");
             }
             setNavHeightVar();
-
-            // Update on resize, load (fonts), and any header size changes
-            let navResizeRaf;
-            window.addEventListener("resize", () => {
-              cancelAnimationFrame(navResizeRaf);
-              navResizeRaf = requestAnimationFrame(setNavHeightVar);
-            });
+            window.addEventListener("resize", () => requestAnimationFrame(setNavHeightVar));
             window.addEventListener("load", setNavHeightVar);
             if (navbar && "ResizeObserver" in window) {
-              const ro = new ResizeObserver(() => setNavHeightVar());
+              const ro = new ResizeObserver(setNavHeightVar);
               ro.observe(navbar);
+            }
+
+            // === Prevent hash-jumps from placeholder links in the header ===
+            if (navbar) {
+              navbar.addEventListener("click", (e) => {
+                const a = e.target.closest('a[href="#"]');
+                if (a) { e.preventDefault(); e.stopPropagation(); }
+              }, true);
             }
 
             // --- Robust fallback: bind ALL dropdowns & drawer controls ---
