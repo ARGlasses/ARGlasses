@@ -359,11 +359,3 @@ html body .viewport .dots { bottom: 1rem !important; }
 
 }
 
-/* Your new section will now render BELOW the picture+content */
-.story-extra {
-  padding: 1rem !important;
-  background: #fff !important;
-  color: #333 !important;
-  border-top: 1px solid #eee !important;
-}
-
