@@ -494,53 +494,6 @@
         // Initial kick
         update();
 
-
-
-      <script>
-(function () {
-  function navH() {
-    const nav = document.getElementById('navbar');
-    return nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
-  }
-
-  function scrollToHash(id, smooth) {
-    if (!id) return;
-    const el = document.getElementById(id);
-    if (!el) return;
-    // Let the browser do its native jump first, then correct the final position
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      const y = el.getBoundingClientRect().top + window.pageYOffset - (navH() + 12);
-      window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
-    }));
-  }
-
-  // Intercept in-page links (covers "#meta" and "products.html#meta")
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a[href]');
-    if (!a) return;
-
-    const href = a.getAttribute('href');
-    if (!href) return;
-
-    // Identify same-page hash navigations
-    const isHashOnly = href.startsWith('#');
-    const isSamePageHash =
-      !isHashOnly &&
-      href.includes('#') &&
-      new URL(href, location.href).pathname === location.pathname;
-
-    if (isHashOnly || isSamePageHash) {
-      e.preventDefault();
-      const id = (isHashOnly ? href : href.slice(href.indexOf('#'))).replace(/^#/, '');
-      // Update URL (keeps back/forward history correct)
-      history.pushState(null, '', '#' + id);
-      scrollToHash(id, true);
-    }
-  }, { passive: false });
-
-  // Also handle manual hash changes (e.g., back/forward buttons)
-  window.addEventListener('hashchange', () => {
-    scrollToHash(location.hash.replace(/^#/, ''), false);
   });
 })();
 </script>
