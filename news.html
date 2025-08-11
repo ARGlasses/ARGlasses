@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Keep your News page-specific styles -->
+    <!-- Page-specific styles (kept) -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -21,7 +21,7 @@
         background: #fff;
       }
 
-      /* When this page loads the shared header, force light theme + grey text */
+      /* Light header treatment on this page */
       body.news-page #navbar {
         background: white !important;
         box-shadow: none !important;
@@ -218,7 +218,7 @@
               try { window.__initHeader(); } catch (_) {}
             }
 
-            // Light navbar treatment for news page
+            // Light navbar for this page
             const navbar = document.getElementById("navbar");
             if (navbar) {
               navbar.classList.remove("dark-nav");
@@ -226,7 +226,7 @@
               navbar.style.setProperty("--nav-text-color", "#555");
             }
 
-            // --- Robust fallback: bind ALL dropdowns & drawer controls ---
+            // Fallback bindings
             (function bindFallback(){
               const menu     = document.getElementById("primary-nav");
               const toggle   = document.getElementById("menu-toggle");
@@ -261,7 +261,7 @@
 
               function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
 
-              // Bind ALL dropdowns (Explore, News, Products, etc.)
+              // Bind ALL dropdowns
               const dropdowns = menu.querySelectorAll(".dropdown");
               dropdowns.forEach((li) => {
                 const label = li.querySelector(".has-submenu");
@@ -286,53 +286,99 @@
               window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
             })();
 
-            // Fire an event so downstream code knows header is ready
+            // Signal header ready
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
       });
     </script>
 
-    <!-- Dynamic overlap guard: only offsets content if it sits under the fixed navbar -->
+    <!-- Robust dynamic overlap guard -->
     <script>
       (function installNavOverlapGuard() {
+        let lastApplied = null;
+
         function firstContentRoot() {
-          // Choose the first obvious page-root element after the header
           return document.querySelector('.viewport, main, .page-root, .container');
         }
 
-        function fixIfOverlapping() {
-          const navbar = document.getElementById('navbar');
+        function applyOffset(px) {
           const root = firstContentRoot();
-          if (!navbar || !root) return;
-
-          const navRect = navbar.getBoundingClientRect();
-          const rootRect = root.getBoundingClientRect();
-
-          // If the first content element starts under the nav, nudge it down.
-          const isOverlapping = rootRect.top < navRect.bottom - 1;
-
-          if (isOverlapping) {
-            const h = Math.ceil(navRect.height);
-            root.style.marginTop = h + 'px';
-            root.style.scrollMarginTop = h + 'px';
-          } else {
+          if (!root) return;
+          if (px && px !== lastApplied) {
+            root.style.marginTop = px + 'px';
+            root.style.scrollMarginTop = px + 'px';
+            lastApplied = px;
+          } else if (!px && lastApplied !== null) {
             root.style.marginTop = '';
             root.style.scrollMarginTop = '';
+            lastApplied = null;
           }
         }
 
-        // Run when the header is ready, on load, and on resize (nav height can vary)
+        function computeNeededOffset() {
+          const navbar = document.getElementById('navbar');
+          const root = firstContentRoot();
+          if (!navbar || !root) return 0;
+
+          const navRect = navbar.getBoundingClientRect();
+          const rootRect = root.getBoundingClientRect();
+          const overlapping = rootRect.top < navRect.bottom - 1;
+          return overlapping ? Math.ceil(navRect.height) : 0;
+        }
+
+        function fixIfOverlapping() {
+          requestAnimationFrame(() => applyOffset(computeNeededOffset()));
+        }
+
+        // Initial runs
         window.addEventListener('header:ready', fixIfOverlapping);
         window.addEventListener('load', fixIfOverlapping);
-        window.addEventListener('resize', fixIfOverlapping);
 
-        // Also correct after brief delay to catch late font/layout shifts
+        // BFCache + late shifts
+        window.addEventListener('pageshow', (e) => {
+          if (e.persisted) fixIfOverlapping();
+          setTimeout(fixIfOverlapping, 0);
+          setTimeout(fixIfOverlapping, 200);
+          setTimeout(fixIfOverlapping, 600);
+        });
+
+        // Reflow triggers
+        window.addEventListener('resize', fixIfOverlapping);
+        window.addEventListener('hashchange', fixIfOverlapping);
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) fixIfOverlapping(); });
+
+        // Link clicks (same-page links, soft navs)
+        document.addEventListener('click', (e) => {
+          const a = e.target.closest('a');
+          if (!a) return;
+          setTimeout(fixIfOverlapping, 0);
+          setTimeout(fixIfOverlapping, 150);
+          setTimeout(fixIfOverlapping, 500);
+        });
+
+        // Observe navbar size/class changes
+        function observeNavbar() {
+          const navbar = document.getElementById('navbar');
+          if (!navbar) return;
+          if ('ResizeObserver' in window) {
+            const ro = new ResizeObserver(() => fixIfOverlapping());
+            ro.observe(navbar);
+          }
+          if ('MutationObserver' in window) {
+            const mo = new MutationObserver(() => fixIfOverlapping());
+            mo.observe(navbar, { attributes: true, attributeFilter: ['class', 'style'] });
+          }
+        }
+        observeNavbar();
+
+        // Safety passes
         setTimeout(fixIfOverlapping, 200);
+        setTimeout(fixIfOverlapping, 1000);
       })();
     </script>
 
-    <!-- News carousel behavior (unchanged) -->
+    <!-- News carousel (unchanged) -->
     <script>
       (function () {
         const rail = document.querySelector('.rail');
