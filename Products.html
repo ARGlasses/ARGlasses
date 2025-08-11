@@ -458,43 +458,7 @@
       })();
     </script>
 
-    <!-- Anchor offset + body padding fix -->
-    <script>
-      (function () {
-        const STYLE_ID = 'nav-offset-padder';
 
-        function navH() {
-          const nav = document.getElementById('navbar');
-          return nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
-        }
-
-        function apply(h) {
-          let tag = document.getElementById(STYLE_ID);
-          if (!tag) {
-            tag = document.createElement('style');
-            tag.id = STYLE_ID;
-            document.head.appendChild(tag);
-          }
-          tag.textContent = `
-            :root { --nav-offset: ${h}px; }
-            body { padding-top: var(--nav-offset); }
-            html { scroll-padding-top: calc(var(--nav-offset) + 12px); }
-            .ar-essay section[id], :target { scroll-margin-top: calc(var(--nav-offset) + 12px); }
-          `;
-        }
-
-        function update() { apply(navH()); }
-
-        // Recalculate when header is ready, on load, resize, and after fonts settle
-        window.addEventListener('header:ready', update);
-        window.addEventListener('load', update);
-        window.addEventListener('resize', update);
-        if (document.fonts && document.fonts.ready) { document.fonts.ready.then(update); }
-
-        // Initial kick
-        update();
-      })();
-    </script>
 
   </body>
 </html>
