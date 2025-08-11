@@ -1,396 +1,355 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>News</title>
+/* === GLOBAL RESET === */
+* { box-sizing: border-box; }
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="images/logo7.png" type="image/png" />
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background: white;
+  color: #111;
+  overflow-x: hidden;
+}
 
-    <!-- News page-specific styles -->
-    <style>
-      html, body { height: 100%; margin: 0; }
-      body {
-        overflow-x: hidden;
-        font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: #fff;
-      }
+/* Inform the browser where to stop anchor/focus scrolling */
+html { scroll-padding-top: var(--nav-h, 0px); }
 
-      /* Force light nav visuals on this page */
-      body.news-page #navbar {
-        background: white !important;
-        box-shadow: none !important;
-        border: 0;
-        padding-block: .5rem;
-      }
-      body.news-page #navbar .nav-inner a { color: var(--nav-text-color, #555) !important; }
-      body.news-page #navbar img { height: 28px; width: auto; }
-      body.news-page #navbar .nav-inner { text-shadow: none; }
+/* === HEADINGS === */
+h1, h2, h3 { color: #004f88; }
 
-      /* Reserve space for the fixed header globally on this page */
-      html { scroll-padding-top: var(--nav-h, 0px); }
-      body.news-page { padding-top: var(--nav-h, 0px); }
+/* === NAVIGATION (DESKTOP UNCHANGED) === */
+nav.container-fluid {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: transparent;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  border: 0;
+  outline: 0;
+}
 
-      /* Viewport just fills the screen; header space is handled by body padding */
-      .viewport {
-        position: relative;
-        height: 100svh;
-        width: 100%;
-        overflow: hidden;
-      }
+.nav-inner {
+  width: 100%;
+  padding: 0 224px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
-      .rail {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        gap: 1.25rem;
-        padding: 0 max(1rem, calc((100vw - min(85vw, 1100px)) / 2));
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-      }
-      .rail::-webkit-scrollbar { display: none; }
-      .rail { scrollbar-width: none; -ms-overflow-style: none; }
+nav ul {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-      .story {
-        position: relative;
-        min-width: clamp(78%, 85vw, 1100px);
-        height: clamp(420px, 82svh, 900px);
-        border-radius: 24px;
-        overflow: hidden;
-        scroll-snap-align: center;
-        isolation: isolate;
-        color: white;
-        box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
-        background: #111;
-      }
-      .story img.bg {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -2;
-      }
-      .story::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(0,0,0,0.55) 0%,
-          rgba(0,0,0,0.25) 40%,
-          rgba(0,0,0,0.10) 65%,
-          rgba(0,0,0,0.30) 100%
-        );
-        z-index: -1;
-      }
-      .story-content {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        align-content: end;
-        padding: clamp(1rem, 4vw, 3rem);
-        gap: .5rem;
-        max-width: 100ch;
-      }
-      .story-kicker { font-size: .95rem; opacity: .9; }
-      .story-title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
-      .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
-      .story-actions { margin-top: .75rem; }
+nav a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+  color: inherit;
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
 
-      .arrow {
-        position: absolute;
-        top: 50%;
-        translate: 0 -50%;
-        width: 3rem;
-        height: 3rem;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,.35);
-        background: rgba(0,0,0,.25);
-        backdrop-filter: blur(4px);
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        z-index: 60;
-        transition: transform .12s ease, opacity .2s ease;
-        color: #fff;
-      }
-      .arrow.left  { left: .75rem; }
-      .arrow.right { right: .75rem; }
-      .arrow[disabled] { opacity: .35; cursor: not-allowed; }
-      .arrow:hover     { transform: translateY(-50%) scale(1.05); }
-      .arrow svg { width: 22px; height: 22px; }
+.logo { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: normal; }
+.logo img { height: 32px; width: auto; }
 
-      .dots {
-        position: absolute;
-        left: 0; right: 0; bottom: 1.1rem;
-        display: flex;
-        gap: .45rem;
-        justify-content: center;
-        z-index: 55;
-        pointer-events: none;
-      }
-      .dots button {
-        pointer-events: auto;
-        width: 8px; height: 8px; border-radius: 999px; border: 0;
-        background: rgba(255,255,255,.45);
-      }
-      .dots button[aria-current="true"] {
-        width: 22px;
-        background: white;
-      }
-      @media (min-width: 1200px) {
-        .arrow { width: 3.25rem; height: 3.25rem; }
-      }
-    </style>
+/* Hide mobile-only elements on desktop */
+.hamburger, .submenu-toggle, .drawer-header { display: none; }
 
-    <!-- Shared header behavior -->
-    <script src="./header.js?v=6" defer></script>
-  </head>
-  <body class="news-page">
-    <!-- Shared header mount -->
-    <div id="site-header"></div>
+/* Theme states (unchanged) */
+nav.container-fluid.dark-nav a,
+nav.container-fluid.dark-nav strong,
+nav.container-fluid.dark-nav .icon { color: white !important; }
+nav.container-fluid.light-nav { background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+nav.container-fluid.light-nav a,
+nav.container-fluid.light-nav strong,
+nav.container-fluid.light-nav .icon { color: #333 !important; }
 
-    <!-- Stories -->
-    <section class="viewport" aria-label="Latest AR Glasses news">
-      <button class="arrow left" aria-label="Previous story" disabled>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="arrow right" aria-label="Next story">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+/* === DROPDOWN MENU (DESKTOP) === */
+.dropdown { position: relative; }
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background: #fff;
+  padding: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  border-radius: 4px;
+  min-width: 180px;
+  z-index: 999;
+}
+.dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu a {
+  display: block; padding: 0.25rem 0.5rem;
+  color: #333 !important; text-decoration: none; font-weight: 500; white-space: nowrap;
+}
+.dropdown-menu a:hover { background: #f0f0f0; color: #000 !important; }
+nav.container-fluid.dark-nav .dropdown-menu { background: #fff !important; }
+nav.container-fluid.dark-nav .dropdown-menu a { color: #333 !important; }
+nav.container-fluid.dark-nav .dropdown-menu a:hover { background: #f0f0f0; color: #000 !important; }
 
-      <div class="rail" tabindex="0">
-        <!-- Story 1 -->
-        <article class="story" id="story-1"><img class="bg" src="images/metaglasses.webp" alt="" /><div class="story-content"><div class="story-kicker">Meta's</div><h1 class="story-title">Oakley Meta HSTN smart glasses</h1><p class="story-teaser">(July 2025)</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
-        <!-- Story 2 -->
-        <article class="story" id="story-2"><img class="bg" src="images/timcook.webp" alt="" /><div class="story-content"><div class="story-kicker">Apple's</div><h1 class="story-title">Liquid Glass UI preview</h1><p class="story-teaser">(I/O 2025 & TED2025)</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
-        <!-- Story 3 -->
-        <article class="story" id="story-3"><img class="bg" src="images/google.jpg" alt="" /><div class="story-content"><div class="story-kicker">Google's</div><h1 class="story-title">Android XR glasses demo</h1><p class="story-teaser">(late 2024)</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
-        <!-- Story 4 -->
-        <article class="story" id="story-4"><img class="bg" src="images/snap.jpg" alt="" /><div class="story-content"><div class="story-kicker">Snap's</div><h1 class="story-title">5th-gen Spectacles</h1><p class="story-teaser">(CES 2025)</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
-        <!-- Story 5 -->
-        <article class="story" id="story-5"><img class="bg" src="images/vuzix.webp" alt="" /><div class="story-content"><div class="story-kicker">Vuzix's</div><h1 class="story-title">Vuzix Ultralite Pro</h1><p class="story-teaser">(WWDC 2025)</p><div class="story-actions"><a href="#" role="button">Read more</a></div></div></article>
-      </div>
+/* === HERO SECTION === */
+.hero {
+  position: relative; width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden; margin: 0; padding: 0;
+}
+.hero-video { position: absolute; top: 0; left: 0; object-fit: cover; width: 100%; height: 100%; z-index: 1; }
+.hero::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 2; }
+.hero-content { position: relative; z-index: 3; margin-top: 500px; color: white; }
+.hero h1 { font-size: 1rem; font-weight: 200; margin-bottom: 1rem; color: #ffffff !important; }
+.hero h2, .hero h3 { color: white; }
+.hero h2 { font-size: 3rem; font-weight: 600; margin-bottom: 1rem; }
+.hero h3 { font-size: 1.75rem; font-weight: 300; }
 
-      <div class="dots" aria-hidden="true"></div>
-    </section>
+/* === MAIN CONTENT === */
+main.container { padding: 0 2rem; background: white; }
+.image-grid { background: white; padding: 2rem 0; width: 100%; }
+.image-grid .grid.two-column { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+.full-width-image { margin-top: 2rem; }
+figure { position: relative; overflow: hidden; border-radius: 14px; margin: 0; padding: 0; }
+figure img { width: 100%; height: auto; object-fit: cover; transition: transform 0.4s ease; border-radius: 14px; }
+figure img:hover { transform: scale(1.03); }
+figcaption {
+  position: absolute; bottom: 0; left: 0; width: 100%;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  color: white; font-size: 1.2rem; font-weight: 600; text-align: center;
+  border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; z-index: 2;
+}
 
-    <!-- Footer -->
-    <footer class="container professional-footer">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <div class="footer-logo-group">
-            <img src="images/logo7.png" alt="AR Glasses Logo" />
-            <h4>AR glasses</h4>
-          </div>
-          <p>Changing how you see the world</p>
-        </div>
-        <div class="footer-links">
-          <strong>Site Terms and Policies</strong>
-          <ul>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="Privacy-Policy.html">Privacy Policy</a></li>
-            <li><a href="Cookie-Policy.html">Cookie Policy</a></li>
-            <li><a href="terms.html">Terms &amp; Conditions</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <small>&copy; 2025 ARglasses.com • All rights reserved</small>
-      </div>
-    </footer>
+/* === FOOTER === */
+footer.container { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #ccc; text-align: center; font-size: 0.8rem; background: white; color: #111; }
+.professional-footer { background: white; padding: 3rem 2rem 2rem; color: #111; border-top: 1px solid #ccc; font-size: 0.8rem; }
+.footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; }
+.footer-logo-group { display: flex; align-items: center; gap: 0.8rem; }
+.footer-logo-group img { height: 40px; }
+.footer-logo-group h4 { margin: 0; font-size: 1.25rem; color: #004f88; }
+.footer-links ul { list-style: none; padding: 0; }
+.footer-links li { margin-bottom: 0.5rem; }
+.footer-links a { text-decoration: none; color: #004f88; }
+.footer-links a:hover { text-decoration: underline; }
+.footer-bottom { text-align: center; margin-top: 2rem; font-size: 0.85rem; color: #666; }
 
-    <!-- Inject shared header -->
-    <script>
-      window.addEventListener("DOMContentLoaded", function () {
-        const mount = document.getElementById("site-header");
-        fetch("./header.html?v=6")
-          .then(r => r.text())
-          .then(html => {
-            mount.innerHTML = html;
+/* === COOKIE BANNER === */
+#cookie-banner {
+  position: fixed; bottom: 0; left: 0; width: 100%;
+  z-index: 9999; background: #f9f9f9; color: #111;
+  padding: 1rem 2rem; box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  display: none; font-size: 0.9rem; border-top: 1px solid #ccc;
+}
+#cookie-banner .container { display: flex; flex-direction: column; gap: 0.75rem; max-width: 960px; margin: 0 auto; }
+#cookie-banner p { margin: 0; line-height: 1.4; }
+#cookie-banner a { color: #004f88; text-decoration: underline; }
+#cookie-banner a:hover { text-decoration: none; }
+#cookie-banner button {
+  font-family: "Poppins", sans-serif;
+  padding: 0.5rem 1rem; border-radius: 4px; border: none; cursor: pointer;
+  font-weight: 500; transition: background-color 0.2s ease;
+}
+#cookie-banner button.contrast { background-color: #004f88; color: white; }
+#cookie-banner button.contrast:hover { background-color: #003a66; }
+#cookie-banner button.secondary { background-color: #e0e0e0; color: #333; }
+#cookie-banner button.secondary:hover { background-color: #d0d0d0; }
 
-            // Initialize header if available
-            if (typeof window.__initHeader === "function") {
-              try { window.__initHeader(); } catch (_) {}
-            }
+@media (max-width: 768px) {
+  #cookie-banner .container { flex-direction: column; align-items: flex-start; }
+  #cookie-banner button { width: 100%; }
+}
 
-            // Light navbar treatment for news page
-            const navbar = document.getElementById("navbar");
-            if (navbar) {
-              navbar.classList.remove("dark-nav");
-              navbar.classList.add("light-nav");
-              navbar.style.setProperty("--nav-text-color", "#555");
-            }
+/* =========================================================
+   MOBILE-ONLY HAMBURGER & OFF-CANVAS DRAWER
+   ========================================================= */
+@media (max-width: 768px) {
+  .nav-inner { padding: 0 1rem; }
 
-            // === Set and maintain --nav-h (header height) ===
-            function setNavHeightVar() {
-              const nb = document.getElementById("navbar");
-              if (!nb) return;
-              const h = Math.round(nb.getBoundingClientRect().height);
-              document.documentElement.style.setProperty("--nav-h", h + "px");
-            }
-            setNavHeightVar();
-            window.addEventListener("resize", () => requestAnimationFrame(setNavHeightVar));
-            window.addEventListener("load", setNavHeightVar);
-            if (navbar && "ResizeObserver" in window) {
-              const ro = new ResizeObserver(setNavHeightVar);
-              ro.observe(navbar);
-            }
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: 36px; height: 36px;
+    border: none;
+    background: transparent;
+    margin-right: 8px;
+    color: #333;
+    cursor: pointer;
+  }
+  nav.container-fluid.dark-nav .hamburger { color: #fff; }
 
-            // === Prevent hash-jumps from placeholder links in the header ===
-            if (navbar) {
-              navbar.addEventListener("click", (e) => {
-                const a = e.target.closest('a[href="#"]');
-                if (a) { e.preventDefault(); e.stopPropagation(); }
-              }, true);
-            }
+  .hamburger span {
+    display: block !important;
+    width: 20px; height: 2px;
+    margin: 0;
+    background: currentColor !important;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-            // --- Robust fallback: bind ALL dropdowns & drawer controls ---
-            (function bindFallback(){
-              const menu     = document.getElementById("primary-nav");
-              const toggle   = document.getElementById("menu-toggle");
-              const backdrop = document.getElementById("backdrop");
-              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
+  /* Off-canvas drawer */
+  #primary-nav {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh; width: 280px;
+    padding: 0;
+    background: #ffffff;
+    box-shadow: 8px 0 24px rgba(0,0,0,0.15);
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    text-align: left;
+  }
+  #primary-nav.open { transform: translateX(0); }
 
-              if (!menu || !toggle || !backdrop) return;
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 14px;
+    border-bottom: 1px solid #eee;
+  }
+  .drawer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #333;
+  }
+  .drawer-brand img { height: 28px; width: auto; }
+  .drawer-close {
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 28px;
+    line-height: 1;
+    width: 36px; height: 36px;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+  }
 
-              function openDrawer(){
-                menu.classList.add("open");
-                backdrop.classList.add("show");
-                toggle.setAttribute("aria-expanded","true");
-                document.body.style.overflow = "hidden";
-              }
-              function closeDrawer(){
-                menu.classList.remove("open");
-                backdrop.classList.remove("show");
-                toggle.setAttribute("aria-expanded","false");
-                document.body.style.overflow = "";
-                // collapse all submenus
-                menu.querySelectorAll(".dropdown").forEach(li => li.classList.remove("open"));
-                menu.querySelectorAll(".submenu-toggle[aria-expanded='true']").forEach(btn => btn.setAttribute("aria-expanded","false"));
-                menu.querySelectorAll(".dropdown-menu").forEach(ul => ul.style.display = "");
-              }
+  #primary-nav > li { width: 100%; display: flex; align-items: center; }
+  #primary-nav > li > a,
+  #primary-nav > li > .has-submenu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start !important;
+    width: 100%;
+    padding: 12px 14px;
+    color: #333 !important;
+    font-size: 0.95rem;
+    text-align: left !important;
+  }
+  #primary-nav > .drawer-header + li > a,
+  #primary-nav > .drawer-header + li > .has-submenu { padding-top: 12px; }
 
-              toggle.addEventListener("click", function(e){
-                e.preventDefault();
-                menu.classList.contains("open") ? closeDrawer() : openDrawer();
-              });
-              backdrop.addEventListener("click", closeDrawer);
-              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
+  #primary-nav > li > a:hover,
+  #primary-nav > li > .has-submenu:hover { background: #f5f7fa; }
 
-              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
+  #primary-nav > li.dropdown { display: block; width: 100%; }
+  #primary-nav .dropdown { position: static !important; }
 
-              // Bind ALL dropdowns (Explore, News, Products, etc.)
-              const dropdowns = menu.querySelectorAll(".dropdown");
-              dropdowns.forEach((li) => {
-                const label = li.querySelector(".has-submenu");
-                const chev  = li.querySelector(".submenu-toggle");
+  .submenu-toggle {
+    display: inline-flex;
+    margin-left: auto;
+    background: none; border: none; padding: 6px;
+    align-items: center; justify-content: center;
+    color: #666; cursor: pointer; border-radius: 8px;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .submenu-toggle[aria-expanded="true"] { transform: rotate(180deg); }
+  .submenu-toggle:hover { background: #f3f4f6; }
 
-                function toggleSubmenu(e){
-                  if (!isMobile()) return;
-                  e.preventDefault();
-                  const menuEl = li.querySelector(".dropdown-menu");
-                  const chevEl = li.querySelector(".submenu-toggle");
-                  const isOpen = li.classList.contains("open");
-                  li.classList.toggle("open", !isOpen);
-                  if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
-                  if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
-                }
+  #primary-nav .dropdown-menu {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 0;
+    padding: 0 0 8px 0;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0;
+    display: none;
+  }
+  #primary-nav .dropdown.open > .dropdown-menu { display: block !important; }
 
-                if (label) label.addEventListener("click", toggleSubmenu);
-                if (chev)  chev.addEventListener("click", toggleSubmenu);
-              });
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 14px 10px 22px;
+    border-radius: 8px;
+    color: #333 !important;
+    text-align: left !important;
+  }
+  .dropdown-menu a:hover { background: #f5f7fa; }
 
-              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
-              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
-            })();
+  #backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 999;
+  }
+  #backdrop.show { opacity: 1; pointer-events: auto; }
 
-            window.dispatchEvent(new Event("header:ready"));
-          })
-          .catch(err => console.error("Failed to load header.html:", err));
-      });
-    </script>
+  .grid.two-column { grid-template-columns: 1fr !important; }
+  .footer-content { flex-direction: column; align-items: center; text-align: center; }
+  .hero-content { margin-top: 200px; }
+}
 
-    <!-- News carousel behavior (unchanged) -->
-    <script>
-      (function () {
-        const rail = document.querySelector('.rail');
-        const prev = document.querySelector('.arrow.left');
-        const next = document.querySelector('.arrow.right');
-        const dotsWrap = document.querySelector('.dots');
-        const cards = Array.from(document.querySelectorAll('.story'));
-        if (!rail || cards.length === 0) return;
+/* Shared dropdown list styling for News and Products */
+.dropdown.open > .dropdown-menu,
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
 
-        cards.forEach((_, i) => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.setAttribute('aria-label', 'Go to story ' + (i + 1));
-          b.addEventListener('click', () => goTo(i));
-          dotsWrap.appendChild(b);
-        });
+#news-submenu,
+#products-submenu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
 
-        function cardWidth() {
-          const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
-          const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
-          return w + gap;
-        }
+#news-submenu li,
+#products-submenu li {
+  display: block;
+  width: 100%;
+}
 
-        function goTo(index) {
-          const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
-          cards[clampIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
+#news-submenu li a,
+#products-submenu li a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: inherit;
+}
 
-        function atStart() { return rail.scrollLeft <= 2; }
-        function atEnd() {
-          const max = rail.scrollWidth - rail.clientWidth - 2;
-          return rail.scrollLeft >= max;
-        }
+#news-submenu li a:hover,
+#products-submenu li a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 
-        function updateUI() {
-          prev.disabled = atStart();
-          next.disabled = atEnd();
+/* === NEWS PAGE OVERRIDES === */
+body.news-page .story-content,
+body.news-page .story-content * { color: white !important; }
+html body .viewport .dots { bottom: 1rem !important; }
 
-          const railRect = rail.getBoundingClientRect();
-          const railCenter = railRect.left + railRect.width / 2;
-
-          let active = 0, min = Infinity;
-          cards.forEach((c, i) => {
-            const rect = c.getBoundingClientRect();
-            const center = rect.left + rect.width / 2;
-            const dist = Math.abs(center - railCenter);
-            if (dist < min) { min = dist; active = i; }
-          });
-
-          dotsWrap.querySelectorAll('button').forEach((b, i) => {
-            b.setAttribute('aria-current', i === active ? 'true' : 'false');
-          });
-        }
-
-        function scrollByStep(dir) {
-          rail.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
-        }
-
-        prev.addEventListener('click', () => scrollByStep(-1));
-        next.addEventListener('click', () => scrollByStep(1));
-
-        rail.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
-          if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
-        });
-
-        rail.addEventListener('scroll', updateUI, { passive: true });
-        window.addEventListener('resize', updateUI);
-        updateUI();
-      })();
-    </script>
-  </body>
-</html>
+/* JS-off fallback for header spacing */
+@supports not (padding-top: var(--nav-h)) {
+  body.news-page { padding-top: 64px; }
+}
