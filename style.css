@@ -357,4 +357,7 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
+body .image-grid figcaption {
+  color: white !important;
+}
 
