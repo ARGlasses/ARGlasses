@@ -521,5 +521,90 @@
         window.addEventListener('products:hash-restored', centerStoryFromHash);
       })();
     </script>
+
+
+      <script>
+/**
+ * Kill same-page anchor scrolling from the dropdown,
+ * keep the hash in the URL, force vertical top, then center the story.
+ */
+(function () {
+  const hashToStory = {
+    '#meta':   '#story-1',
+    '#apple':  '#story-2',
+    '#google': '#story-3',
+    '#snap':   '#story-4',
+    '#vuzix':  '#story-5',
+    '#rokid':  '#story-6',
+    '#rayneo': '#story-7',
+    '#viture': '#story-8',
+    '#xreal':  '#story-9'
+  };
+
+  function forceTop() {
+    // snap — no smooth behavior, no padding tricks
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+
+  function centerStoryFromHash(h) {
+    const sel = hashToStory[h?.toLowerCase()];
+    const el  = sel && document.querySelector(sel);
+    if (el) el.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+  }
+
+  // Intercept ONLY same-page links that point to one of our sections.
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+
+    // Resolve the link target against the current page
+    const url = new URL(a.getAttribute('href'), location.href);
+
+    // Not same origin or not same page → let the browser handle it.
+    if (url.origin !== location.origin) return;
+    if (url.pathname !== location.pathname) return;
+
+    // If no (or unknown) hash → let the browser handle it.
+    const h = url.hash;
+    if (!h || !(h.toLowerCase() in hashToStory)) return;
+
+    // Same-page hash: stop the default anchor scroll.
+    e.preventDefault();
+
+    // Close the drawer if the header menu is open (optional, safe no-op if absent)
+    try {
+      const menu = document.getElementById('primary-nav');
+      const backdrop = document.getElementById('backdrop');
+      const toggle = document.getElementById('menu-toggle');
+      menu?.classList.remove('open');
+      backdrop?.classList.remove('show');
+      toggle?.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    } catch (_) {}
+
+    // Update the URL WITHOUT scrolling or firing a native anchor jump.
+    history.pushState(null, '', url.pathname + url.search + h);
+
+    // Hard-snap to absolute top, then center the correct story horizontally.
+    forceTop();
+    // Use rAF to ensure layout is stable before centering
+    requestAnimationFrame(() => centerStoryFromHash(h));
+  });
+
+  // Fallback: if something else changes the hash (e.g., code), correct it.
+  window.addEventListener('hashchange', function () {
+    const h = location.hash;
+    if (!(h.toLowerCase() in hashToStory)) return;
+    forceTop();
+    requestAnimationFrame(() => centerStoryFromHash(h));
+  });
+
+  // bfcache return (Back/Forward) — ensure it doesn’t restore a scrolled position
+  window.addEventListener('pageshow', (e) => { if (e.persisted) forceTop(); });
+})();
+</script>
+
   </body>
 </html>
