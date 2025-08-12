@@ -184,6 +184,7 @@
         <article class="story" id="story-8"><img class="bg" src="images/viture.avif" alt="" /><div class="story-content"><div class="story-kicker">XR Glasses from</div><h1 class="story-title">Viture</h1><p class="story-teaser">4K-Like Display, Sharper & Brighter, Next-Gen Audio</p><div class="story-actions"><a href="#viture" role="button">Read more</a></div></div></article>
         <!-- Story 9 -->
         <article class="story" id="story-9"><img class="bg" src="images/xreal.jpg" alt="" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h1 class="story-title">Xreal</h1><p class="story-teaser">Snapdragon, Android XR, Large FOV</p><div class="story-actions"><a href="#xreal" role="button">Read more</a></div></div></article>
+        
       </div>
       </section>
     
@@ -457,63 +458,7 @@
       })();
     </script>
 
-    <!-- Scroll control just for this page: keep top on same-page nav; allow deep links from other pages -->
-    <script>
-      (function () {
-        try { history.scrollRestoration = 'manual'; } catch (_) {}
 
-        var initialHash = location.hash;
 
-        function forceTop() {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-        }
-        function forceTopSequence() {
-          forceTop();
-          requestAnimationFrame(forceTop);
-          setTimeout(forceTop, 0);
-          setTimeout(forceTop, 60);
-        }
-
-        // On initial load:
-        // - If there's no hash, make sure we're at the very top.
-        // - If there IS a hash, let the browser scroll to that section (deep link from another page).
-        window.addEventListener('load', function () {
-          if (!initialHash) {
-            forceTopSequence();
-          }
-        });
-
-        // Back/forward cache restores: apply only when we originally loaded without a hash.
-        window.addEventListener('pageshow', function (e) {
-          if (e.persisted && !initialHash) forceTopSequence();
-        });
-
-        // Intercept clicks to same-page hash links to prevent the jump and keep the page at the top.
-        document.addEventListener('click', function (e) {
-          var a = e.target.closest('a[href]');
-          if (!a) return;
-
-          var next = new URL(a.getAttribute('href'), location.href);
-
-          // Same origin + same path + has a hash → user is navigating within products.html
-          if (next.origin === location.origin &&
-              next.pathname === location.pathname &&
-              next.hash) {
-            e.preventDefault();
-            // Keep URL clean and stay at top
-            history.pushState(null, '', location.pathname + location.search);
-            forceTopSequence();
-          }
-        }, { capture: true });
-
-        // Also suppress programmatic hash changes on this page
-        window.addEventListener('hashchange', function () {
-          history.replaceState(null, '', location.pathname + location.search);
-          forceTopSequence();
-        });
-      })();
-    </script>
   </body>
 </html>
