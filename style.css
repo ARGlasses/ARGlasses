@@ -364,38 +364,6 @@ body .image-grid figcaption {
 
 
 /* Floating "Shop All" Button - Mobile Only (Centered) */
-.shop-all-btn {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #004f88; /* Blue */
-  color: white;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 999px; /* Fully rounded edges */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-  font-size: 1rem;
-  z-index: 2000;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-/* Hover & focus effects */
-.shop-all-btn:hover,
-.shop-all-btn:focus {
-  background-color: #003a66;
-  transform: translate(-50%, -2px);
-}
-
-/* Only show on mobile */
-@media (min-width: 769px) {
-  .shop-all-btn {
-    display: none;
-  }
-}
-
-
 
 .shop-all-btn {
   position: fixed;
