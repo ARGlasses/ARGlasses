@@ -5,13 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Products</title>
 
+    <!-- Early scroll control: stop auto hash jump and scroll restore -->
+    <script>
+      (function () {
+        try { history.scrollRestoration = 'manual'; } catch (_) {}
+        if (location.hash) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      })();
+    </script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Keep your page-specific styles -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -147,6 +156,11 @@
       @media (min-width: 1200px) {
         .arrow { width: 3.25rem; height: 3.25rem; }
       }
+
+      /* News page text contrast for cards */
+      body.news-page .story-content,
+      body.news-page .story-content * { color: white !important; }
+      html body .viewport .dots { bottom: 1rem !important; }
     </style>
 
     <!-- Shared header behavior -->
@@ -184,93 +198,82 @@
         <article class="story" id="story-8"><img class="bg" src="images/viture.avif" alt="" /><div class="story-content"><div class="story-kicker">XR Glasses from</div><h1 class="story-title">Viture</h1><p class="story-teaser">4K-Like Display, Sharper & Brighter, Next-Gen Audio</p><div class="story-actions"><a href="#viture" role="button">Read more</a></div></div></article>
         <!-- Story 9 -->
         <article class="story" id="story-9"><img class="bg" src="images/xreal.jpg" alt="" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h1 class="story-title">Xreal</h1><p class="story-teaser">Snapdragon, Android XR, Large FOV</p><div class="story-actions"><a href="#xreal" role="button">Read more</a></div></div></article>
-        
       </div>
-      </section>
-    
+    </section>
+
     <!-- Page Content -->
     <main class="container" style="max-width: 900px;">
       <section aria-labelledby="collab-heading">
+        <div class="ar-essay" style="max-width:900px;margin:0 auto;line-height:1.6;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+          <br><br>
 
-<div class="ar-essay" style="max-width:900px;margin:0 auto;line-height:1.6;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
-    <br>
-    <br>
-  <section id="meta">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Meta</h1>
-    <p><strong>Name(s):</strong> Ray-Ban | Meta smart glasses (gen-2); Oakley | Meta HSTN (limited ed.); Meta Quest 3 (mixed-reality headset).</p>
-    <p>Meta is the volume leader in camera-equipped “AI smart glasses,” and the only Western vendor with a mainstream, fashion-grade line made at eyewear scale via EssilorLuxottica. The second-generation Ray-Ban | Meta glasses marry discrete open-ear audio, a 12-MP ultra-wide camera and always-available Meta AI (with vision and live translation) in frames people actually want to wear; recent firmware added WhatsApp/Messenger video calling and richer on-device assistance. The strategy is to make glasses the natural home for ambient AI—hands-free capture, real-time answers about what you’re seeing, and lightweight media—while iterating faster than “true AR” optics allow today. In 2025 Meta expanded beyond Ray-Ban to Oakley’s sport line (HSTN), adding longer battery life and improved video stabilization, signaling a multi-brand play up and down lifestyle segments while the OS and AI mature. Parallel to glasses, Quest 3 anchors Meta’s mixed-reality stack for immersive apps and dev tooling—useful both as a content beachhead and as a proving ground for input, tracking and passthrough that will eventually inform slimmer eyewear. The net: pragmatic, socially acceptable AI eyewear now; deeper spatial computing via Quest until optics catch up.</p>
-  </section>
+          <section id="meta">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Meta</h1>
+            <p><strong>Name(s):</strong> Ray-Ban | Meta smart glasses (gen-2); Oakley | Meta HSTN (limited ed.); Meta Quest 3 (mixed-reality headset).</p>
+            <p>Meta is the volume leader in camera-equipped “AI smart glasses,” and the only Western vendor with a mainstream, fashion-grade line made at eyewear scale via EssilorLuxottica. The second-generation Ray-Ban | Meta glasses marry discrete open-ear audio, a 12-MP ultra-wide camera and always-available Meta AI (with vision and live translation) in frames people actually want to wear; recent firmware added WhatsApp/Messenger video calling and richer on-device assistance. The strategy is to make glasses the natural home for ambient AI—hands-free capture, real-time answers about what you’re seeing, and lightweight media—while iterating faster than “true AR” optics allow today. In 2025 Meta expanded beyond Ray-Ban to Oakley’s sport line (HSTN), adding longer battery life and improved video stabilization, signaling a multi-brand play up and down lifestyle segments while the OS and AI mature. Parallel to glasses, Quest 3 anchors Meta’s mixed-reality stack for immersive apps and dev tooling—useful both as a content beachhead and as a proving ground for input, tracking and passthrough that will eventually inform slimmer eyewear. The net: pragmatic, socially acceptable AI eyewear now; deeper spatial computing via Quest until optics catch up.</p>
+          </section>
 
-  <section id="apple">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Apple</h1>
-    <p><strong>Name:</strong> Apple Vision Pro (spatial computer; not AR glasses).</p>
-    <p>Apple’s first spatial device is intentionally not glasses: Vision Pro prioritizes fidelity, input naturalness and app continuity over sunglasses-like form factors. With dual micro-OLED 4K-per-eye displays, eye- and hand-tracking, and visionOS, it is best in class for pixel density, text legibility and color accuracy—enabling real productivity alongside cinematic “spatial videos,” SharePlay and a growing catalog of iPad and native spatial apps. Apple’s posture is architectural: ship the premium reference machine (with persona avatars, high-quality passthrough and Apple-grade privacy), cultivate a developer ecosystem, and harden UX primitives—direct gaze selection, pinch gestures, spatial anchoring—before compressing the stack into lighter eyewear later. That clarity shows up in polished first-party experiences (Photos/Videos, Safari, Freeform) and system-level affordances (windowing, depth, spatial audio) that generalize well when the form factor shrinks. While not “AR glasses” by name or size, Vision Pro defines the north star for immersion and ergonomics, sets expectations for eye-safe rendering and text, and—crucially—gives Apple time to tune silicon, optics and battery architecture under real-world load. In short, Vision Pro is Apple’s platform primer for an eventual glasses era, not the end state.</p>
-  </section>
+          <section id="apple">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Apple</h1>
+            <p><strong>Name:</strong> Apple Vision Pro (spatial computer; not AR glasses).</p>
+            <p>Apple’s first spatial device is intentionally not glasses: Vision Pro prioritizes fidelity, input naturalness and app continuity over sunglasses-like form factors. With dual micro-OLED 4K-per-eye displays, eye- and hand-tracking, and visionOS, it is best in class for pixel density, text legibility and color accuracy—enabling real productivity alongside cinematic “spatial videos,” SharePlay and a growing catalog of iPad and native spatial apps. Apple’s posture is architectural: ship the premium reference machine (with persona avatars, high-quality passthrough and Apple-grade privacy), cultivate a developer ecosystem, and harden UX primitives—direct gaze selection, pinch gestures, spatial anchoring—before compressing the stack into lighter eyewear later. That clarity shows up in polished first-party experiences (Photos/Videos, Safari, Freeform) and system-level affordances (windowing, depth, spatial audio) that generalize well when the form factor shrinks. While not “AR glasses” by name or size, Vision Pro defines the north star for immersion and ergonomics, sets expectations for eye-safe rendering and text, and—crucially—gives Apple time to tune silicon, optics and battery architecture under real-world load. In short, Vision Pro is Apple’s platform primer for an eventual glasses era, not the end state.</p>
+          </section>
 
-  <section id="google">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Google</h1>
-    <p><strong>Name(s):</strong> Android XR (platform/OS); Project Astra (multimodal AI, prototyped on glasses).</p>
-    <p>After sun-setting Glass Enterprise in 2023, Google re-entered the arena at the platform layer: Android XR, co-developed with Samsung and Qualcomm, extends Android to headsets and—eventually—smart glasses. The bet is Google’s core strengths—Play Store reach, Android Studio tooling, WebXR/OpenXR support, and Gemini-based multimodal AI—can catalyze a multi-OEM ecosystem much like phones. Hardware is partner-led (e.g., Samsung’s “Project Moohan” headset), while Google concentrates on OS, services and assistant. In parallel, DeepMind’s Project Astra demos showed real-time, on-device visual understanding and memory running across phones and prototype glasses; limited trusted-tester trials suggest Google is validating UX before making consumer hardware commitments. The near-term “offering,” then, is an enabling stack (Android XR SDK and Gemini integrations) plus reference experiences, not a retail pair of AR specs. That pragmatism—platform first, prototypes second—acknowledges the lessons of Glass while positioning Google to be indispensable when optics, power and cost cross the consumer threshold again.</p>
-  </section>
+          <section id="google">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Google</h1>
+            <p><strong>Name(s):</strong> Android XR (platform/OS); Project Astra (multimodal AI, prototyped on glasses).</p>
+            <p>After sun-setting Glass Enterprise in 2023, Google re-entered the arena at the platform layer: Android XR, co-developed with Samsung and Qualcomm, extends Android to headsets and—eventually—smart glasses. The bet is Google’s core strengths—Play Store reach, Android Studio tooling, WebXR/OpenXR support, and Gemini-based multimodal AI—can catalyze a multi-OEM ecosystem much like phones. Hardware is partner-led (e.g., Samsung’s “Project Moohan” headset), while Google concentrates on OS, services and assistant. In parallel, DeepMind’s Project Astra demos showed real-time, on-device visual understanding and memory running across phones and prototype glasses; limited trusted-tester trials suggest Google is validating UX before making consumer hardware commitments. The near-term “offering,” then, is an enabling stack (Android XR SDK and Gemini integrations) plus reference experiences, not a retail pair of AR specs. That pragmatism—platform first, prototypes second—acknowledges the lessons of Glass while positioning Google to be indispensable when optics, power and cost cross the consumer threshold again.</p>
+          </section>
 
-  <section id="snap">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Snap</h1>
-    <p><strong>Name:</strong> Spectacles (developer hardware; not mass-market consumer).</p>
-    <p>Snap continues to treat eyewear as a creator-first laboratory for world-scale AR. The latest Spectacles are an AR developer kit tightly integrated with Lens Studio, Snap’s mature authoring pipeline used by millions of lens creators on mobile. On-face, Spectacles emphasize low-latency rendering, rapid wireless deployment and tight loops between creator tools and hardware, rather than megapixel cameras or media playback. The business logic is consistent: Snap’s moat is its AR platform and community, not commodity eyewear; Spectacles seed new interaction patterns (geo-anchored lenses, VPS-powered experiences, social co-presence) that immediately cross-pollinate to Snapchat’s camera. This “tooling over trophies” approach keeps burn low, doubles down on software leverage and lets Snap ride component curves before attempting a broad consumer launch. For brands and creators, Spectacles + Lens Studio deliver the fastest path from idea to heads-up prototype in the industry.</p>
-  </section>
+          <section id="snap">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Snap</h1>
+            <p><strong>Name:</strong> Spectacles (developer hardware; not mass-market consumer).</p>
+            <p>Snap continues to treat eyewear as a creator-first laboratory for world-scale AR. The latest Spectacles are an AR developer kit tightly integrated with Lens Studio, Snap’s mature authoring pipeline used by millions of lens creators on mobile. On-face, Spectacles emphasize low-latency rendering, rapid wireless deployment and tight loops between creator tools and hardware, rather than megapixel cameras or media playback. The business logic is consistent: Snap’s moat is its AR platform and community, not commodity eyewear; Spectacles seed new interaction patterns (geo-anchored lenses, VPS-powered experiences, social co-presence) that immediately cross-pollinate to Snapchat’s camera. This “tooling over trophies” approach keeps burn low, doubles down on software leverage and lets Snap ride component curves before attempting a broad consumer launch. For brands and creators, Spectacles + Lens Studio deliver the fastest path from idea to heads-up prototype in the industry.</p>
+          </section>
 
-  <section id="vuzix">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Vuzix</h1>
-    <p><strong>Name(s):</strong> Vuzix M400/M400C (assisted-reality); Blade 2; Shield (µLED waveguide smart safety glasses); Ultralite (OEM platform).</p>
-    <p>Vuzix is the most battle-tested enterprise smart-glasses vendor: ruggedized, ANSI-rated, hot-swappable batteries and single-eye HUDs built to live in factories, ORs and field service. M-Series devices prioritize uptime and “see-what-I-see” workflows; Blade 2 adds binocular waveguides in a familiar glasses form factor for heads-up instructions and remote expert support. Shield steps further, bringing binocular micro-LED waveguides into an industrial safety chassis now available beyond limited pilots. Strategically, the Ultralite OEM platform is Vuzix’s consumer wedge: sub-40-gram reference designs with phone-tethered notification/guide overlays and all-day battery life, aimed at brands that want “smart eyewear” without building optics stacks from scratch. In aggregate, Vuzix’s offering is less about cinematic media and more about ROI: reduced error rates, faster training and safer workflows—with an OEM path for fashion-forward partners as micro-LED yields improve.</p>
-  </section>
+          <section id="vuzix">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Vuzix</h1>
+            <p><strong>Name(s):</strong> Vuzix M400/M400C (assisted-reality); Blade 2; Shield (µLED waveguide smart safety glasses); Ultralite (OEM platform).</p>
+            <p>Vuzix is the most battle-tested enterprise smart-glasses vendor: ruggedized, ANSI-rated, hot-swappable batteries and single-eye HUDs built to live in factories, ORs and field service. M-Series devices prioritize uptime and “see-what-I-see” workflows; Blade 2 adds binocular waveguides in a familiar glasses form factor for heads-up instructions and remote expert support. Shield steps further, bringing binocular micro-LED waveguides into an industrial safety chassis now available beyond limited pilots. Strategically, the Ultralite OEM platform is Vuzix’s consumer wedge: sub-40-gram reference designs with phone-tethered notification/guide overlays and all-day battery life, aimed at brands that want “smart eyewear” without building optics stacks from scratch. In aggregate, Vuzix’s offering is less about cinematic media and more about ROI: reduced error rates, faster training and safer workflows—with an OEM path for fashion-forward partners as micro-LED yields improve.</p>
+          </section>
 
-  <section id="rokid">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Rokid</h1>
-    <p><strong>Name(s):</strong> Rokid Max 2 (XR/AR display glasses); Rokid Station / Station 2 (Android TV-based companion).</p>
-    <p>Rokid has carved out a strong consumer niche: <em>cinema-class display glasses</em> paired with a pocketable Android TV “Station” that supplies apps, power and input—no phone required. Max 2 emphasizes comfort and visual clarity (micro-OLED, ~50° FOV, up to 120 Hz) with diopter adjustment and edge-to-edge readability; Station/Station 2 bring certified Google TV streaming, gamepad-friendly UX and spatial video playback, effectively turning the combo into a personal big-screen for travel, gaming and desk-lite productivity. The software side (Rokid AR app/YodaOS Master) layers casting, device management and spatial video support, while maintaining broad device compatibility for those who prefer tethering. The result isn’t “true AR” with environmental understanding; it’s private, portable immersion with just enough spatial UI to feel modern. For many buyers, that hits the value sweet spot today—especially for Switch/Steam Deck players and long-haul fliers.</p>
-  </section>
+          <section id="rokid">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Rokid</h1>
+            <p><strong>Name(s):</strong> Rokid Max 2 (XR/AR display glasses); Rokid Station / Station 2 (Android TV-based companion).</p>
+            <p>Rokid has carved out a strong consumer niche: <em>cinema-class display glasses</em> paired with a pocketable Android TV “Station” that supplies apps, power and input—no phone required. Max 2 emphasizes comfort and visual clarity (micro-OLED, ~50° FOV, up to 120 Hz) with diopter adjustment and edge-to-edge readability; Station/Station 2 bring certified Google TV streaming, gamepad-friendly UX and spatial video playback, effectively turning the combo into a personal big-screen for travel, gaming and desk-lite productivity. The software side (Rokid AR app/YodaOS Master) layers casting, device management and spatial video support, while maintaining broad device compatibility for those who prefer tethering. The result isn’t “true AR” with environmental understanding; it’s private, portable immersion with just enough spatial UI to feel modern. For many buyers, that hits the value sweet spot today—especially for Switch/Steam Deck players and long-haul fliers.</p>
+          </section>
 
-  <section id="rayneo">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">RayNeo</h1>
-    <p><strong>Name(s):</strong> Air 2 / Air 2s / Air 3s (XR display glasses); X2 (full-color micro-LED AR glasses).</p>
-    <p>TCL’s RayNeo straddles <em>media-first XR glasses</em> (Air series) and a more ambitious, binocular micro-LED <em>true-AR</em> line (X2). The Air family focuses on lightweight, travel-friendly “giant screen” experiences: micro-OLED displays, high brightness on newer models, edge-clarity improvements and accessory ecosystem (Pocket TV/JoyDock) that mirror competitors’ “beam” devices. X2, by contrast, targets heads-up, world-locked overlays: full-color micro-LED waveguides, SLAM-based navigation, translation and an on-board assistant—still early-market, but a credible path toward everyday AR once weight and battery improve. RayNeo’s advantage is TCL’s display supply chain and cost discipline, which shows up in aggressive pricing and frequent spec bumps; its challenge is software gravity, where partnerships and Android XR alignment will matter. For now: Air for private cinema and commuting; X2 for developers and enthusiasts chasing “glass-through” AR.</p>
-  </section>
+          <section id="rayneo">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">RayNeo</h1>
+            <p><strong>Name(s):</strong> Air 2 / Air 2s / Air 3s (XR display glasses); X2 (full-color micro-LED AR glasses).</p>
+            <p>TCL’s RayNeo straddles <em>media-first XR glasses</em> (Air series) and a more ambitious, binocular micro-LED <em>true-AR</em> line (X2). The Air family focuses on lightweight, travel-friendly “giant screen” experiences: micro-OLED displays, high brightness on newer models, edge-clarity improvements and accessory ecosystem (Pocket TV/JoyDock) that mirror competitors’ “beam” devices. X2, by contrast, targets heads-up, world-locked overlays: full-color micro-LED waveguides, SLAM-based navigation, translation and an on-board assistant—still early-market, but a credible path toward everyday AR once weight and battery improve. RayNeo’s advantage is TCL’s display supply chain and cost discipline, which shows up in aggressive pricing and frequent spec bumps; its challenge is software gravity, where partnerships and Android XR alignment will matter. For now: Air for private cinema and commuting; X2 for developers and enthusiasts chasing “glass-through” AR.</p>
+          </section>
 
-  <section id="viture">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Viture</h1>
-    <p><strong>Name(s):</strong> VITURE Pro (XR glasses); VITURE One / One Lite; accessories (Mobile Dock/Neckband).</p>
-    <p>Viture leans into <em>polished, gamer-centric XR</em>: the Pro model pushes a bright, 135-inch-equivalent, 120 Hz image with unusually crisp edge-to-edge clarity and thoughtful industrial design (magnetic shades, hair-safe temples), paired with a Harman-tuned audio profile. The ecosystem—Mobile Dock for HDMI consoles/handhelds, app integrations for Samsung DeX and desktop mirroring—frames the glasses as a <em>portable workstation + travel theater</em> rather than a developer kit. Reviews consistently call out its strong balance of sharpness, comfort and color pop, making it a frequent pick for Switch/PS5/ROG Ally owners and remote workers wanting a private monitor. While these are not environment-aware AR glasses, Viture’s cadence of optics upgrades and accessory support, plus a clean onboarding flow, put it near the top of today’s “display-first” segment for people who care about image quality as much as portability.</p>
-  </section>
+          <section id="viture">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Viture</h1>
+            <p><strong>Name(s):</strong> VITURE Pro (XR glasses); VITURE One / One Lite; accessories (Mobile Dock/Neckband).</p>
+            <p>Viture leans into <em>polished, gamer-centric XR</em>: the Pro model pushes a bright, 135-inch-equivalent, 120 Hz image with unusually crisp edge-to-edge clarity and thoughtful industrial design (magnetic shades, hair-safe temples), paired with a Harman-tuned audio profile. The ecosystem—Mobile Dock for HDMI consoles/handhelds, app integrations for Samsung DeX and desktop mirroring—frames the glasses as a <em>portable workstation + travel theater</em> rather than a developer kit. Reviews consistently call out its strong balance of sharpness, comfort and color pop, making it a frequent pick for Switch/PS5/ROG Ally owners and remote workers wanting a private monitor. While these are not environment-aware AR glasses, Viture’s cadence of optics upgrades and accessory support, plus a clean onboarding flow, put it near the top of today’s “display-first” segment for people who care about image quality as much as portability.</p>
+          </section>
 
-  <section id="xreal">
-    <br>
-    <br>
-    <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Xreal</h1>
-    <p><strong>Name(s):</strong> Air 2 / Air 2 Pro (XR display glasses); Air 2 Ultra (6-DoF developer AR glasses); Beam / Beam Pro (Android spatial companion).</p>
-    <p>Xreal’s playbook is <em>breadth + tooling</em>. Air 2/Pro are light, affordable display glasses for private big-screen use; Beam adds spatial stabilization and pointer-style UI; Beam Pro goes further—a phone-like, Android 14 “spatial terminal” with dual 50-MP cameras for 3D capture that unlocks a Vision-Pro-style multi-window environment. For developers, Air 2 Ultra introduces dual 3D cameras and 6-DoF tracking in a sunglasses form factor—still a dev device, but a meaningful step toward environment-aware AR at sub-100g weights. Xreal’s strengths are fast iteration, wide device compatibility (Windows/macOS/Android/iPhone 15), and a pragmatic stack that scales from simple mirroring to spatial apps without forcing a heavy headset. The open question is long-run OS anchoring (Android XR alignment, app distribution) as the category converges. Today, though, Xreal offers the most <em>complete consumer pathway</em> from “just a private screen” to hands-tracked spatial experiences—one accessory at a time.</p>
-  </section>
-</div>
+          <section id="xreal">
+            <br><br>
+            <h1 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Xreal</h1>
+            <p><strong>Name(s):</strong> Air 2 / Air 2 Pro (XR display glasses); Air 2 Ultra (6-DoF developer AR glasses); Beam / Beam Pro (Android spatial companion).</p>
+            <p>Xreal’s playbook is <em>breadth + tooling</em>. Air 2/Pro are light, affordable display glasses for private big-screen use; Beam adds spatial stabilization and pointer-style UI; Beam Pro goes further—a phone-like, Android 14 “spatial terminal” with dual 50-MP cameras for 3D capture that unlocks a Vision-Pro-style multi-window environment. For developers, Air 2 Ultra introduces dual 3D cameras and 6-DoF tracking in a sunglasses form factor—still a dev device, but a meaningful step toward environment-aware AR at sub-100g weights. Xreal’s strengths are fast iteration, wide device compatibility (Windows/macOS/Android/iPhone 15), and a pragmatic stack that scales from simple mirroring to spatial apps without forcing a heavy headset. The open question is long-run OS anchoring (Android XR alignment, app distribution) as the category converges. Today, though, Xreal offers the most <em>complete consumer pathway</em> from “just a private screen” to hands-tracked spatial experiences—one accessory at a time.</p>
+          </section>
+        </div>
+      </section>
 
-        
       <div class="dots" aria-hidden="true"></div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="container professional-footer">
@@ -306,12 +309,11 @@
           .then(html => {
             mount.innerHTML = html;
 
-            // Primary init from header.js if available
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
 
-            // Fallback bindings (ensures hamburger + ALL submenus always work)
+            // Fallback bindings to ensure drawer + submenus always work
             (function bindFallback(){
               const menu     = document.getElementById("primary-nav");
               const toggle   = document.getElementById("menu-toggle");
@@ -331,7 +333,6 @@
                 backdrop.classList.remove("show");
                 toggle.setAttribute("aria-expanded","false");
                 document.body.style.overflow = "";
-                // collapse all submenus
                 menu.querySelectorAll(".dropdown").forEach(li => li.classList.remove("open"));
                 menu.querySelectorAll(".submenu-toggle[aria-expanded='true']").forEach(btn => btn.setAttribute("aria-expanded","false"));
                 menu.querySelectorAll(".dropdown-menu").forEach(ul => ul.style.display = "");
@@ -346,12 +347,10 @@
 
               function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
 
-              // Bind ALL dropdowns (Explore, News, Products, etc.)
               const dropdowns = menu.querySelectorAll(".dropdown");
               dropdowns.forEach((li) => {
                 const label = li.querySelector(".has-submenu");
                 const chev  = li.querySelector(".submenu-toggle");
-
                 function toggleSubmenu(e){
                   if (!isMobile()) return;
                   e.preventDefault();
@@ -362,7 +361,6 @@
                   if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
                   if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
                 }
-
                 if (label) label.addEventListener("click", toggleSubmenu);
                 if (chev)  chev.addEventListener("click", toggleSubmenu);
               });
@@ -385,7 +383,7 @@
       });
     </script>
 
-    <!-- News carousel behavior (unchanged) -->
+    <!-- News carousel behavior -->
     <script>
       (function () {
         const rail = document.querySelector('.rail');
@@ -454,19 +452,29 @@
 
         rail.addEventListener('scroll', updateUI, { passive: true });
         window.addEventListener('resize', updateUI);
-        updateUI();     
+        updateUI();
       })();
     </script>
 
-<script>
-  window.addEventListener("DOMContentLoaded", function () {
-    // Delay ensures it happens after browser’s default anchor jumps
-    setTimeout(function () {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }, 0);
-  });
-</script>
+    <!-- Strong scroll-to-top enforcement after everything is ready -->
+    <script>
+      (function () {
+        function forceTop() {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+        function forceTopSequence() {
+          forceTop();
+          requestAnimationFrame(forceTop);
+          setTimeout(forceTop, 0);
+          setTimeout(forceTop, 60);
+        }
 
-
+        window.addEventListener('load', forceTopSequence);
+        window.addEventListener('pageshow', (e) => { if (e.persisted) forceTopSequence(); });
+        window.addEventListener('header:ready', forceTopSequence);
+      })();
+    </script>
   </body>
 </html>
