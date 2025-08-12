@@ -5,160 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Products</title>
 
-    <!-- Prevent browser scroll restoration -->
+    <!-- Prevent browser scroll restoration (safe; does not affect links) -->
     <script>
       try { history.scrollRestoration = 'manual'; } catch (_) {}
-    </script>
-
-    <!-- SAME-DOCUMENT HASH GUARD (no padding, no vertical jump) -->
-    <script>
-      (function () {
-        // Only run on products page
-        var here = location.pathname.toLowerCase();
-        if (!/products(\.html)?$/.test(here)) return;
-
-        // Disable scroll anchoring nudges (no layout padding used)
-        try { document.documentElement.style.overflowAnchor = 'none'; } catch (_){}
-
-        // Map deep-link sections to their hero story cards
-        var STORY_OF = {
-          '#meta':   '#story-1',
-          '#apple':  '#story-2',
-          '#google': '#story-3',
-          '#snap':   '#story-4',
-          '#vuzix':  '#story-5',
-          '#rokid':  '#story-6',
-          '#rayneo': '#story-7',
-          '#viture': '#story-8',
-          '#xreal':  '#story-9'
-        };
-
-        function normalizePath(p) {
-          try { p = decodeURIComponent(p); } catch (_) {}
-          return p.replace(/\/index\.html$/i,'/').replace(/\/$/,'').toLowerCase();
-        }
-        function sameDoc(url) {
-          try {
-            var u = url instanceof URL ? url : new URL(url, location.href);
-            return u.origin === location.origin &&
-                   normalizePath(u.pathname) === normalizePath(location.pathname);
-          } catch (_) { return false; }
-        }
-        function forceTop() {
-          try { document.activeElement && document.activeElement.blur({ preventScroll: true }); } catch(_){}
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-        }
-        function centerStory(h) {
-          var sel = STORY_OF[(h || '').toLowerCase()];
-          if (!sel) return;
-          var el = document.querySelector(sel);
-          if (el) el.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-        }
-
-        // Handle initial deep link (/products#x...) without vertical jump
-        if (location.hash && STORY_OF[location.hash.toLowerCase()]) {
-          try { history.replaceState(null, '', location.pathname + location.search); } catch(_){}
-          window.addEventListener('load', function () {
-            forceTop();
-            try { history.replaceState(null, '', location.pathname + location.search + location.hash); } catch(_){}
-            requestAnimationFrame(function(){ centerStory(location.hash); });
-          }, { once: true });
-        } else {
-          // Still ensure top on normal load & bfcache restore
-          window.addEventListener('load', forceTop, { once: true });
-        }
-        window.addEventListener('pageshow', function (e) { if (e.persisted) forceTop(); });
-
-        // Intercept SAME-DOC anchor activation EARLY (beats header/menu handlers)
-        function handleNav(targetHref, ev) {
-          var url = new URL(targetHref, location.href);
-          var h = url.hash;
-          if (!h || !(h.toLowerCase() in STORY_OF)) return false;
-
-          // Update URL without native vertical jump
-          history.pushState(null, '', url.pathname + url.search + h);
-
-          // Pin to top, then center horizontally
-          forceTop();
-          requestAnimationFrame(function(){ centerStory(h); });
-
-          // Close any open drawer (safe no-op if not present)
-          try {
-            var menu = document.getElementById('primary-nav');
-            var backdrop = document.getElementById('backdrop');
-            var toggle = document.getElementById('menu-toggle');
-            menu && menu.classList.remove('open');
-            backdrop && backdrop.classList.remove('show');
-            toggle && toggle.setAttribute('aria-expanded','false');
-            document.body.style.overflow = '';
-          } catch(_){}
-
-          if (ev) {
-            ev.preventDefault();
-            ev.stopImmediatePropagation();
-            ev.stopPropagation();
-          }
-          return true;
-        }
-
-        // Pointer-first (covers mouse + touch)
-        window.addEventListener('pointerdown', function (e) {
-          var a = e.target && e.target.closest && e.target.closest('a[href]');
-          if (!a) return;
-          if (a.target && a.target !== '_self') return; // respect new-tab etc.
-          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
-
-          var href = a.getAttribute('href');
-          if (!href) return;
-          var url = new URL(href, location.href);
-          if (!sameDoc(url)) return;
-
-          if (handleNav(url, e)) return;
-        }, { capture: true, passive: false });
-
-        // Keyboard activation (Enter/Space)
-        window.addEventListener('keydown', function (e) {
-          if (!(e.key === 'Enter' || e.key === ' ')) return;
-          var a = document.activeElement && document.activeElement.matches && document.activeElement.matches('a[href]')
-            ? document.activeElement : null;
-          if (!a) return;
-          if (a.target && a.target !== '_self') return;
-
-          var href = a.getAttribute('href');
-          if (!href) return;
-          var url = new URL(href, location.href);
-          if (!sameDoc(url)) return;
-
-          if (handleNav(url, e)) return;
-        }, { capture: true, passive: false });
-
-        // Catch-all for late/synthetic clicks
-        window.addEventListener('click', function (e) {
-          var a = e.target && e.target.closest && e.target.closest('a[href]');
-          if (!a) return;
-          if (a.target && a.target !== '_self') return;
-          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
-
-          var href = a.getAttribute('href');
-          if (!href) return;
-          var url = new URL(href, location.href);
-          if (!sameDoc(url)) return;
-
-          if (handleNav(url, e)) return;
-        }, { capture: true, passive: false });
-
-        // Back/forward or programmatic hash changes
-        function onHashRoute() {
-          var h = location.hash;
-          if (!(h.toLowerCase() in STORY_OF)) return;
-          forceTop();
-          requestAnimationFrame(function(){ centerStory(h); });
-        }
-        window.addEventListener('hashchange', onHashRoute);
-        window.addEventListener('popstate', onHashRoute);
-      })();
     </script>
 
     <!-- Styles -->
@@ -167,6 +16,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
+    <!-- Keep your page-specific styles (unchanged) -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -346,7 +196,7 @@
         <article class="story" id="story-9"><img class="bg" src="images/xreal.jpg" alt="" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h1 class="story-title">Xreal</h1><p class="story-teaser">Snapdragon, Android XR, Large FOV</p><div class="story-actions"><a href="#xreal" role="button">Read more</a></div></div></article>
       </div>
       </section>
-
+    
     <!-- Page Content -->
     <main class="container" style="max-width: 900px;">
       <section aria-labelledby="collab-heading">
@@ -427,6 +277,7 @@
   </section>
 </div>
 
+        
       <div class="dots" aria-hidden="true"></div>
     </section>
 
@@ -455,7 +306,7 @@
       </div>
     </footer>
 
-    <!-- Header injection + menu bindings (unchanged, from your original) -->
+    <!-- Inject shared header (unchanged) -->
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
@@ -612,7 +463,65 @@
 
         rail.addEventListener('scroll', updateUI, { passive: true });
         window.addEventListener('resize', updateUI);
-        updateUI();
+        updateUI();     
+      })();
+    </script>
+
+    <!-- Scroll stabilization: only when arriving without a hash; doesn't affect links -->
+    <script>
+      (function () {
+        var shouldForceTop = !location.hash;
+
+        function stabilizeTop(durationMs) {
+          var start = performance.now();
+          var stoppedByUser = false;
+
+          function forceTop() {
+            if (stoppedByUser) return;
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
+            if (performance.now() - start < durationMs) {
+              requestAnimationFrame(forceTop);
+            }
+          }
+
+          function onUserScroll() {
+            if (Math.abs(window.scrollY) > 2) {
+              stoppedByUser = true;
+              window.removeEventListener('wheel', onUserScroll, { passive: true });
+              window.removeEventListener('touchmove', onUserScroll, { passive: true });
+              window.removeEventListener('scroll', onUserScroll, { passive: true });
+            }
+          }
+
+          window.addEventListener('wheel', onUserScroll, { passive: true });
+          window.addEventListener('touchmove', onUserScroll, { passive: true });
+          window.addEventListener('scroll', onUserScroll, { passive: true });
+
+          forceTop();
+          window.addEventListener('load', function () { window.scrollTo(0, 0); }, { once: true });
+        }
+
+        function run() {
+          if (!shouldForceTop) return;
+          stabilizeTop(380);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          setTimeout(run, 0);
+        } else {
+          document.addEventListener('DOMContentLoaded', run, { once: true });
+        }
+
+        window.addEventListener('header:ready', function () {
+          if (shouldForceTop) stabilizeTop(220);
+        });
+
+        window.addEventListener('pageshow', function (e) {
+          if (shouldForceTop && e.persisted) stabilizeTop(220);
+        });
       })();
     </script>
   </body>
