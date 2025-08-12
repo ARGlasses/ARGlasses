@@ -357,3 +357,9 @@ body.news-page .story-content * {
 /* 5) Give the dots a little room without forcing overflow */
 html body .viewport .dots { bottom: 1rem !important; }
 
+
+
+/* Prevent micro-jumps when the header injects */
+#site-header { overflow-anchor: none; }
+/* (Optional) reserve space to further reduce layout shift; set to your navbar height */
+#site-header { min-height: 64px; }
