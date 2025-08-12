@@ -395,28 +395,26 @@ body .image-grid figcaption {
   }
 }
 
-
-
 .shop-all-btn {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   
-  /* Wider + slimmer */
-  padding: 0.5rem 2.5rem; /* Less vertical, more horizontal */
+  /* Much slimmer + much wider */
+  padding: 0.35rem 3.5rem; /* Less vertical height, more horizontal width */
   
-  background-color: #004f88; /* Exact logo shade */
+  background-color: #007fe6; /* Brighter, punchier blue */
   color: white;
   font-weight: 600;
   font-size: 1rem;
   
-  border-radius: 999px;
+  border-radius: 999px; /* Fully rounded pill */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   z-index: 2000;
 
-  /* Premium smooth hover */
+  /* Smooth premium transitions */
   transition: background-color 0.35s ease-in-out, 
               transform 0.25s ease-out, 
               box-shadow 0.25s ease;
@@ -424,9 +422,9 @@ body .image-grid figcaption {
 
 .shop-all-btn:hover,
 .shop-all-btn:focus {
-  background-color: #007ad2; /* Exact lighter hover shade */
-  transform: translate(-50%, -4px); /* Slightly more lift */
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); /* Stronger shadow for hover */
+  background-color: #00a2ff; /* Even brighter hover shade */
+  transform: translate(-50%, -4px); /* Lift */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 
