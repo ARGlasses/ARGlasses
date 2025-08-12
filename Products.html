@@ -458,6 +458,14 @@
       })();
     </script>
 
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    // Delay ensures it happens after browser’s default anchor jumps
+    setTimeout(function () {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, 0);
+  });
+</script>
 
 
   </body>
