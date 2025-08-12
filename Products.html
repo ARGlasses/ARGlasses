@@ -5,21 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Products</title>
 
-    <!-- Prevent browser scroll restoration (safe; does not affect links) -->
+    <!-- Prevent browser scroll restoration -->
     <script>
       try { history.scrollRestoration = 'manual'; } catch (_) {}
     </script>
 
-    <!-- Neutralize default hash jump on initial navigation (links still work after load) -->
+    <!-- HARD STOP the default #hash auto-jump on initial navigation (no padding used) -->
     <script>
       (function () {
-        try {
-          if (location.hash) {
-            var h = location.hash;
-            history.replaceState(null, '', location.pathname + location.search);
-            history.replaceState(null, '', location.pathname + location.search + h);
-          }
-        } catch (_) {}
+        // Disable scroll anchoring globally to avoid micro-jumps from late content/layout changes
+        try { document.documentElement.style.setProperty('overflow-anchor', 'none'); } catch (_) {}
+
+        var initialHash = location.hash;
+        var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
+        var isInitialNav = !nav || nav.type === 'navigate' || nav.type === 'reload';
+
+        if (initialHash && isInitialNav) {
+          // Strip the hash BEFORE the browser can jump to it
+          try { history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
+
+          // On load: ensure top, then restore the hash WITHOUT scrolling and signal our carousel code
+          window.addEventListener('load', function () {
+            window.scrollTo(0, 0);
+            try {
+              history.replaceState(null, '', location.pathname + location.search + initialHash);
+            } catch (_) {}
+            // Let the carousel logic know the hash is back (without vertical movement)
+            window.dispatchEvent(new CustomEvent('products:hash-restored'));
+          }, { once: true });
+        }
+
+        // If the page comes from bfcache (back/forward), also force top
+        window.addEventListener('pageshow', function (e) { if (e.persisted) window.scrollTo(0, 0); });
       })();
     </script>
 
@@ -37,12 +54,6 @@
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #fff;
       }
-
-      /* Prevent scroll anchoring on injected header to avoid micro-jumps */
-      #site-header { overflow-anchor: none; min-height: 64px; }
-
-      /* Ensure in-page anchors (e.g., #meta) account for header height */
-      .ar-essay section[id] { scroll-margin-top: 72px; }
 
       /* Force light theme + grey text for shared header on this page */
       body.news-page #navbar {
@@ -332,7 +343,6 @@
           .then(html => {
             mount.innerHTML = html;
 
-            // Primary init from header.js if available
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
@@ -505,67 +515,10 @@
           if (el) el.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
         }
 
-        // After layout & header injection, recentre the story without changing vertical scroll
+        // On normal load (no initial-hash case) and after we restore the hash without scrolling
         window.addEventListener('load', centerStoryFromHash);
         window.addEventListener('header:ready', centerStoryFromHash);
-      })();
-    </script>
-
-    <!-- Scroll stabilization: always land fully scrolled up on first load -->
-    <script>
-      (function () {
-        var shouldForceTop = true; // force top regardless of hash (initial navigation only)
-
-        function stabilizeTop(durationMs) {
-          var start = performance.now();
-          var stoppedByUser = false;
-
-          function forceTop() {
-            if (stoppedByUser) return;
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-
-            if (performance.now() - start < durationMs) {
-              requestAnimationFrame(forceTop);
-            }
-          }
-
-          function onUserScroll() {
-            if (Math.abs(window.scrollY) > 2) {
-              stoppedByUser = true;
-              window.removeEventListener('wheel', onUserScroll, { passive: true });
-              window.removeEventListener('touchmove', onUserScroll, { passive: true });
-              window.removeEventListener('scroll', onUserScroll, { passive: true });
-            }
-          }
-
-          window.addEventListener('wheel', onUserScroll, { passive: true });
-          window.addEventListener('touchmove', onUserScroll, { passive: true });
-          window.addEventListener('scroll', onUserScroll, { passive: true });
-
-          forceTop();
-          window.addEventListener('load', function () { window.scrollTo(0, 0); }, { once: true });
-        }
-
-        function run() {
-          if (!shouldForceTop) return;
-          stabilizeTop(380);
-        }
-
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-          setTimeout(run, 0);
-        } else {
-          document.addEventListener('DOMContentLoaded', run, { once: true });
-        }
-
-        window.addEventListener('header:ready', function () {
-          if (shouldForceTop) stabilizeTop(220);
-        });
-
-        window.addEventListener('pageshow', function (e) {
-          if (shouldForceTop && e.persisted) stabilizeTop(220);
-        });
+        window.addEventListener('products:hash-restored', centerStoryFromHash);
       })();
     </script>
   </body>
