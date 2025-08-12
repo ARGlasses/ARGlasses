@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Products</title>
 
+    <!-- Prevent browser scroll restoration (safe; does not affect links) -->
+    <script>
+      try { history.scrollRestoration = 'manual'; } catch (_) {}
+    </script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Keep your page-specific styles -->
+    <!-- Keep your page-specific styles (unchanged) -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -147,6 +152,11 @@
       @media (min-width: 1200px) {
         .arrow { width: 3.25rem; height: 3.25rem; }
       }
+
+      /* Text contrast for cards on this page */
+      body.news-page .story-content,
+      body.news-page .story-content * { color: white !important; }
+      html body .viewport .dots { bottom: 1rem !important; }
     </style>
 
     <!-- Shared header behavior -->
@@ -184,7 +194,6 @@
         <article class="story" id="story-8"><img class="bg" src="images/viture.avif" alt="" /><div class="story-content"><div class="story-kicker">XR Glasses from</div><h1 class="story-title">Viture</h1><p class="story-teaser">4K-Like Display, Sharper & Brighter, Next-Gen Audio</p><div class="story-actions"><a href="#viture" role="button">Read more</a></div></div></article>
         <!-- Story 9 -->
         <article class="story" id="story-9"><img class="bg" src="images/xreal.jpg" alt="" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h1 class="story-title">Xreal</h1><p class="story-teaser">Snapdragon, Android XR, Large FOV</p><div class="story-actions"><a href="#xreal" role="button">Read more</a></div></div></article>
-        
       </div>
       </section>
     
@@ -297,7 +306,7 @@
       </div>
     </footer>
 
-    <!-- Inject shared header -->
+    <!-- Inject shared header (unchanged) -->
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
@@ -458,7 +467,62 @@
       })();
     </script>
 
+    <!-- Scroll stabilization: only when arriving without a hash; doesn't affect links -->
+    <script>
+      (function () {
+        var shouldForceTop = !location.hash;
 
+        function stabilizeTop(durationMs) {
+          var start = performance.now();
+          var stoppedByUser = false;
 
+          function forceTop() {
+            if (stoppedByUser) return;
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
+            if (performance.now() - start < durationMs) {
+              requestAnimationFrame(forceTop);
+            }
+          }
+
+          function onUserScroll() {
+            if (Math.abs(window.scrollY) > 2) {
+              stoppedByUser = true;
+              window.removeEventListener('wheel', onUserScroll, { passive: true });
+              window.removeEventListener('touchmove', onUserScroll, { passive: true });
+              window.removeEventListener('scroll', onUserScroll, { passive: true });
+            }
+          }
+
+          window.addEventListener('wheel', onUserScroll, { passive: true });
+          window.addEventListener('touchmove', onUserScroll, { passive: true });
+          window.addEventListener('scroll', onUserScroll, { passive: true });
+
+          forceTop();
+          window.addEventListener('load', function () { window.scrollTo(0, 0); }, { once: true });
+        }
+
+        function run() {
+          if (!shouldForceTop) return;
+          stabilizeTop(380);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          setTimeout(run, 0);
+        } else {
+          document.addEventListener('DOMContentLoaded', run, { once: true });
+        }
+
+        window.addEventListener('header:ready', function () {
+          if (shouldForceTop) stabilizeTop(220);
+        });
+
+        window.addEventListener('pageshow', function (e) {
+          if (shouldForceTop && e.persisted) stabilizeTop(220);
+        });
+      })();
+    </script>
   </body>
 </html>
