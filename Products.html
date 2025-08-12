@@ -10,13 +10,25 @@
       try { history.scrollRestoration = 'manual'; } catch (_) {}
     </script>
 
+    <!-- Neutralize default hash jump on initial navigation (links still work after load) -->
+    <script>
+      (function () {
+        try {
+          if (location.hash) {
+            var h = location.hash;
+            history.replaceState(null, '', location.pathname + location.search);
+            history.replaceState(null, '', location.pathname + location.search + h);
+          }
+        } catch (_) {}
+      })();
+    </script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/logo7.png" type="image/png" />
 
-    <!-- Keep your page-specific styles (unchanged) -->
     <style>
       /* ===== Base / layout ===== */
       html, body { height: 100%; margin: 0; }
@@ -25,6 +37,12 @@
         font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         background: #fff;
       }
+
+      /* Prevent scroll anchoring on injected header to avoid micro-jumps */
+      #site-header { overflow-anchor: none; min-height: 64px; }
+
+      /* Ensure in-page anchors (e.g., #meta) account for header height */
+      .ar-essay section[id] { scroll-margin-top: 72px; }
 
       /* Force light theme + grey text for shared header on this page */
       body.news-page #navbar {
@@ -196,7 +214,7 @@
         <article class="story" id="story-9"><img class="bg" src="images/xreal.jpg" alt="" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h1 class="story-title">Xreal</h1><p class="story-teaser">Snapdragon, Android XR, Large FOV</p><div class="story-actions"><a href="#xreal" role="button">Read more</a></div></div></article>
       </div>
       </section>
-    
+
     <!-- Page Content -->
     <main class="container" style="max-width: 900px;">
       <section aria-labelledby="collab-heading">
@@ -277,7 +295,6 @@
   </section>
 </div>
 
-        
       <div class="dots" aria-hidden="true"></div>
     </section>
 
@@ -463,14 +480,41 @@
 
         rail.addEventListener('scroll', updateUI, { passive: true });
         window.addEventListener('resize', updateUI);
-        updateUI();     
+        updateUI();
       })();
     </script>
 
-    <!-- Scroll stabilization: only when arriving without a hash; doesn't affect links -->
+    <!-- Use hash only to center the correct story horizontally (no vertical scrolling) -->
     <script>
       (function () {
-        var shouldForceTop = !location.hash;
+        const map = {
+          '#meta':   '#story-1',
+          '#apple':  '#story-2',
+          '#google': '#story-3',
+          '#snap':   '#story-4',
+          '#vuzix':  '#story-5',
+          '#rokid':  '#story-6',
+          '#rayneo': '#story-7',
+          '#viture': '#story-8',
+          '#xreal':  '#story-9'
+        };
+
+        function centerStoryFromHash() {
+          const sel = map[(location.hash || '').toLowerCase()];
+          const el  = sel && document.querySelector(sel);
+          if (el) el.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+        }
+
+        // After layout & header injection, recentre the story without changing vertical scroll
+        window.addEventListener('load', centerStoryFromHash);
+        window.addEventListener('header:ready', centerStoryFromHash);
+      })();
+    </script>
+
+    <!-- Scroll stabilization: always land fully scrolled up on first load -->
+    <script>
+      (function () {
+        var shouldForceTop = true; // force top regardless of hash (initial navigation only)
 
         function stabilizeTop(durationMs) {
           var start = performance.now();
