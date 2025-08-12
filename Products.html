@@ -10,33 +10,154 @@
       try { history.scrollRestoration = 'manual'; } catch (_) {}
     </script>
 
-    <!-- HARD STOP the default #hash auto-jump on initial navigation (no padding used) -->
+    <!-- SAME-DOCUMENT HASH GUARD (no padding, no vertical jump) -->
     <script>
       (function () {
-        // Disable scroll anchoring globally to avoid micro-jumps from late content/layout changes
-        try { document.documentElement.style.setProperty('overflow-anchor', 'none'); } catch (_) {}
+        // Only run on products page
+        var here = location.pathname.toLowerCase();
+        if (!/products(\.html)?$/.test(here)) return;
 
-        var initialHash = location.hash;
-        var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
-        var isInitialNav = !nav || nav.type === 'navigate' || nav.type === 'reload';
+        // Disable scroll anchoring nudges (no layout padding used)
+        try { document.documentElement.style.overflowAnchor = 'none'; } catch (_){}
 
-        if (initialHash && isInitialNav) {
-          // Strip the hash BEFORE the browser can jump to it
-          try { history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
+        // Map deep-link sections to their hero story cards
+        var STORY_OF = {
+          '#meta':   '#story-1',
+          '#apple':  '#story-2',
+          '#google': '#story-3',
+          '#snap':   '#story-4',
+          '#vuzix':  '#story-5',
+          '#rokid':  '#story-6',
+          '#rayneo': '#story-7',
+          '#viture': '#story-8',
+          '#xreal':  '#story-9'
+        };
 
-          // On load: ensure top, then restore the hash WITHOUT scrolling and signal our carousel code
-          window.addEventListener('load', function () {
-            window.scrollTo(0, 0);
-            try {
-              history.replaceState(null, '', location.pathname + location.search + initialHash);
-            } catch (_) {}
-            // Let the carousel logic know the hash is back (without vertical movement)
-            window.dispatchEvent(new CustomEvent('products:hash-restored'));
-          }, { once: true });
+        function normalizePath(p) {
+          try { p = decodeURIComponent(p); } catch (_) {}
+          return p.replace(/\/index\.html$/i,'/').replace(/\/$/,'').toLowerCase();
+        }
+        function sameDoc(url) {
+          try {
+            var u = url instanceof URL ? url : new URL(url, location.href);
+            return u.origin === location.origin &&
+                   normalizePath(u.pathname) === normalizePath(location.pathname);
+          } catch (_) { return false; }
+        }
+        function forceTop() {
+          try { document.activeElement && document.activeElement.blur({ preventScroll: true }); } catch(_){}
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+        function centerStory(h) {
+          var sel = STORY_OF[(h || '').toLowerCase()];
+          if (!sel) return;
+          var el = document.querySelector(sel);
+          if (el) el.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
         }
 
-        // If the page comes from bfcache (back/forward), also force top
-        window.addEventListener('pageshow', function (e) { if (e.persisted) window.scrollTo(0, 0); });
+        // Handle initial deep link (/products#x...) without vertical jump
+        if (location.hash && STORY_OF[location.hash.toLowerCase()]) {
+          try { history.replaceState(null, '', location.pathname + location.search); } catch(_){}
+          window.addEventListener('load', function () {
+            forceTop();
+            try { history.replaceState(null, '', location.pathname + location.search + location.hash); } catch(_){}
+            requestAnimationFrame(function(){ centerStory(location.hash); });
+          }, { once: true });
+        } else {
+          // Still ensure top on normal load & bfcache restore
+          window.addEventListener('load', forceTop, { once: true });
+        }
+        window.addEventListener('pageshow', function (e) { if (e.persisted) forceTop(); });
+
+        // Intercept SAME-DOC anchor activation EARLY (beats header/menu handlers)
+        function handleNav(targetHref, ev) {
+          var url = new URL(targetHref, location.href);
+          var h = url.hash;
+          if (!h || !(h.toLowerCase() in STORY_OF)) return false;
+
+          // Update URL without native vertical jump
+          history.pushState(null, '', url.pathname + url.search + h);
+
+          // Pin to top, then center horizontally
+          forceTop();
+          requestAnimationFrame(function(){ centerStory(h); });
+
+          // Close any open drawer (safe no-op if not present)
+          try {
+            var menu = document.getElementById('primary-nav');
+            var backdrop = document.getElementById('backdrop');
+            var toggle = document.getElementById('menu-toggle');
+            menu && menu.classList.remove('open');
+            backdrop && backdrop.classList.remove('show');
+            toggle && toggle.setAttribute('aria-expanded','false');
+            document.body.style.overflow = '';
+          } catch(_){}
+
+          if (ev) {
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            ev.stopPropagation();
+          }
+          return true;
+        }
+
+        // Pointer-first (covers mouse + touch)
+        window.addEventListener('pointerdown', function (e) {
+          var a = e.target && e.target.closest && e.target.closest('a[href]');
+          if (!a) return;
+          if (a.target && a.target !== '_self') return; // respect new-tab etc.
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+
+          var href = a.getAttribute('href');
+          if (!href) return;
+          var url = new URL(href, location.href);
+          if (!sameDoc(url)) return;
+
+          if (handleNav(url, e)) return;
+        }, { capture: true, passive: false });
+
+        // Keyboard activation (Enter/Space)
+        window.addEventListener('keydown', function (e) {
+          if (!(e.key === 'Enter' || e.key === ' ')) return;
+          var a = document.activeElement && document.activeElement.matches && document.activeElement.matches('a[href]')
+            ? document.activeElement : null;
+          if (!a) return;
+          if (a.target && a.target !== '_self') return;
+
+          var href = a.getAttribute('href');
+          if (!href) return;
+          var url = new URL(href, location.href);
+          if (!sameDoc(url)) return;
+
+          if (handleNav(url, e)) return;
+        }, { capture: true, passive: false });
+
+        // Catch-all for late/synthetic clicks
+        window.addEventListener('click', function (e) {
+          var a = e.target && e.target.closest && e.target.closest('a[href]');
+          if (!a) return;
+          if (a.target && a.target !== '_self') return;
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+
+          var href = a.getAttribute('href');
+          if (!href) return;
+          var url = new URL(href, location.href);
+          if (!sameDoc(url)) return;
+
+          if (handleNav(url, e)) return;
+        }, { capture: true, passive: false });
+
+        // Back/forward or programmatic hash changes
+        function onHashRoute() {
+          var h = location.hash;
+          if (!(h.toLowerCase() in STORY_OF)) return;
+          forceTop();
+          requestAnimationFrame(function(){ centerStory(h); });
+        }
+        window.addEventListener('hashchange', onHashRoute);
+        window.addEventListener('popstate', onHashRoute);
       })();
     </script>
 
@@ -334,7 +455,7 @@
       </div>
     </footer>
 
-    <!-- Inject shared header (unchanged) -->
+    <!-- Header injection + menu bindings (unchanged, from your original) -->
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         const mount = document.getElementById("site-header");
@@ -343,6 +464,7 @@
           .then(html => {
             mount.innerHTML = html;
 
+            // Primary init from header.js if available
             if (typeof window.__initHeader === "function") {
               try { window.__initHeader(); } catch (_) {}
             }
@@ -491,34 +613,6 @@
         rail.addEventListener('scroll', updateUI, { passive: true });
         window.addEventListener('resize', updateUI);
         updateUI();
-      })();
-    </script>
-
-    <!-- Use hash only to center the correct story horizontally (no vertical scrolling) -->
-    <script>
-      (function () {
-        const map = {
-          '#meta':   '#story-1',
-          '#apple':  '#story-2',
-          '#google': '#story-3',
-          '#snap':   '#story-4',
-          '#vuzix':  '#story-5',
-          '#rokid':  '#story-6',
-          '#rayneo': '#story-7',
-          '#viture': '#story-8',
-          '#xreal':  '#story-9'
-        };
-
-        function centerStoryFromHash() {
-          const sel = map[(location.hash || '').toLowerCase()];
-          const el  = sel && document.querySelector(sel);
-          if (el) el.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-        }
-
-        // On normal load (no initial-hash case) and after we restore the hash without scrolling
-        window.addEventListener('load', centerStoryFromHash);
-        window.addEventListener('header:ready', centerStoryFromHash);
-        window.addEventListener('products:hash-restored', centerStoryFromHash);
       })();
     </script>
   </body>
