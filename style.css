@@ -408,7 +408,7 @@ body .image-grid figcaption {
   border-radius: 50px;
   font-size: 18px;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: none;
   letter-spacing: 0.5px;
   text-decoration: none;
   cursor: pointer;
