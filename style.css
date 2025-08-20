@@ -435,7 +435,7 @@ body .image-grid figcaption {
     width: 100%;
     padding: 16px;
     font-size: 16px;
-
+  }
 } /* close the 600px media query */
 
 /* Accessible, always-on visual hiding for SEO + screen readers */
