@@ -1,3 +1,5 @@
+// deploy bump 001
+
 // header.js — mobile-friendly dropdowns + off-canvas (no touchend double-fire)
 (function () {
   if (window.__headerInit) return;
