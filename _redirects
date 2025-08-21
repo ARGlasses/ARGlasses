@@ -1,0 +1,5 @@
+# Force HTTPS
+http://*    https://:splat    301!
+
+# Force non-www (so all traffic goes to https://arglasses.com)
+https://www.arglasses.com/*    https://arglasses.com/:splat    301!
