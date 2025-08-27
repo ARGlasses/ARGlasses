@@ -453,6 +453,53 @@ body .image-grid figcaption {
 }
 
   
+/* === Accessibility Contrast Overrides (Safe to remove if undesired) === */
+
+/* Floating "Shop all" button */
+.shop-all-btn{
+  background: #111 !important;   /* dark background for strong contrast */
+  color: #fff !important;        /* white text passes AA */
+  border: 2px solid #FFD400;     /* keep brand yellow as accent */
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.shop-all-btn:hover,
+.shop-all-btn:focus{
+  background:#000 !important;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Cookie banner container */
+#cookie-banner{
+  background:#f6f6f6 !important;
+  color:#111 !important;
+  border-top:1px solid #e0e0e0;
+}
+
+/* Links inside banner */
+#cookie-banner p a{
+  color:#0a5 !important; /* darker green link */
+  text-decoration:underline;
+}
+#cookie-banner p a:hover{ color:#084 !important; }
+
+/* Buttons inside banner */
+#cookie-banner button.contrast{
+  background:#111 !important;
+  color:#fff !important;
+  border:2px solid #FFD400;
+}
+#cookie-banner button.contrast:hover{ background:#000 !important; }
+
+#cookie-banner button.secondary{
+  background:#fff !important;
+  color:#111 !important;
+  border:1px solid #111 !important;
+}
+#cookie-banner button.secondary:hover{ background:#f0f0f0 !important; }
 
 
 
