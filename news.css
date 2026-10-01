@@ -63,7 +63,7 @@ body.news-article .editorial-note {
 body.news-article .article-visual {
   background:linear-gradient(135deg,#e6f5fb,#fff 55%,#dff1f8) !important;
   color:#075985 !important;
-  border:1px solid #d5eaf2;
+  border:0 !important;
 }
 body.news-article .professional-footer {
   margin-top:2rem;
@@ -409,3 +409,7 @@ body.news-article .company-visual figcaption {
     max-height: 250px;
   }
 }
+
+/* Roadmap hero images: clean edge with no dark frame or shadow. */
+body.news-article .hero-img{border:0 !important;box-shadow:none !important;background:transparent !important;}
+body.news-article .hero-img img{border:0 !important;box-shadow:none !important;}
