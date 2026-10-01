@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AR Glasses News | The latest in augmented reality eyewear</title>
-  <meta name="description" content="Independent coverage of AR glasses, smart eyewear and spatial computing. The latest launches, technology, industry moves and analysis." />
+  <title>AR Glasses News | Meta, Google & Snap roadmaps</title>
+  <meta name="description" content="Big-tech AR glasses news, roadmaps and informed analysis from Meta, Google and Snap." />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
@@ -12,223 +12,190 @@
   <script src="./header.js?v=6" defer></script>
   <style>
     html,body{margin:0;min-height:100%;background:#fff;font-family:"Poppins",system-ui,sans-serif}
-    body.news-page{overflow-x:hidden;color:#17212b}
+    body.news-page{overflow-x:hidden;color:#17212b;font-size:16px;line-height:1.65}
     body.news-page #navbar{background:#fff!important;box-shadow:none!important;border:0;padding-block:.5rem}
     body.news-page #navbar .nav-inner a{color:var(--nav-text-color,#555)!important}
     body.news-page #navbar img{height:28px;width:auto}
     body.news-page #navbar .nav-inner{text-shadow:none}
-    .news-shell{max-width:1180px;margin:0 auto;padding:0 1.25rem}
-    .news-masthead{padding:3.4rem 0 2.2rem;border-bottom:1px solid #e9edf1}
-    .news-eyebrow{display:flex;align-items:center;gap:.65rem;color:#426b87;font-size:.76rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
-    .news-live-dot{width:8px;height:8px;border-radius:50%;background:#18a477;display:inline-block;box-shadow:0 0 0 4px #e3f5ee}
-    .news-masthead h1{font-size:clamp(2.5rem,6vw,5.2rem);letter-spacing:-.065em;line-height:.99;margin:.9rem 0 1rem;color:#101b29;font-weight:700}
-    .news-intro{max-width:690px;color:#647180;font-size:1.05rem;line-height:1.8;margin:0}
-    .news-date{margin-top:1.35rem;color:#788594;font-size:.8rem;letter-spacing:.04em}
-    .news-hero{display:grid;grid-template-columns:1.25fr .75fr;gap:1.5rem;margin:2rem 0 3.25rem}
-    .lead-story{position:relative;min-height:470px;border-radius:22px;overflow:hidden;background:#101923;color:white;isolation:isolate;display:flex;align-items:flex-end}
-    .lead-story>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-    .lead-story:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,13,22,.94),rgba(5,13,22,.18) 72%);z-index:-1}
-    .lead-copy{padding:clamp(1.4rem,4vw,2.7rem);max-width:760px}
-    .story-label{display:inline-flex;align-items:center;gap:.45rem;font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#d9ecff}
-    .story-label:before{content:"";width:19px;height:2px;background:#7bc7ff}
-    .lead-copy h2{font-size:clamp(1.8rem,3.6vw,3.15rem);line-height:1.08;letter-spacing:-.04em;color:#fff;margin:.85rem 0}
-    .lead-copy p{color:#e1e8ef;line-height:1.7;margin:0 0 1rem;max-width:60ch}
-    .story-meta{font-size:.76rem;color:#b8c7d5;display:flex;gap:.75rem;flex-wrap:wrap}
-    .story-link{display:inline-flex;align-items:center;gap:.45rem;margin-top:1.15rem;color:#fff!important;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.55);padding-bottom:.25rem}
-    .story-link:hover{color:#a9dcff!important}
-    .side-stories{display:grid;grid-template-rows:1fr 1fr;gap:1.5rem}
-    .side-story{position:relative;min-height:220px;border-radius:20px;overflow:hidden;background:#17212b;color:#fff;isolation:isolate;display:flex;align-items:flex-end}
-    .side-story img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-    .side-story:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,13,22,.94),rgba(5,13,22,.12) 90%);z-index:-1}
-    .side-copy{padding:1.35rem}
-    .side-copy h3{font-size:1.28rem;line-height:1.2;color:#fff;margin:.5rem 0}
-    .side-copy p{font-size:.86rem;line-height:1.55;color:#e1e8ef;margin:0}
-    .section-heading{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:0 0 1.25rem}
-    .section-heading h2{font-size:1.75rem;letter-spacing:-.04em;margin:0;color:#152333}
-    .section-heading p{margin:0;color:#7a8794;font-size:.82rem}
-    .latest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin-bottom:3.5rem}
-    .news-card{border:1px solid #e8edf1;border-radius:17px;overflow:hidden;background:#fff;transition:transform .2s ease,box-shadow .2s ease}
-    .news-card:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(21,43,61,.09)}
-    .news-card img{display:block;width:100%;height:190px;object-fit:cover;background:#edf1f4}
-    .news-card-copy{padding:1.15rem}
-    .card-category{font-size:.67rem;text-transform:uppercase;letter-spacing:.12em;color:#39739a;font-weight:700}
-    .news-card h3{font-size:1.12rem;line-height:1.3;letter-spacing:-.025em;margin:.55rem 0;color:#182636}
-    .news-card p{font-size:.86rem;line-height:1.65;color:#667482;margin:0 0 .9rem}
-    .card-meta{font-size:.72rem;color:#8a96a2;display:flex;justify-content:space-between;gap:.5rem}
-    .news-card a{color:inherit;text-decoration:none}
-    .news-card a:hover h3{color:#2878a9}
-    .briefing{background:#f3f7fa;border-radius:22px;padding:clamp(1.4rem,4vw,2.5rem);margin:0 0 3.5rem}
-    .briefing h2{font-size:1.65rem;letter-spacing:-.04em;margin:0 0 .5rem;color:#172636}
-    .briefing-intro{color:#667482;max-width:720px;line-height:1.7;margin:0 0 1.3rem}
-    .briefing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    .briefing-stat{background:#fff;border:1px solid #e5ebef;border-radius:14px;padding:1.1rem}
-    .briefing-stat strong{display:block;font-size:1.8rem;letter-spacing:-.05em;color:#1b668f}
-    .briefing-stat span{display:block;color:#667482;font-size:.78rem;line-height:1.5;margin-top:.25rem}
-    .deep-dive{max-width:850px;margin:0 auto 3.5rem}
-    .deep-dive>h2{font-size:1.8rem;letter-spacing:-.04em;margin-bottom:.35rem;color:#172636}
-    .deep-dive-intro{color:#788594;margin-bottom:1.8rem}
-    .article-block{padding:1.5rem 0;border-top:1px solid #e8edf1;scroll-margin-top:2rem}
-    .article-block h3{font-size:1.35rem;line-height:1.25;letter-spacing:-.03em;color:#172636;margin:.45rem 0 .75rem}
-    .article-block p{color:#596978;line-height:1.85}
-    .article-block .source-line{font-size:.78rem;color:#84909b;margin-top:1rem}
+    .news-shell{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+    .news-masthead{padding:3.25rem 0 1.75rem}
+    .news-eyebrow{display:flex;align-items:center;gap:.6rem;color:#52728a;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+    .news-live-dot{width:8px;height:8px;border-radius:50%;background:#19a477;display:inline-block;box-shadow:0 0 0 4px #e3f5ee}
+    .news-masthead h1{font-size:clamp(2.35rem,5.2vw,4.4rem);letter-spacing:-.065em;line-height:1.02;margin:.8rem 0 .75rem;color:#101b29;font-weight:700}
+    .news-intro{max-width:650px;color:#697887;font-size:1rem;line-height:1.7;margin:0}
+    .news-date{margin-top:1.1rem;color:#8a96a2;font-size:.72rem;letter-spacing:.08em}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.8fr);gap:1.1rem;margin:1.5rem 0 3.3rem}
+    .lead-story,.side-story{position:relative;overflow:hidden;isolation:isolate;border-radius:28px;background:#172432;color:#fff;display:flex;align-items:flex-end;min-width:0}
+    .lead-story{min-height:470px}
+    .lead-story>img,.side-story>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+    .lead-story:after,.side-story:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,13,22,.94),rgba(5,13,22,.08) 88%);z-index:-1}
+    .lead-copy{padding:clamp(1.35rem,3.4vw,2.5rem);max-width:720px}
+    .story-label{display:inline-flex;align-items:center;gap:.45rem;font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#d9ecff}
+    .story-label:before{content:"";width:17px;height:2px;background:#82caff}
+    .lead-copy h2{font-size:clamp(1.85rem,3.5vw,3rem);line-height:1.08;letter-spacing:-.045em;color:#fff;margin:.75rem 0}
+    .lead-copy p{color:#e2eaf0;font-size:.94rem;line-height:1.7;margin:0;max-width:58ch}
+    .story-meta{font-size:.72rem;color:#c1cfda;display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.85rem}
+    .story-link{display:inline-flex;align-items:center;gap:.45rem;margin-top:1rem;color:#fff!important;font-size:.85rem;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.55);padding-bottom:.2rem}
+    .side-stack{display:grid;grid-template-rows:1fr 1fr;gap:1.1rem}
+    .side-story{min-height:228px}
+    .side-copy{padding:1.3rem}
+    .side-copy h3{font-size:1.3rem;line-height:1.2;letter-spacing:-.035em;color:#fff;margin:.55rem 0}
+    .side-copy p{font-size:.83rem;line-height:1.55;color:#e1e8ef;margin:0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:1.15rem}
+    .section-head h2{font-size:1.85rem;letter-spacing:-.05em;margin:0;color:#142334}
+    .section-head p{font-size:.8rem;color:#84909b;margin:0}
+    .story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;margin-bottom:3.3rem}
+    .news-card{border:1px solid #e9eef2;border-radius:22px;overflow:hidden;background:#fff;transition:transform .2s ease,box-shadow .2s ease}
+    .news-card:hover{transform:translateY(-3px);box-shadow:0 13px 32px rgba(21,43,61,.08)}
+    .news-card>a{display:block;color:inherit;text-decoration:none}
+    .news-card img{display:block;width:100%;height:185px;object-fit:cover;background:#edf1f4}
+    .card-copy{padding:1.15rem 1.2rem 1.25rem}
+    .card-category{font-size:.66rem;text-transform:uppercase;letter-spacing:.13em;color:#39739a;font-weight:700}
+    .news-card h3{font-size:1.12rem;line-height:1.3;letter-spacing:-.03em;margin:.5rem 0;color:#182636}
+    .news-card p{font-size:.83rem;line-height:1.62;color:#687887;margin:0 0 .9rem}
+    .card-meta{font-size:.7rem;color:#929da7;display:flex;justify-content:space-between;gap:.5rem}
+    .roadmap{background:#f4f8fa;border-radius:28px;padding:clamp(1.4rem,4vw,2.4rem);margin:0 0 3.3rem}
+    .roadmap h2{font-size:1.8rem;letter-spacing:-.05em;margin:0 0 .4rem;color:#152536}
+    .roadmap>p{max-width:720px;color:#697887;font-size:.9rem;line-height:1.7;margin:0 0 1.35rem}
+    .roadmap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
+    .roadmap-item{background:#fff;border:1px solid #e8eef2;border-radius:18px;padding:1.1rem}
+    .roadmap-item strong{display:block;color:#1b668f;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.45rem}
+    .roadmap-item h3{font-size:1rem;line-height:1.3;margin:0 0 .4rem;color:#182636}
+    .roadmap-item p{font-size:.8rem;line-height:1.6;color:#697887;margin:0}
+    .analysis{max-width:900px;margin:0 auto 3.2rem}
+    .analysis>h2{font-size:1.9rem;letter-spacing:-.05em;margin:0 0 .35rem;color:#152536}
+    .analysis-intro{font-size:.9rem;color:#7b8995;margin:0 0 1.25rem}
+    /* Reset Pico's default article panel styling: these are editorial entries, not nested cards. */
+    article.article-block{display:block;margin:0;padding:1.35rem 0 1.5rem;border:0;border-top:1px solid #e8edf1;border-radius:0;background:transparent;box-shadow:none}
+    .article-block h3{font-size:clamp(1.2rem,2vw,1.48rem);line-height:1.28;letter-spacing:-.035em;color:#172636;margin:.45rem 0 .65rem}
+    .article-block p{max-width:72ch;font-size:.9rem;line-height:1.75;color:#596978;margin:.6rem 0}
+    .article-block .source-line{font-size:.75rem;color:#84909b;margin-top:.8rem}
     .article-block a,.source-list a{color:#216f9d;text-decoration:underline;text-underline-offset:3px}
-    .takeaway{border-left:3px solid #6ab4dd;padding:.75rem 1rem;background:#f5f9fb;color:#405566;font-size:.9rem;line-height:1.7;margin:1rem 0}
-    .source-list{max-width:850px;margin:0 auto 3.5rem;padding-top:1.5rem;border-top:1px solid #e8edf1}
-    .source-list h2{font-size:1.35rem;color:#172636}
-    .source-list ul{padding-left:1.2rem;color:#667482;font-size:.85rem;line-height:1.9}
-    .news-footer-space{height:.5rem}
-    @media(max-width:850px){.news-hero{grid-template-columns:1fr}.lead-story{min-height:420px}.side-stories{grid-template-columns:1fr 1fr;grid-template-rows:auto}.side-story{min-height:250px}.latest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:600px){.news-shell{padding:0 1rem}.news-masthead{padding:2.4rem 0 1.7rem}.news-hero{margin:1.4rem 0 2.5rem}.lead-story{min-height:430px}.side-stories{grid-template-columns:1fr}.side-story{min-height:210px}.latest-grid{grid-template-columns:1fr;gap:1rem}.news-card img{height:210px}.briefing-grid{grid-template-columns:1fr}.section-heading{align-items:start;flex-direction:column}.news-card-copy{padding:1rem}}
+    .takeaway{border-radius:14px;padding:.8rem 1rem;background:#f3f8fb;color:#405566;font-size:.83rem;line-height:1.65;margin:.9rem 0}
+    .takeaway strong{color:#1c526f}
+    .source-list{max-width:900px;margin:0 auto 3.3rem;padding-top:1.35rem;border-top:1px solid #e8edf1}
+    .source-list h2{font-size:1.3rem;color:#172636}
+    .source-list p{max-width:700px;font-size:.86rem;color:#697887;line-height:1.7}
+    .source-list ul{padding-left:1.2rem;color:#667482;font-size:.82rem;line-height:1.9}
+    @media(max-width:850px){.hero-grid{grid-template-columns:1fr}.lead-story{min-height:430px}.side-stack{grid-template-columns:1fr 1fr;grid-template-rows:auto}.side-story{min-height:245px}.story-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:600px){.news-shell{padding:0 1rem}.news-masthead{padding:2.4rem 0 1.3rem}.hero-grid{margin:1.2rem 0 2.5rem}.lead-story{min-height:440px;border-radius:23px}.side-stack{grid-template-columns:1fr}.side-story{min-height:220px;border-radius:21px}.story-grid,.roadmap-grid{grid-template-columns:1fr}.news-card img{height:205px}.section-head{align-items:start;flex-direction:column}.news-card{border-radius:19px}.roadmap{border-radius:22px}.analysis>h2{font-size:1.65rem}}
     @media(prefers-reduced-motion:reduce){.news-card{transition:none}.news-card:hover{transform:none}}
   </style>
 </head>
 <body class="news-page">
   <div id="site-header"></div>
-
   <main>
     <header class="news-shell news-masthead">
       <div class="news-eyebrow"><span class="news-live-dot"></span> The AR glasses briefing</div>
-      <h1>See what’s<br>coming into view.</h1>
-      <p class="news-intro">The stories shaping augmented reality eyewear — from breakthrough optics and spatial computing to the people, products and ideas bringing digital experiences into the real world.</p>
-      <div class="news-date">LATEST EDITION <time datetime="2026-10-01">1 OCTOBER 2026</time> &nbsp;·&nbsp; NEWS, ANALYSIS &amp; INDUSTRY</div>
+      <h1>The next era<br>is taking shape.</h1>
+      <p class="news-intro">Big moves. Bold roadmaps. The race to put useful digital experiences in your field of view — led by Meta, Google and Snap.</p>
+      <div class="news-date">THE BIG THREE &nbsp;·&nbsp; ROADMAPS, BREAKTHROUGHS &amp; WHAT COMES NEXT</div>
     </header>
 
     <div class="news-shell">
-      <section class="news-hero" aria-label="Top AR glasses stories">
+      <section class="hero-grid" aria-label="Featured AR glasses coverage">
         <article class="lead-story">
           <img src="images/snap.webp" alt="Snap Specs augmented reality glasses" fetchpriority="high">
           <div class="lead-copy">
-            <span class="story-label">Lead story · AR platforms</span>
-            <h2>Snap is turning Specs into a platform — not just a pair of glasses</h2>
-            <p>New experiences for work, learning, shopping and navigation sit alongside an AI service designed to anticipate what wearers need. The bigger story is the attempt to make spatial computing useful throughout the day.</p>
-            <div class="story-meta"><span>30 September 2026</span><span>5 min read</span></div>
-            <a class="story-link" href="#snap-specs">Explore the story <span aria-hidden="true">↗</span></a>
+            <span class="story-label">Snap · The platform play</span>
+            <h2>Snap’s Specs bet: a whole computer, hiding in plain sight</h2>
+            <p>Snap is building beyond individual apps: spatial experiences, an anticipatory AI layer and partnerships spanning work, entertainment and everyday tasks. Could this be the blueprint for glasses that earn a place in your daily routine?</p>
+            <div class="story-meta"><span>16 September 2026</span><span>5 min read</span><span>News + analysis</span></div>
+            <a class="story-link" href="#snap-roadmap">Unpack the roadmap <span aria-hidden="true">↗</span></a>
           </div>
         </article>
-        <div class="side-stories">
+        <div class="side-stack">
           <article class="side-story">
-            <img src="images/metaglasses2.webp" alt="Meta smart glasses">
+            <img src="images/metaglasses2.webp" alt="Meta smart glasses" loading="lazy">
             <div class="side-copy">
-              <span class="story-label">Market watch</span>
-              <h3>Smart glasses shipments surge — but what counts as AR?</h3>
-              <p>New figures show rapid growth, led by display-free AI eyewear.</p>
-              <a class="story-link" href="#market-growth">Read the analysis ↗</a>
+              <span class="story-label">Meta · Display glasses</span>
+              <h3>Meta puts directions and holograms on the roadmap</h3>
+              <p>New display features hint at a future where the phone stays in your pocket.</p>
+              <a class="story-link" href="#meta-roadmap">See what’s coming ↗</a>
             </div>
           </article>
           <article class="side-story">
-            <img src="images/google.webp" alt="Google Android XR smart glasses concept">
+            <img src="images/google.webp" alt="Google Android XR glasses" loading="lazy">
             <div class="side-copy">
-              <span class="story-label">Partnerships</span>
-              <h3>Eyewear expertise meets AR optics in a new Japan partnership</h3>
-              <p>Cellid and Megane Top are joining forces to bring AR glasses to market.</p>
-              <a class="story-link" href="#cellid-megane">Read the story ↗</a>
+              <span class="story-label">Google · Android XR</span>
+              <h3>Google’s two-track glasses strategy is coming into focus</h3>
+              <p>Gemini-powered audio first, with display eyewear following.</p>
+              <a class="story-link" href="#google-roadmap">Explore the plan ↗</a>
             </div>
           </article>
         </div>
       </section>
 
       <section aria-labelledby="latest-heading">
-        <div class="section-heading">
-          <div><h2 id="latest-heading">The latest</h2><p>Developments worth your attention, in context.</p></div>
-          <p>Updated 1 October 2026</p>
+        <div class="section-head">
+          <div><h2 id="latest-heading">The stories moving the race</h2><p>Only the companies shaping the next generation of glasses.</p></div>
+          <p>Meta · Google · Snap</p>
         </div>
-        <div class="latest-grid">
-          <article class="news-card">
-            <a href="#meta-connect">
-              <img src="images/metaglasses2.webp" alt="Meta AI glasses range" loading="lazy">
-              <div class="news-card-copy"><span class="card-category">Product launches</span><h3>Meta expands its glasses family with audio-first designs and a new generation</h3><p>Meta’s latest announcements span lighter audio eyewear, updated Ray-Ban Meta glasses and more styles across its range.</p><div class="card-meta"><span>24 Sep 2026</span><span>4 min read</span></div></div>
-            </a>
-          </article>
-          <article class="news-card">
-            <a href="#privacy-controls">
-              <img src="images/rayneo2.webp" alt="Smart glasses close-up" loading="lazy">
-              <div class="news-card-copy"><span class="card-category">Privacy &amp; trust</span><h3>Smart-glasses privacy controls move further into the spotlight</h3><p>New opt-out controls underline a key challenge for camera-equipped eyewear: making data use understandable and controllable.</p><div class="card-meta"><span>25 Sep 2026</span><span>3 min read</span></div></div>
-            </a>
-          </article>
-          <article class="news-card">
-            <a href="#microled-outlook">
-              <img src="images/vuzix3.webp" alt="Waveguide and microdisplay smart glasses" loading="lazy">
-              <div class="news-card-copy"><span class="card-category">Display technology</span><h3>MicroLED’s next test: bringing full-colour AR displays into everyday frames</h3><p>Industry coverage points to optical efficiency, cost and comfortable styling as the hurdles still to solve.</p><div class="card-meta"><span>22 Sep 2026</span><span>4 min read</span></div></div>
-            </a>
-          </article>
+        <div class="story-grid">
+          <article class="news-card"><a href="#meta-roadmap">
+            <img src="images/metaglasses2.webp" alt="Meta Ray-Ban Display glasses" loading="lazy">
+            <div class="card-copy"><span class="card-category">Meta · 23 September 2026</span><h3>Meta’s display glasses get navigation, holograms and a wider launch</h3><p>Meta is adding hands-free cycling and transit directions, video-call holograms and an Explore app — while expanding availability into the UK and Europe.</p><div class="card-meta"><span>Roadmap watch</span><span>4 min read</span></div></div>
+          </a></article>
+          <article class="news-card"><a href="#google-roadmap">
+            <img src="images/google.webp" alt="Google Android XR intelligent eyewear" loading="lazy">
+            <div class="card-copy"><span class="card-category">Google · 19 May 2026</span><h3>Google is splitting its glasses future into audio and display</h3><p>Android XR and Gemini are the foundation: voice-first eyewear is due first, with in-lens information planned for a later wave.</p><div class="card-meta"><span>Roadmap watch</span><span>4 min read</span></div></div>
+          </a></article>
+          <article class="news-card"><a href="#snap-roadmap">
+            <img src="images/snap.webp" alt="Snap Specs AR glasses" loading="lazy">
+            <div class="card-copy"><span class="card-category">Snap · 16 September 2026</span><h3>Snap brings Nvidia, Salesforce and AWS into its Specs vision</h3><p>Enterprise tools join entertainment, learning and navigation as Snap looks to make AR useful at work as well as at home.</p><div class="card-meta"><span>Platform watch</span><span>5 min read</span></div></div>
+          </a></article>
         </div>
       </section>
 
-      <section class="briefing" aria-labelledby="numbers-heading">
-        <h2 id="numbers-heading">The market, in a moment</h2>
-        <p class="briefing-intro">IDC’s second-quarter 2026 tracker shows that the broader smart-glasses and XR category is expanding, while the mix of products remains important. Display-free audio/AI glasses and see-through AR glasses are not the same experience.</p>
-        <div class="briefing-grid">
-          <div class="briefing-stat"><strong>35.3%</strong><span>Year-on-year growth in global XR headsets and glasses shipments in Q2 2026.</span></div>
-          <div class="briefing-stat"><strong>70.3%</strong><span>Share of Q2 shipments represented by audio, display-free glasses.</span></div>
-          <div class="briefing-stat"><strong>14.3%</strong><span>Share represented by display glasses in the same quarter.</span></div>
+      <section class="roadmap" aria-labelledby="roadmap-heading">
+        <h2 id="roadmap-heading">Three roadmaps. One big shift.</h2>
+        <p>Each company is approaching everyday eyewear from a different angle. These are the announced directions; the predictions below are analysis, not confirmed launch promises.</p>
+        <div class="roadmap-grid">
+          <div class="roadmap-item"><strong>Meta</strong><h3>Make glasses the everyday AI companion — then add more visual computing.</h3><p>Its current line spans audio-first AI glasses and a display model with navigation, notifications and visual experiences.</p></div>
+          <div class="roadmap-item"><strong>Google</strong><h3>Build an open Android XR ecosystem around Gemini.</h3><p>Audio eyewear is the first step; display glasses are the next category in its announced product direction.</p></div>
+          <div class="roadmap-item"><strong>Snap</strong><h3>Turn see-through AR into a spatial platform for apps and shared experiences.</h3><p>Specs combines in-view digital content, hand and voice interaction, developer experiences and AI services.</p></div>
         </div>
-        <p class="source-line">Source: <a href="https://www.idc.com/resource-center/blog/smart-glasses-growth-cools-to-35-as-meta-doubles-down-on-distribution/" target="_blank" rel="noopener noreferrer">IDC, Smart Glasses Growth Cools to 35%, 16 September 2026</a>. Figures describe IDC’s tracked XR category, not AR glasses alone.</p>
       </section>
 
-      <section class="deep-dive" aria-labelledby="deep-dive-heading">
-        <h2 id="deep-dive-heading">Inside the stories</h2>
-        <p class="deep-dive-intro">What happened, why it matters, and what to watch next.</p>
+      <section class="analysis" aria-labelledby="analysis-heading">
+        <h2 id="analysis-heading">What happens next?</h2>
+        <p class="analysis-intro">The confirmed moves — and the signals they may send about the future of AR eyewear.</p>
 
-        <article class="article-block" id="snap-specs">
-          <span class="card-category">01 · AR platforms · 30 September 2026</span>
-          <h3>Snap wants Specs to become a useful layer over everyday life</h3>
-          <p>Snap’s September announcement puts the emphasis on what people can do with its Specs platform, rather than on hardware alone. The company outlined augmented-reality experiences spanning entertainment, education, work, shopping, translation, navigation and fitness. It also introduced Specs Intelligence, an anticipatory AI service intended to work across its glasses and other devices.</p>
-          <p>The ambition is significant: instead of asking people to open a dedicated app for every task, the platform aims to surface relevant information in context, using voice and hand interaction. That approach could make glasses feel more like a natural extension of computing — provided the experiences are genuinely helpful, comfortable and respectful of the people around the wearer.</p>
-          <div class="takeaway"><strong>Why it matters:</strong> The competition is increasingly about the operating system, developer experiences and useful everyday applications, not only display specifications.</div>
-          <p class="source-line">Primary source: <a href="https://investor.snap.com/news/news-details/2026/SPECS-Make-Computing-More-Human-with-New-Experiences-Partnerships-and-SPECS-Intelligence/default.aspx" target="_blank" rel="noopener noreferrer">Snap Inc. announcement, 16 September 2026</a>.</p>
+        <article class="article-block" id="meta-roadmap">
+          <span class="card-category">01 · Meta · Confirmed updates + outlook</span>
+          <h3>Meta is moving from hands-free AI towards information in your line of sight</h3>
+          <p>At Connect on 23 September, Meta announced new features for Meta Ray-Ban Display: hands-free cycling and public-transport directions, a personalised hologram for video calls, an Explore app and plans for mirrored phone notifications. Meta also announced expansion into the UK, Canada, France, Italy and Germany.</p>
+          <p><strong>Why it could be exciting:</strong> navigation is a natural fit for see-through displays. Instead of repeatedly checking a phone, directions can appear when needed while the wearer stays aware of the street. Holographic calling points towards a more expressive kind of communication, although comfort, battery life and social acceptance will determine how often people actually use it.</p>
+          <div class="takeaway"><strong>Our outlook:</strong> Meta’s roadmap suggests a gradual bridge from camera-and-audio glasses to glasses that can place useful visual information directly in front of you. The important test is whether those features feel effortless rather than distracting.</div>
+          <p class="source-line">Primary source: <a href="https://about.fb.com/news/2026/09/new-features-for-meta-ray-ban-display-navigation-hologram/" target="_blank" rel="noopener noreferrer">Meta — New Features for Meta Ray-Ban Display, 23 September 2026</a>.</p>
         </article>
 
-        <article class="article-block" id="market-growth">
-          <span class="card-category">02 · Market watch · 16 September 2026</span>
-          <h3>Smart-glasses growth is real — but the category needs clearer labels</h3>
-          <p>IDC reported that global shipments of XR headsets and glasses rose 35.3% year on year in the second quarter of 2026. Within that tracked mix, audio glasses without displays accounted for 70.3% of shipments, while display glasses represented 14.3%. Those figures help explain why camera-and-AI eyewear is gaining visibility, but they should not be read as a direct measure of transparent-display AR adoption.</p>
-          <p>For readers comparing devices, the distinction matters. Some glasses capture photos, play audio and connect to an assistant; others place digital information in the wearer’s field of view. A product may be compelling without being optical see-through AR. Clear descriptions help buyers understand what they are actually getting.</p>
-          <div class="takeaway"><strong>What to watch:</strong> Whether the next wave of lighter displays, better battery life and lower-cost optics can broaden demand for glasses that visibly augment the world.</div>
-          <p class="source-line">Source: <a href="https://www.idc.com/resource-center/blog/smart-glasses-growth-cools-to-35-as-meta-doubles-down-on-distribution/" target="_blank" rel="noopener noreferrer">IDC, 16 September 2026</a>.</p>
+        <article class="article-block" id="google-roadmap">
+          <span class="card-category">02 · Google · Confirmed roadmap + outlook</span>
+          <h3>Google wants Gemini to understand what you see — and eventually show you what you need</h3>
+          <p>Google’s Android XR announcement at I/O 2026 described two kinds of intelligent eyewear. Audio glasses, developed with eyewear partners including Gentle Monster and Warby Parker, are designed for spoken Gemini assistance, navigation, translation, messages and camera-based questions about the world. Google said audio glasses would arrive first, with display glasses following later.</p>
+          <p><strong>Why it could be exciting:</strong> Google has the ingredients to connect glasses to maps, search, translation and Android services. If the display version can present just the right detail at the right moment, glasses could become a genuinely useful companion for travel, learning and getting things done — without turning every moment into a screen session.</p>
+          <div class="takeaway"><strong>Our outlook:</strong> Watch how quickly Google moves from voice-first products to a comfortable, lightweight display. Its Android XR strategy could matter beyond one device if it attracts developers and eyewear brands.</div>
+          <p class="source-line">Primary source: <a href="https://blog.google/products-and-platforms/platforms/android/android-xr-io-2026/" target="_blank" rel="noopener noreferrer">Google — Intelligent eyewear is coming this fall, 19 May 2026</a>.</p>
         </article>
 
-        <article class="article-block" id="cellid-megane">
-          <span class="card-category">03 · Industry partnerships · 25 September 2026</span>
-          <h3>Cellid and Megane Top bring optical technology and eyewear know-how together</h3>
-          <p>Japanese AR technology company Cellid and eyewear business Megane Top announced a partnership to commercialise and expand AR glasses. Cellid brings optical and hardware development expertise, while Megane Top contributes product development experience and an established eyewear sales network.</p>
-          <p>The partnership highlights a practical route to consumer adoption. Making a display work is only part of the challenge: frames also need to feel familiar, fit comfortably, suit different faces and be supported by a route to market. Combining specialist optics with an established eyewear business could help address some of those product and distribution questions.</p>
-          <div class="takeaway"><strong>Why it matters:</strong> The future of AR eyewear may depend as much on lens makers, frame designers and retail networks as on the technology brands consumers already know.</div>
-          <p class="source-line">Source: <a href="https://www.prnewswire.com/news-releases/cellid-and-megane-top-partner-to-commercialize-and-expand-the-ar-glasses-business-302889978.html" target="_blank" rel="noopener noreferrer">Cellid / Megane Top announcement, 25 September 2026</a>.</p>
-        </article>
-
-        <article class="article-block" id="meta-connect">
-          <span class="card-category">04 · Product launches · 24 September 2026</span>
-          <h3>Meta widens its smart-eyewear line-up across styles and use cases</h3>
-          <p>At Connect 2026, Meta outlined a broader family of AI glasses, including a new audio-focused line and the next generation of Ray-Ban Meta. The company said its portfolio across Ray-Ban, Oakley and Meta-branded glasses would exceed 100 styles by the end of the year, and announced plans to bring its Muse AI agent to glasses.</p>
-          <p>The announcements show how quickly the market is separating into different form factors: some products focus on audio and voice assistance, while others add cameras or displays. That variety gives people more choice, but it also makes precise product descriptions and privacy information increasingly important.</p>
-          <p class="source-line">Source: <a href="https://about.fb.com/news/2026/09/the-biggest-news-from-connect-2026/" target="_blank" rel="noopener noreferrer">Meta, The Biggest News From Connect 2026, 24 September 2026</a>.</p>
-        </article>
-
-        <article class="article-block" id="privacy-controls">
-          <span class="card-category">05 · Privacy &amp; trust · 25 September 2026</span>
-          <h3>Privacy settings are becoming part of the smart-glasses product story</h3>
-          <p>Recent reporting describes a new setting that lets Meta glasses users opt out of having visual data from AI experiences stored for model training. The change follows wider scrutiny of how camera-equipped wearables capture, process and share information.</p>
-          <p>Settings are only one part of the answer. Clear recording indicators, understandable defaults, bystander awareness and transparent explanations of when data leaves a device all shape whether people feel comfortable around smart glasses. These details deserve the same attention as battery life and camera quality.</p>
-          <p class="source-line">Reporting: <a href="https://www.businessinsider.com/meta-glasses-ai-visual-data-opt-out-training-2026-9" target="_blank" rel="noopener noreferrer">Business Insider, 25 September 2026</a>. See Meta’s own product and privacy information for current settings.</p>
-        </article>
-
-        <article class="article-block" id="microled-outlook">
-          <span class="card-category">06 · Display technology · 22 September 2026</span>
-          <h3>MicroLED is part of the push to make full-colour AR glasses practical</h3>
-          <p>Recent supply-chain coverage points to full-colour MicroLED as one of the display technologies being developed for future AR glasses. The attraction is clear: compact, bright displays could help digital content remain visible while users look at the real world. But a promising display material does not automatically make a finished pair of glasses.</p>
-          <p>Optical efficiency, waveguide design, manufacturing yield, heat, power consumption and cost all have to work together. The most meaningful progress will be the point at which these components can be packaged into frames people are happy to wear for extended periods.</p>
-          <p class="source-line">Industry coverage: <a href="https://www.digitimes.com/tag/ar_glasses/00110948.html" target="_blank" rel="noopener noreferrer">DigiTimes AR glasses coverage, September 2026</a>.</p>
+        <article class="article-block" id="snap-roadmap">
+          <span class="card-category">03 · Snap · Confirmed roadmap + outlook</span>
+          <h3>Snap is betting that the killer feature will be a world full of useful AR experiences</h3>
+          <p>Snap’s 16 September update for Specs introduced new experiences across entertainment, education, work, shopping, translation, navigation and fitness, alongside Specs Intelligence. The company also detailed partnerships with enterprise technology providers including Salesforce, Nvidia and AWS. Specs is designed as a standalone see-through AR computer, with voice and hand interaction.</p>
+          <p><strong>Why it could be exciting:</strong> Snap’s approach points to one of AR’s most compelling possibilities: digital instructions, creative tools and shared experiences that appear anchored to the real world. Imagine learning a practical skill with visual prompts in place, or collaborating around a 3D object that everyone can see from their own angle.</p>
+          <div class="takeaway"><strong>Our outlook:</strong> The big question is whether Snap can attract enough great software and make the hardware light and affordable enough for regular use. If it can, Specs could help move AR from occasional novelty to a new way of interacting with information and people.</div>
+          <p class="source-line">Primary source: <a href="https://investor.snap.com/news/news-details/2026/SPECS-Make-Computing-More-Human-with-New-Experiences-Partnerships-and-SPECS-Intelligence/default.aspx" target="_blank" rel="noopener noreferrer">Snap — SPECS Make Computing More Human, 16 September 2026</a>. Additional reporting: <a href="https://www.reuters.com/business/snap-targets-enterprises-with-salesforce-nvidia-ai-tools-augmented-reality-2026-09-16/" target="_blank" rel="noopener noreferrer">Reuters, 16 September 2026</a>.</p>
         </article>
       </section>
 
       <section class="source-list" aria-labelledby="sources-heading">
-        <h2 id="sources-heading">Follow the signal</h2>
-        <p class="news-intro">We prioritise original announcements, named research and established technology reporting. Each story links to its source so you can explore the details and read the original context.</p>
+        <h2 id="sources-heading">Follow the companies shaping AR</h2>
+        <p>We prioritise company announcements and established reporting. Confirmed facts are identified separately from our forward-looking analysis.</p>
         <ul>
-          <li><a href="https://investor.snap.com/news/" target="_blank" rel="noopener noreferrer">Snap Investor News</a> — platform and product announcements.</li>
-          <li><a href="https://about.fb.com/news/" target="_blank" rel="noopener noreferrer">Meta Newsroom</a> — product updates and company announcements.</li>
-          <li><a href="https://www.idc.com/" target="_blank" rel="noopener noreferrer">IDC</a> — market research and shipment tracking.</li>
-          <li><a href="https://www.digitimes.com/" target="_blank" rel="noopener noreferrer">DigiTimes</a> — component and supply-chain reporting.</li>
+          <li><a href="https://about.fb.com/news/" target="_blank" rel="noopener noreferrer">Meta Newsroom</a> — Ray-Ban Meta, Meta Ray-Ban Display and product updates.</li>
+          <li><a href="https://blog.google/products-and-platforms/platforms/android/" target="_blank" rel="noopener noreferrer">Google Android News</a> — Android XR and intelligent eyewear.</li>
+          <li><a href="https://investor.snap.com/news/" target="_blank" rel="noopener noreferrer">Snap Investor News</a> — Specs hardware, software and partnerships.</li>
         </ul>
       </section>
     </div>
