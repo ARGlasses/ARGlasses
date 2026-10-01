@@ -1,590 +1,283 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AR Glasses News & Trends | Latest in AR & AI Wearables</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AR Glasses News | The latest in augmented reality eyewear</title>
+  <meta name="description" content="Independent coverage of AR glasses, smart eyewear and spatial computing. The latest launches, technology, industry moves and analysis." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/logo40x40.webp" type="image/png" />
+  <script src="./header.js?v=6" defer></script>
+  <style>
+    html,body{margin:0;min-height:100%;background:#fff;font-family:"Poppins",system-ui,sans-serif}
+    body.news-page{overflow-x:hidden;color:#17212b}
+    body.news-page #navbar{background:#fff!important;box-shadow:none!important;border:0;padding-block:.5rem}
+    body.news-page #navbar .nav-inner a{color:var(--nav-text-color,#555)!important}
+    body.news-page #navbar img{height:28px;width:auto}
+    body.news-page #navbar .nav-inner{text-shadow:none}
+    .news-shell{max-width:1180px;margin:0 auto;padding:0 1.25rem}
+    .news-masthead{padding:3.4rem 0 2.2rem;border-bottom:1px solid #e9edf1}
+    .news-eyebrow{display:flex;align-items:center;gap:.65rem;color:#426b87;font-size:.76rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+    .news-live-dot{width:8px;height:8px;border-radius:50%;background:#18a477;display:inline-block;box-shadow:0 0 0 4px #e3f5ee}
+    .news-masthead h1{font-size:clamp(2.5rem,6vw,5.2rem);letter-spacing:-.065em;line-height:.99;margin:.9rem 0 1rem;color:#101b29;font-weight:700}
+    .news-intro{max-width:690px;color:#647180;font-size:1.05rem;line-height:1.8;margin:0}
+    .news-date{margin-top:1.35rem;color:#788594;font-size:.8rem;letter-spacing:.04em}
+    .news-hero{display:grid;grid-template-columns:1.25fr .75fr;gap:1.5rem;margin:2rem 0 3.25rem}
+    .lead-story{position:relative;min-height:470px;border-radius:22px;overflow:hidden;background:#101923;color:white;isolation:isolate;display:flex;align-items:flex-end}
+    .lead-story>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+    .lead-story:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,13,22,.94),rgba(5,13,22,.18) 72%);z-index:-1}
+    .lead-copy{padding:clamp(1.4rem,4vw,2.7rem);max-width:760px}
+    .story-label{display:inline-flex;align-items:center;gap:.45rem;font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#d9ecff}
+    .story-label:before{content:"";width:19px;height:2px;background:#7bc7ff}
+    .lead-copy h2{font-size:clamp(1.8rem,3.6vw,3.15rem);line-height:1.08;letter-spacing:-.04em;color:#fff;margin:.85rem 0}
+    .lead-copy p{color:#e1e8ef;line-height:1.7;margin:0 0 1rem;max-width:60ch}
+    .story-meta{font-size:.76rem;color:#b8c7d5;display:flex;gap:.75rem;flex-wrap:wrap}
+    .story-link{display:inline-flex;align-items:center;gap:.45rem;margin-top:1.15rem;color:#fff!important;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.55);padding-bottom:.25rem}
+    .story-link:hover{color:#a9dcff!important}
+    .side-stories{display:grid;grid-template-rows:1fr 1fr;gap:1.5rem}
+    .side-story{position:relative;min-height:220px;border-radius:20px;overflow:hidden;background:#17212b;color:#fff;isolation:isolate;display:flex;align-items:flex-end}
+    .side-story img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+    .side-story:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,13,22,.94),rgba(5,13,22,.12) 90%);z-index:-1}
+    .side-copy{padding:1.35rem}
+    .side-copy h3{font-size:1.28rem;line-height:1.2;color:#fff;margin:.5rem 0}
+    .side-copy p{font-size:.86rem;line-height:1.55;color:#e1e8ef;margin:0}
+    .section-heading{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:0 0 1.25rem}
+    .section-heading h2{font-size:1.75rem;letter-spacing:-.04em;margin:0;color:#152333}
+    .section-heading p{margin:0;color:#7a8794;font-size:.82rem}
+    .latest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin-bottom:3.5rem}
+    .news-card{border:1px solid #e8edf1;border-radius:17px;overflow:hidden;background:#fff;transition:transform .2s ease,box-shadow .2s ease}
+    .news-card:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(21,43,61,.09)}
+    .news-card img{display:block;width:100%;height:190px;object-fit:cover;background:#edf1f4}
+    .news-card-copy{padding:1.15rem}
+    .card-category{font-size:.67rem;text-transform:uppercase;letter-spacing:.12em;color:#39739a;font-weight:700}
+    .news-card h3{font-size:1.12rem;line-height:1.3;letter-spacing:-.025em;margin:.55rem 0;color:#182636}
+    .news-card p{font-size:.86rem;line-height:1.65;color:#667482;margin:0 0 .9rem}
+    .card-meta{font-size:.72rem;color:#8a96a2;display:flex;justify-content:space-between;gap:.5rem}
+    .news-card a{color:inherit;text-decoration:none}
+    .news-card a:hover h3{color:#2878a9}
+    .briefing{background:#f3f7fa;border-radius:22px;padding:clamp(1.4rem,4vw,2.5rem);margin:0 0 3.5rem}
+    .briefing h2{font-size:1.65rem;letter-spacing:-.04em;margin:0 0 .5rem;color:#172636}
+    .briefing-intro{color:#667482;max-width:720px;line-height:1.7;margin:0 0 1.3rem}
+    .briefing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .briefing-stat{background:#fff;border:1px solid #e5ebef;border-radius:14px;padding:1.1rem}
+    .briefing-stat strong{display:block;font-size:1.8rem;letter-spacing:-.05em;color:#1b668f}
+    .briefing-stat span{display:block;color:#667482;font-size:.78rem;line-height:1.5;margin-top:.25rem}
+    .deep-dive{max-width:850px;margin:0 auto 3.5rem}
+    .deep-dive>h2{font-size:1.8rem;letter-spacing:-.04em;margin-bottom:.35rem;color:#172636}
+    .deep-dive-intro{color:#788594;margin-bottom:1.8rem}
+    .article-block{padding:1.5rem 0;border-top:1px solid #e8edf1;scroll-margin-top:2rem}
+    .article-block h3{font-size:1.35rem;line-height:1.25;letter-spacing:-.03em;color:#172636;margin:.45rem 0 .75rem}
+    .article-block p{color:#596978;line-height:1.85}
+    .article-block .source-line{font-size:.78rem;color:#84909b;margin-top:1rem}
+    .article-block a,.source-list a{color:#216f9d;text-decoration:underline;text-underline-offset:3px}
+    .takeaway{border-left:3px solid #6ab4dd;padding:.75rem 1rem;background:#f5f9fb;color:#405566;font-size:.9rem;line-height:1.7;margin:1rem 0}
+    .source-list{max-width:850px;margin:0 auto 3.5rem;padding-top:1.5rem;border-top:1px solid #e8edf1}
+    .source-list h2{font-size:1.35rem;color:#172636}
+    .source-list ul{padding-left:1.2rem;color:#667482;font-size:.85rem;line-height:1.9}
+    .news-footer-space{height:.5rem}
+    @media(max-width:850px){.news-hero{grid-template-columns:1fr}.lead-story{min-height:420px}.side-stories{grid-template-columns:1fr 1fr;grid-template-rows:auto}.side-story{min-height:250px}.latest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:600px){.news-shell{padding:0 1rem}.news-masthead{padding:2.4rem 0 1.7rem}.news-hero{margin:1.4rem 0 2.5rem}.lead-story{min-height:430px}.side-stories{grid-template-columns:1fr}.side-story{min-height:210px}.latest-grid{grid-template-columns:1fr;gap:1rem}.news-card img{height:210px}.briefing-grid{grid-template-columns:1fr}.section-heading{align-items:start;flex-direction:column}.news-card-copy{padding:1rem}}
+    @media(prefers-reduced-motion:reduce){.news-card{transition:none}.news-card:hover{transform:none}}
+  </style>
+</head>
+<body class="news-page">
+  <div id="site-header"></div>
 
-<meta name="description" content="Stay updated on AR glasses: the latest from Meta, Apple, Google, Snap, Vuzix, Rokid, RayNeo, Viture, and Xreal—features, releases, and trends in spatial computing.">
-    
-    <!-- Prevent browser scroll restoration (safe; does not affect links) -->
-    <script>
-      try { history.scrollRestoration = 'manual'; } catch (_) {}
-    </script>
+  <main>
+    <header class="news-shell news-masthead">
+      <div class="news-eyebrow"><span class="news-live-dot"></span> The AR glasses briefing</div>
+      <h1>See what’s<br>coming into view.</h1>
+      <p class="news-intro">The stories shaping augmented reality eyewear — from breakthrough optics and spatial computing to the people, products and ideas bringing digital experiences into the real world.</p>
+      <div class="news-date">LATEST EDITION <time datetime="2026-10-01">1 OCTOBER 2026</time> &nbsp;·&nbsp; NEWS, ANALYSIS &amp; INDUSTRY</div>
+    </header>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" /> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="images/logo40x40.webp" type="image/png" />
-
-    <!-- Keep your page-specific styles (unchanged) -->
-    <style>
-      /* ===== Base / layout ===== */
-      html, body { height: 100%; margin: 0; }
-      body {
-        overflow-x: hidden;
-        font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: #fff;
-      }
-
-      /* Force light theme + grey text for shared header on this page */
-      body.news-page #navbar {
-        background: white !important;
-        box-shadow: none !important;
-        border: 0;
-        padding-block: .5rem;
-      }
-      body.news-page #navbar .nav-inner a { color: var(--nav-text-color, #555) !important; }
-      body.news-page #navbar img { height: 28px; width: auto; }
-      body.news-page #navbar .nav-inner { text-shadow: none; }
-
-      /* ===== Viewport area ===== */
-      .viewport {
-        position: relative;
-        height: 100svh;
-        width: 100%;
-        overflow: hidden;
-      }
-
-      .rail {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        gap: 1.25rem;
-        padding: 0 max(1rem, calc((100vw - min(85vw, 1100px)) / 2));
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-      }
-      .rail::-webkit-scrollbar { display: none; }
-      .rail { scrollbar-width: none; -ms-overflow-style: none; }
-
-      .story {
-        position: relative;
-        min-width: clamp(78%, 85vw, 1100px);
-        height: clamp(420px, 82svh, 900px);
-        border-radius: 24px;
-        overflow: hidden;
-        scroll-snap-align: center;
-        isolation: isolate;
-        color: white;
-        box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
-        background: #111;
-      }
-      .story img.bg {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -2;
-      }
-      .story::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(0,0,0,0.55) 0%,
-          rgba(0,0,0,0.25) 40%,
-          rgba(0,0,0,0.10) 65%,
-          rgba(0,0,0,0.30) 100%
-        );
-        z-index: -1;
-      }
-      .story-content {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        align-content: end;
-        padding: clamp(1rem, 4vw, 3rem);
-        gap: .5rem;
-        max-width: 100ch;
-      }
-      .story-kicker { font-size: .95rem; opacity: .9; }
-      .story-title  { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.1; margin: 0; font-weight: 600; }
-      .story-teaser { font-size: clamp(1rem, 1.8vw, 1.15rem); margin: .25rem 0 0; max-width: 65ch; opacity: .95; }
-      .story-actions { margin-top: .75rem; }
-
-      .arrow {
-        position: absolute;
-        top: 50%;
-        translate: 0 -50%;
-        width: 3rem;
-        height: 3rem;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,.35);
-        background: rgba(0,0,0,.25);
-        backdrop-filter: blur(4px);
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        z-index: 60;
-        transition: transform .12s ease, opacity .2s ease;
-        color: #fff;
-      }
-      .arrow.left  { left: .75rem; }
-      .arrow.right { right: .75rem; }
-      .arrow[disabled] { opacity: .35; cursor: not-allowed; }
-      .arrow:hover     { transform: translateY(-50%) scale(1.05); }
-      .arrow svg { width: 22px; height: 22px; }
-
-      .dots {
-        position: absolute;
-        left: 0; right: 0; bottom: 1.1rem;
-        display: flex;
-        gap: .45rem;
-        justify-content: center;
-        z-index: 55;
-        pointer-events: none;
-      }
-      .dots button {
-        pointer-events: auto;
-        width: 8px; height: 8px; border-radius: 999px; border: 0;
-        background: rgba(255,255,255,.45);
-      }
-      .dots button[aria-current="true"] {
-        width: 22px;
-        background: white;
-      }
-      @media (min-width: 1200px) {
-        .arrow { width: 3.25rem; height: 3.25rem; }
-      }
-
-      /* Text contrast for cards on this page */
-      body.news-page .story-content,
-      body.news-page .story-content * { color: white !important; }
-      html body .viewport .dots { bottom: 1rem !important; }
-    </style>
-
-    <!-- Shared header behavior -->
-    <script src="./header.js?v=6" defer></script>
-  </head>
-  <body class="news-page">
-    <!-- Shared header mount -->
-    <div id="site-header"></div>
-
-  <h1 id="news-page-h1" class="visually-hidden">
-  AR Glasses News from Meta, Apple, Google, Snap, Vuzix, Rokid, RayNeo, Viture, Xreal, Magic Leap, Lenovo, RealWear
-  </h1>
-    
-    <!-- Stories -->
-    <section class="viewport" aria-label="Latest AR Glasses News">
-      <button class="arrow left" aria-label="Previous story" disabled>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="arrow right" aria-label="Next story">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-
-      <div class="rail" tabindex="0">
-        <!-- Story 1 -->
-        <article class="story" id="story-1"><img class="bg" src="images/metaglasses2.webp" alt="Meta AI Glasses" fetchpriority="high" loading="eager"/><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Meta</h2><p class="story-teaser">Cutting-Edge, Multi-Model, Iconic Styles</p><div class="story-actions"><a href="#meta" role="button">Read more</a></div></div></article>
-        <!-- Story 2 -->
-        <article class="story" id="story-2"><img class="bg" src="images/visionpro2.webp" alt="Apple Vision Pro" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Apple</h2><p class="story-teaser">Spatial Computing, Vision OS, High Resolution</p><div class="story-actions"><a href="#apple" role="button">Read more</a></div></div></article>
-        <!-- Story 3 -->
-        <article class="story" id="story-3"><img class="bg" src="images/google.webp" alt="Google AR Glasses" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Google</h2><p class="story-teaser">Gemini AI, Android XR, Contextual Awareness</p><div class="story-actions"><a href="#google" role="button">Read more</a></div></div></article>
-        <!-- Story 4 -->
-        <article class="story" id="story-4"><img class="bg" src="images/snap.webp" alt="Snap AR Glasses" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Snap</h2><p class="story-teaser">Standalone, Snap OS, Natural Interface</p><div class="story-actions"><a href="#snap" role="button">Read more</a></div></div></article>
-        <!-- Story 5 -->
-        <article class="story" id="story-5"><img class="bg" src="images/vuzix3.webp" alt="Vuzix AR Glasses" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Vuzix</h2><p class="story-teaser">Transformative, Waveguide Optics, Enterprise-Ready</p><div class="story-actions"><a href="#vuzix" role="button">Read more</a></div></div></article>
-        <!-- Story 6 -->
-        <article class="story" id="story-6"><img class="bg" src="images/rokid2.webp" alt="Rokid AR Glasses" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Rokid</h2><p class="story-teaser">Pioneering, Android TV, Gaming Hub</p><div class="story-actions"><a href="#rokid" role="button">Read more</a></div></div></article>
-        <!-- Story 7 -->
-        <article class="story" id="story-7"><img class="bg" src="images/rayneo2.webp" alt="RayNeo AR Glasses" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">RayNeo</h2><p class="story-teaser">Study, Stream & Game, IMAX Enhanced</p><div class="story-actions"><a href="#rayneo" role="button">Read more</a></div></div></article>
-        <!-- Story 8 -->
-        <article class="story" id="story-8"><img class="bg" src="images/viture.webp" alt="Viture AR Glasses" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Viture</h2><p class="story-teaser">4K-Like Display, Sharper & Brighter, Next-Gen Audio</p><div class="story-actions"><a href="#viture" role="button">Read more</a></div></div></article>
-        <!-- Story 9 -->
-        <article class="story" id="story-9"><img class="bg" src="images/xreal.webp" alt="Xreal AR Glasses" /><div class="story-content"><div class="story-kicker">Latest News from</div><h2 class="story-title">Xreal</h2><p class="story-teaser">Snapdragon, Android XR, Large FOV</p><div class="story-actions"><a href="#xreal" role="button">Read more</a></div></div></article>
-      </div>
-      </section>
-    
-    <!-- Page Content -->
-    <main class="container" style="max-width: 900px;">
-      <section aria-labelledby="collab-heading">
-
-<div class="ar-essay" style="max-width:900px;margin:0 auto;line-height:1.6;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
-    <br>
-    <br>
-  <section id="meta">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Meta</h2>
-    <p><strong>Name(s):</strong> Ray-Ban | Meta smart glasses (gen-2); Oakley | Meta HSTN (limited ed.); Meta Quest 3 (mixed-reality headset).</p>
-    <p>
-     Meta’s AI glasses marry iconic aesthetics with intuitive intelligence. They perceive and respond to the world around you, capturing moments, interpreting speech and context, and sharing experiences as they unfold. Designed for both purpose and leisure, they transform eyewear into an unobtrusive companion that keeps you seamlessly connected. 
-      </p>
-    <p>
-Turning everyday eyewear into a portal for shared moments and instant connection.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="apple">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Apple</h2>
-    <p><strong>Name:</strong> Apple Vision Pro (spatial computer; not AR glasses).</p>
-    <p>
-      Apple Vision Pro embodies a new realm of spatial computing, merging the digital and physical into a single, fluid environment. It expands workspaces, enriches communication, and immerses you in cinematic worlds. Interaction feels effortless through eye, hand, and voice, creating the sensation of stepping naturally into the experience.
-    </p>
-        <p>
-Making technology a space you live in rather than a device you hold.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="google">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Google</h2>
-    <p><strong>Name(s):</strong> Android XR (platform/OS); Project Astra (multimodal AI, prototyped on glasses).</p>
-    <p>
-    Google’s AR glasses combine understated elegance with perceptive intelligence. They overlay navigation, translation, and timely information directly into your view, preserving the comfort and style of everyday eyewear. Developed with leading fashion and technology partners, they keep you informed and engaged while allowing your attention to remain fully present.  
-    </p>
-    <p>
-Weaving insight seamlessly into the natural rhythm of your daily life.
-    </p>
-    
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="snap">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Snap</h2>
-    <p><strong>Name:</strong> Spectacles (developer hardware; not mass-market consumer).</p>
-    <p>
-    Snap’s AR glasses infuse everyday life with creativity and play. They weave vibrant effects, interactive experiences, and games into the world around you, responding naturally to gestures and voice. Built for social connection, they foster a sense of shared presence that is immersive, immediate, and joyfully expressive.
-    </p>
-     <p>
-Shaping self-expression into an art that moves with you in reality.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="vuzix">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Vuzix</h2>
-    <p><strong>Name(s):</strong> Vuzix M400/M400C (assisted-reality); Blade 2; Shield (µLED waveguide smart safety glasses); Ultralite (OEM platform).</p>
-    <p>
-    Vuzix smart glasses are designed with precision and practicality for professional environments. They deliver real time data, enable hands free communication, and support remote collaboration, all through lightweight, durable frames. Engineered for productivity in the field, they maintain focus on the task while enhancing situational awareness.
-    </p>
-        <p>
-Connecting critical expertise to the exact moment it is needed most.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="rokid">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Rokid</h2>
-    <p><strong>Name(s):</strong> Rokid Max 2 (XR/AR display glasses); Rokid Station / Station 2 (Android TV-based companion).</p>
-    <p>
-    Rokid’s AR glasses combine refined design with advanced visual capability. They summon expansive virtual screens and offer real time translation, navigation, and object recognition with ease. Equally suited to immersive entertainment or professional tasks, they enhance perception and productivity while remaining light, comfortable, and unobtrusive in any setting.
-    </p>
-        <p>
-Blending vision and knowledge until they feel part of who you are.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="rayneo">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">RayNeo</h2>
-    <p><strong>Name(s):</strong> Air 2 / Air 2s / Air 3s (XR display glasses); X2 (full-color micro-LED AR glasses).</p>
-    <p>
-   RayNeo’s eyewear brings cinematic scale into a form that is both refined and portable. The lenses project an expansive virtual display while preserving clarity and comfort, enriching work, leisure, and travel. Their discreet design invites immersion without compromising elegance or drawing undue attention.
-    </p>
-        <p>
-Framing the extraordinary so it feels as natural as looking outside.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="viture">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Viture</h2>
-    <p><strong>Name(s):</strong> VITURE Pro (XR glasses); VITURE One / One Lite; accessories (Mobile Dock/Neckband).</p>
-    <p>
-    Viture’s glasses balance bold style with immersive visual capability. They transform any space into a personal theater, delivering vivid imagery within a remarkably light and comfortable frame. Whether for streaming, gaming, or multitasking, they offer a seamless extension of your digital life into the physical world.
-    </p>
-        <p>
-Opening endless worlds without leaving the comfort of where you are.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-
-  <section id="xreal">
-    <br>
-    <br>
-    <h2 style="font-size:1.75rem;margin:1.5rem 0 0.5rem;">Xreal</h2>
-    <p><strong>Name(s):</strong> Air 2 / Air 2 Pro (XR display glasses); Air 2 Ultra (6-DoF developer AR glasses); Beam / Beam Pro (Android spatial companion).</p>
-    <p>
-    Xreal’s AR glasses blend modern minimalism with immersive performance. They conjure expansive virtual displays that float effortlessly before your eyes, equally suited to productivity or entertainment. Light in hand yet rich in experience, they allow you to shift between augmented overlays and private cinematic spaces with ease. 
-    </p>
-        <p>
-Bringing imagination to life as a companion that travels with you.
-    </p>
-    <p style="margin-top: 1rem;"><a href="news.html">← Back to News</a></p>
-  </section>
-</div>
-
-        
-      <div class="dots" aria-hidden="true"></div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="container professional-footer">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <div class="footer-logo-group">
-            <img src="images/logo40x40.webp" alt="AR Glasses Logo" />
-            <h4>AR glasses</h4>
+    <div class="news-shell">
+      <section class="news-hero" aria-label="Top AR glasses stories">
+        <article class="lead-story">
+          <img src="images/snap.webp" alt="Snap Specs augmented reality glasses" fetchpriority="high">
+          <div class="lead-copy">
+            <span class="story-label">Lead story · AR platforms</span>
+            <h2>Snap is turning Specs into a platform — not just a pair of glasses</h2>
+            <p>New experiences for work, learning, shopping and navigation sit alongside an AI service designed to anticipate what wearers need. The bigger story is the attempt to make spatial computing useful throughout the day.</p>
+            <div class="story-meta"><span>30 September 2026</span><span>5 min read</span></div>
+            <a class="story-link" href="#snap-specs">Explore the story <span aria-hidden="true">↗</span></a>
           </div>
-          <p>Change how you see the world</p>
+        </article>
+        <div class="side-stories">
+          <article class="side-story">
+            <img src="images/metaglasses2.webp" alt="Meta smart glasses">
+            <div class="side-copy">
+              <span class="story-label">Market watch</span>
+              <h3>Smart glasses shipments surge — but what counts as AR?</h3>
+              <p>New figures show rapid growth, led by display-free AI eyewear.</p>
+              <a class="story-link" href="#market-growth">Read the analysis ↗</a>
+            </div>
+          </article>
+          <article class="side-story">
+            <img src="images/google.webp" alt="Google Android XR smart glasses concept">
+            <div class="side-copy">
+              <span class="story-label">Partnerships</span>
+              <h3>Eyewear expertise meets AR optics in a new Japan partnership</h3>
+              <p>Cellid and Megane Top are joining forces to bring AR glasses to market.</p>
+              <a class="story-link" href="#cellid-megane">Read the story ↗</a>
+            </div>
+          </article>
         </div>
-        <div class="footer-links">
-          <strong>Site Terms and Policies</strong>
-          <ul>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="cookie-policy.html">Cookie Policy</a></li>
-            <li><a href="terms.html">Terms &amp; Conditions</a></li>
-          </ul>
+      </section>
+
+      <section aria-labelledby="latest-heading">
+        <div class="section-heading">
+          <div><h2 id="latest-heading">The latest</h2><p>Developments worth your attention, in context.</p></div>
+          <p>Updated 1 October 2026</p>
         </div>
+        <div class="latest-grid">
+          <article class="news-card">
+            <a href="#meta-connect">
+              <img src="images/metaglasses2.webp" alt="Meta AI glasses range" loading="lazy">
+              <div class="news-card-copy"><span class="card-category">Product launches</span><h3>Meta expands its glasses family with audio-first designs and a new generation</h3><p>Meta’s latest announcements span lighter audio eyewear, updated Ray-Ban Meta glasses and more styles across its range.</p><div class="card-meta"><span>24 Sep 2026</span><span>4 min read</span></div></div>
+            </a>
+          </article>
+          <article class="news-card">
+            <a href="#privacy-controls">
+              <img src="images/rayneo2.webp" alt="Smart glasses close-up" loading="lazy">
+              <div class="news-card-copy"><span class="card-category">Privacy &amp; trust</span><h3>Smart-glasses privacy controls move further into the spotlight</h3><p>New opt-out controls underline a key challenge for camera-equipped eyewear: making data use understandable and controllable.</p><div class="card-meta"><span>25 Sep 2026</span><span>3 min read</span></div></div>
+            </a>
+          </article>
+          <article class="news-card">
+            <a href="#microled-outlook">
+              <img src="images/vuzix3.webp" alt="Waveguide and microdisplay smart glasses" loading="lazy">
+              <div class="news-card-copy"><span class="card-category">Display technology</span><h3>MicroLED’s next test: bringing full-colour AR displays into everyday frames</h3><p>Industry coverage points to optical efficiency, cost and comfortable styling as the hurdles still to solve.</p><div class="card-meta"><span>22 Sep 2026</span><span>4 min read</span></div></div>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="briefing" aria-labelledby="numbers-heading">
+        <h2 id="numbers-heading">The market, in a moment</h2>
+        <p class="briefing-intro">IDC’s second-quarter 2026 tracker shows that the broader smart-glasses and XR category is expanding, while the mix of products remains important. Display-free audio/AI glasses and see-through AR glasses are not the same experience.</p>
+        <div class="briefing-grid">
+          <div class="briefing-stat"><strong>35.3%</strong><span>Year-on-year growth in global XR headsets and glasses shipments in Q2 2026.</span></div>
+          <div class="briefing-stat"><strong>70.3%</strong><span>Share of Q2 shipments represented by audio, display-free glasses.</span></div>
+          <div class="briefing-stat"><strong>14.3%</strong><span>Share represented by display glasses in the same quarter.</span></div>
+        </div>
+        <p class="source-line">Source: <a href="https://www.idc.com/resource-center/blog/smart-glasses-growth-cools-to-35-as-meta-doubles-down-on-distribution/" target="_blank" rel="noopener noreferrer">IDC, Smart Glasses Growth Cools to 35%, 16 September 2026</a>. Figures describe IDC’s tracked XR category, not AR glasses alone.</p>
+      </section>
+
+      <section class="deep-dive" aria-labelledby="deep-dive-heading">
+        <h2 id="deep-dive-heading">Inside the stories</h2>
+        <p class="deep-dive-intro">What happened, why it matters, and what to watch next.</p>
+
+        <article class="article-block" id="snap-specs">
+          <span class="card-category">01 · AR platforms · 30 September 2026</span>
+          <h3>Snap wants Specs to become a useful layer over everyday life</h3>
+          <p>Snap’s September announcement puts the emphasis on what people can do with its Specs platform, rather than on hardware alone. The company outlined augmented-reality experiences spanning entertainment, education, work, shopping, translation, navigation and fitness. It also introduced Specs Intelligence, an anticipatory AI service intended to work across its glasses and other devices.</p>
+          <p>The ambition is significant: instead of asking people to open a dedicated app for every task, the platform aims to surface relevant information in context, using voice and hand interaction. That approach could make glasses feel more like a natural extension of computing — provided the experiences are genuinely helpful, comfortable and respectful of the people around the wearer.</p>
+          <div class="takeaway"><strong>Why it matters:</strong> The competition is increasingly about the operating system, developer experiences and useful everyday applications, not only display specifications.</div>
+          <p class="source-line">Primary source: <a href="https://investor.snap.com/news/news-details/2026/SPECS-Make-Computing-More-Human-with-New-Experiences-Partnerships-and-SPECS-Intelligence/default.aspx" target="_blank" rel="noopener noreferrer">Snap Inc. announcement, 16 September 2026</a>.</p>
+        </article>
+
+        <article class="article-block" id="market-growth">
+          <span class="card-category">02 · Market watch · 16 September 2026</span>
+          <h3>Smart-glasses growth is real — but the category needs clearer labels</h3>
+          <p>IDC reported that global shipments of XR headsets and glasses rose 35.3% year on year in the second quarter of 2026. Within that tracked mix, audio glasses without displays accounted for 70.3% of shipments, while display glasses represented 14.3%. Those figures help explain why camera-and-AI eyewear is gaining visibility, but they should not be read as a direct measure of transparent-display AR adoption.</p>
+          <p>For readers comparing devices, the distinction matters. Some glasses capture photos, play audio and connect to an assistant; others place digital information in the wearer’s field of view. A product may be compelling without being optical see-through AR. Clear descriptions help buyers understand what they are actually getting.</p>
+          <div class="takeaway"><strong>What to watch:</strong> Whether the next wave of lighter displays, better battery life and lower-cost optics can broaden demand for glasses that visibly augment the world.</div>
+          <p class="source-line">Source: <a href="https://www.idc.com/resource-center/blog/smart-glasses-growth-cools-to-35-as-meta-doubles-down-on-distribution/" target="_blank" rel="noopener noreferrer">IDC, 16 September 2026</a>.</p>
+        </article>
+
+        <article class="article-block" id="cellid-megane">
+          <span class="card-category">03 · Industry partnerships · 25 September 2026</span>
+          <h3>Cellid and Megane Top bring optical technology and eyewear know-how together</h3>
+          <p>Japanese AR technology company Cellid and eyewear business Megane Top announced a partnership to commercialise and expand AR glasses. Cellid brings optical and hardware development expertise, while Megane Top contributes product development experience and an established eyewear sales network.</p>
+          <p>The partnership highlights a practical route to consumer adoption. Making a display work is only part of the challenge: frames also need to feel familiar, fit comfortably, suit different faces and be supported by a route to market. Combining specialist optics with an established eyewear business could help address some of those product and distribution questions.</p>
+          <div class="takeaway"><strong>Why it matters:</strong> The future of AR eyewear may depend as much on lens makers, frame designers and retail networks as on the technology brands consumers already know.</div>
+          <p class="source-line">Source: <a href="https://www.prnewswire.com/news-releases/cellid-and-megane-top-partner-to-commercialize-and-expand-the-ar-glasses-business-302889978.html" target="_blank" rel="noopener noreferrer">Cellid / Megane Top announcement, 25 September 2026</a>.</p>
+        </article>
+
+        <article class="article-block" id="meta-connect">
+          <span class="card-category">04 · Product launches · 24 September 2026</span>
+          <h3>Meta widens its smart-eyewear line-up across styles and use cases</h3>
+          <p>At Connect 2026, Meta outlined a broader family of AI glasses, including a new audio-focused line and the next generation of Ray-Ban Meta. The company said its portfolio across Ray-Ban, Oakley and Meta-branded glasses would exceed 100 styles by the end of the year, and announced plans to bring its Muse AI agent to glasses.</p>
+          <p>The announcements show how quickly the market is separating into different form factors: some products focus on audio and voice assistance, while others add cameras or displays. That variety gives people more choice, but it also makes precise product descriptions and privacy information increasingly important.</p>
+          <p class="source-line">Source: <a href="https://about.fb.com/news/2026/09/the-biggest-news-from-connect-2026/" target="_blank" rel="noopener noreferrer">Meta, The Biggest News From Connect 2026, 24 September 2026</a>.</p>
+        </article>
+
+        <article class="article-block" id="privacy-controls">
+          <span class="card-category">05 · Privacy &amp; trust · 25 September 2026</span>
+          <h3>Privacy settings are becoming part of the smart-glasses product story</h3>
+          <p>Recent reporting describes a new setting that lets Meta glasses users opt out of having visual data from AI experiences stored for model training. The change follows wider scrutiny of how camera-equipped wearables capture, process and share information.</p>
+          <p>Settings are only one part of the answer. Clear recording indicators, understandable defaults, bystander awareness and transparent explanations of when data leaves a device all shape whether people feel comfortable around smart glasses. These details deserve the same attention as battery life and camera quality.</p>
+          <p class="source-line">Reporting: <a href="https://www.businessinsider.com/meta-glasses-ai-visual-data-opt-out-training-2026-9" target="_blank" rel="noopener noreferrer">Business Insider, 25 September 2026</a>. See Meta’s own product and privacy information for current settings.</p>
+        </article>
+
+        <article class="article-block" id="microled-outlook">
+          <span class="card-category">06 · Display technology · 22 September 2026</span>
+          <h3>MicroLED is part of the push to make full-colour AR glasses practical</h3>
+          <p>Recent supply-chain coverage points to full-colour MicroLED as one of the display technologies being developed for future AR glasses. The attraction is clear: compact, bright displays could help digital content remain visible while users look at the real world. But a promising display material does not automatically make a finished pair of glasses.</p>
+          <p>Optical efficiency, waveguide design, manufacturing yield, heat, power consumption and cost all have to work together. The most meaningful progress will be the point at which these components can be packaged into frames people are happy to wear for extended periods.</p>
+          <p class="source-line">Industry coverage: <a href="https://www.digitimes.com/tag/ar_glasses/00110948.html" target="_blank" rel="noopener noreferrer">DigiTimes AR glasses coverage, September 2026</a>.</p>
+        </article>
+      </section>
+
+      <section class="source-list" aria-labelledby="sources-heading">
+        <h2 id="sources-heading">Follow the signal</h2>
+        <p class="news-intro">We prioritise original announcements, named research and established technology reporting. Each story links to its source so you can explore the details and read the original context.</p>
+        <ul>
+          <li><a href="https://investor.snap.com/news/" target="_blank" rel="noopener noreferrer">Snap Investor News</a> — platform and product announcements.</li>
+          <li><a href="https://about.fb.com/news/" target="_blank" rel="noopener noreferrer">Meta Newsroom</a> — product updates and company announcements.</li>
+          <li><a href="https://www.idc.com/" target="_blank" rel="noopener noreferrer">IDC</a> — market research and shipment tracking.</li>
+          <li><a href="https://www.digitimes.com/" target="_blank" rel="noopener noreferrer">DigiTimes</a> — component and supply-chain reporting.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="container professional-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo-group">
+          <img src="images/logo40x40.webp" alt="AR Glasses Logo" />
+          <h4>AR glasses</h4>
+        </div>
+        <p>Change how you see the world</p>
       </div>
-      <div class="footer-bottom">
-        <small>&copy; 2025 ARglasses.com • All rights reserved</small>
+      <div class="footer-links">
+        <strong>Site Terms and Policies</strong>
+        <ul>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="cookie-policy.html">Cookie Policy</a></li>
+          <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        </ul>
       </div>
-    </footer>
+    </div>
+    <div class="footer-bottom">
+      <small>&copy; 2025 ARglasses.com • All rights reserved</small>
+    </div>
+  </footer>
 
-    <!-- Inject shared header (unchanged) -->
-    <script>
-      window.addEventListener("DOMContentLoaded", function () {
-        const mount = document.getElementById("site-header");
-        fetch("./header.html?v=6")
-          .then(r => r.text())
-          .then(html => {
-            mount.innerHTML = html;
-
-            // Primary init from header.js if available
-            if (typeof window.__initHeader === "function") {
-              try { window.__initHeader(); } catch (_) {}
-            }
-
-            // Fallback bindings (ensures hamburger + ALL submenus always work)
-            (function bindFallback(){
-              const menu     = document.getElementById("primary-nav");
-              const toggle   = document.getElementById("menu-toggle");
-              const backdrop = document.getElementById("backdrop");
-              const closeBtn = menu ? menu.querySelector(".drawer-close") : null;
-
-              if (!menu || !toggle || !backdrop) return;
-
-              function openDrawer(){
-                menu.classList.add("open");
-                backdrop.classList.add("show");
-                toggle.setAttribute("aria-expanded","true");
-                document.body.style.overflow = "hidden";
-              }
-              function closeDrawer(){
-                menu.classList.remove("open");
-                backdrop.classList.remove("show");
-                toggle.setAttribute("aria-expanded","false");
-                document.body.style.overflow = "";
-                // collapse all submenus
-                menu.querySelectorAll(".dropdown").forEach(li => li.classList.remove("open"));
-                menu.querySelectorAll(".submenu-toggle[aria-expanded='true']").forEach(btn => btn.setAttribute("aria-expanded","false"));
-                menu.querySelectorAll(".dropdown-menu").forEach(ul => ul.style.display = "");
-              }
-
-              toggle.addEventListener("click", function(e){
-                e.preventDefault();
-                menu.classList.contains("open") ? closeDrawer() : openDrawer();
-              });
-              backdrop.addEventListener("click", closeDrawer);
-              if (closeBtn) closeBtn.addEventListener("click", function(e){ e.preventDefault(); closeDrawer(); });
-
-              function isMobile(){ return window.matchMedia("(max-width: 768px)").matches; }
-
-              // Bind ALL dropdowns (Explore, News, Products, etc.)
-              const dropdowns = menu.querySelectorAll(".dropdown");
-              dropdowns.forEach((li) => {
-                const label = li.querySelector(".has-submenu");
-                const chev  = li.querySelector(".submenu-toggle");
-
-                function toggleSubmenu(e){
-                  if (!isMobile()) return;
-                  e.preventDefault();
-                  const menuEl = li.querySelector(".dropdown-menu");
-                  const chevEl = li.querySelector(".submenu-toggle");
-                  const isOpen = li.classList.contains("open");
-                  li.classList.toggle("open", !isOpen);
-                  if (chevEl) chevEl.setAttribute("aria-expanded", (!isOpen).toString());
-                  if (menuEl) menuEl.style.display = !isOpen ? "block" : "none";
-                }
-
-                if (label) label.addEventListener("click", toggleSubmenu);
-                if (chev)  chev.addEventListener("click", toggleSubmenu);
-              });
-
-              window.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) closeDrawer(); });
-              window.addEventListener("resize", () => { if (!isMobile()) closeDrawer(); });
-            })();
-
-            // Page-specific header tweaks
-            const navbar = document.getElementById("navbar");
-            if (navbar) {
-              navbar.classList.remove("dark-nav");
-              navbar.classList.add("light-nav");
-              navbar.style.setProperty("--nav-text-color", "#555");
-            }
-
-            window.dispatchEvent(new Event("header:ready"));
-          })
-          .catch(err => console.error("Failed to load header.html:", err));
-      });
-    </script>
-
-    <!-- News carousel behavior (unchanged) -->
-    <script>
-      (function () {
-        const rail = document.querySelector('.rail');
-        const prev = document.querySelector('.arrow.left');
-        const next = document.querySelector('.arrow.right');
-        const dotsWrap = document.querySelector('.dots');
-        const cards = Array.from(document.querySelectorAll('.story'));
-        if (!rail || cards.length === 0) return;
-
-        cards.forEach((_, i) => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.setAttribute('aria-label', 'Go to story ' + (i + 1));
-          b.addEventListener('click', () => goTo(i));
-          dotsWrap.appendChild(b);
-        });
-
-        function cardWidth() {
-          const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
-          const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
-          return w + gap;
-        }
-
-        function goTo(index) {
-          const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
-          cards[clampIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-
-        function atStart() { return rail.scrollLeft <= 2; }
-        function atEnd() {
-          const max = rail.scrollWidth - rail.clientWidth - 2;
-          return rail.scrollLeft >= max;
-        }
-
-        function updateUI() {
-          prev.disabled = atStart();
-          next.disabled = atEnd();
-
-          const railRect = rail.getBoundingClientRect();
-          const railCenter = railRect.left + railRect.width / 2;
-
-          let active = 0, min = Infinity;
-          cards.forEach((c, i) => {
-            const rect = c.getBoundingClientRect();
-            const center = rect.left + rect.width / 2;
-            const dist = Math.abs(center - railCenter);
-            if (dist < min) { min = dist; active = i; }
-          });
-
-          dotsWrap.querySelectorAll('button').forEach((b, i) => {
-            b.setAttribute('aria-current', i === active ? 'true' : 'false');
-          });
-        }
-
-        function scrollByStep(dir) {
-          rail.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
-        }
-
-        prev.addEventListener('click', () => scrollByStep(-1));
-        next.addEventListener('click', () => scrollByStep(1));
-
-        rail.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
-          if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
-        });
-
-        rail.addEventListener('scroll', updateUI, { passive: true });
-        window.addEventListener('resize', updateUI);
-        updateUI();     
-      })();
-    </script>
-
-    <!-- Scroll stabilization: only when arriving without a hash; doesn't affect links -->
-    <script>
-      (function () {
-        var shouldForceTop = !location.hash;
-
-        function stabilizeTop(durationMs) {
-          var start = performance.now();
-          var stoppedByUser = false;
-
-          function forceTop() {
-            if (stoppedByUser) return;
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-
-            if (performance.now() - start < durationMs) {
-              requestAnimationFrame(forceTop);
-            }
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      const mount = document.getElementById("site-header");
+      fetch("./header.html?v=6")
+        .then(r => r.text())
+        .then(html => {
+          mount.innerHTML = html;
+          if (typeof window.__initHeader === "function") {
+            try { window.__initHeader(); } catch (_) {}
           }
-
-          function onUserScroll() {
-            if (Math.abs(window.scrollY) > 2) {
-              stoppedByUser = true;
-              window.removeEventListener('wheel', onUserScroll, { passive: true });
-              window.removeEventListener('touchmove', onUserScroll, { passive: true });
-              window.removeEventListener('scroll', onUserScroll, { passive: true });
-            }
+          const navbar = document.getElementById("navbar");
+          if (navbar) {
+            navbar.classList.remove("dark-nav");
+            navbar.classList.add("light-nav");
+            navbar.style.setProperty("--nav-text-color", "#555");
           }
-
-          window.addEventListener('wheel', onUserScroll, { passive: true });
-          window.addEventListener('touchmove', onUserScroll, { passive: true });
-          window.addEventListener('scroll', onUserScroll, { passive: true });
-
-          forceTop();
-          window.addEventListener('load', function () { window.scrollTo(0, 0); }, { once: true });
-        }
-
-        function run() {
-          if (!shouldForceTop) return;
-          stabilizeTop(380);
-        }
-
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-          setTimeout(run, 0);
-        } else {
-          document.addEventListener('DOMContentLoaded', run, { once: true });
-        }
-
-        window.addEventListener('header:ready', function () {
-          if (shouldForceTop) stabilizeTop(220);
-        });
-
-        window.addEventListener('pageshow', function (e) {
-          if (shouldForceTop && e.persisted) stabilizeTop(220);
-        });
-      })();
-    </script>
-   
-  </body>
+          window.dispatchEvent(new Event("header:ready"));
+        })
+        .catch(err => console.error("Failed to load header.html:", err));
+    });
+  </script>
+</body>
 </html>
