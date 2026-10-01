@@ -375,3 +375,37 @@ html:has(body.news-article) body.news-article .story-body p,
 html:has(body.news-article) body.news-article .roadmap-panel p {
   color:#526778 !important;
 }
+
+
+/* Company landscape visuals */
+body.news-article .company-visual {
+  margin: 1.5rem 0 1.75rem;
+  padding: .75rem;
+  background: #f8fcfd !important;
+  border: 1px solid #d9eaf1;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(20,55,75,.06);
+}
+body.news-article .company-visual img {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+}
+body.news-article .company-visual figcaption {
+  margin: .65rem .35rem .15rem;
+  color: #667985 !important;
+  font-size: .82rem;
+  line-height: 1.45;
+}
+@media (max-width:700px) {
+  body.news-article .company-visual {
+    margin: 1.15rem 0 1.35rem;
+    padding: .5rem;
+  }
+  body.news-article .company-visual img {
+    max-height: 250px;
+  }
+}
