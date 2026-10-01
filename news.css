@@ -220,3 +220,22 @@ body.news-hub .professional-footer .footer-links a {
   body.news-article .story-wrap { padding-top:5.8rem; }
   .roadmap-item { grid-template-columns:1fr; gap:.35rem; }
 }
+/* News pages have no full-bleed video hero, so the shared fixed nav must use the site's light state. */
+body.news-hub nav.container-fluid,
+body.news-article nav.container-fluid {
+  background:#fff !important;
+  box-shadow:0 4px 10px rgba(0,0,0,.06) !important;
+  border-bottom:1px solid #e5edf1 !important;
+}
+body.news-hub nav.container-fluid a,
+body.news-hub nav.container-fluid strong,
+body.news-hub nav.container-fluid .icon,
+body.news-article nav.container-fluid a,
+body.news-article nav.container-fluid strong,
+body.news-article nav.container-fluid .icon {
+  color:#17364d !important;
+}
+body.news-hub nav.container-fluid .hamburger,
+body.news-article nav.container-fluid .hamburger { color:#17364d !important; }
+body.news-hub nav.container-fluid .dropdown-menu a,
+body.news-article nav.container-fluid .dropdown-menu a { color:#333 !important; }
