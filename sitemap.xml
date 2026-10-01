@@ -15,7 +15,7 @@
 
   <url>
     <loc>https://arglasses.com/news.html</loc>
-    <lastmod>2025-09-10</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <priority>0.8</priority>
   </url>
 
@@ -71,6 +71,41 @@
     <loc>https://arglasses.com/retail.html</loc>
     <lastmod>2025-09-10</lastmod>
     <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://arglasses.com/news/meta-ray-ban-smart-glasses-roadmap.html</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://arglasses.com/news/google-samsung-android-xr-smart-glasses.html</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://arglasses.com/news/snap-specs-ar-glasses-roadmap.html</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://arglasses.com/news/xreal-rokid-rayneo-display-glasses-guide.html</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://arglasses.com/news/smart-glasses-vs-ar-glasses-explained.html</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://arglasses.com/news/ar-glasses-display-technology-waveguides-microled.html</loc>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+
+  <url>
+    <loc>https://arglasses.com/news/ar-glasses-companies.html</loc>
+    <lastmod>2026-10-01</lastmod>
   </url>
 
 </urlset>
