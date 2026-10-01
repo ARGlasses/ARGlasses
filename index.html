@@ -168,6 +168,407 @@ sizes="(max-width: 600px) calc(100vw - 4rem), 348px"
       </section>
     </main>
 
+<!-- AR GLASSES FAQ START -->
+<style>
+  #arg-home-faq {
+    width: 100%;
+    max-width: 820px;
+    margin: 48px auto 0;
+    padding: 24px 0 32px;
+    background: #fff;
+    color: #111;
+    font-family: inherit;
+    text-align: left;
+  }
+
+  #arg-home-faq .arg-faq-heading {
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  #arg-home-faq .arg-faq-eyebrow {
+    margin: 0 0 8px;
+    color: #111;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  #arg-home-faq h2 {
+    margin: 0;
+    color: #111;
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  #arg-home-faq details {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid #d6d6d6;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  #arg-home-faq summary {
+    position: relative;
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 18px 36px 18px 8px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #333;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    cursor: pointer;
+    overflow-wrap: break-word;
+  }
+
+  #arg-home-faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  #arg-home-faq summary::marker {
+    content: "";
+  }
+
+  #arg-home-faq summary::after {
+    content: "";
+    position: absolute;
+    top: 23px;
+    right: 12px;
+    float: none;
+    width: 8px;
+    height: 8px;
+    margin: 0;
+    border: 0;
+    border-right: 1.5px solid #111;
+    border-bottom: 1.5px solid #111;
+    background: none;
+    transform: rotate(45deg);
+  }
+
+  #arg-home-faq details[open] > summary {
+    color: #004f88;
+    font-weight: 600;
+  }
+
+  #arg-home-faq details[open] > summary::after {
+    top: 27px;
+    transform: rotate(225deg);
+  }
+
+  #arg-home-faq summary:hover {
+    color: #004f88;
+    background: #f8f9fa;
+  }
+
+  #arg-home-faq summary:focus-visible {
+    outline: 2px solid #004f88;
+    outline-offset: 2px;
+  }
+
+  #arg-home-faq .arg-faq-answer {
+    padding: 0 36px 20px 8px;
+  }
+
+  #arg-home-faq .arg-faq-answer p {
+    margin: 0 0 12px;
+    color: #444;
+    font-size: 15px;
+    line-height: 1.8;
+    overflow-wrap: break-word;
+  }
+
+  #arg-home-faq .arg-faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  #arg-home-faq a {
+    color: #004f88;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  #arg-home-faq a:hover {
+    color: #003a66;
+  }
+
+  #arg-home-faq a:focus-visible {
+    outline: 2px solid #004f88;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 600px) {
+    #arg-home-faq {
+      margin-top: 24px;
+      padding-top: 20px;
+    }
+
+    #arg-home-faq summary {
+      padding-left: 0;
+    }
+
+    #arg-home-faq .arg-faq-answer {
+      padding-left: 0;
+      padding-right: 16px;
+    }
+  }
+</style>
+
+<section id="arg-home-faq" aria-labelledby="arg-faq-title">
+  <div class="arg-faq-heading">
+    <p class="arg-faq-eyebrow">Want to know more?</p>
+    <h2 id="arg-faq-title">AR glasses: frequently asked questions</h2>
+  </div>
+
+  <details>
+    <summary>What are AR glasses?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Augmented reality (AR) glasses add digital information to your
+        view of the physical world. Depending on the device, this might
+        be text, directions, a virtual screen or an interactive 3D object.
+        Optical see-through glasses let you look through the lenses at
+        your surroundings while a display adds digital content.
+      </p>
+      <p>
+        Capabilities vary considerably. Glasses designed for watching
+        films on a virtual screen may not offer the room mapping or
+        object placement found in more advanced spatial computing systems.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How do AR glasses differ from smart glasses and VR headsets?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Smart glasses is a broad term for eyewear with connected
+        features, such as audio, cameras or an AI assistant. Some smart
+        glasses have no display. AR glasses add visual digital content
+        to a view of your surroundings.
+      </p>
+      <p>
+        Virtual reality (VR) headsets can replace your view with an
+        immersive digital environment. Some headsets also offer mixed
+        reality through cameras that show your surroundings on internal
+        screens. Check a product's actual display and tracking features
+        rather than relying on its label alone.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How do AR glasses work, and what is spatial computing?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Small displays and optical components direct light towards your
+        eyes, making digital images appear in your view. Optical designs
+        vary: some glasses use waveguides, while others use different
+        arrangements of lenses and mirrors.
+      </p>
+      <p>
+        Spatial computing involves digital content responding to
+        physical space. Tracking and software can help a virtual screen
+        remain in a chosen position or let a 3D object relate to your
+        environment. These capabilities depend on the glasses,
+        connected hardware and application; a visible screen does not
+        automatically mean full spatial tracking.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What can AR glasses be used for?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Uses range from personal entertainment and virtual workspaces
+        to training and remote assistance. Supported industrial systems
+        can display instructions while a technician works. Educational
+        applications can place interactive models alongside a lesson,
+        while collaboration tools can help people share information.
+      </p>
+      <p>
+        Explore our guides to
+        <a href="/industrial">industrial and fieldwork applications</a>,
+        <a href="/collaboration">collaboration and workspaces</a>,
+        <a href="/education">education and training</a>,
+        <a href="/healthcare">healthcare applications</a> and
+        <a href="/retail">retail and shopping</a>.
+        Some scenarios are emerging possibilities rather than features
+        available on every device today.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How does artificial intelligence work with AR glasses?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        On supported glasses, an AI assistant can use voice input and,
+        where permitted, camera information to help interpret a question
+        or scene. Features may include translation, spoken assistance
+        and short visual responses. Audio-only smart glasses can also
+        offer AI assistance without displaying an image.
+      </p>
+      <p>
+        AR describes the visual experience; AI describes software
+        capabilities. They can work together, but neither guarantees
+        the other. Availability depends on the model, application,
+        language, region and connection. Check important AI-generated
+        information because responses can be incorrect.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Do AR glasses need a phone, computer or internet connection?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Some glasses connect to a phone, laptop or separate computing
+        unit for power, processing or content. Others include more of
+        that hardware in the glasses. For wired display models, a USB-C
+        socket alone does not guarantee compatibility: the connected
+        device may need DisplayPort video output, and some setups
+        require an adapter.
+      </p>
+      <p>
+        Internet requirements depend on the task. Local video playback
+        may work offline, while cloud-based AI, online content and
+        remote collaboration may need a connection. Check the
+        manufacturer's compatibility information for your exact device
+        and intended feature.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Can AR glasses work with prescription lenses?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Some models support prescription inserts or specially fitted
+        lenses, while others offer limited focus adjustment. Support
+        varies by frame and prescription, and an insert may need to
+        be purchased separately.
+      </p>
+      <p>
+        Check the manufacturer's supported prescription range, lens
+        supplier and fitting instructions before ordering. Focus
+        adjustment is not necessarily a replacement for your full
+        prescription. A suitable fit should let you see the display
+        clearly without forcing the glasses into an uncomfortable position.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Which specifications matter when comparing AR glasses?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Start with the experience you want: a portable screen, glanceable
+        information or interactive content in physical space. Then
+        compare display clarity, field of view, tracking, weight, fit,
+        prescription support and device compatibility.
+      </p>
+      <p>
+        Field of view describes how much of your view the display
+        covers. Tracking affects whether content follows your head or
+        stays positioned in space. Also check supported applications
+        and required accessories: impressive display specifications
+        do not guarantee the software features you need.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How are AR glasses powered, and what affects battery life?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        Power may come from a built-in battery, a connected phone or
+        computer, or a separate battery and processing unit. Glasses
+        powered through a cable can reduce the battery life of the
+        device they are connected to.
+      </p>
+      <p>
+        Runtime depends on the whole setup and the task. Display
+        brightness, camera use, wireless connections and processing
+        demands can affect power consumption. Compare manufacturer
+        estimates for similar usage conditions, and check whether
+        charging is possible while your chosen setup is in use.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Are AR glasses available now, and why do prices vary?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        The market includes commercially available display glasses and
+        smart eyewear, alongside developer devices, prototypes and
+        announced products. An announcement or demonstration does not
+        necessarily mean a product is shipping in your country.
+      </p>
+      <p>
+        Prices reflect differences in displays, tracking, computing
+        hardware, software and intended use. Consider the complete
+        setup cost, including adapters, prescription inserts,
+        processing accessories or subscriptions where required.
+        Confirm regional availability and current specifications
+        with the manufacturer or retailer before purchasing.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What privacy questions should I ask about smart and AR glasses?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        For models with cameras, microphones or connected AI services,
+        check what is captured, where it is processed and how long it
+        is retained. Review application permissions, recording
+        indicators, cloud processing settings and controls for
+        deleting stored information.
+      </p>
+      <p>
+        Think about people around you as well as your own data. Follow
+        recording rules and workplace or venue policies, and make it
+        clear when you are capturing images or audio. Privacy features
+        differ between products, so consult the documentation for
+        the particular device and service.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What are the current limitations, and what might improve next?</summary>
+    <div class="arg-faq-answer">
+      <p>
+        AR glasses involve trade-offs between size, weight, display
+        coverage, outdoor visibility, power and processing. Software
+        support, fit and compatibility can also limit what a particular
+        pair can do. Lightweight eyewear may offer a different
+        experience from a larger, more capable headset.
+      </p>
+      <p>
+        Areas to watch include more efficient displays, improved
+        tracking, lighter designs and useful AI-assisted applications.
+        Progress will vary by product: future concepts should not be
+        treated as current features, and AR glasses are not yet a
+        universal replacement for phones or computers.
+      </p>
+    </div>
+  </details>
+</section>
+<!-- AR GLASSES FAQ END -->
+    
     <!-- Footer -->
     <footer class="container professional-footer">
       <div class="footer-content">
