@@ -239,3 +239,98 @@ body.news-hub nav.container-fluid .hamburger,
 body.news-article nav.container-fluid .hamburger { color:#17364d !important; }
 body.news-hub nav.container-fluid .dropdown-menu a,
 body.news-article nav.container-fluid .dropdown-menu a { color:#333 !important; }
+
+/* Unified light editorial treatment for every News article.
+   Article pages intentionally stay white/light and must not inherit dark site sections. */
+html body.news-article,
+html body.news-article main,
+html body.news-article .story-wrap,
+html body.news-article article,
+html body.news-article header,
+html body.news-article .story-body,
+html body.news-article .story-body section,
+html body.news-article .article-sources,
+html body.news-article .related {
+  background:#fff !important;
+  background-image:none !important;
+}
+
+html body.news-article .story-wrap {
+  max-width:1160px;
+  padding:7rem 1.25rem 4rem;
+}
+
+html body.news-article article {
+  max-width:920px;
+  margin:0 auto;
+}
+
+html body.news-article .story-body {
+  max-width:780px;
+}
+
+html body.news-article .story-body section {
+  padding:1.65rem 1.25rem;
+  margin:1rem 0;
+  border:1px solid #e1ebef;
+  border-radius:18px;
+  background:#fff !important;
+  box-shadow:0 6px 22px rgba(27,68,91,.045);
+}
+
+html body.news-article .story-body section:first-child {
+  padding-top:1.65rem;
+  border-top:1px solid #e1ebef;
+}
+
+html body.news-article .article-hero-image,
+html body.news-article .article-visual {
+  width:100%;
+  border-radius:22px;
+  box-shadow:0 10px 30px rgba(27,68,91,.08);
+}
+
+html body.news-article .article-visual {
+  background:#edf7fb !important;
+  border:1px solid #d7eaf2 !important;
+  color:#123b5d !important;
+}
+
+html body.news-article .editorial-note {
+  background:#f4fafc !important;
+  border:1px solid #d9eaf1 !important;
+  border-radius:18px;
+}
+
+html body.news-article .roadmap-panel {
+  background:#f8fcfd !important;
+  border:1px solid #dcebf0 !important;
+  border-radius:20px;
+  padding:1.4rem;
+  margin:1.5rem 0;
+}
+
+html body.news-article .roadmap-panel h2 {
+  margin-top:0;
+}
+
+html body.news-article .professional-footer {
+  background:#fff !important;
+}
+
+@media(max-width:700px) {
+  html body.news-article .story-wrap {
+    padding:5.8rem 1rem 3rem;
+  }
+  html body.news-article article {
+    width:100%;
+  }
+  html body.news-article .story-body section {
+    padding:1.25rem 1rem;
+    border-radius:15px;
+  }
+  html body.news-article .article-hero-image,
+  html body.news-article .article-visual {
+    border-radius:16px;
+  }
+}
