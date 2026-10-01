@@ -334,3 +334,44 @@ html body.news-article .professional-footer {
     border-radius:16px;
   }
 }
+
+
+/* Hard light-mode guard: News articles must never inherit the site's dark presentation. */
+html:has(body.news-article),
+html:has(body.news-article) body,
+html:has(body.news-article) body.news-article,
+html:has(body.news-article) body.news-article #site-header,
+html:has(body.news-article) body.news-article main,
+html:has(body.news-article) body.news-article footer {
+  background:#fff !important;
+  background-color:#fff !important;
+  color:#182636 !important;
+}
+html:has(body.news-article) body.news-article .story-wrap,
+html:has(body.news-article) body.news-article article,
+html:has(body.news-article) body.news-article .story-body,
+html:has(body.news-article) body.news-article .story-body section,
+html:has(body.news-article) body.news-article .article-sources,
+html:has(body.news-article) body.news-article .related {
+  background:#fff !important;
+  background-color:#fff !important;
+  color:#182636 !important;
+}
+html:has(body.news-article) body.news-article .roadmap-panel {
+  background:#f8fcfd !important;
+  background-color:#f8fcfd !important;
+  color:#182636 !important;
+}
+html:has(body.news-article) body.news-article .roadmap-item {
+  background:#f6fbfd !important;
+  background-color:#f6fbfd !important;
+}
+html:has(body.news-article) body.news-article .story-body h2,
+html:has(body.news-article) body.news-article .roadmap-panel h2,
+html:has(body.news-article) body.news-article .roadmap-item strong {
+  color:#18384d !important;
+}
+html:has(body.news-article) body.news-article .story-body p,
+html:has(body.news-article) body.news-article .roadmap-panel p {
+  color:#526778 !important;
+}
