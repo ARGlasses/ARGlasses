@@ -19,6 +19,7 @@
     if (!menu || !backdrop) return;
     menu.classList.add('open');
     backdrop.classList.add('show');
+    menu.setAttribute('aria-hidden', 'false');
     if (toggle) toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
@@ -30,6 +31,7 @@
     if (!menu || !backdrop) return;
     menu.classList.remove('open');
     backdrop.classList.remove('show');
+    menu.setAttribute('aria-hidden', 'true');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
     // collapse any open submenus
@@ -75,6 +77,8 @@
 
   // ---------- Event wiring (click only) ----------
   function bindEvents() {
+    if (window.__headerEventsBound) return;
+    window.__headerEventsBound = true;
     const backdrop = qs('#backdrop');
     const menu = qs('#primary-nav');
 
@@ -84,6 +88,13 @@
       if (toggle) {
         e.preventDefault();
         if (menu && menu.classList.contains('open')) closeDrawer(); else openDrawer();
+        return;
+      }
+
+      const close = e.target.closest('.drawer-close');
+      if (close) {
+        e.preventDefault();
+        closeDrawer();
         return;
       }
 
