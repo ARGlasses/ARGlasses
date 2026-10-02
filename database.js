@@ -26,7 +26,8 @@ function render(){
  const q=document.getElementById("db-search").value.toLowerCase(), cat=document.getElementById("db-category").value, brand=document.getElementById("db-brand").value, sort=document.getElementById("db-sort").value;
  let a=DB_PRODUCTS.filter(p=>(cat==="all"||p.cat===cat)&&(brand==="all"||p.brand===brand)&&JSON.stringify(p).toLowerCase().includes(q));
  const weightOf=value=>{const match=String(value??"").match(/[0-9]+(?:\.[0-9]+)?/);return match?Number(match[0]):Infinity;};
- a.sort((x,y)=>{if(sort==="year"){const xv=Number.isFinite(x.year)?x.year:null,yv=Number.isFinite(y.year)?y.year:null;if(xv===null&&yv!==null)return 1;if(yv===null&&xv!==null)return -1;if(xv!==null&&yv!==null&&xv!==yv)return yv-xv;}if(sort==="weight"){const diff=weightOf(x.weight)-weightOf(y.weight);if(Number.isFinite(diff)&&diff!==0)return diff;}return String(x.name||"").localeCompare(String(y.name||""));});
+ const compareKnown=(x,y,descending=false)=>{const xv=Number.isFinite(x)?x:null,yv=Number.isFinite(y)?y:null;if(xv===null&&yv===null)return 0;if(xv===null)return 1;if(yv===null)return -1;return descending?yv-xv:xv-yv;};
+ a.sort((x,y)=>{const result=sort==="year"?compareKnown(x.year,y.year,true):sort==="weight"?compareKnown(weightOf(x.weight),weightOf(y.weight)):0;return result||String(x.name||"").localeCompare(String(y.name||""));});
  document.getElementById("db-count").textContent=a.length+" of "+DB_PRODUCTS.length+" products in the current reference set";
  document.getElementById("db-body").innerHTML=a.map(p=>"<tr><td><strong>"+esc(p.name)+"</strong><br><a href='"+esc(p.source)+"' target='_blank' rel='noopener noreferrer'>Manufacturer source ↗</a></td>"+fields.slice(1).map(k=>"<td>"+(k==="cat"?"<span class='db-tag'>"+esc(p[k])+"</span>":esc(p[k]||"Not published"))+"</td>").join("")+"</tr>").join("");
 }
