@@ -588,3 +588,124 @@ html body a.shop-all-btn:focus {
     padding-left: 15px;
   }
 }
+
+
+/* === Desktop mega-menu: clean white panel inspired by Meta's navigation === */
+@media (min-width: 769px) {
+  nav.container-fluid {
+    transition: background-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  /* Turn the full navigation bar white while a mega-menu is active. */
+  nav.container-fluid:has(#primary-nav > .dropdown:hover),
+  nav.container-fluid:has(#primary-nav > .dropdown:focus-within) {
+    background: #fff !important;
+    box-shadow: 0 1px 0 rgba(16, 24, 40, 0.08);
+  }
+
+  nav.container-fluid:has(#primary-nav > .dropdown:hover) a,
+  nav.container-fluid:has(#primary-nav > .dropdown:focus-within) a,
+  nav.container-fluid:has(#primary-nav > .dropdown:hover) strong,
+  nav.container-fluid:has(#primary-nav > .dropdown:focus-within) strong,
+  nav.container-fluid:has(#primary-nav > .dropdown:hover) .icon,
+  nav.container-fluid:has(#primary-nav > .dropdown:focus-within) .icon {
+    color: #17202b !important;
+  }
+
+  /* Soft page scrim below the white navigation panel. */
+  nav.container-fluid:has(#primary-nav > .dropdown:hover)::after,
+  nav.container-fluid:has(#primary-nav > .dropdown:focus-within)::after {
+    content: "";
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    background: rgba(18, 27, 39, 0.20);
+    pointer-events: none;
+  }
+
+  #primary-nav > .dropdown {
+    position: static;
+  }
+
+  /* Full-width panel aligned directly below the existing header. */
+  #primary-nav > .dropdown > .dropdown-menu {
+    position: fixed !important;
+    top: 64px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    max-width: none !important;
+    max-height: min(68vh, 560px);
+    overflow-y: auto;
+    display: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(24px, 4vw, 64px);
+    row-gap: 2px;
+    align-content: start;
+    padding: 30px max(7vw, calc((100vw - 1120px) / 2)) 38px !important;
+    margin: 0 !important;
+    background: #fff !important;
+    border: 0 !important;
+    border-top: 1px solid #eef0f2 !important;
+    border-radius: 0 !important;
+    box-shadow: 0 18px 32px rgba(16, 24, 40, 0.12) !important;
+    z-index: 1002 !important;
+    opacity: 0;
+    transform: translateY(-6px);
+    animation: arMegaMenuIn 180ms ease forwards;
+  }
+
+  #primary-nav > .dropdown:hover > .dropdown-menu,
+  #primary-nav > .dropdown:focus-within > .dropdown-menu {
+    display: grid !important;
+  }
+
+  #primary-nav > .dropdown > .dropdown-menu li {
+    min-width: 0;
+    border: 0 !important;
+  }
+
+  #primary-nav > .dropdown > .dropdown-menu a {
+    min-height: 44px;
+    padding: 12px 14px !important;
+    border-radius: 8px;
+    color: #273444 !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.35;
+    white-space: normal;
+    transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+  }
+
+  #primary-nav > .dropdown > .dropdown-menu a:hover,
+  #primary-nav > .dropdown > .dropdown-menu a:focus-visible {
+    padding-left: 14px !important;
+    background: #f3f6f8;
+    color: #111827 !important;
+    transform: translateX(2px);
+    outline: none;
+  }
+
+  #primary-nav > .dropdown > .has-submenu {
+    position: relative;
+  }
+
+  #primary-nav > .dropdown:hover > .has-submenu::after,
+  #primary-nav > .dropdown:focus-within > .has-submenu::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -17px;
+    height: 3px;
+    border-radius: 3px;
+    background: #1877f2;
+  }
+}
+
+@keyframes arMegaMenuIn {
+  to { opacity: 1; transform: translateY(0); }
+}
