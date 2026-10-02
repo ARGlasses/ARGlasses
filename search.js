@@ -190,21 +190,3 @@
   // Delegated fallback: works even if the shared header is injected after this script.
   document.addEventListener('click', (e) => {
     const link = e.target.closest('#primary-nav a.icon-link[aria-label="Search"]');
-    if (!link) return;
-    if (link.dataset.searchBound === '1') return;
-    bindSearchLink(link);
-    e.preventDefault();
-    link.click();
-  }, true);
-
-  new MutationObserver(init).observe(document.documentElement, { childList: true, subtree: true });
-  ensureSearchStyles();
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
-  window.__initSiteSearch = init;
-  window.addEventListener('header:ready', init);
-  new MutationObserver(init).observe(document.documentElement, { childList: true, subtree: true });
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
