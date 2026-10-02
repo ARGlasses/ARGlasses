@@ -639,6 +639,9 @@ sizes="(max-width: 600px) calc(100vw - 4rem), 348px"
 
             // Fallback bindings (ensures hamburger + ALL submenus always work)
             (function bindFallback(){
+              // header.js already owns the shared header events when available.
+              // Do not bind a second hamburger handler: two toggle handlers cancel each other out.
+              if (window.__headerEventsBound) return;
               const menu     = document.getElementById("primary-nav");
               const toggle   = document.getElementById("menu-toggle");
               const backdrop = document.getElementById("backdrop");
