@@ -115,42 +115,93 @@
     }).join('');
   }
 
-  function init() {
-    const searchLink = document.querySelector('#primary-nav a.icon-link[aria-label="Search"]');
-    if (!searchLink || searchLink.dataset.searchBound === '1') return;
-    searchLink.dataset.searchBound = '1';
-    searchLink.style.color = '#333';
-    searchLink.style.cursor = 'pointer';
-    searchLink.style.pointerEvents = 'auto';
-    const icon = searchLink.querySelector('.icon');
-    if (icon) icon.style.color = '#333';
-    const overlay = makeOverlay();
-    const input = overlay.querySelector('.site-search-input');
-    const form = overlay.querySelector('.site-search-form');
-    const results = overlay.querySelector('.site-search-results');
-    const status = overlay.querySelector('.site-search-status');
+  function ensureSearchStyles() {
+    if (document.getElementById('site-search-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'site-search-styles';
+    style.textContent = `
+      #primary-nav a.icon-link[aria-label="Search"]{color:#222!important;cursor:pointer!important;pointer-events:auto!important}
+      #primary-nav a.icon-link[aria-label="Search"] .icon{color:#222!important;stroke:#222!important;opacity:1!important;visibility:visible!important}
+      #site-search-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;padding:7vh 16px 24px;box-sizing:border-box}
+      #site-search-overlay.open{display:flex}
+      .site-search-panel{position:relative;width:min(760px,100%);max-height:86vh;overflow:auto;background:#fff;border-radius:14px;padding:24px;box-sizing:border-box;box-shadow:0 18px 60px rgba(0,0,0,.25);color:#222}
+      .site-search-panel h2{margin:0 44px 16px 0;font-size:1.35rem}
+      .site-search-close{position:absolute;right:14px;top:10px;border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer;color:#333}
+      .site-search-form{display:flex;gap:8px;margin-bottom:14px}
+      .site-search-input{flex:1;min-width:0;padding:12px 14px;border:1px solid #ccc;border-radius:8px;font:inherit;color:#222;background:#fff}
+      .site-search-form button{border:0;border-radius:8px;padding:0 18px;background:#222;color:#fff;font:inherit;cursor:pointer}
+      .site-search-status{font-size:.9rem;color:#666;margin:8px 0 14px}
+      .site-search-result{padding:12px 0;border-top:1px solid #eee}
+      .site-search-result a{font-weight:600;color:#1769aa;text-decoration:none}
+      .site-search-result p{margin:5px 0 0;color:#555;font-size:.9rem;line-height:1.45}
+      @media(max-width:520px){#site-search-overlay{padding:16px}.site-search-panel{padding:20px}.site-search-form{flex-direction:column}.site-search-form button{padding:11px}}
+    `;
+    document.head.appendChild(style);
+  }
 
-    const close = () => overlay.classList.remove('open');
-    const open = async () => {
+  function getSearchOverlay() {
+    ensureSearchStyles();
+    return makeOverlay();
+  }
+
+  function bindSearchLink(link) {
+    if (!link || link.dataset.searchBound === '1') return;
+    link.dataset.searchBound = '1';
+    link.setAttribute('href', '#');
+    link.style.setProperty('color', '#222', 'important');
+    link.style.setProperty('cursor', 'pointer', 'important');
+    link.style.setProperty('pointer-events', 'auto', 'important');
+    const icon = link.querySelector('.icon');
+    if (icon) {
+      icon.style.setProperty('color', '#222', 'important');
+      icon.style.setProperty('stroke', '#222', 'important');
+      icon.style.setProperty('opacity', '1', 'important');
+      icon.style.setProperty('visibility', 'visible', 'important');
+    }
+
+    const open = async (e) => {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      const overlay = getSearchOverlay();
+      const input = overlay.querySelector('.site-search-input');
+      const status = overlay.querySelector('.site-search-status');
       overlay.classList.add('open');
       input.focus();
       status.textContent = 'Loading site search…';
-      try { await buildIndex(); status.textContent = 'Type a search and press Search.'; }
-      catch (_) { status.textContent = 'Search is temporarily unavailable. Please try again.'; }
+      try {
+        await buildIndex();
+        status.textContent = 'Type a search and press Search.';
+      } catch (_) {
+        status.textContent = 'Search is temporarily unavailable. Please try again.';
+      }
     };
 
-    searchLink.addEventListener('click', e => { e.preventDefault(); open(); });
-    overlay.querySelector('.site-search-close').addEventListener('click', close);
-    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) close(); });
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      status.textContent = 'Searching…';
-      try { runSearch(input.value, await buildIndex(), results, status); }
-      catch (_) { status.textContent = 'Search is temporarily unavailable. Please try again.'; }
-    });
+    link.addEventListener('click', open);
+    link.addEventListener('touchend', open, { passive:false });
   }
 
+  function init() {
+    ensureSearchStyles();
+    document.querySelectorAll('#primary-nav a.icon-link[aria-label="Search"]').forEach(bindSearchLink);
+  }
+
+  window.__initSiteSearch = init;
+  window.addEventListener('header:ready', init);
+
+  // Delegated fallback: works even if the shared header is injected after this script.
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('#primary-nav a.icon-link[aria-label="Search"]');
+    if (!link) return;
+    if (link.dataset.searchBound === '1') return;
+    bindSearchLink(link);
+    e.preventDefault();
+    link.click();
+  }, true);
+
+  new MutationObserver(init).observe(document.documentElement, { childList: true, subtree: true });
+  ensureSearchStyles();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
   window.__initSiteSearch = init;
   window.addEventListener('header:ready', init);
   new MutationObserver(init).observe(document.documentElement, { childList: true, subtree: true });
