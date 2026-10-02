@@ -616,11 +616,12 @@ html body a.shop-all-btn:focus {
   nav.container-fluid:has(#primary-nav > .dropdown:hover)::after,
   nav.container-fluid:has(#primary-nav > .dropdown:focus-within)::after {
     content: "";
-    position: fixed;
-    top: 64px;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: 100vh;
+    bottom: auto;
     z-index: 0;
     background: rgba(18, 27, 39, 0.20);
     pointer-events: none;
@@ -631,9 +632,15 @@ html body a.shop-all-btn:focus {
   }
 
   /* Full-width panel aligned directly below the existing header. */
+  nav.container-fluid:has(#primary-nav > .dropdown:hover) .nav-inner,
+  nav.container-fluid:has(#primary-nav > .dropdown:focus-within) .nav-inner {
+    position: relative;
+    z-index: 1;
+  }
+
   #primary-nav > .dropdown > .dropdown-menu {
-    position: fixed !important;
-    top: 64px !important;
+    position: absolute !important;
+    top: 100% !important;
     left: 0 !important;
     right: 0 !important;
     width: 100vw !important;
