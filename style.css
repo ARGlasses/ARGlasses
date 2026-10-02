@@ -590,13 +590,12 @@ html body a.shop-all-btn:focus {
 }
 
 
-/* === Desktop mega-menu: clean white panel inspired by Meta's navigation === */
+/* === Desktop mega-menu: clean, balanced link columns === */
 @media (min-width: 769px) {
   nav.container-fluid {
     transition: background-color 180ms ease, box-shadow 180ms ease;
   }
 
-  /* Turn the full navigation bar white while a mega-menu is active. */
   nav.container-fluid:has(#primary-nav > .dropdown:hover),
   nav.container-fluid:has(#primary-nav > .dropdown:focus-within) {
     background: #fff !important;
@@ -612,7 +611,6 @@ html body a.shop-all-btn:focus {
     color: #17202b !important;
   }
 
-  /* Soft page scrim below the white navigation panel. */
   nav.container-fluid:has(#primary-nav > .dropdown:hover)::after,
   nav.container-fluid:has(#primary-nav > .dropdown:focus-within)::after {
     content: "";
@@ -621,23 +619,20 @@ html body a.shop-all-btn:focus {
     left: 0;
     right: 0;
     height: 100vh;
-    bottom: auto;
     z-index: 0;
-    background: rgba(18, 27, 39, 0.20);
+    background: rgba(18, 27, 39, 0.18);
     pointer-events: none;
   }
 
-  #primary-nav > .dropdown {
-    position: static;
-  }
+  #primary-nav > .dropdown { position: static; }
 
-  /* Full-width panel aligned directly below the existing header. */
   nav.container-fluid:has(#primary-nav > .dropdown:hover) .nav-inner,
   nav.container-fluid:has(#primary-nav > .dropdown:focus-within) .nav-inner {
     position: relative;
     z-index: 1;
   }
 
+  /* A single, centred panel with tidy vertical lists rather than a loose grid. */
   #primary-nav > .dropdown > .dropdown-menu {
     position: absolute !important;
     top: 100% !important;
@@ -648,56 +643,55 @@ html body a.shop-all-btn:focus {
     max-height: min(68vh, 560px);
     overflow-y: auto;
     display: none;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: clamp(24px, 4vw, 64px);
-    row-gap: 2px;
-    align-content: start;
-    padding: 30px max(7vw, calc((100vw - 1120px) / 2)) 38px !important;
+    column-count: 3;
+    column-gap: clamp(28px, 5vw, 72px);
+    column-rule: 1px solid #edf0f2;
+    padding: 26px max(7vw, calc((100vw - 1120px) / 2)) 30px !important;
     margin: 0 !important;
     background: #fff !important;
     border: 0 !important;
-    border-top: 1px solid #eef0f2 !important;
+    border-top: 1px solid #edf0f2 !important;
     border-radius: 0 !important;
     box-shadow: 0 18px 32px rgba(16, 24, 40, 0.12) !important;
     z-index: 1002 !important;
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     animation: arMegaMenuIn 180ms ease forwards;
   }
 
   #primary-nav > .dropdown:hover > .dropdown-menu,
   #primary-nav > .dropdown:focus-within > .dropdown-menu {
-    display: grid !important;
+    display: block !important;
   }
 
   #primary-nav > .dropdown > .dropdown-menu li {
+    display: block;
     min-width: 0;
+    break-inside: avoid;
+    margin: 0 0 4px !important;
     border: 0 !important;
   }
 
   #primary-nav > .dropdown > .dropdown-menu a {
-    min-height: 44px;
-    padding: 12px 14px !important;
-    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 9px 13px !important;
+    border-radius: 7px;
     color: #273444 !important;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-weight: 500;
     line-height: 1.35;
     white-space: normal;
-    transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+    text-decoration: none;
+    transition: background-color 140ms ease, color 140ms ease;
   }
 
   #primary-nav > .dropdown > .dropdown-menu a:hover,
   #primary-nav > .dropdown > .dropdown-menu a:focus-visible {
-    padding-left: 14px !important;
-    background: #f3f6f8;
+    background: #f2f5f8;
     color: #111827 !important;
-    transform: translateX(2px);
     outline: none;
-  }
-
-  #primary-nav > .dropdown > .has-submenu {
-    position: relative;
   }
 
   #primary-nav > .dropdown:hover > .has-submenu::after,
@@ -710,6 +704,15 @@ html body a.shop-all-btn:focus {
     height: 3px;
     border-radius: 3px;
     background: #1877f2;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1050px) {
+  #primary-nav > .dropdown > .dropdown-menu {
+    column-count: 2;
+    column-gap: 30px;
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
   }
 }
 
