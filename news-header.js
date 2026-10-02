@@ -64,5 +64,12 @@
   }
 
   window.__initNewsHeader = initNewsHeader;
+  if (!window.__siteSearchScriptRequested) {
+    window.__siteSearchScriptRequested = true;
+    const searchScript = document.createElement('script');
+    searchScript.src = '../search.js?v=1';
+    searchScript.defer = true;
+    document.head.appendChild(searchScript);
+  }
   window.addEventListener('header:ready', initNewsHeader);
 })();
