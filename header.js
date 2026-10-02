@@ -160,4 +160,3 @@
     window.addEventListener('DOMContentLoaded', init);
   }
 })();
-
