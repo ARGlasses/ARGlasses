@@ -1,0 +1,19 @@
+name: Site regression checks
+
+on:
+  push:
+    branches: [main, chatgpt-remediation-2026-10-02]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  static-regression-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Run static regression checks
+        run: python3 scripts/validate_site.py
