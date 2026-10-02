@@ -117,6 +117,11 @@
     const searchLink = document.querySelector('#primary-nav a.icon-link[aria-label="Search"]');
     if (!searchLink || searchLink.dataset.searchBound === '1') return;
     searchLink.dataset.searchBound = '1';
+    searchLink.style.color = '#333';
+    searchLink.style.cursor = 'pointer';
+    searchLink.style.pointerEvents = 'auto';
+    const icon = searchLink.querySelector('.icon');
+    if (icon) icon.style.color = '#333';
     const overlay = makeOverlay();
     const input = overlay.querySelector('.site-search-input');
     const form = overlay.querySelector('.site-search-form');
@@ -146,6 +151,7 @@
 
   window.__initSiteSearch = init;
   window.addEventListener('header:ready', init);
+  new MutationObserver(init).observe(document.documentElement, { childList: true, subtree: true });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
