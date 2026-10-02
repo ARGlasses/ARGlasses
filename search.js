@@ -145,6 +145,7 @@
   }
 
   window.__initSiteSearch = init;
+  window.addEventListener('header:ready', init);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
