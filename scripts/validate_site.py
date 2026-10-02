@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Small regression checks for security/performance remediations.
-
-Uses only the Python standard library; it does not rewrite site files.
-"""
+"""Small regression checks for security/performance remediations."""
 from pathlib import Path
 import re
 import sys
@@ -10,32 +7,27 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 errors = []
 
-# An image must be rendered with <img>/<picture>, never executed as JavaScript.
 for path in ROOT.rglob("*.html"):
-    text = path.read_text(encoding="utf-8", errors="replace")
-    for match in re.finditer(r'<script\\b[^>]*\\bsrc\\s*=\\s*["\']([^"\']+)["\']', text, re.I):
+    source = path.read_text(encoding="utf-8", errors="replace")
+    image_script = re.compile(r'<script[^>]*src\s*=\s*["\']([^"\']+)["\']', re.I)
+    for match in image_script.finditer(source):
         src = match.group(1).split("?", 1)[0].lower()
         if src.endswith((".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg")):
-            errors.append(f"{path.relative_to(ROOT)}: image asset incorrectly loaded as script: {match.group(1)}")
+            errors.append(f"{path.relative_to(ROOT)}: image asset loaded as script: {match.group(1)}")
 
-    consent_count = len(re.findall(r'<script\\b[^>]*\\bsrc\\s*=\\s*["\'][^"\']*cookie-consent\\.js(?:\\?[^"\']*)?["\']', text, re.I))
-    if consent_count > 1:
-        errors.append(f"{path.relative_to(ROOT)}: cookie-consent.js included {consent_count} times")
+    consent = re.findall(r'<script[^>]*src\s*=\s*["\'][^"\']*cookie-consent\.js(?:\?[^"\']*)?["\']', source, re.I)
+    if len(consent) > 1:
+        errors.append(f"{path.relative_to(ROOT)}: cookie-consent.js included {len(consent)} times")
 
 headers_path = ROOT / "_headers"
-if headers_path.exists():
-    headers = headers_path.read_text(encoding="utf-8", errors="replace").lower()
-    for name in (
-        "strict-transport-security:",
-        "x-content-type-options:",
-        "x-frame-options:",
-        "referrer-policy:",
-        "permissions-policy:",
-    ):
-        if name not in headers:
-            errors.append(f"_headers: missing expected security header {name}")
-else:
+if not headers_path.exists():
     errors.append("_headers: file is missing")
+else:
+    headers = headers_path.read_text(encoding="utf-8", errors="replace").lower()
+    for name in ("strict-transport-security:", "x-content-type-options:",
+                 "x-frame-options:", "referrer-policy:", "permissions-policy:"):
+        if name not in headers:
+            errors.append(f"_headers: missing {name}")
 
 if errors:
     print("Site regression checks failed:")
