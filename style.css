@@ -69,6 +69,22 @@ nav.container-fluid.light-nav a,
 nav.container-fluid.light-nav strong,
 nav.container-fluid.light-nav .icon { color: #333 !important; }
 
+/* === CONSISTENT SITE HEADER THEME === */
+/* Keep the shared header visually identical across every page. */
+body #navbar{
+  background:#fff!important;
+  box-shadow:0 4px 10px rgba(0,0,0,.05)!important;
+}
+body #navbar a,
+body #navbar strong,
+body #navbar .icon,
+body #navbar .hamburger{
+  color:#333!important;
+}
+body #navbar .hamburger span{
+  background:currentColor!important;
+}
+
 /* === DROPDOWN MENU (DESKTOP) === */
 .dropdown { position: relative; }
 .dropdown-menu {
