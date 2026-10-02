@@ -166,5 +166,5 @@
 (function(){
   if (window.__siteSearchScriptRequested) return;
   window.__siteSearchScriptRequested = true;
-  const s=document.createElement('script'); s.src='search.js?v=1'; s.defer=true; document.head.appendChild(s);
+  const s=document.createElement('script'); s.src='search.js?v=2'; s.defer=true; document.head.appendChild(s);
 })();
