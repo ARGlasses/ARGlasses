@@ -8,8 +8,18 @@
 <link rel="canonical" href="https://arglasses.com/reviews.html">
 <link rel="stylesheet" href="style.css">
 <style>
+.reviews-page nav.container-fluid{padding-top:0!important;padding-bottom:0!important;font-size:.8rem!important;font-weight:500!important;letter-spacing:.2px!important}
+.reviews-page .nav-inner{width:100%;padding:0 224px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.reviews-page .logo{display:flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:normal}
+.reviews-page .logo img{height:32px;width:auto}
 .reviews-page #navbar{background:#fff!important;box-shadow:0 4px 10px rgba(0,0,0,.05)}
 .reviews-page #navbar a,.reviews-page #navbar strong,.reviews-page #navbar .icon,.reviews-page #navbar .hamburger{color:#333!important}
+@media(max-width:768px){
+.reviews-page .nav-inner{padding:0 1rem}
+.reviews-page .hamburger{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:36px;height:36px;margin-right:8px}
+.reviews-page .logo img{height:32px;width:auto}
+.reviews-page #primary-nav{width:280px;height:100vh;padding:0}
+}
 .reviews-shell{max-width:1180px;margin:0 auto;padding:8.5rem 1.25rem 3rem}
 .reviews-hero{background:linear-gradient(135deg,#071d2d,#0b4f72);color:#fff;border-radius:24px;padding:3rem 2.5rem;box-shadow:0 16px 45px rgba(0,0,0,.12)}
 .reviews-eyebrow{font-size:.75rem;letter-spacing:.14em;font-weight:800;opacity:.8;margin:0 0 .7rem}
