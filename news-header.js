@@ -67,7 +67,7 @@
   if (!window.__siteSearchScriptRequested) {
     window.__siteSearchScriptRequested = true;
     const searchScript = document.createElement('script');
-    searchScript.src = '../search.js?v=1';
+    searchScript.src = '../search.js?v=2';
     searchScript.defer = true;
     document.head.appendChild(searchScript);
   }
