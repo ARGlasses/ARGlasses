@@ -627,19 +627,6 @@ html body a.shop-all-btn:focus {
     color: #17202b !important;
   }
 
-  nav.container-fluid:has(#primary-nav > .dropdown:hover)::after,
-  nav.container-fluid:has(#primary-nav > .dropdown:focus-within)::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    z-index: 0;
-    background: rgba(18, 27, 39, 0.18);
-    pointer-events: none;
-  }
-
   #primary-nav > .dropdown { position: relative; }
 
   nav.container-fluid:has(#primary-nav > .dropdown:hover) .nav-inner,
