@@ -31,17 +31,6 @@
         background: #fff;
       }
 
-      /* Force light theme + grey text for shared header on this page */
-      body.news-page #navbar {
-        background: white !important;
-        box-shadow: none !important;
-        border: 0;
-        padding-block: .5rem;
-      }
-      body.news-page #navbar .nav-inner a { color: var(--nav-text-color, #555) !important; }
-      body.news-page #navbar img { height: 28px; width: auto; }
-      body.news-page #navbar .nav-inner { text-shadow: none; }
-
       /* ===== Viewport area ===== */
       .viewport {
         position: relative;
@@ -415,19 +404,8 @@
           .then(html => {
             mount.innerHTML = html;
 
-            // Primary init from header.js if available
-            if (typeof window.__initHeader === "function") {
-              try { window.__initHeader(); } catch (_) {}
-            }
-
-                        // Page-specific header tweaks
-            const navbar = document.getElementById("navbar");
-            if (navbar) {
-              navbar.classList.remove("dark-nav");
-              navbar.classList.add("light-nav");
-              navbar.style.setProperty("--nav-text-color", "#555");
-            }
-
+            // Let the shared header initialise from the ready event.
+            // The page also listens for this event to stabilise its carousel.
             window.dispatchEvent(new Event("header:ready"));
           })
           .catch(err => console.error("Failed to load header.html:", err));
