@@ -147,7 +147,7 @@
 <script>
 document.addEventListener("DOMContentLoaded",function(){
 const mount=document.getElementById("site-header");
-fetch("./header.html?v=9").then(r=>r.text()).then(html=>{mount.innerHTML=html;if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(_){}}window.dispatchEvent(new Event("header:ready"));}).catch(err=>console.error("Failed to load header.html:",err));
+fetch("./header.html?v=8").then(r=>r.text()).then(html=>{mount.innerHTML=html;if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(err){console.error("Header initialisation failed:",err);}}}).catch(err=>console.error("Failed to load header.html:",err));
 const video=document.querySelector(".home-hero-video");if(video&&window.matchMedia("(prefers-reduced-motion: reduce)").matches){video.pause();video.removeAttribute("autoplay");}
 });
 </script>
