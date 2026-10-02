@@ -63,7 +63,7 @@
     if (document.getElementById('site-search-overlay')) return document.getElementById('site-search-overlay');
     const overlay = document.createElement('div');
     overlay.id = 'site-search-overlay';
-    overlay.innerHTML = \`
+    overlay.innerHTML = `
       <div class="site-search-panel" role="dialog" aria-modal="true" aria-labelledby="site-search-title">
         <button type="button" class="site-search-close" aria-label="Close search">&times;</button>
         <h2 id="site-search-title">Search AR glasses</h2>
@@ -73,9 +73,11 @@
         </form>
         <div class="site-search-status" aria-live="polite">Type a search and press Search.</div>
         <div class="site-search-results"></div>
-      </div>\`;
+      </div>`;
     const style = document.createElement('style');
-    style.textContent = \`
+    style.textContent = `
+      #primary-nav a.icon-link[aria-label="Search"] .icon{color:#333!important;stroke:#333!important}
+      #primary-nav a.icon-link[aria-label="Search"]{color:#333!important;stroke:#333!important;cursor:pointer!important;pointer-events:auto!important}
       #site-search-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;padding:7vh 16px 24px;box-sizing:border-box}
       #site-search-overlay.open{display:flex}
       .site-search-panel{position:relative;width:min(760px,100%);max-height:86vh;overflow:auto;background:#fff;border-radius:14px;padding:24px;box-sizing:border-box;box-shadow:0 18px 60px rgba(0,0,0,.25);color:#222}
@@ -89,7 +91,7 @@
       .site-search-result a{font-weight:600;color:#1769aa;text-decoration:none}
       .site-search-result p{margin:5px 0 0;color:#555;font-size:.9rem;line-height:1.45}
       @media(max-width:520px){#site-search-overlay{padding:16px}.site-search-panel{padding:20px}.site-search-form{flex-direction:column}.site-search-form button{padding:11px}}
-    \`;
+    `;
     document.head.appendChild(style);
     document.body.appendChild(overlay);
     return overlay;
@@ -100,16 +102,16 @@
     if (!q) { results.innerHTML = ''; status.textContent = 'Type a search and press Search.'; return; }
     const terms = q.split(/\s+/).filter(Boolean);
     const matches = items.map(item => {
-      const haystack = \`\${item.title} \${item.description} \${item.text} \${item.url}\`.toLowerCase();
+      const haystack = `${item.title} ${item.description} ${item.text} ${item.url}`.toLowerCase();
       const score = terms.reduce((n, term) => n + (item.title.toLowerCase().includes(term) ? 8 : 0) + (item.description.toLowerCase().includes(term) ? 4 : 0) + (item.text.toLowerCase().includes(term) ? 1 : 0) + (item.url.toLowerCase().includes(term) ? 2 : 0), 0);
       return { item, score, haystack };
     }).filter(x => x.score > 0).sort((a,b) => b.score - a.score).slice(0, 20);
 
-    status.textContent = matches.length ? \`\${matches.length} result\${matches.length === 1 ? '' : 's'} found.\` : 'No results found.';
+    status.textContent = matches.length ? `${matches.length} result${matches.length === 1 ? '' : 's'} found.` : 'No results found.';
     results.innerHTML = matches.map(({item}) => {
       const snippetSource = item.description || item.text;
       const snippet = snippetSource.length > 220 ? snippetSource.slice(0, 220) + '…' : snippetSource;
-      return \`<div class="site-search-result"><a href="\${escapeHtml(item.url)}">\${escapeHtml(item.title)}</a>\${snippet ? \`<p>\${escapeHtml(snippet)}</p>\` : ''}</div>\`;
+      return `<div class="site-search-result"><a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>${snippet ? `<p>${escapeHtml(snippet)}</p>` : ''}</div>`;
     }).join('');
   }
 
