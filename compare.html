@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AR Glasses Comparison 2026 | Compare Specs, Features & Prices</title>
+  <meta name="description" content="Compare AR display glasses, AI smart glasses and advanced spatial AR eyewear. Explore verified manufacturer specifications, UK pricing, compatibility and source links.">
+  <link rel="canonical" href="https://arglasses.com/compare.html">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"><link rel="stylesheet" href="compare.css">
+  <link rel="icon" href="images/logo40x40.webp" type="image/webp">
+  <script src="./header.js?v=6" defer></script><script src="./compare.js" defer></script>
+</head>
+<body class="comparison-page">
+  <div id="site-header"></div>
+  <main class="compare-shell">
+    <section class="compare-hero">
+      <p class="compare-eyebrow">THE AR GLASSES DATABASE</p>
+      <h1>Find the right glasses for the way you see the world.</h1>
+      <p class="compare-intro">Explore the differences between display glasses, AI smart glasses and true augmented-reality systems. Compare published specifications side by side, check compatibility and follow the source for every important detail.</p>
+      <div class="compare-trust"><span>Manufacturer-sourced specifications</span><span>UK pricing where published</span><span>Unknowns clearly marked</span></div>
+      <a class="compare-primary" href="#explorer">Explore the comparison <span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section class="compare-explainer" aria-label="Understand product categories">
+      <article><div class="category-symbol">▣</div><h2>Display glasses</h2><p>Wearable screens for films, gaming and virtual monitors. Usually tethered to a phone, laptop or media device; they do not necessarily understand or map the room around you.</p><small>Examples: XREAL, VITURE, RayNeo Air, Rokid Max</small></article>
+      <article><div class="category-symbol">✧</div><h2>AI smart glasses</h2><p>Everyday eyewear with cameras, microphones, speakers and an AI assistant. Some include a small private display; many have no visual display at all.</p><small>Examples: Ray-Ban Meta, Even Realities, Halliday</small></article>
+      <article><div class="category-symbol">⌖</div><h2>Spatial / true AR</h2><p>Systems designed to anchor digital content in the physical environment using tracking, spatial mapping or optical see-through displays. Capabilities vary significantly.</p><small>Examples: Snap Specs, RayNeo X3 Pro, enterprise systems</small></article>
+    </section>
+
+    <section id="explorer" class="explorer-section">
+      <div class="section-heading"><div><p class="compare-eyebrow">EXPLORE THE LINE-UP</p><h2>Compare AR glasses</h2><p>Search the catalogue, narrow it by category, then select up to three products for a detailed comparison.</p></div><div class="catalogue-count" id="catalogue-count" aria-live="polite">Loading catalogue…</div></div>
+      <div class="compare-controls">
+        <label class="search-field"><span>Search products</span><input id="product-search" type="search" placeholder="Try XREAL, Meta, 3DoF, camera…" autocomplete="off"></label>
+        <label><span>Product type</span><select id="category-filter"><option value="all">All categories</option><option value="display">Display glasses</option><option value="ai">AI smart glasses</option><option value="spatial">Spatial / true AR</option><option value="enterprise">Enterprise AR</option></select></label>
+        <label><span>Manufacturer</span><select id="brand-filter"><option value="all">All manufacturers</option></select></label>
+        <label><span>Sort by</span><select id="sort-filter"><option value="brand">Manufacturer A–Z</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="weight">Weight: light to heavy</option><option value="newest">Recently announced</option></select></label>
+      </div>
+      <div class="compare-selection-bar"><p><strong id="selected-count">0 selected</strong><span>Choose up to three products to compare.</span></p><button id="compare-selected" disabled>Compare selected <span aria-hidden="true">→</span></button></div>
+      <div id="product-grid" class="product-grid" aria-live="polite"></div>
+      <p class="no-results" id="no-results" hidden>No products match those filters. Try a broader search or clear a filter.</p>
+    </section>
+
+    <section id="comparison" class="comparison-results" hidden>
+      <div class="section-heading"><div><p class="compare-eyebrow">SIDE-BY-SIDE</p><h2>Your comparison</h2><p>Specifications are shown as published. Different display architectures are not directly interchangeable.</p></div><button id="clear-comparison" class="clear-button">Clear selection</button></div>
+      <div id="comparison-table-wrap" class="comparison-table-wrap"></div>
+    </section>
+
+    <section class="spec-guide">
+      <p class="compare-eyebrow">HOW TO READ THE SPECS</p><h2>Numbers need context.</h2>
+      <div class="guide-grid">
+        <article><h3>Field of view (FOV)</h3><p>The angle of the visible image. A wider FOV can make content feel larger, but the quoted diagonal figure is not the same as usable horizontal FOV.</p></article>
+        <article><h3>Brightness</h3><p>Check whether a figure is measured at the microdisplay or stated as perceived image brightness. Manufacturer methods can differ, so figures are not always directly comparable.</p></article>
+        <article><h3>Refresh rate</h3><p>A higher maximum refresh rate may require a supported host, resolution or mode. It does not guarantee every app runs at that rate.</p></article>
+        <article><h3>Tracking</h3><p>3DoF tracks rotation; 6DoF also tracks movement through space. Some glasses rely on a companion device or accessory for spatial features.</p></article>
+      </div>
+    </section>
+
+    <section class="methodology">
+      <h2>Our data and verification policy</h2>
+      <p>We prioritise manufacturer product pages, technical specifications and support documentation. Independent reviews are used only to add context, not to silently replace a manufacturer's stated specification.</p>
+      <ul>
+        <li><strong>Not disclosed:</strong> the manufacturer does not publish a dependable figure in the sources checked.</li>
+        <li><strong>Varies by configuration:</strong> the specification depends on size, lens, regional model or operating mode.</li>
+        <li><strong>Announced / upcoming:</strong> the product has been announced but shipping specifications or broad retail availability may still change.</li>
+        <li><strong>Price:</strong> UK RRP or current UK direct-store price when available; promotions and bundles can change. Always confirm on the retailer's page.</li>
+      </ul>
+      <p class="data-stamp">Catalogue checked: <time datetime="2026-10-02">2 October 2026</time>. Specifications can change after firmware updates or new product revisions. Each product card links to the manufacturer's source.</p>
+    </section>
+  </main>
+  <footer class="container professional-footer">
+    <div class="footer-content"><div class="footer-brand"><div class="footer-logo-group"><img src="images/logo40x40.webp" alt="AR Glasses Logo"><h4>AR glasses</h4></div><p>Change how you see the world</p></div><div class="footer-links"><strong>Site Terms and Policies</strong><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="cookie-policy.html">Cookie Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div></div>
+    <div class="footer-bottom"><small>&copy; 2026 ARglasses.com • All rights reserved</small></div>
+  </footer>
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      const mount=document.getElementById("site-header");
+      fetch("./header.html?v=6").then(r=>r.text()).then(html=>{mount.innerHTML=html;if(typeof window.__initHeader==="function")window.__initHeader();});
+    });
+  </script>
+</body></html>
