@@ -177,41 +177,6 @@ const video=document.querySelector(".home-hero-video");if(video&&window.matchMed
         <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
     </footer>
-
-    <!-- Cookie Consent Banner -->
-    <div id="cookie-banner">
-      <div class="container">
-        <p>
-          We use cookies to improve your experience, analyze traffic, and
-          enhance content. By clicking "Accept", you agree to our use of
-          non-essential cookies.
-          <a href="cookie-policy.html">Read our Cookie Policy</a>.
-        </p>
-        <div>
-          <button class="contrast" id="accept-cookies">Accept</button>
-          <button class="secondary" id="decline-cookies">Decline</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cookie Consent Script -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const banner = document.getElementById("cookie-banner");
-        const acceptBtn = document.getElementById("accept-cookies");
-        const declineBtn = document.getElementById("decline-cookies");
-        if (!banner || !acceptBtn || !declineBtn) return;
-        let consent = null;
-        try { consent = localStorage.getItem("cookieConsent"); } catch (_) {}
-        if (!consent) banner.style.display = "block";
-        const saveConsent = value => {
-          try { localStorage.setItem("cookieConsent", value); } catch (_) {}
-          banner.style.display = "none";
-        };
-        acceptBtn.addEventListener("click", () => saveConsent("accepted"));
-        declineBtn.addEventListener("click", () => saveConsent("declined"));
-      });
-    </script>
-
+  <script src="cookie-consent.js" defer></script>
 </body>
 </html>
