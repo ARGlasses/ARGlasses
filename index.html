@@ -200,10 +200,16 @@ const video=document.querySelector(".home-hero-video");if(video&&window.matchMed
         const banner = document.getElementById("cookie-banner");
         const acceptBtn = document.getElementById("accept-cookies");
         const declineBtn = document.getElementById("decline-cookies");
-        const consent = localStorage.getItem("cookieConsent");
+        if (!banner || !acceptBtn || !declineBtn) return;
+        let consent = null;
+        try { consent = localStorage.getItem("cookieConsent"); } catch (_) {}
         if (!consent) banner.style.display = "block";
-        acceptBtn.addEventListener("click", () => { localStorage.setItem("cookieConsent", "accepted"); banner.style.display = "none"; });
-        declineBtn.addEventListener("click", () => { localStorage.setItem("cookieConsent", "declined"); banner.style.display = "none"; });
+        const saveConsent = value => {
+          try { localStorage.setItem("cookieConsent", value); } catch (_) {}
+          banner.style.display = "none";
+        };
+        acceptBtn.addEventListener("click", () => saveConsent("accepted"));
+        declineBtn.addEventListener("click", () => saveConsent("declined"));
       });
     </script>
 
