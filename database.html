@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AR Glasses Database | Specifications, Compatibility & Features</title>
+<meta name="description" content="ARGlasses.com Database: a structured reference for AR, XR, AI smart and enterprise glasses, covering displays, resolution, field of view, tracking, weight, battery, cameras, audio and compatibility.">
+<link rel="canonical" href="https://arglasses.com/database.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="images/logo40x40.webp" type="image/webp">
+<style>
+.database-page #navbar{background:#fff!important;box-shadow:0 4px 10px rgba(0,0,0,.05)}
+.database-page #navbar a,.database-page #navbar strong,.database-page #navbar .icon,.database-page #navbar .hamburger{color:#333!important}
+.database-page .database-shell{max-width:1240px;margin:0 auto;padding:8.5rem 2rem 3rem}
+.database-hero{max-width:920px;padding:1.5rem 0 2.5rem}
+.db-eyebrow{margin:0 0 .7rem;color:#0071b9;font-size:.72rem;font-weight:700;letter-spacing:.15em}
+.database-hero h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.06;color:#004f88;margin:0 0 1rem}
+.database-lead{font-size:1.05rem;line-height:1.8;color:#465762;max-width:850px}
+.db-pills{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.2rem}.db-pills span{border:1px solid #dce6ec;background:#f7fafc;border-radius:999px;padding:.42rem .7rem;font-size:.75rem;color:#4b5b65}
+.db-jump{display:flex;gap:.4rem;overflow:auto;border:1px solid #dfe7ec;border-radius:14px;padding:.55rem;background:#fff;position:sticky;top:62px;z-index:15;box-shadow:0 5px 20px rgba(0,0,0,.04);margin-bottom:2.5rem}.db-jump a{white-space:nowrap;padding:.5rem .75rem;border-radius:8px;text-decoration:none;color:#36505e;font-size:.78rem;font-weight:600}.db-jump a:hover{background:#edf5fa;color:#004f88}
+.db-section{border-top:1px solid #e4eaee;padding:2.7rem 0;scroll-margin-top:115px}.db-section h2{font-size:clamp(1.6rem,3vw,2.25rem);margin:0 0 .65rem}.db-intro{color:#586872;line-height:1.7;max-width:800px}
+.db-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.4rem}.db-cat{border:1px solid #dfe7ec;border-radius:15px;padding:1.15rem;background:#fff}.db-cat b{display:block;margin-bottom:.35rem}.db-cat p{margin:0;font-size:.82rem;line-height:1.6;color:#5a6871}
+.db-controls{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:.7rem;margin:1.4rem 0}.db-controls input,.db-controls select{margin:0;background:#fff}
+.db-count{font-size:.78rem;color:#687780;margin-bottom:.8rem}
+.db-table-wrap{overflow:auto;border:1px solid #dfe7ec;border-radius:14px;background:#fff}.db-table{margin:0;min-width:1450px;font-size:.78rem}.db-table th{background:#f4f7f9;color:#30434f;position:sticky;top:0}.db-table td,.db-table th{padding:.72rem .7rem;vertical-align:top}.db-table td:first-child,.db-table th:first-child{position:sticky;left:0;background:#fff;z-index:2;font-weight:600}.db-table th:first-child{background:#f4f7f9;z-index:3}.db-table a{color:#00679f}.db-tag{display:inline-block;font-size:.67rem;font-weight:700;padding:.25rem .45rem;border-radius:999px;background:#eef6fa;color:#00679f;margin-bottom:.35rem}
+.db-note{margin-top:1rem;padding:1rem 1.1rem;border-left:4px solid #0071b9;background:#f4f9fc;color:#465761;font-size:.82rem;line-height:1.65}
+.db-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}.db-card{border:1px solid #dfe7ec;border-radius:15px;padding:1.25rem;background:#fff}.db-card h3{margin:.15rem 0 .5rem;font-size:1.05rem}.db-card p,.db-card li{font-size:.82rem;line-height:1.65;color:#56656e}.db-card ul{padding-left:1.1rem;margin:.5rem 0 0}
+.db-source{font-size:.74rem;color:#697781;margin-top:1.4rem}.db-cta{text-align:center;border:1px solid #dce6ec;background:#f5f9fb;border-radius:18px;padding:2rem;margin-top:1rem}.db-cta h2{margin:.1rem 0 .5rem}.db-cta p{color:#56656e;max-width:700px;margin:0 auto 1rem;line-height:1.7}.db-button{display:inline-block;background:#004f88;color:#fff!important;border-radius:9px;padding:.72rem 1.1rem;text-decoration:none;font-weight:600;font-size:.84rem}
+@media(max-width:900px){.db-cats{grid-template-columns:1fr 1fr}.db-cards{grid-template-columns:1fr 1fr}.db-controls{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.database-shell{padding:6.8rem 1rem 2rem}.db-cats,.db-cards,.db-controls{grid-template-columns:1fr}.db-jump{top:52px}.database-hero{padding-top:1rem}}
+</style>
+<script src="./header.js?v=6" defer></script>
+</head>
+<body class="database-page">
+<div id="site-header"></div>
+<main class="database-shell">
+<section class="database-hero">
+<p class="db-eyebrow">THE AR GLASSES DATABASE</p>
+<h1>A structured reference for AR, XR and smart glasses.</h1>
+<p class="database-lead">Use the Database to understand what each product actually offers. It separates display glasses, AI smart glasses, spatial AR and enterprise systems, then puts the practical specifications side by side so you can research without relying on marketing labels alone.</p>
+<div class="db-pills"><span>Manufacturer specifications</span><span>Compatibility</span><span>Display &amp; optics</span><span>Tracking</span><span>Battery &amp; comfort</span><span>Sources linked</span></div>
+</section>
+<nav class="db-jump" aria-label="Database sections"><a href="#categories">Categories</a><a href="#catalogue">Catalogue</a><a href="#specs">How to read specs</a><a href="#methodology">Methodology</a></nav>
+
+<section id="categories" class="db-section">
+<h2>Start with the category</h2>
+<p class="db-intro">“AR glasses” covers several very different products. The category is a starting point, not a quality rating.</p>
+<div class="db-cats">
+<div class="db-cat"><b>Display glasses</b><p>Wearable screens for films, gaming and virtual monitors. Usually connected to another device.</p></div>
+<div class="db-cat"><b>AI smart glasses</b><p>Everyday eyewear built around cameras, microphones, speakers and AI; some also have a small display.</p></div>
+<div class="db-cat"><b>Spatial / true AR</b><p>Optical or see-through systems designed to place digital information into the physical environment using spatial sensing.</p></div>
+<div class="db-cat"><b>Enterprise AR</b><p>Rugged or workflow-focused systems for field service, training, inspection and industrial use.</p></div>
+</div>
+</section>
+
+<section id="catalogue" class="db-section">
+<h2>Product catalogue</h2>
+<p class="db-intro">Search the current reference set by product, manufacturer or capability. “Not published” means a comparable manufacturer figure was not found in the referenced product material.</p>
+<div class="db-controls">
+<input id="db-search" type="search" placeholder="Search products, brands or features" aria-label="Search database">
+<select id="db-category" aria-label="Filter by category"><option value="all">All categories</option><option value="Display glasses">Display glasses</option><option value="AI smart glasses">AI smart glasses</option><option value="Spatial / true AR">Spatial / true AR</option><option value="Enterprise AR">Enterprise AR</option></select>
+<select id="db-brand" aria-label="Filter by manufacturer"><option value="all">All manufacturers</option></select>
+<select id="db-sort" aria-label="Sort database"><option value="name">Sort: Name</option><option value="weight">Sort: Weight</option><option value="year">Sort: Newest</option></select>
+</div>
+<div class="db-count" id="db-count"></div>
+<div class="db-table-wrap">
+<table class="db-table">
+<thead><tr><th>Product</th><th>Category</th><th>Year</th><th>UK price</th><th>Weight</th><th>Display</th><th>Resolution</th><th>FOV</th><th>Refresh</th><th>Brightness</th><th>Tracking</th><th>Power / battery</th><th>Camera</th><th>Audio</th><th>Compatibility</th><th>Prescription</th></tr></thead>
+<tbody id="db-body"></tbody>
+</table>
+</div>
+<div class="db-note"><strong>Important:</strong> specifications can differ by region, frame size, firmware, accessory and use mode. Prices are not permanent. Where a manufacturer does not publish a directly comparable figure, the Database says so rather than estimating it.</div>
+</section>
+
+<section id="specs" class="db-section">
+<h2>How to read the important specifications</h2>
+<div class="db-cards">
+<article class="db-card"><h3>Resolution ≠ image quality</h3><p>Resolution describes the number of pixels, but perceived clarity also depends on optics, lens design, panel quality, focus, text rendering and software.</p></article>
+<article class="db-card"><h3>FOV changes the experience</h3><p>Field of view describes how large the visible image appears. A higher figure can mean a larger viewing area, but FOV measurements are not always reported using identical methods.</p></article>
+<article class="db-card"><h3>Brightness needs context</h3><p>Manufacturer brightness figures may use different measurement conventions. “Nits” should therefore be compared carefully, especially between see-through and virtual-display products.</p></article>
+<article class="db-card"><h3>3DoF vs 6DoF</h3><p>3DoF tracks orientation such as turning your head. 6DoF adds positional movement, allowing a system to understand changes in your location within its tracked space.</p></article>
+<article class="db-card"><h3>USB-C is not enough</h3><p>A USB-C connector does not guarantee video output. Check for DisplayPort Alt Mode, the host device, adapters and any product-specific software requirements.</p></article>
+<article class="db-card"><h3>Weight is only part of comfort</h3><p>Balance, nose pressure, temple pressure, cable position, lens fit, heat and prescription configuration can matter as much as the headline gram figure.</p></article>
+</div>
+</section>
+
+<section id="methodology" class="db-section">
+<h2>Database methodology</h2>
+<p class="db-intro">The Database is designed as a factual reference rather than a league table. It does not award an overall score or declare a single “best” product.</p>
+<div class="db-cards">
+<article class="db-card"><h3>Source first</h3><ul><li>Manufacturer product pages are the primary reference.</li><li>Regional stores are used for published local pricing where available.</li><li>Unknown values remain unknown.</li></ul></article>
+<article class="db-card"><h3>Comparable fields</h3><ul><li>Display, resolution, FOV and refresh rate.</li><li>Weight, tracking, power and cameras.</li><li>Audio, compatibility and prescription support.</li></ul></article>
+<article class="db-card"><h3>Keep categories honest</h3><ul><li>Display glasses are not automatically spatial AR.</li><li>AI eyewear can have a display without being full AR.</li><li>Headsets are identified as such rather than presented as ordinary glasses.</li></ul></article>
+</div>
+<p class="db-source">Editorial note: this reference changes as products, software, prices and manufacturer specifications change. Check the linked manufacturer source before making a purchase or technical decision.</p>
+<div class="db-cta"><h2>Want to understand the differences first?</h2><p>The Guide explains the terminology, display technologies, tracking systems, compatibility questions and practical checks behind the specifications in this Database.</p><a class="db-button" href="guide.html">Read the Guide</a></div>
+</section>
+</main>
+<footer class="container professional-footer">
+<div class="footer-content"><div class="footer-brand"><div class="footer-logo-group"><img src="images/logo40x40.webp" alt="AR Glasses Logo"><h4>AR glasses</h4></div><p>Change how you see the world</p></div>
+<div class="footer-links"><strong>Site Terms and Policies</strong><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="cookie-policy.html">Cookie Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div></div>
+<div class="footer-bottom"><small>&copy; 2026 ARglasses.com • All rights reserved</small></div>
+</footer>
+<script>
+window.addEventListener("DOMContentLoaded",function(){const mount=document.getElementById("site-header");fetch("./header.html?v=6").then(r=>r.text()).then(html=>{mount.innerHTML=html;if(typeof window.__initHeader==="function")window.__initHeader();});});
+</script>
+<script src="./database.js" defer></script>
+</body></html>
