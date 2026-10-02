@@ -21,7 +21,7 @@ const DB_PRODUCTS = window.ARG_PRODUCTS.map(p => ({
 }));
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fields=["name","cat","year","price","weight","display","resolution","fov","refresh","brightness","tracking","power","camera","audio","compat","rx"];
-const labels=["Product","Category","Year","UK price","Weight","Display","Resolution","FOV","Refresh","Brightness","Tracking","Power / battery","Camera","Audio","Compatibility","Prescription"];
+const labels=["Product","Category","Year","Price / availability","Weight","Display","Resolution","FOV","Refresh","Brightness","Tracking","Power / battery","Camera","Audio","Compatibility","Prescription"];
 function render(){
  const q=document.getElementById("db-search").value.toLowerCase(), cat=document.getElementById("db-category").value, brand=document.getElementById("db-brand").value, sort=document.getElementById("db-sort").value;
  let a=DB_PRODUCTS.filter(p=>(cat==="all"||p.cat===cat)&&(brand==="all"||p.brand===brand)&&JSON.stringify(p).toLowerCase().includes(q));
