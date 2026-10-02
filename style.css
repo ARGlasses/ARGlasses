@@ -643,9 +643,9 @@ html body a.shop-all-btn:focus {
     max-height: min(68vh, 560px);
     overflow-y: auto;
     display: none;
-    column-count: 3;
-    column-gap: clamp(28px, 5vw, 72px);
-    column-rule: 1px solid #edf0f2;
+    column-count: 1;
+    column-gap: 0;
+    column-rule: 0;
     padding: 26px max(7vw, calc((100vw - 1120px) / 2)) 30px !important;
     margin: 0 !important;
     background: #fff !important;
@@ -709,8 +709,8 @@ html body a.shop-all-btn:focus {
 
 @media (min-width: 769px) and (max-width: 1050px) {
   #primary-nav > .dropdown > .dropdown-menu {
-    column-count: 2;
-    column-gap: 30px;
+    column-count: 1;
+    column-gap: 0;
     padding-left: 5vw !important;
     padding-right: 5vw !important;
   }
