@@ -3,7 +3,7 @@ const PRODUCTS = window.ARG_PRODUCTS;
 
 const $=id=>document.getElementById(id);let selected=new Set();
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const fields=[["Price (UK)", "priceText"],["Weight","weight"],["Display technology","display"],["Resolution","resolution"],["Field of view","fov"],["Refresh rate","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power / battery","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription support","prescription"]];
+const fields=[["Price / availability", "priceText"],["Weight","weight"],["Display technology","display"],["Resolution","resolution"],["Field of view","fov"],["Refresh rate","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power / battery","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription support","prescription"]];
 function populateBrands(){const brands=[...new Set(PRODUCTS.map(p=>p.brand))].sort();$("brand-filter").innerHTML='<option value="all">All manufacturers</option>'+brands.map(b=>'<option value="'+esc(b)+'">'+esc(b)+'</option>').join("");}
 function numericWeight(value){const match=String(value??"").match(/[0-9]+(?:\.[0-9]+)?/);return match?Number(match[0]):Infinity;}
 function compareKnownNumbers(a,b,descending=false){const av=Number.isFinite(a)?a:null,bv=Number.isFinite(b)?b:null;if(av===null&&bv===null)return 0;if(av===null)return 1;if(bv===null)return -1;return descending?bv-av:av-bv;}
