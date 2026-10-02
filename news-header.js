@@ -64,6 +64,5 @@
   }
 
   window.__initNewsHeader = initNewsHeader;
-  }
   window.addEventListener('header:ready', initNewsHeader);
 })();
