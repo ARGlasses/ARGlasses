@@ -161,10 +161,3 @@
   }
 })();
 
-
-// Load site search without changing the shared header layout.
-(function(){
-  if (window.__siteSearchScriptRequested) return;
-  window.__siteSearchScriptRequested = true;
-  const s=document.createElement('script'); s.src='search.js?v=2'; s.defer=true; document.head.appendChild(s);
-})();
