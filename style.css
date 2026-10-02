@@ -624,7 +624,7 @@ html body a.shop-all-btn:focus {
     pointer-events: none;
   }
 
-  #primary-nav > .dropdown { position: static; }
+  #primary-nav > .dropdown { position: relative; }
 
   nav.container-fluid:has(#primary-nav > .dropdown:hover) .nav-inner,
   nav.container-fluid:has(#primary-nav > .dropdown:focus-within) .nav-inner {
@@ -637,22 +637,21 @@ html body a.shop-all-btn:focus {
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
-    right: 0 !important;
-    width: 100vw !important;
-    max-width: none !important;
+    right: auto !important;
+    width: 260px !important;
+    max-width: min(320px, 90vw) !important;
     max-height: min(68vh, 560px);
     overflow-y: auto;
     display: none;
     column-count: 1;
     column-gap: 0;
     column-rule: 0;
-    padding: 26px max(7vw, calc((100vw - 1120px) / 2)) 30px !important;
+    padding: 10px !important;
     margin: 0 !important;
     background: #fff !important;
-    border: 0 !important;
-    border-top: 1px solid #edf0f2 !important;
-    border-radius: 0 !important;
-    box-shadow: 0 18px 32px rgba(16, 24, 40, 0.12) !important;
+    border: 1px solid #edf0f2 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 14px 30px rgba(16, 24, 40, 0.14) !important;
     z-index: 1002 !important;
     opacity: 0;
     transform: translateY(-5px);
