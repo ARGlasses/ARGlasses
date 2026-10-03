@@ -15,7 +15,7 @@ h1, h2, h3 { color: #004f88; }
 
 /* === NAVIGATION (DESKTOP UNCHANGED) === */
 nav.container-fluid {
-  position: sticky;
+  position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
   background: transparent;
