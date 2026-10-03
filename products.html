@@ -18,7 +18,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" /> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=8" />
     <link rel="icon" href="images/logo40x40.webp" type="image/png" />
 
     <!-- Keep your page-specific styles (unchanged) -->
@@ -32,11 +32,17 @@
       }
 
       /* ===== Viewport area ===== */
+      :root { --products-header-offset: 76px; }
       .viewport {
         position: relative;
-        height: 100svh;
+        height: calc(100svh - var(--products-header-offset));
+        min-height: 320px;
         width: 100%;
         overflow: hidden;
+        scroll-margin-top: var(--products-header-offset);
+      }
+      @media (max-width: 700px) {
+        :root { --products-header-offset: 68px; }
       }
 
       .rail {
@@ -58,7 +64,7 @@
       .story {
         position: relative;
         min-width: clamp(78%, 85vw, 1100px);
-        height: clamp(420px, 82svh, 900px);
+        height: clamp(260px, calc(100svh - var(--products-header-offset) - 36px), 820px);
         border-radius: 24px;
         overflow: hidden;
         scroll-snap-align: center;
