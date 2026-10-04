@@ -243,11 +243,11 @@ window.addEventListener("DOMContentLoaded",function(){
    $("fxYear").textContent=range.value;$("fxSceneYear").textContent=range.value;$("fxEra").textContent=d[8];
    $("fxKicker").textContent=d[0];$("fxTitle").textContent=d[1];$("fxText").textContent=d[2];
    $("fxGain").textContent=d[3];$("fxLoss").textContent=d[4];$("fxHard").textContent=d[5];
-   $("fxConfidence").textContent=d[6]+"%";$("fxConfidenceBar").style.width=d[6]+"%";
+   $("fxConfidence").textContent=d[6]+"%";$("fxConfidenceBar").style.width="86%";
    $("fxCaption").textContent=d[9];$("fxTag1").textContent=d[10];$("fxTag2").textContent=d[11];$("fxTag3").textContent=d[12];
    document.querySelectorAll(".fx-year-labels button").forEach(b=>b.classList.toggle("active",+b.dataset.year===+range.value));
    const p=(+range.value-2026)/10;
-   document.querySelector(".fx-world-ring").style.transform="rotate("+(-12+p*28)+"deg) scale("+(1+p*.22)+")";
+   document.querySelector(".fx-world-ring").style.transform="rotate("+(-12+p*28)+"deg)";
  }
  range.addEventListener("input",updateYear);document.querySelectorAll(".fx-year-labels button").forEach(b=>b.addEventListener("click",()=>{range.value=b.dataset.year;updateYear()}));updateYear();
 
