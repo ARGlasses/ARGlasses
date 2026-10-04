@@ -183,6 +183,76 @@
 .future-speed-card{padding:2rem;border:1px solid #cfe2e8;border-radius:30px;background:linear-gradient(145deg,#fff,#f2fafc);box-shadow:0 25px 65px rgba(47,111,130,.08)}.speed-top{display:flex;justify-content:space-between;align-items:center}.speed-top span{font-size:.58rem;letter-spacing:.16em;color:#57808c}.speed-top strong{font-size:1.1rem;color:#2c8ba4}.future-speed-card>input{width:100%;margin:1.8rem 0 .4rem;accent-color:#2f9fbd}.speed-labels{display:flex;justify-content:space-between;color:#91a4aa;font-size:.55rem;letter-spacing:.1em}.speed-result{display:grid;grid-template-columns:230px 1fr;gap:2rem;margin-top:2rem;padding-top:2rem;border-top:1px solid #dcebef}.speed-year{padding:1.2rem;border-radius:20px;background:#edf9fc;border:1px solid #cce7ee}.speed-year small{display:block;font-size:.53rem;letter-spacing:.14em;color:#5e94a2}.speed-year strong{display:block;font-size:4.5rem;line-height:.9;letter-spacing:-.07em;color:#1f687d;margin:.7rem 0}.speed-year span{font-size:.65rem;line-height:1.4;color:#6e858d}.speed-story p{font-size:1.05rem;line-height:1.75;color:#5d737c;margin-top:0}.speed-pill-row{display:flex;flex-wrap:wrap;gap:.5rem}.speed-pill-row span{font-size:.58rem;color:#397b8d;padding:.5rem .65rem;border-radius:999px;background:#fff;border:1px solid #cfe4e9}.future-mini-curve{height:115px;margin-top:1.8rem;position:relative;border-bottom:1px solid #d8e9ed;background:linear-gradient(to top,rgba(77,187,211,.12),transparent);clip-path:polygon(0 100%,0 82%,10% 80%,20% 74%,30% 67%,40% 56%,50% 45%,60% 30%,70% 22%,80% 12%,90% 7%,100% 3%,100% 100%)}
 
  
+/* Hover explanations: turn metrics and small information bites into contextual micro-notes */
+.future-page [data-info]{position:relative;cursor:help}
+.future-page [data-info]::after{
+  content:attr(data-info);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 12px);
+  transform:translate(-50%,8px);
+  width:min(310px,72vw);
+  padding:.85rem 1rem;
+  border:1px solid #c9e2e8;
+  border-radius:14px;
+  background:rgba(255,255,255,.98);
+  color:#45636d;
+  font:500 .68rem/1.55 Poppins,system-ui,sans-serif;
+  letter-spacing:0;
+  text-transform:none;
+  text-align:left;
+  box-shadow:0 18px 45px rgba(35,91,108,.16);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:80;
+  transition:opacity .18s ease,transform .18s ease,visibility .18s ease;
+}
+.future-page [data-info]::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 6px);
+  width:10px;
+  height:10px;
+  background:#fff;
+  border-right:1px solid #c9e2e8;
+  border-bottom:1px solid #c9e2e8;
+  transform:translateX(-50%) rotate(45deg);
+  opacity:0;
+  visibility:hidden;
+  z-index:81;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+.future-page [data-info]:hover::after,
+.future-page [data-info]:focus-visible::after,
+.future-page [data-info]:hover::before,
+.future-page [data-info]:focus-visible::before{
+  opacity:1;
+  visibility:visible;
+}
+.future-page [data-info]:hover::after,
+.future-page [data-info]:focus-visible::after{transform:translate(-50%,0)}
+.future-page [data-info]:focus-visible{outline:2px solid #55abc2;outline-offset:4px}
+.future-page .future-metrics>div[data-info]::after{bottom:auto;top:calc(100% + 12px);transform:translate(-50%,-8px)}
+.future-page .future-metrics>div[data-info]::before{bottom:auto;top:calc(100% + 6px);transform:translateX(-50%) rotate(225deg)}
+.future-page .future-metrics>div[data-info]:hover::after,
+.future-page .future-metrics>div[data-info]:focus-visible::after{transform:translate(-50%,0)}
+.future-page .future-capabilities .cap[data-info]::after{width:260px}
+.future-page .future-scenario-interactive button[data-info]::after{width:300px}
+.future-page .future-impact-grid div[data-info]::after{width:240px}
+.future-page .future-confidence[data-info]::after{left:auto;right:0;transform:translateY(8px)}
+.future-page .future-confidence[data-info]:hover::after,
+.future-page .future-confidence[data-info]:focus-visible::after{transform:translateY(0)}
+.future-page .future-confidence[data-info]::before{left:auto;right:18px;bottom:calc(100% + 6px)}
+@media(max-width:650px){
+  .future-page [data-info]::after{width:min(270px,82vw);left:50%}
+  .future-page .future-metrics>div[data-info]::after{top:auto;bottom:calc(100% + 12px);transform:translate(-50%,8px)}
+  .future-page .future-metrics>div[data-info]::before{top:auto;bottom:calc(100% + 6px);transform:translateX(-50%) rotate(45deg)}
+  .future-page .future-metrics>div[data-info]:hover::after,
+  .future-page .future-metrics>div[data-info]:focus-visible::after{transform:translate(-50%,0)}
+}
+
 /* Cinematic hero + compact interactive storytelling */
 .future-heading-compact{margin-bottom:1.8rem}.future-heading-compact h2{max-width:800px}.future-heading-compact>p:last-child{margin-top:.7rem}
 .future-hero-stage{background:linear-gradient(180deg,#bfefff 0%,#eefaff 54%,#d8edf1 100%)}
@@ -206,6 +276,39 @@
 window.addEventListener("DOMContentLoaded",function(){
  const mount=document.getElementById("site-header");
  fetch("./header.html?v=8").then(r=>r.text()).then(html=>{mount.innerHTML=html;if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(e){}}window.dispatchEvent(new Event("header:ready"));});
+
+ // Contextual hover notes: every headline metric / info bite can explain itself without leaving the page.
+ const infoBites = [
+  [".future-metrics>div:nth-child(1)", "This is the share of organisations reporting AI use in the Stanford AI Index 2026. It is a measure of organisational adoption, not a claim that 88% of people use AI."],
+  [".future-metrics>div:nth-child(2)", "This is a modelled population-level adoption milestone for generative AI. It illustrates how quickly a new interface can move from novelty toward mainstream use; it is not an AR-glasses forecast."],
+  [".future-metrics>div:nth-child(3)", "This is the IEA's base-case estimate for global data-centre electricity demand in 2030. More AI capability means more compute, so energy and infrastructure are part of the AR story too."],
+  [".future-metrics>div:nth-child(4)", "2030 is used as a useful collision point: AI agents, lighter hardware, spatial computing and changing work patterns could all be mature enough to reshape how interfaces feel."],
+  [".future-impact-grid div:nth-child(1)", "The concrete benefit this scenario could add to everyday life if the underlying technology becomes reliable enough."],
+  [".future-impact-grid div:nth-child(2)", "Every new interface trades one friction for another. This shows what behaviour or convenience might fade as AR becomes more capable."],
+  [".future-impact-grid div:nth-child(3)", "The biggest unresolved engineering, social or governance problem standing between this scenario and a genuinely good experience."],
+  [".future-confidence", "Editorial confidence is not certainty. It reflects how close this particular scenario is to trends and capabilities already visible today; lower scores mean more assumptions are required."],
+  [".future-capabilities .cap[data-cap='optics']", "Why it matters: if the display is heavy, dim, narrow or visually tiring, the magic collapses no matter how smart the software becomes."],
+  [".future-capabilities .cap[data-cap='ai']", "Why it matters: AR needs AI that understands what you are looking at, what was said and what you are trying to do — not just a chatbot floating in front of you."],
+  [".future-capabilities .cap[data-cap='power']", "Why it matters: glasses have to work through a normal day without becoming hot, heavy or dependent on constant charging."],
+  [".future-capabilities .cap[data-cap='spatial']", "Why it matters: digital information becomes genuinely useful in AR when it knows where objects, rooms and people are in relation to you."],
+  [".future-capabilities .cap[data-cap='agents']", "Why it matters: the step beyond answers is action. Agents could handle bounded tasks, but permissions and human approval become essential."],
+  [".future-capabilities .cap[data-cap='trust']", "Why it matters: glasses can see and hear intimate parts of life. Privacy controls and ownership of memory may determine adoption as much as the hardware."],
+  [".future-scenario-interactive button[data-scenario='language']", "The promise here is not perfect translation; it is reducing the tiny pauses and social friction that make multilingual conversation difficult."],
+  [".future-scenario-interactive button[data-scenario='expertise']", "The deeper idea is that expert knowledge can travel to the physical place where a problem exists, rather than requiring everyone to travel to the expert."],
+  [".future-scenario-interactive button[data-scenario='learning']", "AR can connect abstract knowledge to the real world around you, making learning more contextual and embodied."],
+  [".future-scenario-interactive button[data-scenario='memory']", "This only becomes a positive future if memory is explicit, controllable and owned by the person wearing the glasses — not silently harvested."],
+  [".future-scenario-interactive button[data-scenario='health']", "This is a controlled-use scenario: AR could help authorised professionals access guidance and remote expertise, but it should not replace clinical judgement."],
+  [".future-scenario-interactive button[data-scenario='presence']", "Spatial collaboration could make remote work feel more grounded by letting people point, annotate and manipulate the same physical reference."],
+  [".speed-pill-row span", "These are examples of the everyday changes that would make AR feel normal. They are signals of adoption, not precise predictions."]
+ ];
+ infoBites.forEach(([selector, message]) => {
+  document.querySelectorAll(selector).forEach(el => {
+   el.setAttribute("data-info", message);
+   el.setAttribute("tabindex", "0");
+   el.setAttribute("aria-label", (el.getAttribute("aria-label") || el.textContent.trim()) + ". Hover or focus for more detail.");
+  });
+ });
+
  const years={
  2026:["TODAY","Glasses begin to see, hear and answer.","Audio, cameras and AI assistants converge. The phone still does most of the heavy lifting.","Hands-free answers","Constant phone checking","Battery + camera privacy",86,"Incremental progress is highly likely","ASSISTANT ERA","Your glasses are becoming an AI companion.","ASK","LISTEN","LOOK"],
  2027:["THE FIRST REAL HABIT","The glasses remember the little things.","Names, places, messages and reminders begin appearing at the right moment instead of living in another app.","Fewer tiny searches","Checking your phone for context","Comfort + reliable voice AI",83,"Early utility is a strong near-term path","CONTEXT ERA","A glance can replace a small task.","REMEMBER","RECALL","NOTICE"],
