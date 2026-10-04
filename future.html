@@ -98,8 +98,7 @@
   <button class="cap" data-cap="spatial"><span>04</span><b>Spatial</b><small>the world becomes mapped</small></button>
   <button class="cap" data-cap="agents"><span>05</span><b>Agents</b><small>from answers to actions</small></button>
   <button class="cap" data-cap="trust"><span>06</span><b>Trust</b><small>private by design</small></button>
-  <div class="cap-center"><span id="capIcon">◌</span><h3 id="capTitle">Optics</h3><p id="capText">The display has to become bright, wide, light and natural enough that you stop thinking about the display.</p></div>
- </div>
+  </div>
 </section>
 
 <section class="future-section" id="scenarios">
@@ -269,6 +268,12 @@
 @media(max-width:950px){.future-hero-light{grid-template-columns:1fr;padding-top:4rem}.future-hero-stage{height:560px}.future-intro,.future-visual-break,.future-fork{grid-template-columns:1fr}.future-metrics{grid-template-columns:repeat(2,1fr)}.future-scenario-grid,.future-source-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.stage-portal{left:23%;width:54%;height:26%}.stage-city{bottom:25%;height:35%}.stage-card-one{left:3%;top:9%}.stage-card-two{right:3%;bottom:14%}.future-console-copy h3{font-size:2rem}.future-console-main{grid-template-columns:1fr}.future-world-preview{border-right:0;border-bottom:1px solid #d9e9ed;min-height:300px}.future-console-copy{padding:2rem 1.4rem}.future-impact-grid{grid-template-columns:1fr}.future-confidence{grid-template-columns:1fr auto}.future-confidence>div{grid-column:1 / 3}.future-confidence small{grid-column:1 / 3}.speed-result{grid-template-columns:1fr}.speed-year strong{font-size:3.5rem}.future-console-head{gap:.6rem}.future-console-head strong{font-size:1.6rem}.future-year-markers button{font-size:.48rem}.future-mini-curve{height:85px}.future-hero-light{padding-left:16px;padding-right:16px;min-height:auto}.future-hero-stage{min-height:430px;height:65vh;border-radius:24px}.future-hero-light h1{font-size:clamp(3rem,15vw,5rem)}.future-hero-actions a{font-size:.72rem}.future-intro,.future-section,.future-visual-break,.future-fork,.future-sources,.future-final{width:calc(100% - 28px)}.future-intro{padding:5rem 0}.future-section{padding:5rem 0}.future-metrics{grid-template-columns:1fr}.future-metrics div{border-right:0;border-bottom:1px solid #dbeaf0}.future-slider-content{grid-template-columns:1fr}.slider-score{border-left:0;border-top:1px solid #d8e8ed;padding-top:1.5rem}.capability-wheel{min-height:760px;grid-template-columns:1fr 1fr}.cap-center{width:220px;height:220px;padding:2rem}.cap-center p{font-size:.68rem}.future-scenario-grid,.future-source-grid{grid-template-columns:1fr}.future-life-visual{height:390px}.stage-card{max-width:160px;padding:.7rem}.stage-card strong{font-size:.6rem}.stage-card span{font-size:.55rem}.stage-caption{font-size:.45rem}.chart-controls{align-items:flex-start;flex-direction:column}.chart-controls input{width:100%}}
 @media(prefers-reduced-motion:reduce){.future-page *{animation:none!important;scroll-behavior:auto!important}}
+
+/* Remove the central capability circle so the six breakthrough cards have a clear stage. */
+.future-page .future-capabilities .capability-wheel .cap-center{display:none!important}
+.future-page .future-capabilities .capability-wheel{min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;align-items:stretch}
+.future-page .future-capabilities .cap{min-height:150px}
+@media(max-width:650px){.future-page .future-capabilities .capability-wheel{grid-template-columns:1fr 1fr;min-height:0}.future-page .future-capabilities .cap{min-height:130px}}
 </style>
 
 <script src="header.js" defer></script>
