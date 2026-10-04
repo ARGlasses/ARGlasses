@@ -60,33 +60,65 @@
  <div><strong>2030</strong><span>the horizon where today's AI, work and hardware trends collide</span></div>
 </section>
 
-<section class="future-section" id="journey">
- <div class="future-section-heading future-heading-compact"><p class="future-eyebrow">YOU CONTROL THE FUTURE</p><h2>Don't just pick a year. Pick a life.</h2><p>Everything you need stays in this view. Drag one year at a time — the scene, explanation, benefits and hard problems all change together.</p></div>
- <div class="future-future-console">
-  <div class="future-console-head"><span class="console-live"><i></i> LIVE SCENARIO</span><strong id="futureYear">2026</strong><span id="eraLabel">ASSISTANT ERA</span></div>
-  <div class="future-year-rail">
-   <input id="futureYearRange" type="range" min="2026" max="2036" value="2026" aria-label="Explore the future from 2026 to 2036">
-   <div class="future-year-markers"><button data-year="2026">NOW</button><button data-year="2029">GLANCE</button><button data-year="2032">AMBIENT</button><button data-year="2036">ORCHESTRATED</button></div>
-  </div>
-  <div class="future-console-main">
-   <div class="future-world-preview" id="futureWorldPreview">
-    <div class="world-horizon"></div><div class="world-person"></div><div class="world-ring"></div>
-    <span class="world-tag tag-a" id="worldTagA">ASK</span><span class="world-tag tag-b" id="worldTagB">LISTEN</span><span class="world-tag tag-c" id="worldTagC">LOOK</span>
-    <div class="world-caption" id="worldCaption">Your glasses are becoming an AI companion.</div>
-   </div>
-   <div class="future-console-copy">
-    <p class="slider-kicker" id="sliderKicker">TODAY</p>
-    <h3 id="sliderTitle">Glasses begin to see, hear and answer.</h3>
-    <p id="sliderText">Audio, cameras, AI assistants and early displays converge. The phone is still the engine behind much of the experience.</p>
-    <div class="future-impact-grid">
-      <div><span>YOU GAIN</span><b id="gainText">Hands-free answers</b></div>
-      <div><span>YOU LOSE</span><b id="lossText">Constant phone checking</b></div>
-      <div><span>THE HARD PART</span><b id="hardText">Battery + camera privacy</b></div>
+<section class="future-section future-journey-redesign" id="journey" aria-labelledby="journey-title">
+  <div class="journey-head">
+    <div>
+      <p class="future-eyebrow">THE DECADE, ONE YEAR AT A TIME</p>
+      <h2 id="journey-title">See the future change.</h2>
+      <p>Move through the years. The story, the useful part and the problem to solve update together.</p>
     </div>
-   </div>
+    <div class="journey-now"><span><i></i> YOU ARE EXPLORING</span><strong id="futureYear">2026</strong><em id="eraLabel">ASSISTANT ERA</em></div>
   </div>
-  <div class="future-confidence"><span>EDITORIAL CONFIDENCE</span><div><i id="confidenceBar"></i></div><b id="confidence">86%</b><small id="scoreNote">Likely incremental progress</small></div>
- </div>
+
+  <div class="journey-card">
+    <div class="journey-controls">
+      <div class="journey-control-labels"><span>2026 · NOW</span><span>2036 · QUIET COMPUTER</span></div>
+      <input id="futureYearRange" type="range" min="2026" max="2036" value="2026" step="1" aria-label="Explore each year from 2026 to 2036">
+      <div class="journey-year-dots" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="journey-shortcuts" aria-label="Jump to a milestone">
+        <button data-year="2026" class="active">2026 <small>NOW</small></button>
+        <button data-year="2029">2029 <small>NORMAL</small></button>
+        <button data-year="2032">2032 <small>AMBIENT</small></button>
+        <button data-year="2036">2036 <small>QUIET</small></button>
+      </div>
+    </div>
+
+    <div class="journey-body">
+      <div class="journey-scene" id="futureWorldPreview" aria-hidden="true">
+        <div class="scene-glow"></div>
+        <div class="scene-sun"></div>
+        <div class="scene-city-line"></div>
+        <div class="scene-person"></div>
+        <div class="scene-ring"></div>
+        <span id="worldTagA">ASK</span><span id="worldTagB">LISTEN</span><span id="worldTagC">LOOK</span>
+        <div class="scene-caption" id="worldCaption">Your glasses are becoming an AI companion.</div>
+        <div class="scene-year" id="sceneYear">2026</div>
+      </div>
+
+      <div class="journey-story">
+        <p class="journey-kicker" id="sliderKicker">TODAY</p>
+        <h3 id="sliderTitle">Glasses begin to see, hear and answer.</h3>
+        <p class="journey-description" id="sliderText">Audio, cameras and AI assistants converge. The phone still does most of the heavy lifting.</p>
+        <div class="journey-insights">
+          <article><span>YOU GAIN</span><strong id="gainText">Hands-free answers</strong></article>
+          <article><span>WHAT FADES</span><strong id="lossText">Constant phone checking</strong></article>
+          <article><span>THE BLOCKER</span><strong id="hardText">Battery + camera privacy</strong></article>
+        </div>
+        <div class="journey-confidence">
+          <div><span>FORECAST CONFIDENCE</span><strong id="confidence">86%</strong></div>
+          <div class="confidence-track"><i id="confidenceBar"></i></div>
+          <small id="scoreNote">Incremental progress is highly likely</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-footer">
+      <span>DRAG TO EXPLORE EVERY YEAR</span>
+      <div><b>↑</b> Earlier = more certain &nbsp; <b>↓</b> Later = more speculative</div>
+    </div>
+  </div>
 </section>
 
 <section class="future-section future-capabilities">
@@ -318,6 +350,76 @@
  .future-page .future-console-copy{padding:1rem .75rem}
  .future-page .future-world-preview{min-height:200px}
  .future-page .future-capabilities{padding:2.5rem 0}
+}
+
+
+/* v2 journey: compact, glanceable, single-panel timeline */
+.future-page .future-journey-redesign{width:min(1180px,calc(100% - 48px));margin-inline:auto;padding:clamp(3.2rem,5vw,5rem) 0}
+.future-page .journey-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:1.25rem}
+.future-page .journey-head h2{font-size:clamp(2rem,4vw,3.6rem);letter-spacing:-.055em;margin:0 0 .4rem;color:#17303b}
+.future-page .journey-head p:last-child{max-width:650px;margin:0;color:#657983;line-height:1.55}
+.future-page .journey-now{display:grid;grid-template-columns:auto auto;align-items:end;column-gap:.7rem;text-align:right;min-width:210px}
+.future-page .journey-now span{grid-column:1/-1;font-size:.56rem;letter-spacing:.16em;font-weight:700;color:#6e8b96;margin-bottom:.25rem}
+.future-page .journey-now i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#49b8d6;margin-right:.35rem;box-shadow:0 0 0 4px rgba(73,184,214,.13)}
+.future-page .journey-now strong{font-size:2.8rem;line-height:1;color:#173a48;letter-spacing:-.06em}
+.future-page .journey-now em{font-style:normal;font-size:.55rem;letter-spacing:.13em;color:#1683a8;font-weight:700;padding-bottom:.25rem}
+.future-page .journey-card{background:#fff;border:1px solid #d5e6eb;border-radius:28px;box-shadow:0 22px 65px rgba(43,91,105,.09);overflow:hidden}
+.future-page .journey-controls{padding:1rem 1.35rem .85rem;background:#f5fbfd;border-bottom:1px solid #deedf1}
+.future-page .journey-control-labels{display:flex;justify-content:space-between;font-size:.55rem;font-weight:700;letter-spacing:.13em;color:#78919b;margin-bottom:.35rem}
+.future-page .journey-controls input{width:100%;margin:.15rem 0;height:26px;accent-color:#218eaf;cursor:pointer}
+.future-page .journey-year-dots{display:flex;justify-content:space-between;padding:0 5px;margin-top:-4px}
+.future-page .journey-year-dots i{width:4px;height:4px;background:#b7d0d8;border-radius:50%}
+.future-page .journey-shortcuts{display:flex;gap:.45rem;margin-top:.75rem}
+.future-page .journey-shortcuts button{border:1px solid #d0e2e8;background:#fff;color:#42616c;border-radius:10px;padding:.42rem .7rem;font:600 .63rem Poppins,sans-serif;cursor:pointer;display:flex;align-items:center;gap:.45rem}
+.future-page .journey-shortcuts button small{font-size:.47rem;letter-spacing:.1em;color:#91a5ad}
+.future-page .journey-shortcuts button.active{background:#173a48;color:#fff;border-color:#173a48}
+.future-page .journey-shortcuts button.active small{color:#bde7f2}
+.future-page .journey-body{display:grid;grid-template-columns:minmax(300px,.82fr) minmax(0,1.18fr);min-height:345px}
+.future-page .journey-scene{position:relative;overflow:hidden;background:linear-gradient(145deg,#dff7ff,#eefafd 58%,#e8f3f5);min-height:345px;border-right:1px solid #deedf1}
+.future-page .scene-glow{position:absolute;width:70%;height:70%;left:15%;top:4%;background:radial-gradient(circle,rgba(255,255,255,.95),transparent 67%)}
+.future-page .scene-sun{position:absolute;width:82px;height:82px;border-radius:50%;right:15%;top:13%;background:#fff;box-shadow:0 0 55px rgba(255,255,255,.95)}
+.future-page .scene-city-line{position:absolute;left:0;right:0;bottom:30%;height:29%;background:linear-gradient(90deg,transparent 0 4%,#b9dce5 4% 8%,transparent 8% 12%,#9fcad5 12% 18%,transparent 18% 24%,#b5d6df 24% 31%,transparent 31% 38%,#8ebecb 38% 45%,transparent 45% 52%,#afd4dd 52% 60%,transparent 60% 67%,#95c4cf 67% 75%,transparent 75% 83%,#acd0d9 83% 90%,transparent 90%);clip-path:polygon(0 45%,4% 20%,8% 45%,12% 12%,18% 45%,24% 28%,31% 45%,38% 8%,45% 45%,52% 24%,60% 45%,67% 14%,75% 45%,83% 26%,90% 45%,100% 18%,100% 100%,0 100%)}
+.future-page .scene-city-line:after{content:"";position:absolute;inset:auto 0 0;height:2px;background:#6caec0;box-shadow:0 -22px 0 rgba(108,174,192,.16)}
+.future-page .scene-person{position:absolute;left:48%;bottom:17%;width:34px;height:92px;background:#173a48;border-radius:18px 18px 8px 8px;box-shadow:0 0 45px rgba(39,169,201,.38)}
+.future-page .scene-person:before{content:"";position:absolute;width:25px;height:25px;border-radius:50%;background:#173a48;left:4px;top:-18px}
+.future-page .scene-person:after{content:"";position:absolute;width:80px;height:2px;background:#55c7e5;left:-23px;top:8px;box-shadow:0 0 18px #55c7e5}
+.future-page .scene-ring{position:absolute;width:190px;height:190px;border:1px solid rgba(48,164,192,.34);border-radius:50%;left:calc(50% - 95px);bottom:2%;transform:perspective(250px) rotateX(62deg)}
+.future-page .scene-ring:after{content:"";position:absolute;inset:24px;border:1px solid rgba(48,164,192,.18);border-radius:50%}
+.future-page .journey-scene>span:not(.scene-caption){position:absolute;padding:.28rem .45rem;border:1px solid rgba(75,160,180,.35);background:rgba(255,255,255,.76);border-radius:7px;color:#23728b;font-size:.5rem;letter-spacing:.12em;font-weight:700;box-shadow:0 7px 20px rgba(34,103,121,.08)}
+.future-page .journey-scene>#worldTagA{left:17%;top:29%}.future-page .journey-scene>#worldTagB{right:11%;top:40%}.future-page .journey-scene>#worldTagC{left:23%;bottom:27%}
+.future-page .scene-caption{position:absolute;left:1rem;right:1rem;bottom:1rem;padding:.65rem .8rem;background:rgba(255,255,255,.78);backdrop-filter:blur(10px);border:1px solid rgba(176,211,220,.7);border-radius:11px;color:#385965;font-size:.65rem;line-height:1.35}
+.future-page .scene-year{position:absolute;right:1rem;top:1rem;font-size:4.5rem;line-height:1;font-weight:700;letter-spacing:-.08em;color:rgba(23,58,72,.08)}
+.future-page .journey-story{padding:1.65rem 1.8rem 1.35rem;display:flex;flex-direction:column;justify-content:center}
+.future-page .journey-kicker{font-size:.58rem;letter-spacing:.18em;font-weight:700;color:#1683a8;margin:0 0 .35rem}
+.future-page .journey-story h3{font-size:clamp(1.6rem,2.7vw,2.55rem);line-height:1.05;letter-spacing:-.05em;color:#17303b;margin:0 0 .7rem;max-width:600px}
+.future-page .journey-description{color:#60747d;line-height:1.6;max-width:650px;margin:0 0 1rem}
+.future-page .journey-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem}
+.future-page .journey-insights article{border:1px solid #dcebef;border-radius:12px;padding:.7rem;background:#f7fbfc}
+.future-page .journey-insights span{display:block;font-size:.48rem;letter-spacing:.13em;font-weight:700;color:#78919b;margin-bottom:.3rem}
+.future-page .journey-insights strong{display:block;font-size:.72rem;line-height:1.35;color:#294852}
+.future-page .journey-confidence{margin-top:1rem;padding-top:.8rem;border-top:1px solid #e1edf0;display:grid;grid-template-columns:1fr auto;gap:.35rem .7rem;align-items:center}
+.future-page .journey-confidence>div:first-child{display:flex;justify-content:space-between;align-items:center;font-size:.52rem;letter-spacing:.12em;font-weight:700;color:#78919b}
+.future-page .journey-confidence>div:first-child strong{font-size:.75rem;color:#2d6778;letter-spacing:0}
+.future-page .confidence-track{grid-column:1/-1;height:5px;background:#e3eef1;border-radius:999px;overflow:hidden}
+.future-page .confidence-track i{display:block;width:86%;height:100%;background:linear-gradient(90deg,#77cadf,#278ead);border-radius:inherit}
+.future-page .journey-confidence small{grid-column:1/-1;color:#91a1a8;font-size:.57rem}
+.future-page .journey-footer{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1.35rem;border-top:1px solid #e0edf0;color:#93a5ac;font-size:.5rem;letter-spacing:.1em;font-weight:700}
+.future-page .journey-footer div{letter-spacing:0;font-weight:500}.future-page .journey-footer b{color:#218eaf}
+@media(max-width:850px){
+ .future-page .journey-head{align-items:flex-start}.future-page .journey-now{min-width:170px}
+ .future-page .journey-body{grid-template-columns:1fr}.future-page .journey-scene{min-height:250px;border-right:0;border-bottom:1px solid #deedf1}
+ .future-page .journey-story{padding:1.25rem}.future-page .journey-insights{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:620px){
+ .future-page .future-journey-redesign{width:calc(100% - 28px);padding:2.6rem 0}
+ .future-page .journey-head{display:block}.future-page .journey-now{text-align:left;margin-top:.9rem}
+ .future-page .journey-now strong{font-size:2.25rem}
+ .future-page .journey-card{border-radius:20px}.future-page .journey-controls{padding:.8rem}
+ .future-page .journey-shortcuts{display:grid;grid-template-columns:repeat(2,1fr)}
+ .future-page .journey-shortcuts button{justify-content:space-between}
+ .future-page .journey-scene{min-height:210px}
+ .future-page .journey-story{padding:1rem}.future-page .journey-insights{grid-template-columns:1fr}
+ .future-page .journey-footer{display:none}
 }
 
 </style>
