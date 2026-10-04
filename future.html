@@ -242,28 +242,14 @@ window.addEventListener("DOMContentLoaded",function(){
    const futureList=futureMenu&&futureMenu.closest(".dropdown")&&futureMenu.closest(".dropdown").querySelector(".dropdown-menu");
    if(futureList){
      futureList.innerHTML=[
-       ["#top","The future of AR"],
-       ["#journey","The decade · 2026–2036"],
-       ["#tech","The magic stack"],
-       ["#scenarios","What becomes possible"],
-       ["#life","A day in 2034"],
-       ["#risks","The choice · risks & guardrails"],
-       ["#sources","Research basis"]
+       ["future.html#top","The future of AR"],
+       ["future.html#journey","The decade · 2026–2036"],
+       ["future.html#tech","The magic stack"],
+       ["future.html#scenarios","What becomes possible"],
+       ["future.html#life","A day in 2034"],
+       ["future.html#risks","The choice · risks & guardrails"],
+       ["future.html#sources","Research basis"]
      ].map(([href,label])=>"<li><a href=\""+href+"\">"+label+"</a></li>").join("");
-     futureList.addEventListener("click",function(e){
-       const link=e.target.closest("a[href^='#']");
-       if(!link)return;
-       const target=document.querySelector(link.getAttribute("href"));
-       if(!target)return;
-       e.preventDefault();
-       const menu=mount.querySelector("#primary-nav");
-       const backdrop=mount.parentElement.querySelector("#backdrop");
-       if(menu)menu.classList.remove("open");
-       if(backdrop)backdrop.classList.remove("show");
-       document.body.style.overflow="";
-       target.scrollIntoView({behavior:"smooth",block:"start"});
-       history.replaceState(null,"",link.getAttribute("href"));
-     });
    }
    if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(e){}}
    window.dispatchEvent(new Event("header:ready"));
