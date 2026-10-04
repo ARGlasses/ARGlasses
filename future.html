@@ -214,6 +214,24 @@
 @media(max-width:650px){
  .future-experience{scroll-snap-type:none}.fx-chapter{height:auto;min-height:100svh}.fx-hero{min-height:calc(100svh - 64px);padding:30px 20px}.fx-hero h1{font-size:3.5rem}.fx-hero-art{height:38vh}.fx-float{transform:scale(.82);transform-origin:top left}.fx-float-b{transform-origin:bottom right}.fx-statement{padding:50px 22px}.fx-statement h2{font-size:2.8rem}.fx-big-word{font-size:25vw}.fx-timeline,.fx-stack,.fx-scenarios,.fx-day,.fx-choice,.fx-sources{height:auto;min-height:100svh;padding:42px 18px}.fx-section-head{align-items:start}.fx-section-head p{display:none}.fx-year-readout{min-width:80px}.fx-year-readout strong{font-size:2.5rem}.fx-timeline-grid{height:auto;max-height:none;grid-template-rows:240px auto}.fx-timeline-story h3{font-size:1.8rem}.fx-story-row{grid-template-columns:1fr}.fx-confidence{display:none}.fx-range-wrap{margin-top:1rem}.fx-year-labels button{font-size:.45rem}.fx-stack-grid{grid-template-columns:1fr 1fr}.fx-stack-card{min-height:105px;padding:11px}.fx-stack-card small{font-size:.5rem}.fx-stack-note{grid-template-columns:35px 80px 1fr}.fx-stack-note p{font-size:.58rem}.fx-scenario-layout{grid-template-columns:1fr;height:auto;max-height:none}.fx-scenario-list{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,auto)}.fx-scenario-list button{min-height:68px}.fx-scenario-stage{height:340px}.fx-day-visual{height:58vh}.fx-choice-card{padding:1.2rem}.fx-source-grid{grid-template-columns:1fr}.fx-final h2{font-size:3.7rem}.fx-final-orbit{width:100vw;height:35vw}
 }
+<style>
+.fx-tip-target{cursor:help;position:relative}
+.fx-tip-target:after{content:"i";display:inline-grid;place-items:center;width:14px;height:14px;margin-left:6px;border:1px solid currentColor;border-radius:50%;font-size:9px;font-style:normal;vertical-align:middle;opacity:.55;transition:.2s}
+.fx-tip-target:hover:after,.fx-tip-target:focus-visible:after{opacity:1;transform:scale(1.08)}
+.fx-tip{position:fixed;z-index:9999;max-width:min(340px,calc(100vw - 28px));padding:12px 14px;border:1px solid #cfe4e9;border-radius:14px;background:rgba(255,255,255,.97);color:#24424c;box-shadow:0 18px 50px rgba(26,73,84,.18);font:500 12px/1.55 Poppins,system-ui,sans-serif;pointer-events:none;opacity:0;transform:translateY(6px) scale(.98);transition:opacity .16s,transform .16s}
+.fx-tip.show{opacity:1;transform:translateY(0) scale(1)}
+.fx-tip strong{display:block;margin-bottom:4px;color:#1885a5;font-size:9px;letter-spacing:.16em}
+.fx-tip:before{content:"";position:absolute;width:8px;height:8px;background:#fff;border-left:1px solid #cfe4e9;border-top:1px solid #cfe4e9;transform:rotate(45deg);top:-5px;left:22px}
+.fx-hero .fx-overline,.fx-hero h1 i,.fx-hero p,.fx-float,.fx-hero-scan span,.fx-hero-scan b,.fx-start,
+.fx-statement-main h2,.fx-statement-main p,.fx-statement-side article,.fx-big-word,
+.fx-section-head h2,.fx-section-head p,.fx-year-readout,.fx-timeline-story h3,.fx-timeline-story>p,.fx-story-row div,.fx-confidence,
+.fx-stack .fx-section-head h2,.fx-stack .fx-section-head p,.fx-stack-card,.fx-stack-note,
+.fx-scenarios .fx-section-head h2,.fx-scenarios .fx-section-head p,.fx-scenario-list button,.fx-scenario-stage,
+.fx-day-copy h2,.fx-day-copy>p,.fx-day-rule,.fx-day-ui,
+.fx-choice-copy h2,.fx-choice-copy p,.fx-choice-tabs,.fx-choice-card,
+.fx-sources h2,.fx-sources>div:first-child p,.fx-source-grid a,
+.fx-final h2,.fx-final p,.fx-final>strong{position:relative}
+</style>
 </style>
 
 <script src="header.js" defer></script>
@@ -284,6 +302,90 @@ window.addEventListener("DOMContentLoaded",function(){
    document.querySelector(".fx-guardrails").innerHTML=d[3].map(x=>"<span>"+x+"</span>").join("");
  }));
 });
+<script>
+(function(){
+ const tips=[
+ [".fx-hero .fx-overline","TIMEFRAME","This page explores a possible ten-year arc from today's emerging AI eyewear toward more ambient computing. The dates are scenarios, not promises."],
+ [".fx-hero h1 i","THE IDEA","“The world becomes the screen” means digital information is anchored to your surroundings instead of requiring you to look down at a phone."],
+ [".fx-hero p","AMBIENT COMPUTING","A quieter computer tries to help from the background: understanding context and appearing only when the information is useful."],
+ [".fx-hero .fx-start","START HERE","Use this to jump directly to the interactive decade timeline. Every year has its own capability, benefit and unresolved problem."],
+ [".fx-float-a","CONTEXTUAL AR","In this scenario, the glasses recognise enough of your surroundings to surface directions, history or people without you opening an app."],
+ [".fx-float-b","SHARED PRESENCE","A future spatial-computing idea: another person can leave information anchored to a real place so you encounter it where it matters."],
+ [".fx-hero-scan span:nth-of-type(1)","REALITY","The physical world remains the primary environment. AR adds information rather than replacing the world around you."],
+ [".fx-hero-scan span:nth-of-type(2)","INTELLIGENCE","AI supplies interpretation: understanding images, speech, context and eventually intent."],
+ [".fx-hero-scan span:nth-of-type(3)","ATTENTION","The scarce resource is human attention. A successful AR interface should compete for less of it, not more."],
+ [".fx-statement-main h2","AMBIENT INTERFACE","The goal is not zero interaction. It is interaction that feels proportional: the computer becomes noticeable when useful and fades away when it is not."],
+ [".fx-statement-main p","THE BIG SHIFT","Traditional computing makes you enter a digital environment. Ambient AR attempts the reverse: digital capability follows you into the physical environment."],
+ [".fx-statement-side article:nth-child(1)","SEE","Computer vision and sensors can identify objects, text, places and visual context. The useful part is deciding what deserves your attention."],
+ [".fx-statement-side article:nth-child(2)","KNOW","Contextual memory means retaining relevant information so you do not have to repeatedly search, remember or re-explain something."],
+ [".fx-statement-side article:nth-child(3)","ACT","An AI agent can move from answering a question to carrying out a bounded task, subject to permissions and human control."],
+ [".fx-section-head h2","YEAR-BY-YEAR MODEL","The slider is intentionally granular. Each year represents a change in what the experience could feel like, not a claim that a specific product will launch that year."],
+ [".fx-year-readout","FORECAST YEAR","Earlier years are closer to capabilities already visible today. Later years require more assumptions, so confidence falls."],
+ [".fx-timeline-story h3","MILESTONE","This headline is the human-facing change imagined for the selected year."],
+ [".fx-timeline-story>p","WHAT CHANGES","This sentence explains the underlying technology or behaviour behind the headline rather than just describing a product feature."],
+ [".fx-story-row div:nth-child(1)","YOU GAIN","The practical benefit a person could experience if the capability becomes reliable."],
+ [".fx-story-row div:nth-child(2)","WHAT FADES","New interfaces usually remove some friction while making an old behaviour unnecessary. This shows what could disappear."],
+ [".fx-story-row div:nth-child(3)","THE HARD PART","The biggest engineering, social or governance obstacle between the scenario and a genuinely good experience."],
+ [".fx-confidence","CONFIDENCE","An editorial confidence score. It is not a statistical probability; it indicates how many assumptions the scenario requires beyond today's visible trajectory."],
+ [".fx-range-wrap","EXPLORE EVERY YEAR","Drag one year at a time to see the narrative change. The numbered markers are direct jumps to individual years."],
+ [".fx-stack .fx-section-head h2","THE MAGIC STACK","AR depends on several technologies improving together. A stunning display cannot compensate for poor battery life or a system users cannot trust."],
+ [".fx-stack .fx-section-head p","WHY THE STACK MATTERS","The experience is only as strong as its weakest dependency. Hardware, AI, spatial mapping, agents and trust reinforce each other."],
+ [".fx-stack-card[data-stack='optics']","OPTICS","Optics covers the display itself: brightness, field of view, resolution, focus, weight and visual comfort. If it feels like a screen stuck in front of your eyes, the illusion breaks."],
+ [".fx-stack-card[data-stack='ai']","AI","The useful leap is multimodal understanding: the system can combine what you see, hear, where you are and what you mean instead of treating each input separately."],
+ [".fx-stack-card[data-stack='power']","POWER","A wearable computer must operate for long periods without becoming hot, heavy or inconvenient. Battery, silicon, display efficiency and thermal design all matter."],
+ [".fx-stack-card[data-stack='spatial']","SPATIAL","Spatial computing gives digital information a location. A label can belong to a machine, a lesson to a building, or an instruction to a physical component."],
+ [".fx-stack-card[data-stack='agents']","AGENTS","Agents turn intent into action. The important design question is not just what they can do, but what they are allowed to do without asking you first."],
+ [".fx-stack-card[data-stack='trust']","TRUST","Because glasses can continuously observe the world, privacy becomes part of the product experience. People need clear recording signals, control over memory and meaningful ways to disconnect."],
+ [".fx-stack-note","SELECTED BREAKTHROUGH","Tap any card above. This panel expands the selected technology into plain language so the short labels do not have to carry the whole explanation."],
+ [".fx-scenarios .fx-section-head h2","BEST-CASE SCENARIOS","These are examples of what could become possible if the underlying technology becomes reliable, affordable and socially acceptable. They are possibilities, not predictions."],
+ [".fx-scenario-list button[data-scenario='language']","LANGUAGE","Real-time translation could reduce the small delays and social awkwardness that make multilingual conversations difficult. Perfect translation is not required for the experience to be transformative."],
+ [".fx-scenario-list button[data-scenario='expertise']","EXPERTISE","AR can move instructions and remote expertise to the physical site where a problem exists. This is especially meaningful when travel is expensive or specialist knowledge is scarce."],
+ [".fx-scenario-list button[data-scenario='learning']","LEARNING","Spatial overlays can connect abstract ideas to real places. Instead of reading about something in isolation, the environment itself becomes part of the lesson."],
+ [".fx-scenario-list button[data-scenario='memory']","MEMORY","Searchable personal memory could reduce the cognitive load of remembering names, decisions or previous conversations — but only if the wearer controls what is stored and recalled."],
+ [".fx-scenario-list button[data-scenario='presence']","PRESENCE","Spatial collaboration is different from video because people can share reference points in the same physical environment, even when they are geographically apart."],
+ [".fx-scenario-stage","INTERACTIVE SCENARIO","The central scene is a visual metaphor for the selected possibility. The orbit represents information being anchored around a real-world context."],
+ [".fx-day-copy h2","A DAY IN 2034","This is a deliberately optimistic day-in-the-life scenario. The important design principle is restraint: useful context appears at the moment it matters instead of becoming another feed."],
+ [".fx-day-copy>p","QUIET COMPUTING","Notice what is absent: constant notifications and dashboards. The promise is not more information; it is better-timed information."],
+ [".fx-day-rule:nth-of-type(1)","07:10 · MORNING","Weather is an example of ambient information: useful when you are deciding what to wear, irrelevant while you are eating breakfast."],
+ [".fx-day-rule:nth-of-type(2)","09:05 · WORK","Persistent context could bring yesterday's unfinished decisions back when they become relevant, rather than forcing you to reconstruct them."],
+ [".fx-day-rule:nth-of-type(3)","12:40 · CONNECTION","Translation becomes meaningful when it preserves eye contact and conversational rhythm instead of making both people stare at a screen."],
+ [".fx-day-rule:nth-of-type(4)","22:15 · QUIET","A healthy ambient system needs an intentional boundary. “Off” should mean the system stops collecting context, not merely hiding the interface."],
+ [".fx-choice-copy h2","TWO DIRECTIONS","The same sensing and AI capabilities could produce very different outcomes depending on incentives and governance."],
+ [".fx-choice-copy p","WHY TRUST MATTERS","More intelligence can increase agency or increase surveillance. Ownership, processing location, visible recording and a genuine off switch are design choices, not side details."],
+ [".fx-choice-tabs button[data-choice='human']","HUMAN-FIRST","A model where the system serves the wearer: it helps when invited, exposes its behaviour and leaves important decisions under human control."],
+ [".fx-choice-tabs button[data-choice='attention']","ATTENTION-FIRST","A warning scenario where the system is optimised to maximise engagement, prompts and data collection rather than autonomy."],
+ [".fx-guardrails","GUARDRAILS","These principles are examples of the safeguards that could keep ambient computing aligned with human agency."],
+ [".fx-sources h2","EVIDENCE","The future scenarios are speculative, but they are informed by real trends in AI capability, adoption, responsible AI, energy demand and work."],
+ [".fx-source-grid a:nth-child(1)","STANFORD AI INDEX","Tracks major trends in AI capability, adoption, investment and impact. It helps anchor the broader direction of AI progress."],
+ [".fx-source-grid a:nth-child(2)","RESPONSIBLE AI","Provides context for the risks that become more important as AI systems become more capable and embedded in everyday life."],
+ [".fx-source-grid a:nth-child(3)","IEA · ENERGY & AI","Shows why compute is not free: data centres require electricity and infrastructure, creating a physical constraint on AI growth."],
+ [".fx-source-grid a:nth-child(4)","WORLD ECONOMIC FORUM","Provides a useful view of how skills and jobs may change as AI becomes more capable, relevant to wearable assistants and agents."],
+ [".fx-final h2","THE BIG QUESTION","The phone is only one possible container for computing. The deeper shift is that computing could become an ambient layer around everyday life."],
+ [".fx-final>strong","THE THESIS","The world becomes the interface when information can understand where it belongs and appear without pulling you away from reality."]
+ ];
+ const tip=document.createElement("div");tip.className="fx-tip";tip.setAttribute("role","tooltip");document.body.appendChild(tip);
+ let current=null,hideTimer;
+ function attach(selector,title,text){
+   document.querySelectorAll(selector).forEach(el=>{
+     if(el.dataset.tipReady)return;el.dataset.tipReady="1";el.classList.add("fx-tip-target");el.setAttribute("tabindex","0");el.setAttribute("aria-describedby","future-tip");
+     const show=()=>{clearTimeout(hideTimer);current=el;tip.innerHTML="<strong>"+title+"</strong>"+text;tip.id="future-tip";tip.classList.add("show");position()};
+     const hide=()=>{hideTimer=setTimeout(()=>tip.classList.remove("show"),120)};
+     el.addEventListener("mouseenter",show);el.addEventListener("mouseleave",hide);el.addEventListener("focus",show);el.addEventListener("blur",hide);
+   });
+ }
+ function position(){
+   if(!current)return;const r=current.getBoundingClientRect(),tw=Math.min(340,window.innerWidth-28),th=tip.offsetHeight;
+   let left=r.left,top=r.bottom+10;
+   if(left+tw>window.innerWidth-14)left=window.innerWidth-14-tw;
+   if(left<14)left=14;
+   if(top+th>window.innerHeight-14)top=r.top-th-10;
+   if(top<14)top=14;
+   tip.style.left=left+"px";tip.style.top=top+"px";
+ }
+ tips.forEach(x=>attach(x[0],x[1],x[2]));
+ window.addEventListener("scroll",()=>{if(tip.classList.contains("show"))position()},{passive:true});
+ window.addEventListener("resize",()=>{if(tip.classList.contains("show"))position()});
+})();
 </script>
 <script src="cookie-consent.js" defer></script>
 </body>
