@@ -236,7 +236,24 @@
 <script>
 window.addEventListener("DOMContentLoaded",function(){
  const mount=document.getElementById("site-header");
- fetch("./header.html?v=8").then(r=>r.text()).then(html=>{mount.innerHTML=html;if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(e){}}window.dispatchEvent(new Event("header:ready"));});
+ fetch("./header.html?v=8").then(r=>r.text()).then(html=>{
+   mount.innerHTML=html;
+   const futureMenu=mount.querySelector('a[href="future.html"]');
+   const futureList=futureMenu&&futureMenu.closest(".dropdown")&&futureMenu.closest(".dropdown").querySelector(".dropdown-menu");
+   if(futureList){
+     futureList.innerHTML=[
+       ["future.html#top","The future of AR"],
+       ["future.html#journey","The decade · 2026–2036"],
+       ["future.html#tech","The magic stack"],
+       ["future.html#scenarios","What becomes possible"],
+       ["future.html#life","A day in 2034"],
+       ["future.html#risks","The choice · risks & guardrails"],
+       ["future.html#sources","Research basis"]
+     ].map(([href,label])=>"<li><a href=\""+href+"\">"+label+"</a></li>").join("");
+   }
+   if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(e){}}
+   window.dispatchEvent(new Event("header:ready"));
+ });
 
  const years={
  2026:["TODAY","Glasses begin to see, hear and answer.","Audio, cameras and AI assistants converge. The phone still does most of the heavy lifting.","Hands-free answers","Constant phone checking","Battery + camera privacy",86,"ASSISTANT ERA","Your glasses become an AI companion.","ASK","LOOK","LISTEN"],
