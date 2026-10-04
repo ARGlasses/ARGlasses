@@ -41,7 +41,8 @@
 {"@type":"ListItem","position":3,"name":"AR glasses guide","url":"https://arglasses.com/guide.html"},
 {"@type":"ListItem","position":4,"name":"AR glasses database","url":"https://arglasses.com/database.html"},
 {"@type":"ListItem","position":5,"name":"AR glasses reviews","url":"https://arglasses.com/reviews.html"},
-{"@type":"ListItem","position":6,"name":"AR glasses news","url":"https://arglasses.com/news.html"}]}
+{"@type":"ListItem","position":6,"name":"AR glasses news","url":"https://arglasses.com/news.html"},
+{"@type":"ListItem","position":7,"name":"The future of AR glasses","url":"https://arglasses.com/future.html"}]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -112,6 +113,22 @@
 </div>
 </section>
 
+<section class="home-section home-future-preview" aria-labelledby="future-preview-title">
+<div class="home-future-preview-grid">
+<div>
+<p class="home-eyebrow">LOOKING AHEAD</p>
+<h2 id="future-preview-title">What could AR glasses become?</h2>
+<p>The next ten years may be bigger than a better pair of glasses. Follow the technology from today's AI assistants and wearable displays toward a possible world of ambient computing, spatial memory, instant translation, remote expertise and radically more human ways to connect.</p>
+<a class="home-text-btn" href="future.html">Explore the 2030–2036 vision →</a>
+</div>
+<div class="home-future-preview-art" aria-hidden="true">
+<span class="preview-orbit preview-orbit-1"></span><span class="preview-orbit preview-orbit-2"></span>
+<div class="preview-core">2034<small>THE WORLD<br>AS INTERFACE</small></div>
+<div class="preview-label preview-label-a">AI</div><div class="preview-label preview-label-b">PEOPLE</div><div class="preview-label preview-label-c">PLACE</div>
+</div>
+</div>
+</section>
+
 <section class="home-section home-trust" aria-labelledby="trust-title">
 <div class="home-trust-grid"><div><p class="home-eyebrow">EVIDENCE OVER HYPE</p><h2 id="trust-title">Research the technology with context.</h2><p>ARGlasses.com brings products, comparisons, specifications, methodology and editorial profiles into one place. We distinguish published specifications from interpretation and keep emerging concepts separate from what is commercially available.</p><a class="home-text-btn" href="reviews.html#standard">Read the ARGlasses Review Standard →</a></div>
 <div class="home-trust-points"><a href="reviews.html#reviews"><strong>Reviews &amp; profiles</strong><span>Product and company coverage with clear evidence labels.</span></a><a href="reviews.html#testing"><strong>What we assess</strong><span>Display, tracking, comfort, software and practical usability.</span></a><a href="reviews.html#evidence"><strong>Evidence labels</strong><span>Understand what is sourced, reported or still emerging.</span></a><a href="reviews.html#sources"><strong>Sources</strong><span>Follow the underlying manufacturer and reference material.</span></a></div></div>
@@ -130,6 +147,24 @@
 <section class="home-final-cta" aria-labelledby="final-title"><div><p class="home-eyebrow">YOUR NEXT STEP</p><h2 id="final-title">New to AR glasses?</h2><p>Start with the guide, then use the comparison and database tools to narrow down the technology and products that fit your needs.</p></div><div class="home-final-actions"><a class="home-btn home-btn-primary" href="guide.html">Start the guide</a><a class="home-btn home-btn-outline" href="compare.html">Compare products</a></div></section>
 </main>
 
+<style>
+.home-future-preview{background:#071018!important;color:#dce8ee!important;position:relative;overflow:hidden}
+.home-future-preview-grid{display:grid;grid-template-columns:1fr .85fr;gap:4rem;align-items:center;max-width:1180px;margin:0 auto}
+.home-future-preview h2{font-size:clamp(2.2rem,4vw,4.4rem);line-height:.98;letter-spacing:-.06em;color:#fff;margin:.2rem 0 1rem}
+.home-future-preview p:not(.home-eyebrow){color:#91a5b1;line-height:1.8;max-width:650px}
+.home-future-preview .home-eyebrow{color:#7fd4f2}
+.home-future-preview .home-text-btn{color:#a8e6fa}
+.home-future-preview-art{min-height:360px;position:relative;display:grid;place-items:center;border:1px solid #203b47;border-radius:30px;background:radial-gradient(circle at center,rgba(72,189,232,.13),transparent 34%),linear-gradient(145deg,#0d1d26,#071018);overflow:hidden}
+.preview-orbit{position:absolute;border:1px solid rgba(102,199,229,.32);border-radius:50%;transform:rotate(-18deg)}
+.preview-orbit-1{width:72%;height:48%;animation:futureSpin 16s linear infinite}
+.preview-orbit-2{width:52%;height:76%;transform:rotate(58deg);animation:futureSpin 21s linear infinite reverse}
+.preview-core{width:116px;height:116px;border-radius:50%;background:#fff;color:#071018;display:grid;place-items:center;align-content:center;font-size:1.6rem;font-weight:700;letter-spacing:-.05em;box-shadow:0 0 70px rgba(109,213,255,.2);z-index:2;text-align:center}
+.preview-core small{display:block;font-size:.43rem;line-height:1.25;letter-spacing:.1em;text-align:center;font-weight:500}
+.preview-label{position:absolute;color:#8bd8ef;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase}
+.preview-label-a{top:20%;left:18%}.preview-label-b{right:14%;top:32%}.preview-label-c{bottom:18%;left:30%}
+@keyframes futureSpin{to{transform:rotate(342deg)}}
+@media(max-width:768px){.home-future-preview-grid{grid-template-columns:1fr;gap:2rem}.home-future-preview-art{min-height:280px}.preview-orbit-1{width:82%;height:48%}.preview-orbit-2{width:60%;height:78%}}
+</style>
 <style>
 #arg-home{--ink:#15212b;--muted:#5d6b75;--line:#e5ebef;--soft:#f5f8fa;--blue:#005f96;--dark:#0c1721;font-family:Poppins,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff}#arg-home *{box-sizing:border-box}#arg-home a{text-decoration:none}
 .home-hero{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:#0a121a;color:#fff}.home-hero-video,.home-hero-scrim{position:absolute;inset:0;width:100%;height:100%}.home-hero-video{object-fit:cover;filter:saturate(.82) contrast(1.05);opacity:.9}.home-hero-scrim{background:linear-gradient(90deg,rgba(4,10,16,.8),rgba(4,10,16,.5) 48%,rgba(4,10,16,.18)),linear-gradient(0deg,rgba(4,10,16,.5),transparent 50%)}.home-hero-content{position:relative;z-index:1;width:min(1180px,calc(100% - 40px));padding:120px 0 90px}.home-kicker,.home-eyebrow{font-size:.68rem;letter-spacing:.18em;font-weight:700;line-height:1.4;margin:0 0 .8rem;text-transform:uppercase}.home-kicker{color:#d6efff}.home-hero h1{max-width:850px;margin:0;color:#fff;font-size:clamp(3.4rem,8vw,7.4rem);line-height:.94;letter-spacing:-.065em}.home-hero-lead{max-width:690px;margin:1.4rem 0 1.8rem;font-size:clamp(1rem,1.8vw,1.35rem);line-height:1.65;color:rgba(255,255,255,.9)}.home-actions{display:flex;flex-wrap:wrap;gap:.7rem}.home-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.8rem 1.15rem;border-radius:999px;font-weight:600;font-size:.86rem;transition:transform .2s ease,background .2s ease}.home-btn:hover{transform:translateY(-2px)}.home-btn-primary{background:#fff;color:#10202d!important}.home-btn-ghost{border:1px solid rgba(255,255,255,.55);color:#fff!important;background:rgba(255,255,255,.08);backdrop-filter:blur(8px)}.home-hero-links{display:flex;flex-wrap:wrap;gap:1.2rem;margin-top:1.1rem}.home-hero-links a{color:#fff;font-size:.78rem;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,255,255,.45)}.home-scroll{position:absolute;z-index:1;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;color:#fff!important;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}.home-scroll i{width:1px;height:34px;background:rgba(255,255,255,.65)}
