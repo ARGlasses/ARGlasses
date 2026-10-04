@@ -274,6 +274,52 @@
 .future-page .future-capabilities .capability-wheel{min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;align-items:stretch}
 .future-page .future-capabilities .cap{min-height:150px}
 @media(max-width:650px){.future-page .future-capabilities .capability-wheel{grid-template-columns:1fr 1fr;min-height:0}.future-page .future-capabilities .cap{min-height:130px}}
+
+/* Compact editorial mode: keep each interactive story beat readable without excessive scrolling. */
+.future-page .future-section{padding:clamp(3rem,5vw,4.5rem) 0}
+.future-page .future-section-heading{margin-bottom:1.25rem}
+.future-page .future-section-heading h2{margin-bottom:.55rem}
+.future-page .future-section-heading>p:last-child{margin-bottom:0}
+.future-page #journey{padding-top:clamp(2.5rem,4vw,3.75rem);padding-bottom:clamp(2.5rem,4vw,3.75rem)}
+.future-page #journey .future-section-heading{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);column-gap:2.5rem;align-items:end;margin-bottom:1rem}
+.future-page #journey .future-section-heading .future-eyebrow{grid-column:1/-1;margin-bottom:.45rem}
+.future-page #journey .future-section-heading h2{margin:0}
+.future-page #journey .future-section-heading>p:last-child{max-width:680px;justify-self:end}
+.future-page .future-future-console{padding:1rem 1.15rem 1.05rem;border-radius:24px}
+.future-page .future-console-head{margin-bottom:.55rem}
+.future-page .future-year-rail{margin-bottom:.8rem}
+.future-page .future-console-main{min-height:0}
+.future-page .future-world-preview{min-height:275px}
+.future-page .future-console-copy{padding:1.35rem 1.5rem}
+.future-page .future-console-copy h3{font-size:clamp(1.45rem,2.4vw,2.15rem);line-height:1.05;margin:.35rem 0 .65rem}
+.future-page .future-console-copy>p{margin-bottom:.75rem;line-height:1.55}
+.future-page .future-impact-grid{gap:.55rem;margin-top:.75rem}
+.future-page .future-impact-grid>div{padding:.7rem .8rem}
+.future-page .future-impact-grid b{font-size:.78rem}
+.future-page .future-confidence{padding-top:.75rem;margin-top:.65rem}
+.future-page .future-capabilities{padding-top:3rem;padding-bottom:3rem}
+.future-page .future-capabilities .capability-wheel{gap:.7rem}
+.future-page .future-capabilities .cap{min-height:125px;padding:1rem}
+.future-page #scenarios,.future-page .future-chart-section,.future-page .future-fork{padding-top:3rem;padding-bottom:3rem}
+.future-page .future-scenario-grid{gap:.7rem}
+.future-page .future-scenario-grid button{padding:1rem}
+.future-page .future-visual-break{padding-top:3rem;padding-bottom:3rem}
+.future-page .future-day-list{gap:.65rem}
+.future-page .future-day-list article{padding:.65rem 0}
+@media(max-width:900px){
+ .future-page #journey .future-section-heading{display:block}
+ .future-page #journey .future-section-heading>p:last-child{margin-top:.6rem}
+ .future-page .future-world-preview{min-height:230px}
+}
+@media(max-width:650px){
+ .future-page .future-section{padding:2.5rem 0}
+ .future-page #journey{padding:2.25rem 0}
+ .future-page .future-future-console{padding:.75rem}
+ .future-page .future-console-copy{padding:1rem .75rem}
+ .future-page .future-world-preview{min-height:200px}
+ .future-page .future-capabilities{padding:2.5rem 0}
+}
+
 </style>
 
 <script src="header.js" defer></script>
@@ -339,7 +385,7 @@ window.addEventListener("DOMContentLoaded",function(){
  document.querySelectorAll(".future-year-markers button").forEach(b=>b.addEventListener("click",()=>{range.value=b.dataset.year;updateYear()})); updateYear();
 
  const caps={optics:["◌","Optics","The display has to become bright, wide, light and natural enough that you stop thinking about the display."],ai:["✦","AI","Models need to understand images, speech, spatial context and intent — quickly enough to help without interrupting."],power:["◒","Power","All-day wear needs progress in batteries, chips, displays and thermal design, not one miracle component."],spatial:["⌁","Spatial","Persistent maps and reliable localisation turn the physical world from background into an interface."],agents:["→","Agents","The major shift is from answering questions to completing bounded tasks, with permissions and human control."],trust:["◇","Trust","Privacy indicators, local inference, user-owned memory and a real off switch may determine adoption as much as hardware."]};
- document.querySelectorAll(".cap").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".cap").forEach(x=>x.classList.remove("active"));b.classList.add("active");const d=caps[b.dataset.cap];document.getElementById("capIcon").textContent=d[0];document.getElementById("capTitle").textContent=d[1];document.getElementById("capText").textContent=d[2]}));
+ document.querySelectorAll(".cap").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".cap").forEach(x=>x.classList.remove("active"));b.classList.add("active");const d=caps[b.dataset.cap];const icon=document.getElementById("capIcon"),title=document.getElementById("capTitle"),desc=document.getElementById("capText");if(icon){icon.textContent=d[0]}if(title){title.textContent=d[1]}if(desc){desc.textContent=d[2]}}));
  document.querySelectorAll(".future-scenario-interactive button").forEach(b=>b.addEventListener("click",()=>{const active=b.classList.contains("active");document.querySelectorAll(".future-scenario-interactive button").forEach(x=>x.classList.remove("active"));if(!active)b.classList.add("active")}));
  const panel=document.getElementById("choicePanel"), choices={human:["THE GOOD VERSION","Technology quietly amplifies agency. It helps when invited, stays out of the way when not, and makes people more capable without making them more dependent."],attention:["THE WARNING","The same intelligence can become an attention trap: constant prompts, opaque data collection and systems optimised for engagement rather than human agency."]};
  document.querySelectorAll(".future-choice").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".future-choice").forEach(x=>x.classList.remove("active"));b.classList.add("active");const d=choices[b.dataset.choice];panel.querySelector("strong").textContent=d[0];panel.querySelector("p").textContent=d[1]}));
