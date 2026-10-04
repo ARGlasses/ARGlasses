@@ -422,6 +422,91 @@
  .future-page .journey-footer{display:none}
 }
 
+
+/* v3 full-screen chapter system: one complete section per viewport */
+.future-page .future-shell{scroll-snap-type:y proximity}
+.future-page .future-shell>section{scroll-snap-align:start;scroll-snap-stop:normal}
+.future-page .future-hero-light,
+.future-page .future-intro,
+.future-page .future-metrics,
+.future-page #journey,
+.future-page .future-capabilities,
+.future-page #scenarios,
+.future-page #life,
+.future-page .future-chart-section,
+.future-page .future-fork,
+.future-page #sources,
+.future-page .future-final{
+  min-height:100svh;
+  box-sizing:border-box;
+}
+.future-page .future-intro{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  align-content:center;
+  gap:clamp(2rem,6vw,6rem);
+  padding:clamp(3rem,7vh,6rem) max(24px,calc((100% - 1180px)/2));
+}
+.future-page .future-metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  align-content:center;
+  gap:1rem;
+  padding:clamp(2rem,7vh,5rem) max(24px,calc((100% - 1180px)/2));
+}
+.future-page .future-metrics>div{min-height:190px;display:flex;flex-direction:column;justify-content:center}
+.future-page #journey{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:clamp(2.5rem,5vh,4.5rem) 0;
+}
+.future-page .future-journey-redesign{width:min(1180px,calc(100% - 48px));margin:0 auto}
+.future-page .future-journey-redesign .journey-card{max-height:calc(100svh - 190px)}
+.future-page .future-journey-redesign .journey-body{min-height:0;height:clamp(300px,42vh,390px)}
+.future-page .future-journey-redesign .journey-scene{min-height:0}
+.future-page .future-capabilities,
+.future-page #scenarios,
+.future-page #life,
+.future-page .future-chart-section,
+.future-page .future-fork,
+.future-page #sources,
+.future-page .future-final{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.future-page .future-capabilities,
+.future-page #scenarios,
+.future-page .future-chart-section,
+.future-page .future-fork,
+.future-page #sources{
+  padding:clamp(2.5rem,6vh,5rem) max(24px,calc((100% - 1180px)/2));
+}
+.future-page .future-capabilities .capability-wheel{margin-top:1.5rem}
+.future-page #scenarios .future-scenario-grid{margin-top:1.5rem}
+.future-page #life{padding:clamp(2.5rem,6vh,5rem) max(24px,calc((100% - 1180px)/2))}
+.future-page #life .future-visual-break{width:100%;min-height:0}
+.future-page .future-chart-section .future-speed-card{margin-top:1.5rem}
+.future-page .future-fork>div,
+.future-page #sources>*,
+.future-page .future-final>*{max-width:1180px;margin-left:auto;margin-right:auto}
+@media(max-width:900px){
+ .future-page .future-intro,.future-page .future-metrics{min-height:100svh}
+ .future-page .future-metrics{grid-template-columns:repeat(2,1fr)}
+ .future-page .future-intro{grid-template-columns:1fr;align-content:center}
+}
+@media(max-width:650px){
+ .future-page .future-shell{scroll-snap-type:none}
+ .future-page .future-shell>section{min-height:100svh}
+ .future-page .future-metrics{grid-template-columns:1fr;padding-top:4rem;padding-bottom:4rem}
+ .future-page .future-metrics>div{min-height:130px}
+ .future-page .future-journey-redesign{width:calc(100% - 28px)}
+ .future-page .future-journey-redesign .journey-card{max-height:none}
+ .future-page .future-journey-redesign .journey-body{height:auto}
+ .future-page .future-capabilities .capability-wheel{margin-top:1rem}
+}
+
 </style>
 
 <script src="header.js" defer></script>
