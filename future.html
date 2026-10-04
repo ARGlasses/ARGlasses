@@ -286,6 +286,55 @@ window.addEventListener("DOMContentLoaded",function(){
    document.querySelector(".fx-guardrails").innerHTML=d[3].map(x=>"<span>"+x+"</span>").join("");
  }));
 });
+</script>
+<style>
+.fx-hover-tip{position:fixed;z-index:10000;max-width:320px;padding:11px 14px;border-radius:12px;background:#173e4a;color:#fff;box-shadow:0 12px 35px rgba(20,55,65,.25);font:500 12px/1.5 Poppins,system-ui,sans-serif;pointer-events:none;opacity:0;transform:translateY(5px);transition:opacity .15s,transform .15s}
+.fx-hover-tip.show{opacity:1;transform:translateY(0)}
+.fx-hover-tip strong{display:block;margin-bottom:3px;color:#8fe5f4;font-size:9px;letter-spacing:.14em}
+[title]{cursor:help}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const tip=document.createElement("div");
+ tip.className="fx-hover-tip";
+ document.body.appendChild(tip);
+ let active=null;
+ document.querySelectorAll("[title]").forEach(el=>{
+   const message=el.getAttribute("title");
+   if(!message)return;
+   el.dataset.hoverInfo=message;
+   el.removeAttribute("title");
+   el.addEventListener("mouseenter",function(){
+     active=el;
+     tip.innerHTML="<strong>MORE CONTEXT</strong>"+message;
+     tip.classList.add("show");
+     place();
+   });
+   el.addEventListener("mouseleave",function(){tip.classList.remove("show");active=null});
+   el.addEventListener("focus",function(){
+     active=el;
+     tip.innerHTML="<strong>MORE CONTEXT</strong>"+message;
+     tip.classList.add("show");
+     place();
+   });
+   el.addEventListener("blur",function(){tip.classList.remove("show");active=null});
+ });
+ function place(){
+   if(!active)return;
+   const r=active.getBoundingClientRect(),w=Math.min(320,innerWidth-24);
+   let x=r.left,y=r.bottom+10;
+   if(x+w>innerWidth-12)x=innerWidth-w-12;
+   if(x<12)x=12;
+   if(y+tip.offsetHeight>innerHeight-12)y=r.top-tip.offsetHeight-10;
+   if(y<12)y=12;
+   tip.style.width=w+"px";
+   tip.style.left=x+"px";
+   tip.style.top=y+"px";
+ }
+ addEventListener("resize",place);
+ addEventListener("scroll",place,{passive:true});
+});
+</script>
 <script src="cookie-consent.js" defer></script>
 </body>
 </html>
