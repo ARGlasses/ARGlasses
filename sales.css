@@ -142,3 +142,9 @@
 @media(min-width:901px) and (max-height:800px){
   .sales-map-panel,.sales-side{height:445px;min-height:445px}
 }
+
+/* Natural terrain map: no sales-color legend; country fills now use geographic terrain tones. */
+.sales-map-panel{background:#b9d8e6}
+.sales-map-panel:before{background:linear-gradient(90deg,transparent 49.8%,rgba(255,255,255,.16) 50%,transparent 50.2%),linear-gradient(transparent 49.8%,rgba(255,255,255,.16) 50%,transparent 50.2%)}
+.country{stroke:#71806c;stroke-width:.5}
+.country:hover,.country.selected{stroke:#315b48;stroke-width:1.6}
