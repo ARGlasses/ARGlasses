@@ -42,9 +42,9 @@ function draw(){
  const fc={type:"FeatureCollection",features};
  const projection=d3.geoNaturalEarth1().fitExtent([[3,8],[w-3,h-5]],fc),path=d3.geoPath(projection);
  const vals=features.map(f=>mode==="all"?f.sales.n+f.sales.s+f.sales.a+f.sales.r:f.sales[mode]),max=d3.max(vals)||1;
- svg.selectAll("path").data(features).join("path").attr("class","country").attr("data-country",f=>f.properties.name)
+ svg.selectAll("path").data(features).join("path").attr("class",f=>"country"+(selected&&selected.properties&&selected.properties.name===f.properties.name?" selected":"")).attr("data-country",f=>f.properties.name)
  .attr("d",path).attr("fill",f=>paint(mode==="all"?f.sales.n+f.sales.s+f.sales.a+f.sales.r:f.sales[mode],max,COLORS[mode]))
- .on("mouseenter",(e,f)=>{tip(e,f);select(f)}).on("mousemove",e=>{const f=features.find(x=>x.properties.name===e.target.dataset.country);if(f)tip(e,f)}).on("mouseleave",()=>{$("#mapTip").hidden=true})
+ .on("mouseenter",(e,f)=>{tip(e,f)}).on("mousemove",e=>{const f=features.find(x=>x.properties.name===e.target.dataset.country);if(f)tip(e,f)}).on("mouseleave",()=>{$("#mapTip").hidden=true})
  .on("click",(e,f)=>{e.stopPropagation();select(f)});
  $("#mapStatus").textContent=features.length+" COUNTRIES / TERRITORIES";
 }
