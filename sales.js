@@ -54,7 +54,6 @@ function update(){
  if(selected&&selected.properties&&selected.properties.name){const fresh=features.find(f=>f.properties.name===selected.properties.name);if(fresh)select(fresh)}else select({properties:{name:"World"},sales:d});
 }
 $("#yearSlider").addEventListener("input",e=>{year=+e.target.value;update()});
-$("#modeSwitch").addEventListener("click",e=>{const b=e.target.closest("button[data-mode]");if(!b)return;mode=b.dataset.mode;document.querySelectorAll("#modeSwitch button").forEach(x=>x.classList.toggle("active",x===b));update()});
 window.addEventListener("resize",()=>features.length&&draw());
 (async()=>{try{
   const r=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json");
