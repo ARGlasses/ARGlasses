@@ -6,9 +6,6 @@
 .sales-intro h1 i{font-weight:300;color:#b13fd4}
 .sales-intro p{max-width:620px;color:#5f737a;margin:0;line-height:1.6}
 .sales-controls{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;justify-content:flex-end}
-.mode-switch{display:flex;gap:3px;padding:3px;background:#f4f7f8;border:1px solid #d6e5e9;border-radius:10px}
-.mode-switch button{border:0;background:transparent;color:#55717a;border-radius:7px;padding:7px 9px;font:700 .55rem Poppins,sans-serif;letter-spacing:.06em;cursor:pointer}
-.mode-switch button.active{background:#004f88;color:#fff}
 .year-control{display:flex;align-items:center;gap:8px;padding:.55rem .7rem;border:1px solid #d6e5e9;border-radius:10px;background:#fff;white-space:nowrap}
 .year-control span{font-size:.5rem;letter-spacing:.12em;color:#80949a}.year-control b{font-size:1.1rem;color:#004f88}.year-control input{width:120px;accent-color:#004f88}
 
@@ -23,7 +20,7 @@
 .sales-kpis{display:grid;grid-template-columns:repeat(4,1fr) 1.25fr;gap:10px;margin-top:1rem}.sales-kpis article{border:1px solid #d7e5e8;border-radius:12px;background:#fff;padding:.9rem 1rem}.sales-kpis span{display:block;font-size:.5rem;letter-spacing:.12em;color:#6e858c}.sales-kpis b{display:block;font-size:1.45rem;letter-spacing:-.06em;margin:.2rem 0}.sales-kpis small{font-size:.5rem;color:#87999e}.sales-kpis article:nth-child(1) b{color:#b88600}.sales-kpis article:nth-child(2) b{color:#119dbb}.sales-kpis article:nth-child(3) b{color:#9a43c1}.sales-kpis article:nth-child(4) b{color:#159a70}.sales-kpis .shift{background:#f1f8fa}.sales-kpis .shift b{color:#159a70}
 .sales-source{font-size:.52rem;color:#84969c;margin:1rem 0 0;line-height:1.5}
 @media(max-width:900px){#sales-top{padding-top:5.5rem}.sales-intro{display:block}.sales-controls{justify-content:flex-start;margin-top:1rem}.sales-dashboard{grid-template-columns:1fr}.sales-side{min-height:0}.sales-map-panel{min-height:460px}.sales-kpis{grid-template-columns:repeat(2,1fr)}.sales-kpis .shift{grid-column:1/-1}}
-@media(max-width:600px){#sales-top{padding-top:5rem}.sales-map-panel{min-height:390px}.mode-switch button{padding:6px 6px;font-size:.48rem}.year-control input{width:90px}.sales-kpis{grid-template-columns:1fr 1fr}.sales-intro h1{font-size:2.5rem}.map-legend{gap:7px}.heat-key{margin-left:0}}
+@media(max-width:600px){#sales-top{padding-top:5rem}.sales-map-panel{min-height:390px}.year-control input{width:90px}.sales-kpis{grid-template-columns:1fr 1fr}.sales-intro h1{font-size:2.5rem}.map-legend{gap:7px}.heat-key{margin-left:0}}
 
 
 /* One-viewport desktop composition: keep the complete Sales dashboard above the footer. */
