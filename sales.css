@@ -75,7 +75,7 @@
   .sales-controls{gap:.45rem}
   .mode-switch button{padding:5px 7px;font-size:.5rem}
   .year-control{padding:.38rem .55rem}
-  .year-control input{width:95px}
+  .year-control input{width:220px}
   .sales-map-panel,.sales-side{height:385px;min-height:385px}
 }
 @media(min-width:901px) and (max-height:800px){
@@ -105,7 +105,7 @@
   .mode-switch button.active{box-shadow:0 2px 6px rgba(0,79,136,.2)}
   .year-control{padding:.48rem .65rem;border-color:#bdd2d8;box-shadow:0 2px 7px rgba(18,54,64,.05)}
   .year-control b{font-size:1rem}
-  .year-control input{width:110px}
+  .year-control input{width:220px}
   .sales-dashboard{grid-template-columns:minmax(0,1fr) 225px;gap:.7rem}
   .sales-map-panel,.sales-side{height:420px;min-height:420px}
   .real-map{inset:28px 5px 31px}
