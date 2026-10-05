@@ -120,3 +120,12 @@
 @media(min-width:901px) and (max-height:800px){
   .sales-map-panel,.sales-side{height:380px;min-height:380px}
 }
+
+
+/* Hover narrative for KPI cards: reveal context without adding permanent page height. */
+.sales-kpis .kpi-story{position:relative;cursor:help;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.sales-kpis .kpi-story:hover{transform:translateY(-2px);border-color:#9fc8d2;box-shadow:0 9px 22px rgba(18,54,64,.11)}
+.sales-kpis .kpi-story::after{content:attr(data-story);position:absolute;left:10px;right:10px;bottom:calc(100% + 8px);z-index:20;padding:10px 11px;border:1px solid #c6dde2;border-radius:9px;background:rgba(255,255,255,.98);box-shadow:0 10px 24px rgba(18,54,64,.14);color:#526c74;font-size:.58rem;font-weight:400;line-height:1.45;letter-spacing:0;opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .14s ease,transform .14s ease,visibility .14s ease;pointer-events:none}
+.sales-kpis .kpi-story:hover::after{opacity:1;visibility:visible;transform:translateY(0)}
+@media(max-width:900px){.sales-kpis .kpi-story::after{bottom:auto;top:calc(100% + 8px)}}
+@media(prefers-reduced-motion:reduce){.sales-kpis .kpi-story,.sales-kpis .kpi-story::after{transition:none}}
