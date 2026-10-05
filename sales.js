@@ -1,9 +1,9 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 import { feature as topoFeature } from "https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm";
 
-const GLOBAL={2024:{s:2.7,a:null,r:null},2025:{s:9.6,a:8.7,r:.6},2026:{s:13.6,a:15,r:.95},2027:{s:16.2,a:null,r:null},2028:{s:19.2,a:null,r:null},2029:{s:22.9,a:null,r:null},2030:{s:27.3,a:null,r:32.1}};
+const GLOBAL={2024:{s:2.7,a:2.1,r:.55},2025:{s:9.6,a:8.7,r:.6},2026:{s:13.6,a:15,r:.95},2027:{s:17.0,a:20,r:3.8},2028:{s:20.1,a:25,r:10.0},2029:{s:23.6,a:30,r:19.8},2030:{s:27.3,a:35,r:32.11}};
 const COLORS={n:"#ffd166",s:"#20d9ff",a:"#c66cff",r:"#42f5a7",all:"#ff4fb3"};
-const NAMES={all:"SMART GLASSES",s:"SMART",a:"AI",r:"AR"};
+const NAMES={all:"SMART GLASSES",s:"SMART GLASSES",a:"AI GLASSES",r:"AR GLASSES"};
 const BASE={Asia:7.2,Europe:5.4,"North America":6.1,"South America":2.4,Africa:2.1,Oceania:1.1};
 const MAJOR={"China":34,"India":27,"United States of America":25,"Indonesia":11,"Brazil":10,"Russia":9,"Japan":8.5,"Mexico":7.5,"Germany":7,"United Kingdom":6.5,"France":6.2,"Italy":5.8,"Canada":5.5,"South Korea":5.2,"Spain":5,"Australia":4.8,"Türkiye":4.7,"Vietnam":4.5,"Iran":4.4,"Thailand":4.2,"Egypt":4.1,"Philippines":4,"Nigeria":3.9,"Pakistan":3.8,"Bangladesh":3.7,"Poland":3.5,"Saudi Arabia":3.3,"Argentina":3.2,"South Africa":3.1};
 let year=2026,mode="all",features=[],selected=null,lakes=[],rivers=[],ice=[];
@@ -54,7 +54,7 @@ function select(f){
  $("#regionName").textContent=name.toUpperCase();
  $("#regionValue").textContent=fmt(mode==="all"?total:s[mode]);
  $("#regionLabel").textContent=(mode==="all"?"SMART GLASSES SHIPMENTS / YEAR":NAMES[mode]+" REFERENCE / YEAR");
- const rows=[["SMART",s.s,"#20d9ff"],["AI",s.a,"#c66cff"],["AR",s.r,"#42f5a7"]].filter(x=>x[1]!=null),mx=Math.max(...rows.map(x=>x[1]));
+ const rows=[["SMART",s.s,"#20d9ff"],["AI",s.a,"#c66cff"],["AR",s.r,"#42f5a7"]],mx=Math.max(...rows.map(x=>x[1]));
  $("#regionBars").innerHTML=rows.map(x=>'<div class="bar-row"><span>'+x[0]+'</span><i><b style="width:'+Math.max(3,x[1]/mx*100)+'%;background:'+x[2]+'"></b></i><b>'+fmt(x[1])+'</b></div>').join("");
  $("#insight").textContent=name==="World"?"Smart glasses use IDC shipment anchors. AI and AR figures are shown only where published benchmarks are available; categories overlap and are not additive.":"Country value is a modelled allocation of the published smart-glasses anchor. It is directional market intelligence, not audited country shipment data.";
 }
