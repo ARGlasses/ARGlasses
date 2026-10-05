@@ -6,7 +6,7 @@ const COLORS={n:"#ffd166",s:"#20d9ff",a:"#c66cff",r:"#42f5a7",all:"#ff4fb3"};
 const NAMES={all:"ALL GLASSES",n:"NORMAL",s:"SMART",a:"AI",r:"AR"};
 const BASE={Asia:7.2,Europe:5.4,"North America":6.1,"South America":2.4,Africa:2.1,Oceania:1.1};
 const MAJOR={"China":34,"India":27,"United States of America":25,"Indonesia":11,"Brazil":10,"Russia":9,"Japan":8.5,"Mexico":7.5,"Germany":7,"United Kingdom":6.5,"France":6.2,"Italy":5.8,"Canada":5.5,"South Korea":5.2,"Spain":5,"Australia":4.8,"Türkiye":4.7,"Vietnam":4.5,"Iran":4.4,"Thailand":4.2,"Egypt":4.1,"Philippines":4,"Nigeria":3.9,"Pakistan":3.8,"Bangladesh":3.7,"Poland":3.5,"Saudi Arabia":3.3,"Argentina":3.2,"South Africa":3.1};
-let year=2026,mode="all",features=[],selected=null,lakes=[],rivers=[];
+let year=2026,mode="all",features=[],selected=null,lakes=[],rivers=[],ice=[];
 const $=s=>document.querySelector(s);
 const fmt=v=>v>=1000?(v/1000).toFixed(2)+"B":v>=1?v.toFixed(v>=10?0:1)+"M":Math.round(v*1000)+"K";
 const hash=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0)/4294967295};
@@ -71,8 +71,9 @@ function draw(){
  const fc={type:"FeatureCollection",features};
  const projection=d3.geoNaturalEarth1().fitExtent([[3,8],[w-3,h-5]],fc),path=d3.geoPath(projection);
  features.forEach((f,i)=>addTerrainGradient(defs,"terrain-"+i,terrainPalette(terrainClass(f))));
- svg.append("g").attr("class","lakes").selectAll("path").data(lakes).join("path").attr("d",path).attr("fill","#78a9bd").attr("stroke","#5c8da2").attr("stroke-width",".35").attr("vector-effect","non-scaling-stroke").attr("pointer-events","none");
  svg.append("g").attr("class","terrain").selectAll("path").data(features).join("path").attr("class",f=>"country"+(selected&&selected.properties&&selected.properties.name===f.properties.name?" selected":"")).attr("data-country",f=>f.properties.name).attr("d",path).attr("fill",(f,i)=>"url(#terrain-"+i+")");
+ svg.append("g").attr("class","lakes").selectAll("path").data(lakes).join("path").attr("d",path).attr("fill","#78a9bd").attr("stroke","#5c8da2").attr("stroke-width",".35").attr("vector-effect","non-scaling-stroke").attr("pointer-events","none");
+ svg.append("g").attr("class","ice").selectAll("path").data(ice).join("path").attr("d",path).attr("fill","#dfe9e7").attr("stroke","#b7cbd0").attr("stroke-width",".3").attr("opacity",".9").attr("vector-effect","non-scaling-stroke").attr("pointer-events","none");
  svg.append("g").attr("class","rivers").selectAll("path").data(rivers).join("path").attr("d",path).attr("fill","none").attr("stroke","#6fa9b7").attr("stroke-width",".65").attr("stroke-linecap","round").attr("opacity",".72").attr("vector-effect","non-scaling-stroke").attr("pointer-events","none");
  svg.selectAll(".country").attr("stroke","#687968").attr("stroke-width",".5").attr("vector-effect","non-scaling-stroke").attr("cursor","pointer")
   .on("mouseenter",(e,f)=>{tip(e,f)}).on("mousemove",e=>{const f=features.find(x=>x.properties.name===e.target.dataset.country);if(f)tip(e,f)}).on("mouseleave",()=>{$("#mapTip").hidden=true})
@@ -88,10 +89,11 @@ function update(){
 $("#yearSlider").addEventListener("input",e=>{year=+e.target.value;update()});
 window.addEventListener("resize",()=>features.length&&draw());
 (async()=>{try{
- const [worldRes,lakeRes,riverRes]=await Promise.all([
+ const [worldRes,lakeRes,riverRes,iceRes]=await Promise.all([
   fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json"),
   fetch("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_lakes.geojson"),
-  fetch("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_rivers_lake_centerlines.geojson")
+  fetch("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_rivers_lake_centerlines.geojson"),
+  fetch("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_glaciated_areas.geojson")
  ]);
  if(!worldRes.ok) throw Error("World boundary request failed: "+worldRes.status);
  const topo=await worldRes.json();
@@ -99,6 +101,7 @@ window.addEventListener("resize",()=>features.length&&draw());
  features=(collection.features||[]).map(f=>({type:"Feature",id:f.id,properties:{...(f.properties||{}),name:f.properties?.name||"Unknown"},geometry:f.geometry}));
  if(lakeRes.ok){const data=await lakeRes.json();lakes=data.features||[]}
  if(riverRes.ok){const data=await riverRes.json();rivers=(data.features||[]).filter(f=>(f.properties?.scalerank??0)<=3)}
+ if(iceRes.ok){const data=await iceRes.json();ice=data.features||[]}
  if(!features.length) throw Error("No country features returned");
  update();
 }catch(e){
