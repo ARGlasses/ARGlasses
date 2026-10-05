@@ -84,7 +84,7 @@ function draw(){
 function update(){
  const d=GLOBAL[year];$("#yearText").textContent=year;$("#metricTitle").textContent=NAMES[mode]+" / COUNTRY VIEW";
  allocate();draw();
- if(selected&&selected.properties&&selected.properties.name){const fresh=features.find(f=>f.properties.name===selected.properties.name);if(fresh)select(fresh)}else select({properties:{name:"World"},sales:d});
+ if(selected&&selected.properties&&selected.properties.name&&selected.properties.name!=="World"){const fresh=features.find(f=>f.properties.name===selected.properties.name);if(fresh)select(fresh);else select({properties:{name:"World"},sales:d})}else select({properties:{name:"World"},sales:d});
 }
 $("#yearSlider").addEventListener("input",e=>{year=+e.target.value;update()});
 window.addEventListener("resize",()=>features.length&&draw());
