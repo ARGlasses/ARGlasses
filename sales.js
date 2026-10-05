@@ -16,9 +16,19 @@ function allocate(){
  const ws=features.map(weight),sum=ws.reduce((a,b)=>a+b,0);
  features.forEach((f,i)=>{const q=ws[i]/sum;f.sales={n:q*GLOBAL[year].n,s:q*GLOBAL[year].s,a:q*GLOBAL[year].a,r:q*GLOBAL[year].r}});
 }
-function paint(v,max,color){
- const t=Math.pow(Math.max(0,Math.min(1,v/max)),.55);
- return d3.interpolateRgb("#102e36",color)(t);
+function terrainColor(f){
+ const p=f.properties||{},name=p.name||"",c=p.continent||"";
+ const desert=new Set(["Algeria","Egypt","Libya","Morocco","Mauritania","Mali","Niger","Chad","Sudan","Saudi Arabia","Yemen","Oman","United Arab Emirates","Jordan","Iraq","Iran","Afghanistan","Namibia","Botswana","Australia","Mongolia"]);
+ const tropical=new Set(["Indonesia","Malaysia","Philippines","Papua New Guinea","Brazil","Colombia","Ecuador","Peru","Venezuela","Guyana","Suriname","Congo","Democratic Republic of the Congo","Uganda","Gabon","Cameroon","Ghana","Nigeria","Ivory Coast","Liberia","Sierra Leone"]);
+ if(desert.has(name)) return "#c9ad72";
+ if(tropical.has(name)) return "#5f8f58";
+ if(c==="Africa") return "#8b9b61";
+ if(c==="Asia") return "#78915c";
+ if(c==="Europe") return "#6f965f";
+ if(c==="North America") return "#71945e";
+ if(c==="South America") return "#6b9459";
+ if(c==="Oceania") return "#8fa66b";
+ return "#789765";
 }
 function select(f){
  selected=f;
@@ -41,9 +51,8 @@ function draw(){
  const svg=root.append("svg").attr("viewBox","0 0 "+w+" "+h);
  const fc={type:"FeatureCollection",features};
  const projection=d3.geoNaturalEarth1().fitExtent([[3,8],[w-3,h-5]],fc),path=d3.geoPath(projection);
- const vals=features.map(f=>mode==="all"?f.sales.n+f.sales.s+f.sales.a+f.sales.r:f.sales[mode]),max=d3.max(vals)||1;
- svg.selectAll("path").data(features).join("path").attr("class",f=>"country"+(selected&&selected.properties&&selected.properties.name===f.properties.name?" selected":"")).attr("data-country",f=>f.properties.name)
- .attr("d",path).attr("fill",f=>paint(mode==="all"?f.sales.n+f.sales.s+f.sales.a+f.sales.r:f.sales[mode],max,COLORS[mode]))
+  svg.selectAll("path").data(features).join("path").attr("class",f=>"country"+(selected&&selected.properties&&selected.properties.name===f.properties.name?" selected":"")).attr("data-country",f=>f.properties.name)
+ .attr("d",path).attr("fill",terrainColor)
  .on("mouseenter",(e,f)=>{tip(e,f)}).on("mousemove",e=>{const f=features.find(x=>x.properties.name===e.target.dataset.country);if(f)tip(e,f)}).on("mouseleave",()=>{$("#mapTip").hidden=true})
  .on("click",(e,f)=>{e.stopPropagation();select(f)});
  $("#mapStatus").textContent=features.length+" COUNTRIES / TERRITORIES";
