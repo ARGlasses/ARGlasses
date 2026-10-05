@@ -56,7 +56,7 @@ function select(f){
  $("#regionLabel").textContent=(mode==="all"?"SMART GLASSES SHIPMENTS / YEAR":NAMES[mode]+" REFERENCE / YEAR");
  const rows=[["SMART",s.s,"#20d9ff"],["AI",s.a,"#c66cff"],["AR",s.r,"#42f5a7"]],mx=Math.max(...rows.map(x=>x[1]));
  $("#regionBars").innerHTML=rows.map(x=>'<div class="bar-row"><span>'+x[0]+'</span><i><b style="width:'+Math.max(3,x[1]/mx*100)+'%;background:'+x[2]+'"></b></i><b>'+fmt(x[1])+'</b></div>').join("");
- $("#insight").textContent=name==="World"?"Smart glasses use IDC shipment anchors. AI and AR figures are shown only where published benchmarks are available; categories overlap and are not additive.":"Country value is a modelled allocation of the published smart-glasses anchor. It is directional market intelligence, not audited country shipment data.";
+ $("#insight").textContent=name==="World"?"Smart glasses use IDC shipment anchors. AI and AR use published benchmark anchors with modelled intermediate years for continuity; categories overlap and are not additive.":"Country value is a modelled allocation of the published smart-glasses anchor. It is directional market intelligence, not audited country shipment data.";
 }
 function tip(e,f){
  const p=f.properties||{},s=f.sales,total=s.s,t=$("#mapTip");
