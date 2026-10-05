@@ -148,3 +148,13 @@
 .sales-map-panel:before{background:linear-gradient(90deg,transparent 49.8%,rgba(255,255,255,.16) 50%,transparent 50.2%),linear-gradient(transparent 49.8%,rgba(255,255,255,.16) 50%,transparent 50.2%)}
 .country{stroke:#71806c;stroke-width:.5}
 .country:hover,.country.selected{stroke:#315b48;stroke-width:1.6}
+
+/* Detailed physical-map treatment inspired by Natural Earth reference cartography. */
+.sales-map-panel{background:linear-gradient(180deg,#a9cddd 0%,#86b6ca 100%)}
+.sales-map-panel:before{background:radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.2),transparent 58%),linear-gradient(90deg,transparent 49.8%,rgba(255,255,255,.12) 50%,transparent 50.2%),linear-gradient(transparent 49.8%,rgba(255,255,255,.12) 50%,transparent 50.2%);background-size:auto,120px 120px,120px 120px}
+.real-map svg{filter:drop-shadow(0 3px 5px rgba(38,72,55,.08))}
+.country{stroke:#657766;stroke-width:.5;transition:filter .12s ease}
+.country:hover{filter:brightness(1.08) saturate(1.08)}
+.country.selected{stroke:#274f40;stroke-width:1.8;filter:brightness(1.06) saturate(1.08)}
+.lakes path{opacity:.88}
+.rivers path{mix-blend-mode:multiply}
