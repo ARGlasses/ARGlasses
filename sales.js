@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
+import { feature as topoFeature } from "https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm";
 
 const GLOBAL={2024:{n:1300,s:8.1,a:2.1,r:.7},2025:{n:1330,s:9.8,a:8.7,r:.6},2026:{n:1360,s:13.6,a:15,r:.95},2027:{n:1390,s:16.5,a:18,r:3.8},2028:{n:1420,s:20,a:21.5,r:10.2},2029:{n:1450,s:23.5,a:25,r:19.8},2030:{n:1480,s:27.3,a:29.5,r:32.1}};
 const COLORS={n:"#ffd166",s:"#20d9ff",a:"#c66cff",r:"#42f5a7",all:"#ff4fb3"};
@@ -55,4 +56,16 @@ function update(){
 $("#yearSlider").addEventListener("input",e=>{year=+e.target.value;update()});
 $("#modeSwitch").addEventListener("click",e=>{const b=e.target.closest("button[data-mode]");if(!b)return;mode=b.dataset.mode;document.querySelectorAll("#modeSwitch button").forEach(x=>x.classList.toggle("active",x===b));update()});
 window.addEventListener("resize",()=>features.length&&draw());
-(async()=>{try{const r=await fetch("https://cdn.jsdelivr.net/gh/datasets/geo-countries@main/data/countries.geojson");if(!r.ok)throw Error();const data=await r.json();features=data.features||[];update()}catch(e){$("#mapStatus").textContent="BOUNDARY DATA UNAVAILABLE";$("#insight").textContent="The country boundary data could not be loaded. Refresh to retry."}})();
+(async()=>{try{
+  const r=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json");
+  if(!r.ok) throw Error("World boundary request failed: "+r.status);
+  const topo=await r.json();
+  const collection=topoFeature(topo,topo.objects.countries);
+  features=(collection.features||[]).map(f=>({type:"Feature",id:f.id,properties:{...(f.properties||{}),name:f.properties?.name||"Unknown"},geometry:f.geometry}));
+  if(!features.length) throw Error("No country features returned");
+  update();
+}catch(e){
+  console.error("Sales map failed to load:",e);
+  $(" #mapStatus".trim()).textContent="MAP DATA UNAVAILABLE";
+  $("#insight").textContent="The world map could not be loaded. Refresh to retry.";
+}})();
