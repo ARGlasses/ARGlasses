@@ -69,37 +69,46 @@
   </main>
 
   <footer class="container professional-footer">
-    <div class="footer-content">
-      <div class="footer-brand">
-        <div class="footer-logo-group"><img src="images/logo40x40.webp" alt="AR Glasses Logo"><h4>AR glasses</h4></div>
-        <p>Change how you see the world</p>
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo-group">
+            <img src="images/logo40x40.webp" alt="AR Glasses Logo" />
+            <h4>AR glasses</h4>
+          </div>
+          <p>Change how you see the world</p>
+        </div>
+        <div class="footer-links">
+          <strong>Site Terms and Policies</strong>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="cookie-policy.html">Cookie Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-links">
-        <strong>Site Terms and Policies</strong>
-        <ul>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="privacy-policy.html">Privacy Policy</a></li>
-          <li><a href="cookie-policy.html">Cookie Policy</a></li>
-          <li><a href="terms.html">Terms &amp; Conditions</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <small>&copy; 2025 ARglasses.com • All rights reserved</small>
       </div>
-    </div>
-    <div class="footer-bottom"><small>&copy; 2026 ARglasses.com • All rights reserved</small></div>
-  </footer>
+    </footer>
 
-  <script src="header.js" defer></script>
-  <script type="module" src="sales.js?v=3"></script>
   <script>
-    window.addEventListener("DOMContentLoaded",function(){
-      fetch("./header.html?v=8").then(r=>r.text()).then(html=>{
-        const m=document.getElementById("site-header");
-        m.innerHTML=html;
-        const a=m.querySelector('a[href="sales.html"]');
-        if(a){a.closest(".dropdown")?.classList.add("active");}
-        if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(e){}}
-        window.dispatchEvent(new Event("header:ready"));
-      });
+    document.addEventListener("DOMContentLoaded", function () {
+      const mount = document.getElementById("site-header");
+      fetch("./header.html?v=8")
+        .then(r => r.text())
+        .then(html => {
+          mount.innerHTML = html;
+          if (typeof window.__initHeader === "function") {
+            try { window.__initHeader(); } catch (_) {}
+          }
+          window.dispatchEvent(new Event("header:ready"));
+        })
+        .catch(err => console.error("Failed to load header.html:", err));
     });
   </script>
+  <script src="./header.js?v=6" defer></script>
+  <script type="module" src="sales.js?v=3"></script>
+  <script src="cookie-consent.js" defer></script>
 </body>
 </html>
