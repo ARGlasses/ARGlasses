@@ -1,20 +1,20 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 import { feature as topoFeature } from "https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm";
 
-const GLOBAL={2024:{n:1300,s:8.1,a:2.1,r:.7},2025:{n:1330,s:9.8,a:8.7,r:.6},2026:{n:1360,s:13.6,a:15,r:.95},2027:{n:1390,s:16.5,a:18,r:3.8},2028:{n:1420,s:20,a:21.5,r:10.2},2029:{n:1450,s:23.5,a:25,r:19.8},2030:{n:1480,s:27.3,a:29.5,r:32.1}};
+const GLOBAL={2024:{s:2.7,a:null,r:null},2025:{s:9.6,a:8.7,r:.6},2026:{s:13.6,a:15,r:.95},2027:{s:16.2,a:null,r:null},2028:{s:19.2,a:null,r:null},2029:{s:22.9,a:null,r:null},2030:{s:27.3,a:null,r:32.1}};
 const COLORS={n:"#ffd166",s:"#20d9ff",a:"#c66cff",r:"#42f5a7",all:"#ff4fb3"};
-const NAMES={all:"ALL GLASSES",n:"NORMAL",s:"SMART",a:"AI",r:"AR"};
+const NAMES={all:"SMART GLASSES",s:"SMART",a:"AI",r:"AR"};
 const BASE={Asia:7.2,Europe:5.4,"North America":6.1,"South America":2.4,Africa:2.1,Oceania:1.1};
 const MAJOR={"China":34,"India":27,"United States of America":25,"Indonesia":11,"Brazil":10,"Russia":9,"Japan":8.5,"Mexico":7.5,"Germany":7,"United Kingdom":6.5,"France":6.2,"Italy":5.8,"Canada":5.5,"South Korea":5.2,"Spain":5,"Australia":4.8,"Türkiye":4.7,"Vietnam":4.5,"Iran":4.4,"Thailand":4.2,"Egypt":4.1,"Philippines":4,"Nigeria":3.9,"Pakistan":3.8,"Bangladesh":3.7,"Poland":3.5,"Saudi Arabia":3.3,"Argentina":3.2,"South Africa":3.1};
 let year=2026,mode="all",features=[],selected=null,lakes=[],rivers=[],ice=[];
 const $=s=>document.querySelector(s);
-const fmt=v=>v>=1000?(v/1000).toFixed(2)+"B":v>=1?v.toFixed(v>=10?0:1)+"M":Math.round(v*1000)+"K";
+const fmt=v=>v==null?"—":v>=1000?(v/1000).toFixed(2)+"B":v>=1?v.toFixed(v>=10?0:1)+"M":Math.round(v*1000)+"K";
 const hash=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0)/4294967295};
 const weight=f=>{const p=f.properties||{},n=p.name||"Unknown";return MAJOR[n]||((BASE[p.continent]||2)*(.55+hash(n)*1.15))};
 
 function allocate(){
  const ws=features.map(weight),sum=ws.reduce((a,b)=>a+b,0);
- features.forEach((f,i)=>{const q=ws[i]/sum;f.sales={n:q*GLOBAL[year].n,s:q*GLOBAL[year].s,a:q*GLOBAL[year].a,r:q*GLOBAL[year].r}});
+ features.forEach((f,i)=>{const q=ws[i]/sum;f.sales={n:0,s:q*GLOBAL[year].s,a:GLOBAL[year].a==null?null:q*GLOBAL[year].a,r:GLOBAL[year].r==null?null:q*GLOBAL[year].r}});
 }
 function terrainClass(f){
  const p=f.properties||{},name=p.name||"",c=p.continent||"";
@@ -50,17 +50,17 @@ function addTerrainGradient(defs,id,colors){
 }
 function select(f){
  selected=f;
- const p=f.properties||{},name=p.name||"World",s=f.sales,total=s.n+s.s+s.a+s.r;
+ const p=f.properties||{},name=p.name||"World",s=f.sales,total=s.s;
  $("#regionName").textContent=name.toUpperCase();
  $("#regionValue").textContent=fmt(mode==="all"?total:s[mode]);
- $("#regionLabel").textContent=(mode==="all"?"MODELLED UNITS / YEAR":NAMES[mode]+" UNITS / YEAR");
- const rows=[["NORMAL",s.n,"#ffd166"],["SMART",s.s,"#20d9ff"],["AI",s.a,"#c66cff"],["AR",s.r,"#42f5a7"]],mx=Math.max(...rows.map(x=>x[1]));
+ $("#regionLabel").textContent=(mode==="all"?"SMART GLASSES SHIPMENTS / YEAR":NAMES[mode]+" REFERENCE / YEAR");
+ const rows=[["SMART",s.s,"#20d9ff"],["AI",s.a,"#c66cff"],["AR",s.r,"#42f5a7"]].filter(x=>x[1]!=null),mx=Math.max(...rows.map(x=>x[1]));
  $("#regionBars").innerHTML=rows.map(x=>'<div class="bar-row"><span>'+x[0]+'</span><i><b style="width:'+Math.max(3,x[1]/mx*100)+'%;background:'+x[2]+'"></b></i><b>'+fmt(x[1])+'</b></div>').join("");
- $("#insight").textContent=name==="World"?"Global anchors combine published industry figures with forward projections. Country values are modelled allocations, not audited shipments.":"Country value is a modelled allocation of published global category anchors. It is directional market intelligence, not audited country shipment data.";
+ $("#insight").textContent=name==="World"?"Smart glasses use IDC shipment anchors. AI and AR figures are shown only where published benchmarks are available; categories overlap and are not additive.":"Country value is a modelled allocation of the published smart-glasses anchor. It is directional market intelligence, not audited country shipment data.";
 }
 function tip(e,f){
- const p=f.properties||{},s=f.sales,total=s.n+s.s+s.a+s.r,t=$("#mapTip");
- t.innerHTML="<strong>"+p.name+"</strong><div><span>Total</span><b>"+fmt(total)+"</b></div><div><span>Smart</span><b>"+fmt(s.s)+"</b></div><div><span>AI</span><b>"+fmt(s.a)+"</b></div><div><span>AR</span><b>"+fmt(s.r)+"</b></div>";
+ const p=f.properties||{},s=f.sales,total=s.s,t=$("#mapTip");
+ t.innerHTML="<strong>"+p.name+"</strong><div><span>Smart</span><b>"+fmt(total)+"</b></div><div><span>AI</span><b>"+fmt(s.a)+"</b></div><div><span>AR</span><b>"+fmt(s.r)+"</b></div>";
  t.hidden=false;const r=$(".sales-map-panel").getBoundingClientRect();t.style.left=Math.min(Math.max(8,e.clientX-r.left+10),r.width-190)+"px";t.style.top=Math.min(Math.max(35,e.clientY-r.top+10),r.height-150)+"px";
 }
 function draw(){
