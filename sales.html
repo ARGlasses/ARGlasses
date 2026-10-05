@@ -1,78 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Global Glasses Sales & Market Shift | ARGlasses.com</title>
-<meta name="description" content="Explore global eyewear, smart glasses, AI glasses and AR glasses sales signals, regional demand and the projected shift toward AR.">
-<link rel="canonical" href="https://arglasses.com/sales.html">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=optional">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-<link rel="stylesheet" href="style.css?v=8"><link rel="stylesheet" href="sales.css?v=1">
-</head>
-<body class="sales-page">
-<div id="site-header"></div>
-<main id="sales-top">
-<section class="sales-hero">
-  <div class="sales-hero-copy">
-    <span class="sales-kicker">GLOBAL MARKET / LIVE MODEL</span>
-    <h1>The world is<br><i>buying vision.</i></h1>
-    <p>Track the eyewear economy as ordinary frames evolve into connected, intelligent and ultimately spatial glasses.</p>
-    <div class="sales-hero-meta"><span><b id="heroYear">2026</b><small>MODEL YEAR</small></span><span><b id="heroSignal">13.6M+</b><small>SMART-GLASSES SIGNAL</small></span><span><b id="heroAr">~1M</b><small>AR SHIPMENTS</small></span></div>
-  </div>
-  <div class="globe-wrap">
-    <canvas id="salesGlobe" aria-label="Interactive globe showing regional glasses sales"></canvas>
-    <div class="globe-hud"><span><i></i> SALES PULSE</span><span id="globeMode">2026 · ESTIMATE + REPORTED</span></div>
-    <div id="globeTip" class="globe-tip" hidden></div>
-    <div class="globe-scan"></div>
-  </div>
-</section>
-
-<section class="sales-command">
-  <div class="sales-section-head"><div><span class="sales-kicker">THE MARKET LENS</span><h2>Hover the world.<br><em>Change the year.</em></h2></div><p>Reported shipment figures are used where available. Regional figures and future curves are ARGlasses editorial estimates anchored to those published market totals.</p></div>
-  <div class="sales-tabs" role="tablist">
-    <button class="active" data-metric="all">ALL SIGNALS</button><button data-metric="normal">NORMAL</button><button data-metric="smart">SMART</button><button data-metric="ai">AI</button><button data-metric="ar">AR</button>
-  </div>
-  <div class="sales-dashboard">
-    <aside class="sales-region-card"><span class="sales-kicker">SELECTED REGION</span><div id="regionName">WORLD</div><strong id="regionTotal">1.37B</strong><small id="regionSub">annual eyewear units · modelled</small><div class="region-bars" id="regionBars"></div><div class="region-note" id="regionNote">Move across the globe to inspect regional demand.</div></aside>
-    <div class="sales-radar">
-      <div class="radar-grid"></div><div class="radar-ring r1"></div><div class="radar-ring r2"></div><div class="radar-ring r3"></div>
-      <div class="radar-core"><b id="coreValue">2026</b><small>GLOBAL PULSE</small></div>
-      <div class="radar-orbit o1"></div><div class="radar-orbit o2"></div>
-      <div class="radar-label l1">NORTH AMERICA</div><div class="radar-label l2">EUROPE</div><div class="radar-label l3">CHINA / EAST ASIA</div><div class="radar-label l4">INDIA / SOUTH ASIA</div>
-    </div>
-    <aside class="sales-mix-card"><span class="sales-kicker">CONNECTED MIX</span><div class="mix-year"><b id="mixYear">2026</b><span id="mixMessage">AI is pulling the market forward.</span></div><div id="mixBars"></div><small class="mix-disclaimer">Categories overlap in industry reporting; this visual is a directional market-mix model, not an additive shipment total.</small></aside>
-  </div>
-  <div class="year-control"><div><span>PAST</span><b id="yearReadout">2026</b><span>FORECAST → 2030</span></div><input id="yearSlider" type="range" min="2024" max="2030" value="2026" step="1" aria-label="Market year"></div>
-</section>
-
-<section class="sales-shift">
-  <div class="shift-copy"><span class="sales-kicker">THE GREAT SHIFT</span><h2>From frames<br>to <i>fields of view.</i></h2><p>AR is still tiny beside ordinary eyewear — but it is the steepest curve on the board. The interesting story is not today's share. It is the rate at which capability is moving into the frame.</p><div class="shift-stat"><b>32.1M</b><span>TrendForce 2030 AR-glasses shipment projection</span></div></div>
-  <div class="shift-chart"><div class="chart-grid"></div><div class="chart-axis"><span>2024</span><span>2026</span><span>2028</span><span>2030</span></div><svg id="shiftSvg" viewBox="0 0 900 430" preserveAspectRatio="none" aria-label="Forecast lines for glasses categories"></svg><div class="chart-legend"><span class="normal"><i></i>Normal eyewear</span><span class="smart"><i></i>Smart glasses</span><span class="ai"><i></i>AI glasses</span><span class="ar"><i></i>AR glasses</span></div></div>
-</section>
-
-<section class="sales-regions">
-  <div class="sales-section-head"><div><span class="sales-kicker">WHERE THE MOMENTUM IS</span><h2>Four markets.<br><em>Four different futures.</em></h2></div></div>
-  <div class="region-grid" id="regionGrid"></div>
-</section>
-
-<section class="sales-method">
-  <div><span class="sales-kicker">READ THE SIGNAL</span><h2>Facts in white.<br><i>Forecasts in colour.</i></h2></div>
-  <div class="method-grid">
-    <article><b>01</b><strong>Reported</strong><p>Published shipment figures from IDC, Omdia and TrendForce anchor the model.</p></article>
-    <article><b>02</b><strong>Estimated</strong><p>Regional splits are an editorial allocation model, because public regional unit data is incomplete.</p></article>
-    <article><b>03</b><strong>Projected</strong><p>Future values interpolate published endpoints and visible growth signals; they are scenarios, not guarantees.</p></article>
-  </div>
-  <div class="source-strip">
-    <a href="https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/" target="_blank" rel="noopener">IDC · Smart glasses 2026–2030 ↗</a>
-    <a href="https://omdia.tech.informa.com/pr/2026/sep/global-ai-glasses-shipments-more-than-doubled-in-1h26-hitting-a-record-4point2-million" target="_blank" rel="noopener">Omdia · AI glasses 1H26 ↗</a>
-    <a href="https://www.trendforce.com/presscenter/news/20260130-12908.html" target="_blank" rel="noopener">TrendForce · AR 2030 ↗</a>
-  </div>
-</section>
-</main>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sales — The Global Glasses Shift | ARGlasses.com</title><meta name="description" content="Interactive global sales map for normal eyewear, smart glasses, AI glasses and AR glasses."><link rel="stylesheet" href="style.css?v=8"><link rel="stylesheet" href="sales.css?v=2"></head>
+<body class="sales-page-v2"><div id="site-header"></div><main class="sales-screen">
+<header class="sales-topline"><div><span class="eyebrow">ARGLASSES / GLOBAL SALES INTELLIGENCE</span><h1>THE WORLD IS <i>CHANGING VIEW.</i></h1></div><div class="top-year"><span>MARKET MODEL</span><b id="yearText">2026</b><input id="yearSlider" type="range" min="2024" max="2030" value="2026"><span>2030 →</span></div></header>
+<section class="sales-map-panel"><div class="map-title"><b id="metricTitle">ALL GLASSES</b><span>HOVER A REGION</span></div>
+<svg id="worldMap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-label="Interactive world map"><defs><filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="land" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#153f4a"/><stop offset=".5" stop-color="#1c6670"/><stop offset="1" stop-color="#163d48"/></linearGradient></defs><g id="land" fill="url(#land)" stroke="#71e6df" stroke-opacity=".22" stroke-width="1.2"><path d="M72 92l40-29 61 5 47 34-14 30-36 10-13 34-31-12-7-32-38-10z"/><path d="M184 205l38 8 28 36-15 35-15 50-25 54-22-26 8-47-17-32 18-26z"/><path d="M470 96l34-20 37 10 23 27-17 22-32 4-20 27-28-11 13-29z"/><path d="M500 163l35 4 27 36-9 42-22 34-17 62-29 44-22-39 13-48-9-39 19-37z"/><path d="M565 82l42-11 49 17 21 25 46 12 34 32-15 25-54-2-34 26-27-20-31 3-20-27 12-27z"/><path d="M666 207l42-8 43 29 18 48-34 18-39-19-39 6-20-29z"/><path d="M762 276l29 4 22 27-10 35-29 4-15-25z"/><path d="M835 112l55-10 49 25 20 31-29 19-35-5-35 16-31-21 14-24z"/><path d="M900 205l31 15 14 36-20 31-24-17-12-34z"/><path d="M824 348l25 8 11 25-25 15-26-13z"/></g><g id="mapDots"></g><g id="mapLabels"></g></svg>
+<div id="mapTip" class="map-tip" hidden></div><div class="map-legend"><span><i class="normal"></i>NORMAL</span><span><i class="smart"></i>SMART</span><span><i class="ai"></i>AI</span><span><i class="ar"></i>AR</span></div></section>
+<aside class="sales-side"><div class="side-head"><span class="eyebrow">SELECTED MARKET</span><b id="regionName">WORLD</b></div><div class="hero-number"><strong id="regionValue">1.36B</strong><span id="regionLabel">EYEWEAR UNITS / YEAR</span></div><div class="region-bars" id="regionBars"></div><div class="insight" id="insight">Conventional eyewear is enormous. The connected layer is where the acceleration is happening.</div><div class="side-kpi"><span>AR 2030</span><b>32.1M</b><small>published industry projection</small></div></aside>
+<section class="bottom-strip"><div class="mini-card"><span>NORMAL</span><b id="normalKpi">1.36B</b><small>mature eyewear base</small></div><div class="mini-card cyan"><span>SMART</span><b id="smartKpi">13.6M</b><small>IDC 2026 signal</small></div><div class="mini-card violet"><span>AI</span><b id="aiKpi">15M</b><small>Omdia / model</small></div><div class="mini-card green"><span>AR</span><b id="arKpi">~1M</b><small>tiny today · huge curve</small></div><div class="shift-card"><span>THE SHIFT</span><div><b>~1M</b><em>→</em><b>32.1M</b></div><small>AR glasses / 2026 → 2030</small></div></section>
+<div class="source-line">Reported anchors: IDC · Omdia · TrendForce &nbsp;•&nbsp; Bright category colours separate the market &nbsp;•&nbsp; Future values are projections</div></main>
 <footer class="container professional-footer"><div class="footer-content"><div class="footer-brand"><div class="footer-logo-group"><img src="images/logo40x40.webp" alt="AR Glasses Logo"><h4>AR glasses</h4></div><p>Change how you see the world</p></div><div class="footer-links"><strong>Site Terms and Policies</strong><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="cookie-policy.html">Cookie Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div></div><div class="footer-bottom"><small>&copy; 2026 ARglasses.com • All rights reserved</small></div></footer>
-<script src="header.js" defer></script><script src="sales.js?v=1" defer></script>
-<script>
-window.addEventListener("DOMContentLoaded",function(){fetch("./header.html?v=8").then(r=>r.text()).then(html=>{const m=document.getElementById("site-header");m.innerHTML=html;const a=m.querySelector('a[href="sales.html"]');if(a){a.closest(".dropdown")?.classList.add("active");}if(typeof window.__initHeader==="function"){try{window.__initHeader()}catch(e){}}window.dispatchEvent(new Event("header:ready"));});});
-</script>
-</body></html>
+<script src="header.js" defer></script><script src="sales.js?v=2" defer></script><script>window.addEventListener("DOMContentLoaded",()=>fetch("./header.html?v=8").then(r=>r.text()).then(h=>{const m=document.getElementById("site-header");m.innerHTML=h;if(typeof window.__initHeader==="function")try{window.__initHeader()}catch(e){}window.dispatchEvent(new Event("header:ready"))}));</script></body></html>
