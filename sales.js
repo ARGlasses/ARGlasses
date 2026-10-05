@@ -48,7 +48,7 @@ function draw(){
  $("#mapStatus").textContent=features.length+" COUNTRIES / TERRITORIES";
 }
 function update(){
- const d=GLOBAL[year];$("#yearText").textContent=year;$("#normalKpi").textContent=fmt(d.n);$("#smartKpi").textContent=fmt(d.s);$("#aiKpi").textContent=fmt(d.a);$("#arKpi").textContent="~"+fmt(d.r);$("#metricTitle").textContent=NAMES[mode]+" / COUNTRY VIEW";
+ const d=GLOBAL[year];$("#yearText").textContent=year;$("#metricTitle").textContent=NAMES[mode]+" / COUNTRY VIEW";
  allocate();draw();
  if(selected&&selected.properties&&selected.properties.name){const fresh=features.find(f=>f.properties.name===selected.properties.name);if(fresh)select(fresh)}else select({properties:{name:"World"},sales:d});
 }
