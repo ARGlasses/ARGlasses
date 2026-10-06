@@ -130,18 +130,23 @@
     const navbar = document.getElementById('navbar');
     const heroSection = document.querySelector('.hero');
     if (!navbar || !heroSection) return;
-    function updateNavbarTheme() {
-      const heroBottom = heroSection.getBoundingClientRect().bottom;
-      if (heroBottom <= 0) {
-        navbar.classList.remove('dark-nav');
-        navbar.classList.add('light-nav');
-      } else {
+    function setNavbarTheme(heroVisible) {
+      if (heroVisible) {
         navbar.classList.remove('light-nav');
         navbar.classList.add('dark-nav');
+      } else {
+        navbar.classList.remove('dark-nav');
+        navbar.classList.add('light-nav');
       }
     }
-    window.addEventListener('scroll', updateNavbarTheme);
-    window.addEventListener('DOMContentLoaded', updateNavbarTheme);
+
+    // Use IntersectionObserver instead of reading layout on every scroll event.
+    // This preserves the same visual behaviour while avoiding repeated forced reflow.
+    const observer = new IntersectionObserver(
+      ([entry]) => setNavbarTheme(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(heroSection);
   }
 
   function init() {
