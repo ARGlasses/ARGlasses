@@ -36,6 +36,10 @@ function render(){
 const brandFromUrl=new URLSearchParams(window.location.search).get("brand");
 if(brandFromUrl){
   const brandSelect=document.getElementById("db-brand");
-  if([...brandSelect.options].some(o=>o.value===brandFromUrl)){brandSelect.value=brandFromUrl;}
+  const normalizeBrand=value=>String(value||"").trim().toLowerCase();
+  const requested=normalizeBrand(brandFromUrl);
+  const option=[...brandSelect.options].find(o=>normalizeBrand(o.value)===requested)
+    || [...brandSelect.options].find(o=>normalizeBrand(o.value).startsWith(requested+" /"));
+  if(option) brandSelect.value=option.value;
 }
 render();
