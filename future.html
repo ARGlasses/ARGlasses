@@ -6,12 +6,12 @@
 <title>The Future of AR Glasses | ARGlasses.com</title>
 <meta name="description" content="A visual, research-led journey through the possible future of AR glasses, AI agents, spatial computing and ambient interfaces.">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="https://arglasses.com/future.html">
+<link rel="canonical" href="https://arglasses.com/future">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ARGlasses.com">
 <meta property="og:title" content="The Future of AR Glasses">
 <meta property="og:description" content="What happens when the computer stops living inside a rectangle?">
-<meta property="og:url" content="https://arglasses.com/future.html">
+<meta property="og:url" content="https://arglasses.com/future">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=optional">
@@ -144,7 +144,7 @@
 <footer class="container professional-footer">
   <div class="footer-content">
     <div class="footer-brand"><div class="footer-logo-group"><img src="images/logo40x40.webp" alt="AR Glasses Logo"><h4>AR glasses</h4></div><p>Change how you see the world</p></div>
-    <div class="footer-links"><strong>Site Terms and Policies</strong><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="cookie-policy.html">Cookie Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
+    <div class="footer-links"><strong>Site Terms and Policies</strong><ul><li><a href="contact">Contact</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="cookie-policy.html">Cookie Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
   </div>
   <div class="footer-bottom"><small>&copy; 2026 ARglasses.com • All rights reserved</small></div>
 </footer>
@@ -203,7 +203,7 @@ window.addEventListener("DOMContentLoaded",function(){
  const mount=document.getElementById("site-header");
  fetch("./header.html?v=8").then(r=>r.text()).then(html=>{
    mount.innerHTML=html;
-   const futureMenu=mount.querySelector('a[href="future.html"]');
+   const futureMenu=mount.querySelector('a[href="future"]');
    const futureList=futureMenu&&futureMenu.closest(".dropdown")&&futureMenu.closest(".dropdown").querySelector(".dropdown-menu");
    if(futureList){
      futureList.innerHTML=[
