@@ -3,3 +3,36 @@ http://*    https://:splat    301!
 
 # Force non-www (so all traffic goes to https://arglasses.com)
 https://www.arglasses.com/*    https://arglasses.com/:splat    301!
+
+# Redirect legacy .html URLs to clean canonical URLs
+/products.html    /products    301!
+/compare.html    /compare    301!
+/guide.html    /guide    301!
+/database.html    /database    301!
+/reviews.html    /reviews    301!
+/news.html    /news    301!
+/sales.html    /sales    301!
+/future.html    /future    301!
+/education.html    /education    301!
+/healthcare.html    /healthcare    301!
+/industrial.html    /industrial    301!
+/retail.html    /retail    301!
+/collaboration.html    /collaboration    301!
+/contact.html    /contact    301!
+
+/index.html    /    301!
+/news/meta-ray-ban-smart-glasses-roadmap.html    /news/meta-ray-ban-smart-glasses-roadmap    301!
+/news/google-samsung-android-xr-smart-glasses.html    /news/google-samsung-android-xr-smart-glasses    301!
+/news/snap-specs-ar-glasses-roadmap.html    /news/snap-specs-ar-glasses-roadmap    301!
+/news/xreal-rokid-rayneo-display-glasses-guide.html    /news/xreal-rokid-rayneo-display-glasses-guide    301!
+/news/smart-glasses-vs-ar-glasses-explained.html    /news/smart-glasses-vs-ar-glasses-explained    301!
+/news/ar-glasses-display-technology-waveguides-microled.html    /news/ar-glasses-display-technology-waveguides-microled    301!
+/news/ar-glasses-companies.html    /news/ar-glasses-companies    301!
+/news/ar-glasses-top-10-roadmaps.html    /news/ar-glasses-top-10-roadmaps    301!
+/news/rayneo-ar-glasses-roadmap.html    /news/rayneo-ar-glasses-roadmap    301!
+/news/xreal-ar-glasses-roadmap.html    /news/xreal-ar-glasses-roadmap    301!
+/news/viture-ar-glasses-roadmap.html    /news/viture-ar-glasses-roadmap    301!
+/news/rokid-ar-glasses-roadmap.html    /news/rokid-ar-glasses-roadmap    301!
+/news/xiaomi-smart-glasses-roadmap.html    /news/xiaomi-smart-glasses-roadmap    301!
+/news/alibaba-quark-ai-glasses-roadmap.html    /news/alibaba-quark-ai-glasses-roadmap    301!
+/news/even-realities-ar-glasses-roadmap.html    /news/even-realities-ar-glasses-roadmap    301!
