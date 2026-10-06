@@ -33,4 +33,9 @@ function render(){
 }
 [...new Set(DB_PRODUCTS.map(p=>p.brand))].sort().forEach(b=>document.getElementById("db-brand").insertAdjacentHTML("beforeend","<option>"+esc(b)+"</option>"));
 ["db-search","db-category","db-brand","db-sort"].forEach(id=>document.getElementById(id).addEventListener(id==="db-search"?"input":"change",render));
+const brandFromUrl=new URLSearchParams(window.location.search).get("brand");
+if(brandFromUrl){
+  const brandSelect=document.getElementById("db-brand");
+  if([...brandSelect.options].some(o=>o.value===brandFromUrl)){brandSelect.value=brandFromUrl;}
+}
 render();
