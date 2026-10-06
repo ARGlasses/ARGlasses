@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://arglasses.com/</loc>
     <lastmod>2026-10-02</lastmod>
@@ -89,6 +90,17 @@
     <loc>https://arglasses.com/terms.html</loc>
     <lastmod>2026-10-05</lastmod>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://arglasses.com/videos/ar-glasses-explained.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://arglasses.com/images/arglasses-engineer-1024.webp?v=4</video:thumbnail_loc>
+      <video:title>AR Glasses Explained: How AR &amp; Smart Glasses Work</video:title>
+      <video:description>Watch the ARGlasses.com introduction to AR glasses, smart glasses and wearable display technology.</video:description>
+      <video:content_loc>https://arglasses.com/images/arglasses-video.mp4</video:content_loc>
+    </video:video>
   </url>
   <url>
     <loc>https://arglasses.com/news/meta-ray-ban-smart-glasses-roadmap.html</loc>
