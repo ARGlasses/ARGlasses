@@ -25,3 +25,6 @@ https://www.arglasses.com/*    https://arglasses.com/:splat    301!
 # Historical XREAL slug previously seen by Google Search Console.
 /news/xreal-glasses-roadmap    /news/xreal-ar-glasses-roadmap    301!
 /news/xreal-glasses-roadmap/   /news/xreal-ar-glasses-roadmap    301!
+
+# Explicitly serve the directory index at the clean roadmap URL.
+/news/ar-glasses-top-10-roadmaps    /news/ar-glasses-top-10-roadmaps/index.html    200!
