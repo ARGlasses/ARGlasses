@@ -28,3 +28,19 @@ https://www.arglasses.com/*    https://arglasses.com/:splat    301!
 
 # Explicitly serve the directory index at the clean roadmap URL.
 /news/ar-glasses-top-10-roadmaps    /news/ar-glasses-top-10-roadmaps/index.html    200!
+
+# Explicitly serve each News directory index at its canonical clean URL.
+/news/meta-ray-ban-smart-glasses-roadmap    /news/meta-ray-ban-smart-glasses-roadmap/index.html    200!
+/news/google-samsung-android-xr-smart-glasses    /news/google-samsung-android-xr-smart-glasses/index.html    200!
+/news/snap-specs-ar-glasses-roadmap    /news/snap-specs-ar-glasses-roadmap/index.html    200!
+/news/xreal-rokid-rayneo-display-glasses-guide    /news/xreal-rokid-rayneo-display-glasses-guide/index.html    200!
+/news/smart-glasses-vs-ar-glasses-explained    /news/smart-glasses-vs-ar-glasses-explained/index.html    200!
+/news/ar-glasses-display-technology-waveguides-microled    /news/ar-glasses-display-technology-waveguides-microled/index.html    200!
+/news/ar-glasses-companies    /news/ar-glasses-companies/index.html    200!
+/news/rayneo-ar-glasses-roadmap    /news/rayneo-ar-glasses-roadmap/index.html    200!
+/news/xreal-ar-glasses-roadmap    /news/xreal-ar-glasses-roadmap/index.html    200!
+/news/viture-ar-glasses-roadmap    /news/viture-ar-glasses-roadmap/index.html    200!
+/news/rokid-ar-glasses-roadmap    /news/rokid-ar-glasses-roadmap/index.html    200!
+/news/xiaomi-smart-glasses-roadmap    /news/xiaomi-smart-glasses-roadmap/index.html    200!
+/news/alibaba-quark-ai-glasses-roadmap    /news/alibaba-quark-ai-glasses-roadmap/index.html    200!
+/news/even-realities-ar-glasses-roadmap    /news/even-realities-ar-glasses-roadmap/index.html    200!
