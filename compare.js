@@ -160,7 +160,18 @@
   function setValue(id,key) { const el=$(id); if(el) state[key]=el.value; }
   document.addEventListener("change",e=>{
     const target=e.target;
-    if(target.matches("[data-picker-select]")){\n      const id=target.dataset.pickerSelect;\n      if(target.checked){if(selected.size<3)selected.add(id);}else selected.delete(id);\n      render();return;\n    }\n    if(target.matches("[data-select]")){
+    if(target.matches("[data-picker-select]")) {
+      const id = target.dataset.pickerSelect;
+      if (target.checked) {
+        if (selected.size < 3) selected.add(id);
+        else target.checked = false;
+      } else {
+        selected.delete(id);
+      }
+      render();
+      return;
+    }
+    if(target.matches("[data-select]")){
       const id=target.dataset.select;
       if(target.checked){if(selected.size<3)selected.add(id);}else selected.delete(id);
       render();return;
