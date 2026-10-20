@@ -897,3 +897,7 @@ html body a.shop-all-btn:focus {
     backdrop-filter: blur(2px);
   }
 }
+
+/* Long Products submenu: keep every comparison model reachable without changing the menu design. */
+.products-dropdown-menu { max-height: min(70vh, 34rem); overflow-y: auto; overscroll-behavior: contain; }
+.products-dropdown-menu a { white-space: normal; }
