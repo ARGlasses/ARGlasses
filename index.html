@@ -49,24 +49,29 @@
 <body class="comparison-page">
   <div id="site-header"></div>
   <main class="compare-shell">
-    <section class="compare-hero">
-      <p class="compare-eyebrow">THE AR GLASSES DATABASE</p>
-      <h1>Compare AR Glasses, XR Glasses and Smart Glasses</h1>
-      <p class="compare-intro">Compare display glasses, AI smart glasses and spatial AR systems side by side. Check published specifications, compatibility, tracking, displays, weight, pricing and source links before you choose a product.</p>
-      <div class="compare-trust"><span>Manufacturer-sourced specifications</span><span>UK pricing where published</span><span>Unknowns clearly marked</span></div>
-      <a class="compare-primary" href="#explorer">Browse all products <span aria-hidden="true">↓</span></a>
+    <section id="explorer" class="explorer-section">
+      <div class="section-heading catalogue-title"><div><p class="compare-eyebrow">EXPLORE THE LINE-UP</p><h1>Compare AR Glasses, XR Glasses and Smart Glasses</h1><p>Select up to three products from the list to compare their specifications side by side.</p></div><div class="catalogue-count" id="catalogue-count" aria-live="polite">18 products ready to browse</div></div>
+      <div class="catalogue-layout">
+        <aside class="catalogue-sidebar" aria-label="Comparison controls">
+          <div class="compare-controls">
+            <div class="picker-field"><span class="picker-field-label">Selected products</span><div class="picker-selection-box"><strong id="picker-selection-summary">Choose up to 3 glasses</strong><span>Tick products in the list to add them.</span></div></div>
+            <label><span>Sort by</span><select id="sort-filter"><option value="brand">Manufacturer A–Z</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="weight">Weight: light to heavy</option><option value="newest">Recently announced</option></select></label>
+          </div>
+          <div class="compare-selection-bar"><p><strong id="selected-count">0 selected</strong><span>Choose up to three products.</span></p><button id="compare-selected" disabled>Compare selected <span aria-hidden="true">→</span></button></div>
+        </aside>
+        <div class="catalogue-list-panel">
+          <div class="catalogue-list-heading"><strong>All products</strong><span>Tick a box on the right to select</span></div>
+          <div id="product-picker-options" class="product-picker-options" aria-live="polite"></div>
+          <p class="no-results" id="no-results" hidden>No products are available to display. Please refresh the page to try again.</p>
+        </div>
+      </div>
     </section>
 
-
-    <section id="explorer" class="explorer-section">
-      <div class="section-heading"><div><p class="compare-eyebrow">EXPLORE THE LINE-UP</p><h2>Choose products to compare</h2><p>Browse all products below, select up to three, and compare their specifications side by side.</p></div><div class="catalogue-count" id="catalogue-count" aria-live="polite">18 products ready to browse</div></div>
-      <div class="compare-controls">
-        <div class="picker-field"><label class="picker-field-label" for="product-picker">Select products</label><details class="product-picker" id="product-picker"><summary><span class="picker-summary-meta" id="picker-selection-summary">Choose up to 3 glasses</span><span class="picker-chevron" aria-hidden="true">⌄</span></summary><div class="product-picker-panel"><p class="picker-help">Select up to three glasses to compare.</p><div id="product-picker-options" class="product-picker-options"></div></div></details></div>
-        <label><span>Sort by</span><select id="sort-filter"><option value="brand">Manufacturer A–Z</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="weight">Weight: light to heavy</option><option value="newest">Recently announced</option></select></label>
-      </div>
-      <div class="compare-selection-bar"><p><strong id="selected-count">0 selected</strong><span>Choose up to three products to compare.</span></p><button id="compare-selected" disabled>Compare selected <span aria-hidden="true">→</span></button></div>
-      <div id="product-grid" class="product-grid" aria-live="polite"></div>
-      <p class="no-results" id="no-results" hidden>No products are available to display. Please refresh the page to try again.</p>
+    <section class="compare-hero">
+      <p class="compare-eyebrow">THE AR GLASSES DATABASE</p>
+      <h2>Make a more informed choice</h2>
+      <p class="compare-intro">Compare display glasses, AI smart glasses and spatial AR systems. Check manufacturer-published specifications, compatibility, tracking, weight and UK pricing before you choose.</p>
+      <div class="compare-trust"><span>Manufacturer-sourced specifications</span><span>UK pricing where published</span><span>Unknowns clearly marked</span></div>
     </section>
 
     <section class="compare-explainer" aria-label="Understand product categories">
