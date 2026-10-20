@@ -2,7 +2,6 @@
 http://arglasses.com/*    https://www.arglasses.com/:splat    301!
 http://www.arglasses.com/*    https://www.arglasses.com/:splat    301!
 https://arglasses.com/*    https://www.arglasses.com/:splat    301!
-https://www.arglasses.com/*    https://www.arglasses.com/:splat    200
 
 # Permanent redirects from legacy news .html URLs to the canonical clean URLs.
 # The ! forces the redirect even though the legacy .html files remain in the repo.
