@@ -119,19 +119,12 @@
   function render() {
     const list=filteredProducts();
     if($("catalogue-count")) $("catalogue-count").textContent=PRODUCTS.length ? list.length+" of "+PRODUCTS.length+" products" : "Catalogue unavailable — refresh to retry";
-    if(!PRODUCTS.length && $("product-grid")) $("product-grid").innerHTML='<p class="catalogue-error" role="alert">The product data could not be loaded. Please refresh the page; if this continues, contact us so we can fix the catalogue.</p>';
     if($("selected-count")) $("selected-count").textContent=selected.size+" selected";
     renderProductPicker();
     if($("compare-selected")) $("compare-selected").disabled=selected.size<2;
     if($("no-results")) $("no-results").hidden=list.length>0;
-    if($("product-grid")) $("product-grid").innerHTML=list.map(p=>{
-      const price = p.priceText || (numericPrice(p)!==null ? "£"+numericPrice(p) : "Price not confirmed");
-      const match = state.use!=="all" ? '<span class="match-label">'+esc(useLabel(p))+'</span>' : "";
-      return '<article class="product-card '+(selected.has(p.id)?"selected":"")+'">'+
-        '<div class="product-card-top"><div><span class="product-category">'+esc(categoryNames[p.category]||"Other")+'</span><h3>'+esc(p.name)+'</h3><div class="product-brand">'+esc(p.brand)+' · '+esc(p.year||"Year not confirmed")+'</div>'+match+'</div><div class="product-price">'+esc(price)+'</div></div>'+
-        '<div class="product-card-body"><p class="product-summary">'+esc(p.summary)+'</p><div class="quick-specs"><div class="quick-spec"><b>'+esc(p.resolution||"Not disclosed")+'</b><span>Resolution</span></div><div class="quick-spec"><b>'+esc(p.fov||"Not disclosed")+'</b><span>Field of view</span></div><div class="quick-spec"><b>'+esc(p.weight||"Not disclosed")+'</b><span>Weight</span></div><div class="quick-spec"><b>'+esc(p.tracking||"Not disclosed")+'</b><span>Tracking</span></div></div></div>'+
-        '<div class="product-card-actions"><label><input type="checkbox" data-select="'+esc(p.id)+'" '+(selected.has(p.id)?"checked":"")+' '+(!selected.has(p.id)&&selected.size>=3?"disabled":"")+' aria-label="Add '+esc(p.brand+" "+p.name)+' to comparison"> Add to compare</label><a href="'+esc(p.source)+'" target="_blank" rel="noopener noreferrer">Manufacturer source ↗</a></div></article>';
-    }).join("");
+    const options=$("product-picker-options");
+    if(options && !PRODUCTS.length) options.innerHTML='<p class="catalogue-error" role="alert">The product data could not be loaded. Please refresh the page; if this continues, contact us so we can fix the catalogue.</p>';
     renderComparison();
     updateUrl();
   }
@@ -140,10 +133,17 @@
     if(!options) return;
     const summary=$("picker-selection-summary");
     if(summary) summary.textContent=selected.size ? selected.size+" of 3 selected" : "Choose up to 3 glasses";
-    options.innerHTML=PRODUCTS.slice().sort((a,b)=>String(a.brand||"").localeCompare(String(b.brand||""))||String(a.name||"").localeCompare(String(b.name||""))).map(p=>{
+    const list=filteredProducts();
+    options.innerHTML=list.map(p=>{
       const checked=selected.has(p.id);
       const disabled=!checked&&selected.size>=3;
-      return '<label class="product-picker-option'+(checked?' is-selected':'')+(disabled?' is-disabled':'')+'"><span class="picker-option-name">'+esc(p.brand)+' '+esc(p.name)+'</span><input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+' aria-label="Select '+esc(p.brand+" "+p.name)+' for comparison"></label>';
+      const price=p.priceText || (numericPrice(p)!==null ? "£"+numericPrice(p) : "Price not confirmed");
+      const match=state.use!=="all" ? '<span class="picker-option-match">'+esc(useLabel(p))+'</span>' : "";
+      return '<label class="product-picker-option'+(checked?' is-selected':'')+(disabled?' is-disabled':'')+'">'+
+        '<span class="picker-option-copy"><span class="picker-option-name">'+esc(p.brand)+' '+esc(p.name)+'</span>'+
+        '<span class="picker-option-description">'+esc(p.summary||"Description not yet published.")+'</span>'+
+        '<span class="picker-option-meta">'+esc(price)+' · '+esc(p.weight||"Weight not disclosed")+' · '+esc(categoryNames[p.category]||"Other")+'</span>'+match+'</span>'+
+        '<input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+' aria-label="Select '+esc(p.brand+" "+p.name)+' for comparison"></label>';
     }).join("");
   }
   function renderComparison() {
@@ -172,11 +172,6 @@
       }
       render();
       return;
-    }
-    if(target.matches("[data-select]")){
-      const id=target.dataset.select;
-      if(target.checked){if(selected.size<3)selected.add(id);}else selected.delete(id);
-      render();return;
     }
     const controls={"category-filter":"category","brand-filter":"brand","sort-filter":"sort","use-case-filter":"use","budget-filter":"budget"};
     if(controls[target.id]){setValue(target.id,controls[target.id]);render();}
