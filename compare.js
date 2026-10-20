@@ -51,7 +51,12 @@
     const url = new URL(window.location.href);
     const params = url.searchParams;
     const values = {q:state.q, category:state.category, brand:state.brand, sort:state.sort, use:state.use, budget:state.budget};
-    for (const [key,value] of Object.entries(values)) value && value !== "all" ? params.set(key,value) : params.delete(key);
+    for (const [key,value] of Object.entries(values)) {
+      // Keep default state out of the URL so the homepage stays canonical and clean.
+      const isDefault = !value || value === "all" || (key === "sort" && value === "brand");
+      if (isDefault) params.delete(key);
+      else params.set(key,value);
+    }
     selected.size ? params.set("compare",[...selected].join(",")) : params.delete("compare");
     state.differences ? params.set("diff","1") : params.delete("diff");
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
