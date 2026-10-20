@@ -59,10 +59,12 @@
   function readUrl() {
     const params = new URLSearchParams(window.location.search);
     state.q = params.get("q") || "";
-    for (const key of ["category","brand","sort","use","budget"]) {
-      const val = params.get(key);
-      if (val) state[key] = val;
-    }
+    const sort = params.get("sort");
+    if (sort) state.sort = sort;
+    state.category = "all";
+    state.brand = "all";
+    state.use = "all";
+    state.budget = "all";
     if (!["all","display","ai","spatial","enterprise"].includes(state.category)) state.category = "all";
     if (!["brand","price-low","price-high","weight","newest"].includes(state.sort)) state.sort = "brand";
     if (!["all",...Object.keys(useCases)].includes(state.use)) state.use = "all";
@@ -141,7 +143,7 @@
     options.innerHTML=PRODUCTS.slice().sort((a,b)=>String(a.brand||"").localeCompare(String(b.brand||""))||String(a.name||"").localeCompare(String(b.name||""))).map(p=>{
       const checked=selected.has(p.id);
       const disabled=!checked&&selected.size>=3;
-      return '<label class="product-picker-option'+(checked?' is-selected':'')+(disabled?' is-disabled':'')+'"><input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+'><span class="picker-option-name">'+esc(p.brand)+' '+esc(p.name)+'</span><span class="picker-option-category">'+esc(categoryNames[p.category]||"Other")+'</span></label>';
+      return '<label class="product-picker-option'+(checked?' is-selected':'')+(disabled?' is-disabled':'')+'"><span class="picker-option-name">'+esc(p.brand)+' '+esc(p.name)+'</span><input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+' aria-label="Select '+esc(p.brand+" "+p.name)+' for comparison"></label>';
     }).join("");
   }
   function renderComparison() {
