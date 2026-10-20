@@ -160,7 +160,30 @@
       body.news-page .story-content,
       body.news-page .story-content * { color: white !important; }
       html body .viewport .dots { bottom: 1rem !important; }
-    </style>
+    
+      /* Product gallery details — preserves the existing full-screen carousel style */
+      .product-viewport { background:#f7f9fb; }
+      .product-viewport .story { min-width:clamp(82%, 88vw, 1180px); }
+      .product-viewport .story-content { max-width: min(850px, 92%); padding-bottom:clamp(2.4rem,5vw,4.5rem); }
+      .product-viewport .story-title { max-width: 18ch; }
+      .product-viewport .story-teaser { max-width: 68ch; line-height:1.55; }
+      .product-viewport .product-price { font-size:.9rem; margin:.15rem 0 0; opacity:.92; max-width:75ch; }
+      .product-viewport .product-category { display:inline-block; margin-left:.35rem; padding:.22rem .55rem; border:1px solid rgba(255,255,255,.48); border-radius:999px; font-size:.72rem; letter-spacing:.02em; }
+      .gallery-topline { position:absolute; top:clamp(5rem,10vh,7rem); left:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); right:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); z-index:70; display:flex; align-items:center; justify-content:space-between; gap:1rem; color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.55); font-size:.72rem; letter-spacing:.12em; pointer-events:none; }
+      .gallery-topline strong { font-size:.72rem; font-weight:500; letter-spacing:.04em; }
+      .product-viewport .story::after { background:linear-gradient(to top,rgba(0,0,0,.84) 0%,rgba(0,0,0,.60) 32%,rgba(0,0,0,.18) 65%,rgba(0,0,0,.35) 100%); }
+      .product-viewport .story img.bg { object-position:center; }
+      @media(max-width:700px) {
+        .product-viewport .story { min-width:88vw; height:calc(100svh - 6.2rem); }
+        .product-viewport .story-content { max-width:100%; padding:1.25rem; padding-bottom:3.2rem; }
+        .product-viewport .story-title { font-size:clamp(1.7rem,8vw,2.4rem); }
+        .product-viewport .story-teaser { font-size:.95rem; max-width:100%; }
+        .product-viewport .story-actions { display:flex; flex-wrap:wrap; gap:.45rem; }
+        .product-viewport .story-actions .amazon-button { margin:0; }
+        .gallery-topline { top:5rem; left:1rem; right:1rem; font-size:.65rem; }
+        .gallery-topline strong { font-size:.65rem; }
+      }
+</style>
 
     <!-- Shared header behavior -->
     <script src="./header.js?v=6" defer></script>
@@ -188,134 +211,516 @@
   </h1>
 
 
-    <!-- Stories -->
-    <section class="viewport" aria-label="Latest AR Glasses Products">
-      <button class="arrow left" aria-label="Previous story" disabled>
+    <!-- Product gallery: one slide per comparison product, sorted A–Z -->
+    <section class="viewport product-viewport" aria-label="Alphabetical product gallery">
+      <div class="gallery-topline">
+        <span>PRODUCT GALLERY</span>
+        <strong>38 products · A–Z</strong>
+      </div>
+      <button class="arrow left" aria-label="Previous product" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <button class="arrow right" aria-label="Next story">
+      <button class="arrow right" aria-label="Next product">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-
-      <div class="rail" tabindex="0">
-        <!-- Story 1 -->
-        <article class="story" id="story-1"><img class="bg" src="images/metaglasses2.webp" alt="Meta AI Glasses" fetchpriority="high" loading="eager"/><div class="story-content"><div class="story-kicker">AI Glasses from</div><h2 class="story-title">Meta</h2><p class="story-teaser">Cutting-Edge, Multi-Model, Iconic Styles</p>
-          <div class="story-actions">
-            
-          <a href="database.html?brand=Meta#catalogue" class="amazon-button">View specs →</a>
-<a href="news/meta-ray-ban-smart-glasses-roadmap" class="amazon-button">Latest news →</a>
-
-          </div></div></article> 
-        <!-- Story 2 -->
-        <article class="story" id="story-2"><img class="bg" src="images/visionpro2.webp" alt="Apple Vision Pro" /><div class="story-content"><div class="story-kicker">Vision Pro from</div><h2 class="story-title">Apple</h2><p class="story-teaser">Spatial Computing, Vision OS, High Resolution</p>
-          
-          <div class="story-actions">
-
-<a href="database.html?brand=Apple#catalogue" class="amazon-button">View specs →</a>
-            
-          </div></div></article>
-
-        <!-- Story 3 -->
-        <article class="story" id="story-3"><img class="bg" src="images/google.webp" alt="Google AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Google</h2><p class="story-teaser">Gemini AI, Android XR, Contextual Awareness</p>
-          
-          <div class="story-actions">
-            
-  <a href="database.html?brand=Google#catalogue" class="amazon-button">View specs →</a>
-<a href="news/google-samsung-android-xr-smart-glasses" class="amazon-button">Latest news →</a>
-        
-          
-          </div></div></article>
-
-        <!-- Story 4 -->
-        <article class="story" id="story-4"><img class="bg" src="images/snap.webp" alt="Snap AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Snap</h2><p class="story-teaser">Standalone, Snap OS, Natural Interface</p>
-          
-          <div class="story-actions">
-            
-          <a href="database.html?brand=Snap#catalogue" class="amazon-button">View specs →</a>
-<a href="news/snap-specs-ar-glasses-roadmap" class="amazon-button">Latest news →</a>
-
-          </div></div></article>
-
-        <!-- Story 5 -->
-        <article class="story" id="story-5"><img class="bg" src="images/vuzix3.webp" alt="Vuzix AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Vuzix</h2><p class="story-teaser">Transformative, Waveguide Optics, Enterprise-Ready</p>
-          
-          <div class="story-actions">
-            
-        <a href="database.html?brand=Vuzix#catalogue" class="amazon-button">View specs →</a>  
-          
-          </div></div></article>
-        
-        <!-- Story 6 -->
-        <article class="story" id="story-6"><img class="bg" src="images/rokid2.webp" alt="Rokid AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Rokid</h2><p class="story-teaser">Pioneering, Android TV, Gaming Hub</p>
-          
-          <div class="story-actions">
-
-          <a href="database.html?brand=Rokid#catalogue" class="amazon-button">View specs →</a>
-<a href="news/rokid-ar-glasses-roadmap" class="amazon-button">Latest news →</a>
-            
-          </div></div></article>
-        
-        <!-- Story 7 -->
-        <article class="story" id="story-7"><img class="bg" src="images/rayneo2.webp" alt="RayNeo AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">RayNeo</h2><p class="story-teaser">Study, Stream & Game, IMAX Enhanced</p>
-          
-         <div class="story-actions">
-
-<a href="database.html?brand=RayNeo#catalogue" class="amazon-button">View specs →</a>
-<a href="news/rayneo-ar-glasses-roadmap" class="amazon-button">Latest news →</a>
-           
-          </div></div></article>
-        
-        <!-- Story 8 -->
-        <article class="story" id="story-8"><img class="bg" src="images/viture.webp" alt="Viture AR Glasses" /><div class="story-content"><div class="story-kicker">XR Glasses from</div><h2 class="story-title">Viture</h2><p class="story-teaser">4K-Like Display, Sharper & Brighter, Next-Gen Audio</p>
-          
-          <div class="story-actions">
-            
-     <a href="database.html?brand=VITURE#catalogue" class="amazon-button">View specs →</a>
-<a href="news/viture-ar-glasses-roadmap" class="amazon-button">Latest news →</a>     
-          
-          </div></div></article>
-
-        <!-- Story 9 -->
-        <article class="story" id="story-9"><img class="bg" src="images/xreal.webp" alt="Xreal AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Xreal</h2><p class="story-teaser">Snapdragon, Android XR, Large FOV</p>
-          
-          <div class="story-actions">
-
-<a href="database.html?brand=Xreal#catalogue" class="amazon-button">View specs →</a>
-<a href="news/xreal-ar-glasses-roadmap" class="amazon-button">Latest news →</a>
-          
-          </div></div></article>
-
-
-        <!-- Story 10 -->
-        <article class="story" id="story-10"><img class="bg" src="images/magicleap.webp" alt="Magic Leap AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Magic Leap</h2><p class="story-teaser">Pioneering, Device Ideation, Groundbreaking</p>
-          
-          <div class="story-actions">
-
-  <a href="database.html?brand=Magic%20Leap#catalogue" class="amazon-button">View specs →</a>
-          
-          </div></div></article>
-
-
-        <!-- Story 11 -->
-        <article class="story" id="story-11"><img class="bg" src="images/lenovo.webp" alt="Lenovo AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Lenovo</h2><p class="story-teaser">Ultra-Portable, Comfortable, Immersive</p>
-          <div class="story-actions">
-
-  <a href="database.html?brand=Lenovo#catalogue" class="amazon-button">View specs →</a>
-          
-          </div></div></article>
-
-        <!-- Story 12 -->
-        <article class="story" id="story-12"><img class="bg" src="images/realwear.webp" alt="Realwear AR Glasses" /><div class="story-content"><div class="story-kicker">AR Glasses from</div><h2 class="story-title">Realwear</h2><p class="story-teaser">Powerful, Unparalleled, Cutting-Edge</p>
-          <div class="story-actions">
-
-<a href="database.html?brand=Realwear#catalogue" class="amazon-button">View specs →</a>
-          
-          </div></div></article>
-        
+      <div class="rail" tabindex="0" aria-label="Products in alphabetical order">
+        <article class="story product-card" id="product-xreal-1-pro-plus" data-product-id="xreal-1-pro-plus" data-product-name="1 Pro+" data-brand="XREAL" data-category="display">
+          <img class="bg" src="images/xreal.webp" alt="XREAL 1 Pro+ product image" loading="eager" decoding="async" onerror="this.onerror=null;this.src='images/xreal.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">XREAL <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">1 Pro+</h2>
+            <p class="story-teaser">XREAL display glasses with X Prism optics and optional 6DoF anchoring; UK store page lists £599 but currently asks visitors to register for stock notification.</p>
+            <p class="product-price">£599 UK store listing; check stock status</p>
+            <div class="story-actions">
+              <a href="index.html?compare=xreal-1-pro-plus" class="amazon-button">Compare specs →</a>
+              <a href="https://www.xreal.com/1-pro-plus" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-xreal-1s" data-product-id="xreal-1s" data-product-name="1S" data-brand="XREAL" data-category="display">
+          <img class="bg" src="images/xreal.webp" alt="XREAL 1S product image" loading="eager" decoding="async" onerror="this.onerror=null;this.src='images/xreal.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">XREAL <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">1S</h2>
+            <p class="story-teaser">Updated One-series display glasses with 1200p resolution, 120 Hz refresh, X1 spatial processing and glasses-side 2D-to-3D conversion.</p>
+            <p class="product-price">Check UK store; regional pricing varies</p>
+            <div class="story-actions">
+              <a href="index.html?compare=xreal-1s" class="amazon-button">Compare specs →</a>
+              <a href="https://www.xreal.com/uk/1s" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rokid-ai-style" data-product-id="rokid-ai-style" data-product-name="AI Glasses Style" data-brand="Rokid" data-category="ai">
+          <img class="bg" src="images/rokid2.webp" alt="Rokid AI Glasses Style product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rokid2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Rokid <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">AI Glasses Style</h2>
+            <p class="story-teaser">Display-free everyday AI eyewear with first-person camera, voice assistance, translation and open-ear audio.</p>
+            <p class="product-price">£329 UK store listing; check current price</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rokid-ai-style" class="amazon-button">Compare specs →</a>
+              <a href="https://gb.rokid.com/products/rokid-ai-glasses-style-non-display" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rayneo-air-4-pro" data-product-id="rayneo-air-4-pro" data-product-name="Air 4 Pro" data-brand="RayNeo" data-category="display">
+          <img class="bg" src="images/rayneo2.webp" alt="RayNeo Air 4 Pro product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rayneo2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">RayNeo <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Air 4 Pro</h2>
+            <p class="story-teaser">Entertainment-focused display glasses with HDR10 support and integrated audio.</p>
+            <p class="product-price">£289 UK direct-store listing; check current price</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rayneo-air-4-pro" class="amazon-button">Compare specs →</a>
+              <a href="https://uk.rayneo.com/products/rayneo-air-4-pro-ar-glasses" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-viture-beast" data-product-id="viture-beast" data-product-name="Beast" data-brand="VITURE" data-category="display">
+          <img class="bg" src="images/viture.webp" alt="VITURE Beast product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/viture.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">VITURE <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Beast</h2>
+            <p class="story-teaser">High-resolution entertainment and productivity glasses; check regional configuration and current bundle.</p>
+            <p class="product-price">Check UK store</p>
+            <div class="story-actions">
+              <a href="index.html?compare=viture-beast" class="amazon-button">Compare specs →</a>
+              <a href="https://www.viture.com/academy/xr-glasses/the-beast" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-vuzix-blade-2" data-product-id="vuzix-blade-2" data-product-name="Blade 2" data-brand="Vuzix" data-category="enterprise">
+          <img class="bg" src="images/vuzix3.webp" alt="Vuzix Blade 2 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/vuzix3.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Vuzix <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">Blade 2</h2>
+            <p class="story-teaser">Eyeglasses-style waveguide smart glasses for notifications, navigation, workflow instructions and hands-free capture.</p>
+            <p class="product-price">Business / channel pricing; check current availability</p>
+            <div class="story-actions">
+              <a href="index.html?compare=vuzix-blade-2" class="amazon-button">Compare specs →</a>
+              <a href="https://www.vuzix.com/products/blade-2" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-even-g1" data-product-id="even-g1" data-product-name="G1" data-brand="Even Realities" data-category="ai">
+          <img class="bg" src="https://cdn.shopify.com/s/files/1/0522/1610/3083/files/even-realities-g1-green1-smart-glasses-hd-1.jpg?v=1724682616" alt="Even Realities G1 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://cdn.shopify.com/s/files/1/0522/1610/3083/files/even-realities-g1-green1-smart-glasses-hd-1.jpg?v=1724682616';"/>
+          <div class="story-content">
+            <div class="story-kicker">Even Realities <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">G1</h2>
+            <p class="story-teaser">Earlier-generation discreet notification and teleprompter glasses; included to help users compare the G1 with the newer G2.</p>
+            <p class="product-price">Check official store; availability varies</p>
+            <div class="story-actions">
+              <a href="index.html?compare=even-g1" class="amazon-button">Compare specs →</a>
+              <a href="https://support.evenrealities.com/hc/en-us/articles/13489269281167-General-FAQs" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-even-g2" data-product-id="even-g2" data-product-name="G2" data-brand="Even Realities" data-category="ai">
+          <img class="bg" src="https://cdn.shopify.com/s/files/1/0522/1610/3083/files/even-realities-g1-green1-smart-glasses-hd-1.jpg?v=1724682616" alt="Even Realities G2 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://cdn.shopify.com/s/files/1/0522/1610/3083/files/even-realities-g1-green1-smart-glasses-hd-1.jpg?v=1724682616';"/>
+          <div class="story-content">
+            <div class="story-kicker">Even Realities <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">G2</h2>
+            <p class="story-teaser">Discreet information display focused on notifications, prompts and AI-assisted productivity.</p>
+            <p class="product-price">Check official store</p>
+            <div class="story-actions">
+              <a href="index.html?compare=even-g2" class="amazon-button">Compare specs →</a>
+              <a href="https://www.evenrealities.com/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rokid-glasses" data-product-id="rokid-glasses" data-product-name="Glasses" data-brand="Rokid" data-category="ai">
+          <img class="bg" src="images/rokid2.webp" alt="Rokid Glasses product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rokid2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Rokid <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">Glasses</h2>
+            <p class="story-teaser">Lightweight AI glasses with a discreet information display, camera, translation, navigation, teleprompter and meeting notes.</p>
+            <p class="product-price">Check UK store; regional pricing varies</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rokid-glasses" class="amazon-button">Compare specs →</a>
+              <a href="https://gb.rokid.com/products/rokid-glasses" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rayneo-gt-max" data-product-id="rayneo-gt-max" data-product-name="GT Max" data-brand="RayNeo" data-category="display">
+          <img class="bg" src="images/rayneo2.webp" alt="RayNeo GT Max product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rayneo2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">RayNeo <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">GT Max</h2>
+            <p class="story-teaser">Wider-field display glasses with native 3DoF and fit options.</p>
+            <p class="product-price">£369 launch offer (regular £399; check current price)</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rayneo-gt-max" class="amazon-button">Compare specs →</a>
+              <a href="https://uk.rayneo.com/products/rayneo-gt-max-ar-glasses" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rayneo-io" data-product-id="rayneo-io" data-product-name="iO" data-brand="RayNeo" data-category="ai">
+          <img class="bg" src="images/rayneo2.webp" alt="RayNeo iO product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rayneo2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">RayNeo <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">iO</h2>
+            <p class="story-teaser">Camera-free AI smart glasses with a transparent information display, live captions and translation, notes and teleprompter features. AI model access and subscriptions vary.</p>
+            <p class="product-price">£429 launch offer (regular £469; check current price)</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rayneo-io" class="amazon-button">Compare specs →</a>
+              <a href="https://uk.rayneo.com/products/rayneo-io-ai-glasses" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-viture-luma" data-product-id="viture-luma" data-product-name="Luma" data-brand="VITURE" data-category="display">
+          <img class="bg" src="images/viture.webp" alt="VITURE Luma product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/viture.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">VITURE <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Luma</h2>
+            <p class="story-teaser">Luma-series personal display glasses with 1200p panels and a USB-C connection; primarily for entertainment and productivity.</p>
+            <p class="product-price">Check UK store; official page lists US pricing</p>
+            <div class="story-actions">
+              <a href="index.html?compare=viture-luma" class="amazon-button">Compare specs →</a>
+              <a href="https://www.viture.com/luma/en-US" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-viture-luma-cyber" data-product-id="viture-luma-cyber" data-product-name="Luma Cyber" data-brand="VITURE" data-category="display">
+          <img class="bg" src="images/viture.webp" alt="VITURE Luma Cyber product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/viture.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">VITURE <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Luma Cyber</h2>
+            <p class="story-teaser">Luma-series variant with a distinct design and higher brightness rating; compare the exact regional configuration before purchase.</p>
+            <p class="product-price">Check official store; regional pricing varies</p>
+            <div class="story-actions">
+              <a href="index.html?compare=viture-luma-cyber" class="amazon-button">Compare specs →</a>
+              <a href="https://www.viture.jp/en-US/academy/xr-glasses/luma-series" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-viture-luma-pro" data-product-id="viture-luma-pro" data-product-name="Luma Pro" data-brand="VITURE" data-category="display">
+          <img class="bg" src="https://dl.lnwfile.com/klkxni.webp" alt="VITURE Luma Pro product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/viture.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">VITURE <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Luma Pro</h2>
+            <p class="story-teaser">Mid-tier Luma display glasses with a wider field of view and camera-enabled features compared with the base Luma.</p>
+            <p class="product-price">Check UK store; official page lists US pricing</p>
+            <div class="story-actions">
+              <a href="index.html?compare=viture-luma-pro" class="amazon-button">Compare specs →</a>
+              <a href="https://www.viture.com/luma/en-US" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-viture-luma-ultra" data-product-id="viture-luma-ultra" data-product-name="Luma Ultra" data-brand="VITURE" data-category="spatial">
+          <img class="bg" src="images/viture.webp" alt="VITURE Luma Ultra product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/viture.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">VITURE <span class="product-category">Spatial / true AR</span></div>
+            <h2 class="story-title">Luma Ultra</h2>
+            <p class="story-teaser">Higher-end Luma model designed for spatial computing, with depth cameras and hand-gesture interaction; verify which features work with each host.</p>
+            <p class="product-price">Check UK store; official page lists US pricing</p>
+            <div class="story-actions">
+              <a href="index.html?compare=viture-luma-ultra" class="amazon-button">Compare specs →</a>
+              <a href="https://www.viture.com/luma/en-US" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-vuzix-m400" data-product-id="vuzix-m400" data-product-name="M400" data-brand="Vuzix" data-category="enterprise">
+          <img class="bg" src="images/vuzix3.webp" alt="Vuzix M400 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/vuzix3.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Vuzix <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">M400</h2>
+            <p class="story-teaser">Rugged, high-brightness monocular wearable for remote assistance, inspection and hands-free enterprise workflows.</p>
+            <p class="product-price">Business / channel pricing; check current availability</p>
+            <div class="story-actions">
+              <a href="index.html?compare=vuzix-m400" class="amazon-button">Compare specs →</a>
+              <a href="https://www.vuzix.com/products/m400-smart-glasses" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-magic-leap-2" data-product-id="magic-leap-2" data-product-name="Magic Leap 2" data-brand="Magic Leap" data-category="enterprise">
+          <img class="bg" src="images/magicleap.webp" alt="Magic Leap Magic Leap 2 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/magicleap.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Magic Leap <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">Magic Leap 2</h2>
+            <p class="story-teaser">Enterprise optical see-through spatial computing headset; distinct from lightweight consumer glasses.</p>
+            <p class="product-price">Enterprise pricing / availability varies</p>
+            <div class="story-actions">
+              <a href="index.html?compare=magic-leap-2" class="amazon-button">Compare specs →</a>
+              <a href="https://www.magicleap.com/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rokid-max-2" data-product-id="rokid-max-2" data-product-name="Max 2" data-brand="Rokid" data-category="display">
+          <img class="bg" src="images/rokid2.webp" alt="Rokid Max 2 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rokid2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Rokid <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Max 2</h2>
+            <p class="story-teaser">High-resolution display glasses with adjustable diopter and accessory-based spatial features.</p>
+            <p class="product-price">Check regional store</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rokid-max-2" class="amazon-button">Compare specs →</a>
+              <a href="https://global.rokid.com/collections/rokid-ar-glasses-series" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-meta-rayban-display" data-product-id="meta-rayban-display" data-product-name="Meta Ray-Ban Display" data-brand="Meta / Ray-Ban" data-category="ai">
+          <img class="bg" src="images/metaglasses2.webp" alt="Meta / Ray-Ban Meta Ray-Ban Display product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/metaglasses2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Meta / Ray-Ban <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">Meta Ray-Ban Display</h2>
+            <p class="story-teaser">Everyday AI eyewear with a small in-lens information display and Neural Band gesture control.</p>
+            <p class="product-price">£749 UK listed</p>
+            <div class="story-actions">
+              <a href="index.html?compare=meta-rayban-display" class="amazon-button">Compare specs →</a>
+              <a href="https://www.ray-ban.com/uk/electronics/HX000001meta%20ray-ban%20display-black/815820026686" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-oakley-meta-vanguard" data-product-id="oakley-meta-vanguard" data-product-name="Meta Vanguard" data-brand="Oakley / Meta" data-category="ai">
+          <img class="bg" src="https://storage.ghost.io/c/2a/2f/2a2f38f0-4b71-407a-9c7e-18a9e2541980/content/images/size/w2400/2025/09/Oakley-Meta-Vanguard-White-with-PRIZM-Sapphire-Lens8.png" alt="Oakley / Meta Meta Vanguard product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://storage.ghost.io/c/2a/2f/2a2f38f0-4b71-407a-9c7e-18a9e2541980/content/images/size/w2400/2025/09/Oakley-Meta-Vanguard-White-with-PRIZM-Sapphire-Lens8.png';"/>
+          <div class="story-content">
+            <div class="story-kicker">Oakley / Meta <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">Meta Vanguard</h2>
+            <p class="story-teaser">Sports-oriented AI glasses with a camera, open-ear audio, Meta AI and activity-focused integrations.</p>
+            <p class="product-price">Check UK store; regional pricing varies</p>
+            <div class="story-actions">
+              <a href="index.html?compare=oakley-meta-vanguard" class="amazon-button">Compare specs →</a>
+              <a href="https://www.oakley.com/en-gb/product/W0OW8001" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-epson-moverio-bt-45cs" data-product-id="epson-moverio-bt-45cs" data-product-name="Moverio BT-45CS" data-brand="Epson" data-category="enterprise">
+          <img class="bg" src="images/vuzix3.webp" alt="Epson Moverio BT-45CS product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/vuzix3.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Epson <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">Moverio BT-45CS</h2>
+            <p class="story-teaser">Industrial see-through smart glasses for remote expert assistance and frontline collaboration, with a dedicated controller.</p>
+            <p class="product-price">Business / channel pricing; check current availability</p>
+            <div class="story-actions">
+              <a href="index.html?compare=epson-moverio-bt-45cs" class="amazon-button">Compare specs →</a>
+              <a href="https://mediaserver.goepson.com/ImConvServlet/imconv/95722853c9c3483de51d04a1c6efca5159f8b53d/original?assetDescr=Moverio-BT-45CS-Smart-Glasses-Specification-Sheet_CPD-62588-Final.pdf" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-realwear-navigator-520" data-product-id="realwear-navigator-520" data-product-name="Navigator 520" data-brand="RealWear" data-category="enterprise">
+          <img class="bg" src="images/vuzix3.webp" alt="RealWear Navigator 520 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/vuzix3.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">RealWear <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">Navigator 520</h2>
+            <p class="story-teaser">Rugged hands-free assisted-reality device for industrial and field workflows.</p>
+            <p class="product-price">Business / channel pricing</p>
+            <div class="story-actions">
+              <a href="index.html?compare=realwear-navigator-520" class="amazon-button">Compare specs →</a>
+              <a href="https://www.realwear.com/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-realwear-navigator-z1" data-product-id="realwear-navigator-z1" data-product-name="Navigator Z1" data-brand="RealWear" data-category="enterprise">
+          <img class="bg" src="images/vuzix3.webp" alt="RealWear Navigator Z1 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/vuzix3.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">RealWear <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">Navigator Z1</h2>
+            <p class="story-teaser">Intrinsically safe hands-free wearable for hazardous industrial environments, including optional thermal inspection.</p>
+            <p class="product-price">Business / channel pricing; check current availability</p>
+            <div class="story-actions">
+              <a href="index.html?compare=realwear-navigator-z1" class="amazon-button">Compare specs →</a>
+              <a href="https://shop.realwear.com/pages/realwear-navigator-z1-specifications" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-xreal-one" data-product-id="xreal-one" data-product-name="One" data-brand="XREAL" data-category="display">
+          <img class="bg" src="images/xreal.webp" alt="XREAL One product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/xreal.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">XREAL <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">One</h2>
+            <p class="story-teaser">USB-C display glasses with built-in spatial processing; accessories expand device compatibility.</p>
+            <p class="product-price">From £349 (store price varies)</p>
+            <div class="story-actions">
+              <a href="index.html?compare=xreal-one" class="amazon-button">Compare specs →</a>
+              <a href="https://uk.shop.xreal.com/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-xreal-one-pro" data-product-id="xreal-one-pro" data-product-name="One Pro" data-brand="XREAL" data-category="display">
+          <img class="bg" src="https://xreal.sensofinity.com/cdn/shop/files/xreal_one_pro_ps_3.png?v=1751642934&amp;width=1346" alt="XREAL One Pro product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/xreal.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">XREAL <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">One Pro</h2>
+            <p class="story-teaser">Personal spatial display glasses with on-board spatial processing and an ultrawide virtual-screen mode.</p>
+            <p class="product-price">£579 UK direct-store listing</p>
+            <div class="story-actions">
+              <a href="index.html?compare=xreal-one-pro" class="amazon-button">Compare specs →</a>
+              <a href="https://www.xreal.com/uk/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-viture-pro-2" data-product-id="viture-pro-2" data-product-name="Pro 2" data-brand="VITURE" data-category="display">
+          <img class="bg" src="images/viture.webp" alt="VITURE Pro 2 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/viture.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">VITURE <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Pro 2</h2>
+            <p class="story-teaser">Lightweight display glasses prioritising sharpness, comfort and brightness for gaming, video and virtual screens.</p>
+            <p class="product-price">Check UK store; official page lists regional pricing</p>
+            <div class="story-actions">
+              <a href="index.html?compare=viture-pro-2" class="amazon-button">Compare specs →</a>
+              <a href="https://www.viture.com/ja/academy/xr-glasses/pro-2" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-viture-pro-xr" data-product-id="viture-pro-xr" data-product-name="Pro XR" data-brand="VITURE" data-category="display">
+          <img class="bg" src="images/viture.webp" alt="VITURE Pro XR product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/viture.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">VITURE <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">Pro XR</h2>
+            <p class="story-teaser">Portable virtual-screen glasses with electrochromic dimming and adjustable focus.</p>
+            <p class="product-price">Check UK store</p>
+            <div class="story-actions">
+              <a href="index.html?compare=viture-pro-xr" class="amazon-button">Compare specs →</a>
+              <a href="https://www.viture.com/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-xreal-project-aura" data-product-id="xreal-project-aura" data-product-name="Project Aura" data-brand="XREAL / Google" data-category="spatial">
+          <img class="bg" src="images/xreal.webp" alt="XREAL / Google Project Aura product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/xreal.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">XREAL / Google <span class="product-category">Spatial / true AR</span></div>
+            <h2 class="story-title">Project Aura</h2>
+            <p class="story-teaser">Announced wired XR glasses developed with Google and Qualcomm; marked as upcoming until a shipping retail configuration is confirmed.</p>
+            <p class="product-price">Announced for global launch in 2026; retail price and shipping status not confirmed in source checked</p>
+            <div class="story-actions">
+              <a href="index.html?compare=xreal-project-aura" class="amazon-button">Compare specs →</a>
+              <a href="https://www.xreal.com/uk/blog/project-aura-google-io-2026" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rayban-meta-gen2" data-product-id="rayban-meta-gen2" data-product-name="Ray-Ban Meta (Gen 2)" data-brand="Meta / Ray-Ban" data-category="ai">
+          <img class="bg" src="images/metaglasses2.webp" alt="Meta / Ray-Ban Ray-Ban Meta (Gen 2) product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/metaglasses2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Meta / Ray-Ban <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">Ray-Ban Meta (Gen 2)</h2>
+            <p class="story-teaser">Second-generation Ray-Ban Meta camera-and-audio AI glasses; kept separate from Gen 3 because hardware and battery specifications differ.</p>
+            <p class="product-price">Check official store; frame and lens variants vary</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rayban-meta-gen2" class="amazon-button">Compare specs →</a>
+              <a href="https://www.ray-ban.com/uk/electronics/ray-ban-meta-smart-glasses" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rayban-meta-gen3" data-product-id="rayban-meta-gen3" data-product-name="Ray-Ban Meta (Gen 3)" data-brand="Meta / Ray-Ban" data-category="ai">
+          <img class="bg" src="images/metaglasses2.webp" alt="Meta / Ray-Ban Ray-Ban Meta (Gen 3) product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/metaglasses2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Meta / Ray-Ban <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">Ray-Ban Meta (Gen 3)</h2>
+            <p class="story-teaser">Camera, audio and AI assistant glasses without an in-lens display.</p>
+            <p class="product-price">From £489 UK official store; frame and lens variants vary</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rayban-meta-gen3" class="amazon-button">Compare specs →</a>
+              <a href="https://www.ray-ban.com/uk/electronics/RW4016ray-ban%20meta%20gen%203%20aviator-black/8056266259852" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-vuzix-shield" data-product-id="vuzix-shield" data-product-name="Shield" data-brand="Vuzix" data-category="enterprise">
+          <img class="bg" src="images/vuzix3.webp" alt="Vuzix Shield product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/vuzix3.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Vuzix <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">Shield</h2>
+            <p class="story-teaser">Binocular waveguide AR safety glasses aimed at industrial work, with stereo displays and cameras.</p>
+            <p class="product-price">Business / channel pricing; check current availability</p>
+            <div class="story-actions">
+              <a href="index.html?compare=vuzix-shield" class="amazon-button">Compare specs →</a>
+              <a href="https://support.vuzix.com/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-snap-specs-2026" data-product-id="snap-specs-2026" data-product-name="Specs (2026)" data-brand="Snap" data-category="spatial">
+          <img class="bg" src="images/snap.webp" alt="Snap Specs (2026) product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/snap.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Snap <span class="product-category">Spatial / true AR</span></div>
+            <h2 class="story-title">Specs (2026)</h2>
+            <p class="story-teaser">Standalone consumer AR system announced for 2026; listed specifications remain subject to final shipping configuration.</p>
+            <p class="product-price">Announced at US$2,195; UK checkout price to confirm</p>
+            <div class="story-actions">
+              <a href="index.html?compare=snap-specs-2026" class="amazon-button">Compare specs →</a>
+              <a href="https://www.specs.com/smart-glasses/specs-27?view=customize" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-apple-vision-pro" data-product-id="apple-vision-pro" data-product-name="Vision Pro" data-brand="Apple" data-category="spatial">
+          <img class="bg" src="images/visionpro2.webp" alt="Apple Vision Pro product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/visionpro2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Apple <span class="product-category">Spatial / true AR</span></div>
+            <h2 class="story-title">Vision Pro</h2>
+            <p class="story-teaser">Included as a spatial-computing reference point; this is a mixed-reality headset, not a glasses-form product.</p>
+            <p class="product-price">Regional pricing; headset, not glasses</p>
+            <div class="story-actions">
+              <a href="index.html?compare=apple-vision-pro" class="amazon-button">Compare specs →</a>
+              <a href="https://www.apple.com/apple-vision-pro/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-vive-eagle" data-product-id="vive-eagle" data-product-name="VIVE Eagle" data-brand="HTC VIVE" data-category="ai">
+          <img class="bg" src="images/metaglasses2.webp" alt="HTC VIVE VIVE Eagle product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/metaglasses2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">HTC VIVE <span class="product-category">AI smart glasses</span></div>
+            <h2 class="story-title">VIVE Eagle</h2>
+            <p class="story-teaser">Everyday AI eyewear with camera capture, voice assistance, translation, Bluetooth and open-ear audio; verify country availability.</p>
+            <p class="product-price">Check regional availability; UK pricing not confirmed</p>
+            <div class="story-actions">
+              <a href="index.html?compare=vive-eagle" class="amazon-button">Compare specs →</a>
+              <a href="https://www.vive.com/hk/product/vive-eagle/spec/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rayneo-x2" data-product-id="rayneo-x2" data-product-name="X2" data-brand="RayNeo" data-category="spatial">
+          <img class="bg" src="images/rayneo2.webp" alt="RayNeo X2 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rayneo2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">RayNeo <span class="product-category">Spatial / true AR</span></div>
+            <h2 class="story-title">X2</h2>
+            <p class="story-teaser">Standalone colour optical-see-through AR glasses with spatial navigation and translation; currently shown out of stock on the UK store.</p>
+            <p class="product-price">£499 shown on UK page; currently out of stock / regional availability restricted</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rayneo-x2" class="amazon-button">Compare specs →</a>
+              <a href="https://uk.rayneo.com/products/tcl-rayneo-x2" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rayneo-x3-pro" data-product-id="rayneo-x3-pro" data-product-name="X3 Pro" data-brand="RayNeo" data-category="spatial">
+          <img class="bg" src="images/rayneo2.webp" alt="RayNeo X3 Pro product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/rayneo2.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">RayNeo <span class="product-category">Spatial / true AR</span></div>
+            <h2 class="story-title">X3 Pro</h2>
+            <p class="story-teaser">Self-contained AI and optical see-through AR glasses with spatial positioning.</p>
+            <p class="product-price">£1,299 UK direct-store listing; check current price</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rayneo-x3-pro" class="amazon-button">Compare specs →</a>
+              <a href="https://uk.rayneo.com/products/x3-pro-ai-display-glasses" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-rog-xreal-r1" data-product-id="rog-xreal-r1" data-product-name="XREAL R1" data-brand="ROG / XREAL" data-category="display">
+          <img class="bg" src="https://xreal.sensofinity.com/cdn/shop/files/xreal_one_pro_ps_3.png?v=1751642934&amp;width=1346" alt="ROG / XREAL XREAL R1 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://xreal.sensofinity.com/cdn/shop/files/xreal_one_pro_ps_3.png?v=1751642934&amp;width=1346';"/>
+          <div class="story-content">
+            <div class="story-kicker">ROG / XREAL <span class="product-category">Display glasses</span></div>
+            <h2 class="story-title">XREAL R1</h2>
+            <p class="story-teaser">Gaming-focused display glasses with high-refresh-rate mode, electrochromic dimming and an included control dock.</p>
+            <p class="product-price">£749 UK ASUS eStore listing; check current price</p>
+            <div class="story-actions">
+              <a href="index.html?compare=rog-xreal-r1" class="amazon-button">Compare specs →</a>
+              <a href="https://rog.asus.com/uk/glasses/rog-xreal-r1/spec/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="story product-card" id="product-vuzix-z100" data-product-id="vuzix-z100" data-product-name="Z100" data-brand="Vuzix" data-category="enterprise">
+          <img class="bg" src="images/vuzix3.webp" alt="Vuzix Z100 product image" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='images/vuzix3.webp';"/>
+          <div class="story-content">
+            <div class="story-kicker">Vuzix <span class="product-category">Enterprise AR</span></div>
+            <h2 class="story-title">Z100</h2>
+            <p class="story-teaser">Lightweight notification and workflow eyewear aimed at enterprise use.</p>
+            <p class="product-price">Business / channel pricing</p>
+            <div class="story-actions">
+              <a href="index.html?compare=vuzix-z100" class="amazon-button">Compare specs →</a>
+              <a href="https://www.vuzix.com/" class="amazon-button" target="_blank" rel="noopener noreferrer">Manufacturer / source ↗</a>
+            </div>
+          </div>
+        </article>
       </div>
-
-            <div class="dots" aria-hidden="true"></div>
-      </section>
+      <div class="dots" aria-label="Choose a product slide"></div>
+    </section>
     
    
 
