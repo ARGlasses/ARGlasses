@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=8"><link rel="stylesheet" href="compare.css">
   <link rel="icon" href="images/logo40x40.webp" type="image/webp">
-  <script src="./header.js?v=6" defer></script><script src="./products-data.js"></script>
+  <script src="./header.js?v=6" defer></script><script src="./products-data.js" defer></script>
   <script src="./compare.js" defer></script>
 <script type="application/ld+json">
 {
@@ -54,17 +54,12 @@
       <h1>Compare AR Glasses, XR Glasses and Smart Glasses</h1>
       <p class="compare-intro">Compare display glasses, AI smart glasses and spatial AR systems side by side. Check published specifications, compatibility, tracking, displays, weight, pricing and source links before you choose a product.</p>
       <div class="compare-trust"><span>Manufacturer-sourced specifications</span><span>UK pricing where published</span><span>Unknowns clearly marked</span></div>
-      <a class="compare-primary" href="#explorer">Explore the comparison <span aria-hidden="true">↓</span></a>
+      <a class="compare-primary" href="#explorer">Browse all products <span aria-hidden="true">↓</span></a>
     </section>
 
-    <section class="compare-explainer" aria-label="Understand product categories">
-      <article><div class="category-symbol">▣</div><h2>Display glasses</h2><p>Wearable screens for films, gaming and virtual monitors. Usually tethered to a phone, laptop or media device; they do not necessarily understand or map the room around you.</p><small>Examples: XREAL, VITURE, RayNeo Air, Rokid Max</small></article>
-      <article><div class="category-symbol">✧</div><h2>AI smart glasses</h2><p>Everyday eyewear with cameras, microphones, speakers and an AI assistant. Some include a small private display; many have no visual display at all.</p><small>Examples: Ray-Ban Meta, Even Realities, Halliday</small></article>
-      <article><div class="category-symbol">⌖</div><h2>Spatial / true AR</h2><p>Systems designed to anchor digital content in the physical environment using tracking, spatial mapping or optical see-through displays. Capabilities vary significantly.</p><small>Examples: Snap Specs, RayNeo X3 Pro, enterprise systems</small></article>
-    </section>
 
     <section id="explorer" class="explorer-section">
-      <div class="section-heading"><div><p class="compare-eyebrow">EXPLORE THE LINE-UP</p><h2>Compare AR glasses</h2><p>Search the catalogue, narrow it by category, then select up to three products for a detailed comparison.</p></div><div class="catalogue-count" id="catalogue-count" aria-live="polite">Loading catalogue…</div></div>
+      <div class="section-heading"><div><p class="compare-eyebrow">EXPLORE THE LINE-UP</p><h2>Choose products to compare</h2><p>Browse all products below, filter by type or brand, and select up to three for a side-by-side comparison.</p></div><div class="catalogue-count" id="catalogue-count" aria-live="polite">18 products ready to browse</div></div>
       <div class="compare-controls">
         <label class="search-field"><span>Search products</span><input id="product-search" type="search" placeholder="Try XREAL, Meta, 3DoF, camera…" autocomplete="off"></label>
         <label><span>Product type</span><select id="category-filter"><option value="all">All categories</option><option value="display">Display glasses</option><option value="ai">AI smart glasses</option><option value="spatial">Spatial / true AR</option><option value="enterprise">Enterprise AR</option></select></label>
@@ -77,6 +72,12 @@
       <div class="compare-selection-bar"><p><strong id="selected-count">0 selected</strong><span>Choose up to three products to compare.</span></p><button id="compare-selected" disabled>Compare selected <span aria-hidden="true">→</span></button></div>
       <div id="product-grid" class="product-grid" aria-live="polite"></div>
       <p class="no-results" id="no-results" hidden>No products match those filters. Try a broader search or clear a filter.</p>
+    </section>
+
+    <section class="compare-explainer" aria-label="Understand product categories">
+      <article><div class="category-symbol">▣</div><h2>Display glasses</h2><p>Wearable screens for films, gaming and virtual monitors. Usually tethered to a phone, laptop or media device; they do not necessarily understand or map the room around you.</p><small>Examples: XREAL, VITURE, RayNeo Air, Rokid Max</small></article>
+      <article><div class="category-symbol">✧</div><h2>AI smart glasses</h2><p>Everyday eyewear with cameras, microphones, speakers and an AI assistant. Some include a small private display; many have no visual display at all.</p><small>Examples: Ray-Ban Meta, Even Realities, Halliday</small></article>
+      <article><div class="category-symbol">⌖</div><h2>Spatial / true AR</h2><p>Systems designed to anchor digital content in the physical environment using tracking, spatial mapping or optical see-through displays. Capabilities vary significantly.</p><small>Examples: Snap Specs, RayNeo X3 Pro, enterprise systems</small></article>
     </section>
 
     <section id="comparison" class="comparison-results" hidden>
