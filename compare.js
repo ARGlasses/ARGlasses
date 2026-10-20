@@ -116,7 +116,8 @@
   }
   function render() {
     const list=filteredProducts();
-    if($("catalogue-count")) $("catalogue-count").textContent=list.length+" of "+PRODUCTS.length+" products";
+    if($("catalogue-count")) $("catalogue-count").textContent=PRODUCTS.length ? list.length+" of "+PRODUCTS.length+" products" : "Catalogue unavailable — refresh to retry";
+    if(!PRODUCTS.length && $("product-grid")) $("product-grid").innerHTML='<p class="catalogue-error" role="alert">The product data could not be loaded. Please refresh the page; if this continues, contact us so we can fix the catalogue.</p>';
     if($("selected-count")) $("selected-count").textContent=selected.size+" selected";
     if($("compare-selected")) $("compare-selected").disabled=selected.size<2;
     if($("no-results")) $("no-results").hidden=list.length>0;
