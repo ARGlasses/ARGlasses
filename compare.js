@@ -59,16 +59,23 @@
   function readUrl() {
     const params = new URLSearchParams(window.location.search);
     state.q = params.get("q") || "";
-    const sort = params.get("sort");
-    if (sort) state.sort = sort;
-    state.category = "all";
-    state.brand = "all";
-    state.use = "all";
-    state.budget = "all";
-    if (!["all","display","ai","spatial","enterprise"].includes(state.category)) state.category = "all";
-    if (!["brand","price-low","price-high","weight","newest"].includes(state.sort)) state.sort = "brand";
-    if (!["all",...Object.keys(useCases)].includes(state.use)) state.use = "all";
-    if (!["all","250","350","500","750","1000","1500"].includes(state.budget)) state.budget = "all";
+
+    const sort = params.get("sort") || "brand";
+    state.sort = ["brand","price-low","price-high","weight","newest"].includes(sort) ? sort : "brand";
+
+    const category = params.get("category") || "all";
+    state.category = ["all","display","ai","spatial","enterprise"].includes(category) ? category : "all";
+
+    const brand = params.get("brand") || "all";
+    const validBrands = new Set(PRODUCTS.map(product => product.brand).filter(Boolean));
+    state.brand = brand === "all" || validBrands.has(brand) ? brand : "all";
+
+    const use = params.get("use") || "all";
+    state.use = ["all", ...Object.keys(useCases)].includes(use) ? use : "all";
+
+    const budget = params.get("budget") || "all";
+    state.budget = ["all","250","350","500","750","1000","1500"].includes(budget) ? budget : "all";
+
     state.differences = params.get("diff") === "1";
     (params.get("compare") || "").split(",").filter(Boolean).slice(0,3).forEach(id => {
       if (PRODUCTS.some(p => p.id === id)) selected.add(id);
@@ -129,11 +136,11 @@
     updateUrl();
   }
   function briefDescription(value) {
-    const description = String(value || "Description not yet published.").replace(/\\s+/g, " ").trim();
+    const description = String(value || "Description not yet published.").replace(/\s+/g, " ").trim();
     if (description.length <= 105) return description;
-    const firstSentence = description.match(/^.{35,105}?[.!?](?=\\s|$)/);
+    const firstSentence = description.match(/^.{35,105}?[.!?](?=\s|$)/);
     if (firstSentence) return firstSentence[0];
-    return description.slice(0, 102).replace(/\\s+\\S*$/, "") + "…";
+    return description.slice(0, 102).replace(/\s+\S*$/, "") + "…";
   }
   function renderProductPicker() {
     const options=$("product-picker-options");
