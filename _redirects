@@ -3,6 +3,10 @@ http://arglasses.com/*    https://www.arglasses.com/:splat    301!
 http://www.arglasses.com/*    https://www.arglasses.com/:splat    301!
 https://arglasses.com/*    https://www.arglasses.com/:splat    301!
 
+# Gallery uses a clean URL; preserve the old Products URL as a permanent redirect.
+/products    /gallery    301!
+/gallery     /products.html    200!
+
 # Permanent redirects from legacy news .html URLs to the canonical clean URLs.
 # The ! forces the redirect even though the legacy .html files remain in the repo.
 /news/meta-ray-ban-smart-glasses-roadmap.html    /news/meta-ray-ban-smart-glasses-roadmap    301!
