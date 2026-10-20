@@ -81,7 +81,7 @@
   function syncControls() {
     const validBrands = ["all", ...PRODUCTS.map(p=>p.brand)];
     if (!validBrands.includes(state.brand)) state.brand = "all";
-    const map = {"product-search":"q","category-filter":"category","brand-filter":"brand","sort-filter":"sort","use-case-filter":"use","budget-filter":"budget","differences-only":"differences"};
+    const map = {"category-filter":"category","brand-filter":"brand","sort-filter":"sort","use-case-filter":"use","budget-filter":"budget","differences-only":"differences"};
     for (const [id,key] of Object.entries(map)) {
       const el = $(id);
       if (!el) continue;
@@ -119,6 +119,7 @@
     if($("catalogue-count")) $("catalogue-count").textContent=PRODUCTS.length ? list.length+" of "+PRODUCTS.length+" products" : "Catalogue unavailable — refresh to retry";
     if(!PRODUCTS.length && $("product-grid")) $("product-grid").innerHTML='<p class="catalogue-error" role="alert">The product data could not be loaded. Please refresh the page; if this continues, contact us so we can fix the catalogue.</p>';
     if($("selected-count")) $("selected-count").textContent=selected.size+" selected";
+    renderProductPicker();
     if($("compare-selected")) $("compare-selected").disabled=selected.size<2;
     if($("no-results")) $("no-results").hidden=list.length>0;
     if($("product-grid")) $("product-grid").innerHTML=list.map(p=>{
@@ -131,6 +132,17 @@
     }).join("");
     renderComparison();
     updateUrl();
+  }
+  function renderProductPicker() {
+    const options=$("product-picker-options");
+    if(!options) return;
+    const summary=$("picker-selection-summary");
+    if(summary) summary.textContent=selected.size ? selected.size+" of 3 selected" : "Choose up to 3 glasses";
+    options.innerHTML=PRODUCTS.slice().sort((a,b)=>String(a.brand||"").localeCompare(String(b.brand||""))||String(a.name||"").localeCompare(String(b.name||""))).map(p=>{
+      const checked=selected.has(p.id);
+      const disabled=!checked&&selected.size>=3;
+      return '<label class="product-picker-option'+(checked?' is-selected':'')+(disabled?' is-disabled':'')+'"><input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+'><span class="picker-option-name">'+esc(p.brand)+' '+esc(p.name)+'</span><span class="picker-option-category">'+esc(categoryNames[p.category]||"Other")+'</span></label>';
+    }).join("");
   }
   function renderComparison() {
     const products=[...selected].map(id=>PRODUCTS.find(p=>p.id===id)).filter(Boolean);
@@ -148,7 +160,7 @@
   function setValue(id,key) { const el=$(id); if(el) state[key]=el.value; }
   document.addEventListener("change",e=>{
     const target=e.target;
-    if(target.matches("[data-select]")){
+    if(target.matches("[data-picker-select]")){\n      const id=target.dataset.pickerSelect;\n      if(target.checked){if(selected.size<3)selected.add(id);}else selected.delete(id);\n      render();return;\n    }\n    if(target.matches("[data-select]")){
       const id=target.dataset.select;
       if(target.checked){if(selected.size<3)selected.add(id);}else selected.delete(id);
       render();return;
@@ -157,7 +169,7 @@
     if(controls[target.id]){setValue(target.id,controls[target.id]);render();}
     if(target.id==="differences-only"){state.differences=target.checked;render();}
   });
-  if($("product-search")) $("product-search").addEventListener("input",e=>{state.q=e.target.value;render();});
+
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{$("comparison").hidden=false;$("comparison").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});});
   if($("clear-comparison")) $("clear-comparison").addEventListener("click",()=>{selected.clear();render();});
   if($("copy-comparison-link")) $("copy-comparison-link").addEventListener("click",async()=>{

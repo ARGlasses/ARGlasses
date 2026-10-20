@@ -70,3 +70,26 @@ body.comparison-page .compare-explainer{margin:42px 0 55px}
   body.comparison-page .compare-hero{padding:22px 18px}
   body.comparison-page .compare-trust{display:none}
 }
+
+
+/* Multi-select product picker: catalogue-wide list with a hard three-product limit. */
+.product-picker{position:relative;min-width:0}
+.product-picker>summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:1px solid #d9e1e9;border-radius:7px;background:#fff;cursor:pointer;list-style:none;color:#26394a}
+.product-picker>summary::-webkit-details-marker{display:none}
+.picker-summary-label{font-size:.82rem;font-weight:600}
+.picker-summary-meta{margin-left:auto;font-size:.72rem;color:#64748b;font-weight:400}
+.picker-chevron{font-size:1.1rem;color:#0874a9;transition:transform .15s}
+.product-picker[open] .picker-chevron{transform:rotate(180deg)}
+.product-picker>summary:focus-visible{outline:3px solid #1681b7;outline-offset:3px}
+.product-picker-panel{position:absolute;top:calc(100% + 7px);left:0;right:0;z-index:20;padding:12px;background:#fff;border:1px solid #d9e1e9;border-radius:10px;box-shadow:0 14px 36px rgba(20,45,65,.16)}
+.picker-help{margin:0 0 9px;color:#64748b;font-size:.72rem;line-height:1.5}
+.product-picker-options{max-height:320px;overflow:auto;overscroll-behavior:contain}
+.product-picker-option{display:grid;grid-template-columns:18px minmax(0,1fr);align-items:center;column-gap:9px;row-gap:2px;padding:9px 7px;border-bottom:1px solid #edf0f3;border-radius:5px;cursor:pointer}
+.product-picker-option:last-child{border-bottom:0}
+.product-picker-option:hover,.product-picker-option.is-selected{background:#eef7fc}
+.product-picker-option input{grid-row:span 2;width:16px;height:16px;margin:0;accent-color:#075b91}
+.picker-option-name{font-size:.76rem;font-weight:600;color:#26394a;overflow-wrap:anywhere}
+.picker-option-category{font-size:.66rem;color:#6b7785}
+.product-picker-option.is-disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:900px){.product-picker-panel{left:0;right:0}}
+@media(max-width:620px){.product-picker-panel{position:relative;top:auto;margin-top:7px;max-height:none;box-shadow:0 8px 20px rgba(20,45,65,.1)}.product-picker-options{max-height:280px}}
