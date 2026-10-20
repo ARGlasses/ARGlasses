@@ -185,3 +185,12 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
  .catalogue-sidebar .compare-controls{grid-template-columns:minmax(0,1fr)}
  .catalogue-list-heading{align-items:flex-start;flex-direction:column;gap:3px}
 }
+
+
+/* Product picker: keep each item to its name and a short, readable description. */
+.catalogue-list-panel .product-picker-option{padding:9px 15px;gap:12px}
+.catalogue-list-panel .picker-option-copy{gap:2px}
+.catalogue-list-panel .picker-option-name{font-size:.8rem;line-height:1.25}
+.catalogue-list-panel .picker-option-description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:.7rem;line-height:1.35;color:#64748b}
+.catalogue-list-panel .picker-option-match{margin-top:3px}
+@media(max-width:760px){.catalogue-list-panel .product-picker-option{padding:8px 11px}.catalogue-list-panel .picker-option-description{font-size:.69rem}}
