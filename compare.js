@@ -128,6 +128,13 @@
     renderComparison();
     updateUrl();
   }
+  function briefDescription(value) {
+    const description = String(value || "Description not yet published.").replace(/\\s+/g, " ").trim();
+    if (description.length <= 105) return description;
+    const firstSentence = description.match(/^.{35,105}?[.!?](?=\\s|$)/);
+    if (firstSentence) return firstSentence[0];
+    return description.slice(0, 102).replace(/\\s+\\S*$/, "") + "…";
+  }
   function renderProductPicker() {
     const options=$("product-picker-options");
     if(!options) return;
@@ -137,12 +144,11 @@
     options.innerHTML=list.map(p=>{
       const checked=selected.has(p.id);
       const disabled=!checked&&selected.size>=3;
-      const price=p.priceText || (numericPrice(p)!==null ? "£"+numericPrice(p) : "Price not confirmed");
+      const brief = briefDescription(p.summary);
       const match=state.use!=="all" ? '<span class="picker-option-match">'+esc(useLabel(p))+'</span>' : "";
       return '<label class="product-picker-option'+(checked?' is-selected':'')+(disabled?' is-disabled':'')+'">'+
         '<span class="picker-option-copy"><span class="picker-option-name">'+esc(p.brand)+' '+esc(p.name)+'</span>'+
-        '<span class="picker-option-description">'+esc(p.summary||"Description not yet published.")+'</span>'+
-        '<span class="picker-option-meta">'+esc(price)+' · '+esc(p.weight||"Weight not disclosed")+' · '+esc(categoryNames[p.category]||"Other")+'</span>'+match+'</span>'+
+        '<span class="picker-option-description">'+esc(brief)+'</span>'+match+'</span>'+
         '<input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+' aria-label="Select '+esc(p.brand+" "+p.name)+' for comparison"></label>';
     }).join("");
   }
