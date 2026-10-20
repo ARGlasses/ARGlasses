@@ -44,3 +44,7 @@ https://www.arglasses.com/*    https://arglasses.com/:splat    301!
 /news/xiaomi-smart-glasses-roadmap    /news/xiaomi-smart-glasses-roadmap/index.html    200!
 /news/alibaba-quark-ai-glasses-roadmap    /news/alibaba-quark-ai-glasses-roadmap/index.html    200!
 /news/even-realities-ar-glasses-roadmap    /news/even-realities-ar-glasses-roadmap/index.html    200!
+
+# Retired duplicate pages now route to the homepage comparison experience.
+/compare.html    /#explorer    301!
+/discover.html   /    301!
