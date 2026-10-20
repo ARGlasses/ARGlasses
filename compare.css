@@ -120,7 +120,7 @@ body.comparison-page .compare-explainer{margin:42px 0 55px}
 .product-picker-option input{grid-row:auto;grid-column:2;justify-self:end;width:16px;height:16px;margin:0}
 .picker-option-name{grid-column:1;font-size:.74rem;line-height:1.25}
 .picker-option-category{display:none!important}
-.compare-controls{grid-template-columns:minmax(220px,320px);align-items:start}
+.compare-controls{grid-template-columns:repeat(2,minmax(0,320px));align-items:start}
 .compare-controls>label{max-width:320px}
 @media(max-width:620px){
   .compare-controls{grid-template-columns:minmax(0,1fr)}
