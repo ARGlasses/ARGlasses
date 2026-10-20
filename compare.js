@@ -13,7 +13,7 @@
   ];
   const categoryNames = {display:"Display glasses", ai:"AI smart glasses", spatial:"Spatial / true AR", enterprise:"Enterprise AR"};
   const useCases = {
-    everyday: {label:"Everyday wear", categories:["ai"], terms:["lightweight","prescription","camera-free","everyday","notifications","translation","open-ear"]},
+    everyday: {label:"Everyday wear", categories:["ai"], terms:["lightweight","camera-free","everyday","notifications","translation","open-ear"]},
     gaming: {label:"Gaming & entertainment", categories:["display"], terms:["micro-oled","120 hz","120hz","refresh","gaming","console","bose","harman","hdr"]},
     productivity: {label:"Work & virtual monitors", categories:["display","ai"], terms:["productivity","virtual-screen","virtual screen","teleprompter","notes","usb-c","ultrawide","notifications"]},
     filming: {label:"Photo & video capture", categories:["ai"], terms:["camera-equipped","camera-equipped;","12 mp","3k video","video at","capture specification"]},
@@ -79,6 +79,8 @@
     select.innerHTML = '<option value="all">All manufacturers</option>' + brands.map(b=>'<option value="'+esc(b)+'">'+esc(b)+'</option>').join("");
   }
   function syncControls() {
+    const validBrands = ["all", ...PRODUCTS.map(p=>p.brand)];
+    if (!validBrands.includes(state.brand)) state.brand = "all";
     const map = {"product-search":"q","category-filter":"category","brand-filter":"brand","sort-filter":"sort","use-case-filter":"use","budget-filter":"budget","differences-only":"differences"};
     for (const [id,key] of Object.entries(map)) {
       const el = $(id);
@@ -104,7 +106,7 @@
         if(ap===null&&bp!==null)return 1;if(bp===null&&ap!==null)return -1;
         if(ap!==null&&bp!==null&&ap!==bp)return state.sort==="price-high"?bp-ap:ap-bp;
       } else if(state.sort==="weight") {
-        const result=numericWeight(a.weight)-numericWeight(b.weight); if(Number.isFinite(result)&&result!==0)return result;
+        const aw=numericWeight(a.weight), bw=numericWeight(b.weight); if(aw!==bw)return aw<bw?-1:1;
       } else if(state.sort==="newest") {
         const result=(Number(b.year)||0)-(Number(a.year)||0);if(result)return result;
       }
