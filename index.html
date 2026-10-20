@@ -59,13 +59,14 @@
 
 
     <section id="explorer" class="explorer-section">
-      <div class="section-heading"><div><p class="compare-eyebrow">EXPLORE THE LINE-UP</p><h2>Choose products to compare</h2><p>Browse all products below, filter by type or brand, and select up to three for a side-by-side comparison.</p></div><div class="catalogue-count" id="catalogue-count" aria-live="polite">18 products ready to browse</div></div>
+      <div class="section-heading"><div><p class="compare-eyebrow">EXPLORE THE LINE-UP</p><h2>Choose products to compare</h2><p>Browse all products below, select up to three, and compare their specifications side by side.</p></div><div class="catalogue-count" id="catalogue-count" aria-live="polite">18 products ready to browse</div></div>
       <div class="compare-controls">
+        <div class="picker-field"><label class="picker-field-label" for="product-picker">Select products</label><details class="product-picker" id="product-picker"><summary><span class="picker-summary-meta" id="picker-selection-summary">Choose up to 3 glasses</span><span class="picker-chevron" aria-hidden="true">⌄</span></summary><div class="product-picker-panel"><p class="picker-help">Select up to three glasses to compare.</p><div id="product-picker-options" class="product-picker-options"></div></div></details></div>
         <label><span>Sort by</span><select id="sort-filter"><option value="brand">Manufacturer A–Z</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="weight">Weight: light to heavy</option><option value="newest">Recently announced</option></select></label>
       </div>
       <div class="compare-selection-bar"><p><strong id="selected-count">0 selected</strong><span>Choose up to three products to compare.</span></p><button id="compare-selected" disabled>Compare selected <span aria-hidden="true">→</span></button></div>
       <div id="product-grid" class="product-grid" aria-live="polite"></div>
-      <p class="no-results" id="no-results" hidden>No products match those filters. Try a broader search or clear a filter.</p>
+      <p class="no-results" id="no-results" hidden>No products are available to display. Please refresh the page to try again.</p>
     </section>
 
     <section class="compare-explainer" aria-label="Understand product categories">
