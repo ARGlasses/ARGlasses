@@ -132,7 +132,7 @@
     updateUrl();
   }
   function renderComparison() {
-    const products=PRODUCTS.filter(p=>selected.has(p.id));
+    const products=[...selected].map(id=>PRODUCTS.find(p=>p.id===id)).filter(Boolean);
     const section=$("comparison");
     if(!section)return;
     if(products.length<2){section.hidden=true;return;}
