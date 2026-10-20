@@ -16,7 +16,7 @@
     everyday: {label:"Everyday wear", categories:["ai"], terms:["lightweight","prescription","camera-free","everyday","notifications","translation","open-ear"]},
     gaming: {label:"Gaming & entertainment", categories:["display"], terms:["micro-oled","120 hz","120hz","refresh","gaming","console","bose","harman","hdr"]},
     productivity: {label:"Work & virtual monitors", categories:["display","ai"], terms:["productivity","virtual-screen","virtual screen","teleprompter","notes","usb-c","ultrawide","notifications"]},
-    filming: {label:"Photo & video capture", categories:["ai"], terms:["camera","video","12 mp","3k video","capture"]},
+    filming: {label:"Photo & video capture", categories:["ai"], terms:["camera-equipped","camera-equipped;","12 mp","3k video","video at","capture specification"]},
     spatial: {label:"Spatial / room-anchored AR", categories:["spatial"], terms:["6dof","6-dof","slam","spatial mapping","hand tracking","spatial positioning"]},
     enterprise: {label:"Enterprise & field work", categories:["enterprise"], terms:["enterprise","industrial","workflow","rugged","sdk","field"]},
     prescription: {label:"Prescription-friendly", categories:[], terms:["prescription","diopter","optical insert","lens options"]}
@@ -37,6 +37,7 @@
   function useScore(p, use) {
     if (use === "all" || !useCases[use]) return 0;
     const rule = useCases[use], haystack = textOf(p);
+    if (use === "filming" && /^(no|none|not stated|not disclosed)/i.test(String(p.camera || "").trim())) return 0;
     let score = rule.categories.includes(p.category) ? 3 : 0;
     for (const term of rule.terms) if (haystack.includes(term)) score += 1;
     return score;
@@ -62,6 +63,10 @@
       const val = params.get(key);
       if (val) state[key] = val;
     }
+    if (!["all","display","ai","spatial","enterprise"].includes(state.category)) state.category = "all";
+    if (!["brand","price-low","price-high","weight","newest"].includes(state.sort)) state.sort = "brand";
+    if (!["all",...Object.keys(useCases)].includes(state.use)) state.use = "all";
+    if (!["all","250","350","500","750","1000","1500"].includes(state.budget)) state.budget = "all";
     state.differences = params.get("diff") === "1";
     (params.get("compare") || "").split(",").filter(Boolean).slice(0,3).forEach(id => {
       if (PRODUCTS.some(p => p.id === id)) selected.add(id);
