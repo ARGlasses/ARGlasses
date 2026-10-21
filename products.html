@@ -77,7 +77,7 @@
         isolation: isolate;
         color: white;
         box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 2px 12px rgba(0,0,0,.25);
-        background: #263747;
+        background: #1d527a;
       }
       .story img.bg {
         position: absolute;
@@ -93,10 +93,10 @@
         inset: 0;
         background: linear-gradient(
           to top,
-          rgba(0,0,0,0.55) 0%,
-          rgba(0,0,0,0.25) 40%,
-          rgba(0,0,0,0.10) 65%,
-          rgba(0,0,0,0.30) 100%
+          rgba(13,55,88,0.72) 0%,
+          rgba(20,73,111,0.40) 40%,
+          rgba(25,83,124,0.12) 65%,
+          rgba(19,66,103,0.26) 100%
         );
         z-index: -1;
       }
@@ -174,14 +174,14 @@
       .product-viewport .product-category { display:inline-block; margin-left:.35rem; padding:.22rem .55rem; border:1px solid rgba(255,255,255,.48); border-radius:999px; font-size:.72rem; letter-spacing:.02em; }
       .gallery-topline { position:absolute; top:clamp(5rem,10vh,7rem); left:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); right:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); z-index:70; display:flex; align-items:center; justify-content:space-between; gap:1rem; color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.55); font-size:.72rem; letter-spacing:.12em; pointer-events:none; }
       .gallery-topline strong { font-size:.72rem; font-weight:500; letter-spacing:.04em; }
-      .product-viewport .story::after { background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.46) 32%,rgba(0,0,0,.12) 65%,rgba(0,0,0,.24) 100%); }
+      .product-viewport .story::after { background:linear-gradient(to top,rgba(13,55,88,.68) 0%,rgba(20,73,111,.36) 32%,rgba(25,83,124,.10) 65%,rgba(19,66,103,.22) 100%); }
       .product-viewport .story img.bg { object-position:center; }
       @media(max-width:700px) {
         /* Mobile-only product image treatment: show the whole product instead of cropping it. */
         .product-viewport .story {
           min-width:88vw;
           height:calc(100svh - 6.2rem);
-          background:#111;
+          background:#e8f1f8;
         }
         .product-viewport .story img.bg {
           inset:0 0 auto;
@@ -194,11 +194,11 @@
         }
         .product-viewport .story::after {
           background:linear-gradient(to bottom,
-            rgba(0,0,0,0) 0%,
-            rgba(0,0,0,0) 38%,
-            rgba(0,0,0,.28) 53%,
-            rgba(0,0,0,.82) 72%,
-            rgba(0,0,0,.88) 100%);
+            rgba(17,61,94,0) 0%,
+            rgba(17,61,94,0) 38%,
+            rgba(20,69,105,.26) 53%,
+            rgba(18,59,91,.80) 72%,
+            rgba(15,48,76,.88) 100%);
           z-index:1;
           pointer-events:none;
         }
