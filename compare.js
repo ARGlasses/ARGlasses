@@ -132,6 +132,8 @@
     const list=filteredProducts();
     if($("catalogue-count")) $("catalogue-count").textContent=PRODUCTS.length ? list.length+" of "+PRODUCTS.length+" products" : "Catalogue unavailable — refresh to retry";
     if($("selected-count")) $("selected-count").textContent=selected.size+" selected";
+    if($("clear-picker-selection")) $("clear-picker-selection").disabled=selected.size===0;
+    if($("selection-hint")) $("selection-hint").textContent=selected.size===0 ? "Select 2 or 3 glasses from the list to compare them side by side." : selected.size===1 ? "Choose one more product to start your comparison." : selected.size===2 ? "One more product can be added, or compare these two now." : "You’ve reached the 3-product limit. Clear a selection to swap models.";
     renderProductPicker();
     if($("compare-selected")) $("compare-selected").disabled=selected.size<2;
     if($("no-results")) $("no-results").hidden=list.length>0;
@@ -198,6 +200,7 @@
 
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{$("comparison").hidden=false;$("comparison").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});});
   if($("clear-comparison")) $("clear-comparison").addEventListener("click",()=>{selected.clear();render();});
+  if($("clear-picker-selection")) $("clear-picker-selection").addEventListener("click",()=>{selected.clear();render();});
   if($("copy-comparison-link")) $("copy-comparison-link").addEventListener("click",async()=>{
     updateUrl();
     const url=window.location.href,button=$("copy-comparison-link");
