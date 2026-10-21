@@ -52,12 +52,8 @@
   <div class="fx-section-head fx-timeline-head">
     <div class="fx-timeline-heading"><span class="fx-overline">THE DECADE</span><h2>The future of AR</h2><p>Explore how glasses could evolve from 2026 to 2036.</p></div>
     <div class="fx-timeline-controls">
-      <div class="fx-year-readout"><small>EXPLORING</small><strong id="fxYear">2026</strong><span id="fxEra">ASSISTANT ERA</span></div>
-      <div class="fx-range-wrap">
-        <div class="fx-range-label"><span>2026</span><span>2036</span></div>
-        <input id="fxRange" type="range" min="2026" max="2036" value="2026" step="1" aria-label="Explore the future year by year">
-        <div class="fx-year-labels"><button data-year="2026">26</button><button data-year="2027">27</button><button data-year="2028">28</button><button data-year="2029">29</button><button data-year="2030">30</button><button data-year="2031">31</button><button data-year="2032">32</button><button data-year="2033">33</button><button data-year="2034">34</button><button data-year="2035">35</button><button data-year="2036">36</button></div>
-      </div>
+      <label class="fx-year-control"><span>YEAR</span><input id="fxRange" type="range" min="2026" max="2036" value="2026" step="1" aria-label="Explore the future year by year"><span>2036</span></label>
+      <div class="fx-year-labels"><button data-year="2026">26</button><button data-year="2027">27</button><button data-year="2028">28</button><button data-year="2029">29</button><button data-year="2030">30</button><button data-year="2031">31</button><button data-year="2032">32</button><button data-year="2033">33</button><button data-year="2034">34</button><button data-year="2035">35</button><button data-year="2036">36</button></div>
     </div>
   </div>
   <div class="fx-timeline-grid">
@@ -231,34 +227,28 @@
 .future-page .fx-timeline-heading h2{font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.08;letter-spacing:-.03em;color:#004f88;margin:0 0 .75rem;max-width:100%;overflow-wrap:break-word}
 .future-page .fx-timeline-heading h2 i{font-style:normal;font-weight:600;color:inherit}
 .future-page .fx-timeline-heading p{font-size:1.05rem;line-height:1.75;color:#56656e;width:100%;max-width:560px;margin:0;overflow-wrap:break-word}
-.future-page .fx-timeline-controls{display:grid;grid-template-columns:76px 246px;align-items:center;gap:.65rem;width:322px;min-width:0;max-width:100%;justify-self:end;margin:0}
-.future-page .fx-timeline-controls .fx-year-readout{min-width:0;text-align:left}
-.future-page .fx-timeline-controls .fx-year-readout small{font-size:.5rem;letter-spacing:.12em;color:#80949a}
-.future-page .fx-timeline-controls .fx-year-readout strong{font-size:1.65rem;line-height:1.05;letter-spacing:-.06em;color:#004f88}
-.future-page .fx-timeline-controls .fx-year-readout span{font-size:.46rem;letter-spacing:.08em;color:#66808b;white-space:normal}
-.future-page .fx-timeline-controls .fx-range-wrap{box-sizing:border-box;width:246px;min-width:0;margin:0;padding:.5rem .75rem;border:1px solid #bdd2d8;border-radius:10px;background:#fff;box-shadow:0 2px 7px rgba(18,54,64,.05)}
-.future-page .fx-timeline-controls .fx-range-label{font-size:.5rem;color:#80949a}
-.future-page .fx-timeline-controls .fx-range-wrap input{display:block;box-sizing:border-box;width:220px;max-width:100%;margin:.25rem 0 .1rem;accent-color:#004f88}
-.future-page .fx-timeline-controls .fx-year-labels{margin-top:0;width:220px;max-width:100%}
+.future-page .fx-timeline-controls{display:block;width:246px;min-width:0;max-width:100%;justify-self:end;margin:0}
+.future-page .fx-year-control{box-sizing:border-box;display:flex;align-items:center;gap:8px;width:246px;max-width:100%;margin:0;padding:.48rem .65rem;border:1px solid #bdd2d8;border-radius:10px;background:#fff;box-shadow:0 2px 7px rgba(18,54,64,.05);white-space:nowrap}
+.future-page .fx-year-control span{font-size:.5rem;letter-spacing:.12em;color:#80949a}
+.future-page .fx-year-control input{display:block;box-sizing:border-box;width:220px;min-width:0;max-width:100%;margin:0;accent-color:#004f88}
+.future-page .fx-timeline-controls .fx-year-labels{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));width:220px;max-width:calc(100% - 1.3rem);margin:2px auto 0}
 .future-page .fx-timeline-controls .fx-year-labels button{font-size:.48rem;padding:2px 0;color:#66808b}
 .future-page .fx-timeline-controls .fx-year-labels button.active{color:#004f88;font-weight:700}
 @media(max-width:900px){
  .future-page .fx-timeline-head{grid-template-columns:minmax(0,1fr);gap:1rem}
  .future-page .fx-timeline-heading{width:100%;max-width:100%}
  .future-page .fx-timeline-heading h2{font-size:clamp(2.2rem,5vw,3.2rem)}
- .future-page .fx-timeline-controls{justify-self:start;width:322px;max-width:100%}
+ .future-page .fx-timeline-controls{justify-self:start;width:246px;max-width:100%}
  .future-page .fx-chapter{padding-left:1.25rem;padding-right:1.25rem}
 }
 @media(max-width:650px){
  .future-page .fx-timeline-head{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem}
  .future-page .fx-timeline-heading h2{font-size:clamp(2rem,8vw,2.7rem);line-height:1.08}
  .future-page .fx-timeline-heading p{display:block;font-size:.95rem;margin-bottom:0}
- .future-page .fx-timeline-controls{grid-template-columns:76px minmax(0,246px);gap:.65rem;width:100%;max-width:322px;justify-self:start}
- .future-page .fx-timeline-controls .fx-year-readout{min-width:0}
- .future-page .fx-timeline-controls .fx-year-readout strong{font-size:1.5rem}
- .future-page .fx-timeline-controls .fx-year-readout span{font-size:.4rem;white-space:normal}
- .future-page .fx-timeline-controls .fx-range-wrap{width:100%;max-width:246px;padding:.45rem .75rem}
- .future-page .fx-timeline-controls .fx-range-wrap input,.future-page .fx-timeline-controls .fx-year-labels{width:100%}
+ .future-page .fx-timeline-controls{width:100%;max-width:246px;justify-self:start}
+ .future-page .fx-year-control{width:100%;padding:.45rem .65rem}
+ .future-page .fx-year-control input{width:100%;flex:1}
+ .future-page .fx-timeline-controls .fx-year-labels{width:calc(100% - 1.3rem)}
  .future-page .fx-timeline-controls .fx-year-labels button{font-size:.42rem}
  .future-page .fx-chapter{padding-left:1rem;padding-right:1rem}
 }
