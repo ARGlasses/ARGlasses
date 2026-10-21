@@ -149,6 +149,65 @@
     if (firstSentence) return firstSentence[0];
     return description.slice(0, 102).replace(/\s+\S*$/, "") + "…";
   }
+
+  let hoverCard;
+  let hoverTarget = null;
+  function ensureHoverCard() {
+    if (hoverCard) return hoverCard;
+    hoverCard = document.createElement("aside");
+    hoverCard.id = "product-hover-card";
+    hoverCard.className = "product-hover-card";
+    hoverCard.setAttribute("role", "tooltip");
+    hoverCard.hidden = true;
+    document.body.appendChild(hoverCard);
+    return hoverCard;
+  }
+  function hoverFact(label, value) {
+    if (!known(value)) return "";
+    return '<div class="product-hover-fact"><span>' + esc(label) + '</span><strong>' + esc(value) + '</strong></div>';
+  }
+  function showProductDetails(nameEl) {
+    const row = nameEl.closest(".product-picker-option");
+    const input = row && row.querySelector("[data-picker-select]");
+    const product = input && PRODUCTS.find(p => p.id === input.dataset.pickerSelect);
+    if (!product) return;
+    const card = ensureHoverCard();
+    hoverTarget = nameEl;
+    const category = categoryNames[product.category] || "AR / smart glasses";
+    card.innerHTML =
+      '<div class="product-hover-topline">' + esc(product.brand) + ' · ' + esc(category) + '</div>' +
+      '<strong class="product-hover-title">' + esc(product.brand + " " + product.name) + '</strong>' +
+      '<p class="product-hover-summary">' + esc(product.summary || "A detailed product overview has not yet been published.") + '</p>' +
+      '<div class="product-hover-facts">' +
+        hoverFact("Price", product.priceText) +
+        hoverFact("Weight", product.weight) +
+        hoverFact("Display", product.display) +
+        hoverFact("Resolution", product.resolution) +
+        hoverFact("Tracking", product.tracking) +
+        hoverFact("Compatibility", product.compatibility) +
+      '</div>';
+    card.hidden = false;
+    const rect = nameEl.getBoundingClientRect();
+    const margin = 12;
+    const width = Math.min(360, window.innerWidth - margin * 2);
+    card.style.width = width + "px";
+    let left = Math.min(Math.max(margin, rect.left), window.innerWidth - width - margin);
+    let top = rect.bottom + 8;
+    card.style.left = left + "px";
+    card.style.top = top + "px";
+    const cardRect = card.getBoundingClientRect();
+    if (cardRect.bottom > window.innerHeight - margin) {
+      top = rect.top - cardRect.height - 8;
+      if (top < margin) top = Math.max(margin, window.innerHeight - cardRect.height - margin);
+      card.style.top = top + "px";
+    }
+  }
+  function hideProductDetails(nameEl) {
+    if (nameEl && hoverTarget !== nameEl) return;
+    if (hoverCard) hoverCard.hidden = true;
+    hoverTarget = null;
+  }
+
   function renderProductPicker() {
     const options=$("product-picker-options");
     if(!options) return;
@@ -161,7 +220,7 @@
       const brief = briefDescription(p.summary);
       const match=state.use!=="all" ? '<span class="picker-option-match">'+esc(useLabel(p))+'</span>' : "";
       return '<label class="product-picker-option'+(checked?' is-selected':'')+(disabled?' is-disabled':'')+'">'+
-        '<span class="picker-option-copy"><span class="picker-option-name">'+esc(p.brand)+' '+esc(p.name)+'</span>'+
+        '<span class="picker-option-copy"><span class="picker-option-name" tabindex="0" aria-describedby="product-hover-card">'+esc(p.brand)+' '+esc(p.name)+'</span>'+
         '<span class="picker-option-description">'+esc(brief)+'</span>'+match+'</span>'+
         '<input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+' aria-label="Select '+esc(p.brand+" "+p.name)+' for comparison"></label>';
     }).join("");
@@ -180,6 +239,25 @@
     $("comparison-table-wrap").innerHTML=differenceNote+'<table class="comparison-table">'+header+'<tbody>'+(body||'<tr><td colspan="'+(products.length+1)+'" class="empty-differences">No differences found for the available fields. Turn off “Differences only” to see all specifications.</td></tr>')+'</tbody></table>';
   }
   function setValue(id,key) { const el=$(id); if(el) state[key]=el.value; }
+  document.addEventListener("pointerover", e => {
+    const name = e.target.closest && e.target.closest(".picker-option-name");
+    if (name && !name.contains(e.relatedTarget)) showProductDetails(name);
+  });
+  document.addEventListener("pointerout", e => {
+    const name = e.target.closest && e.target.closest(".picker-option-name");
+    if (name && !name.contains(e.relatedTarget) && !(hoverCard && hoverCard.contains(e.relatedTarget))) hideProductDetails(name);
+    if (hoverCard && hoverCard.contains(e.target) && !hoverCard.contains(e.relatedTarget) && !(hoverTarget && hoverTarget.contains(e.relatedTarget))) hideProductDetails();
+  });
+  document.addEventListener("focusin", e => {
+    const name = e.target.closest && e.target.closest(".picker-option-name");
+    if (name) showProductDetails(name);
+  });
+  document.addEventListener("focusout", e => {
+    const name = e.target.closest && e.target.closest(".picker-option-name");
+    if (name) hideProductDetails(name);
+  });
+  window.addEventListener("scroll", () => hideProductDetails(), {passive:true});
+  window.addEventListener("resize", () => hideProductDetails());
   document.addEventListener("change",e=>{
     const target=e.target;
     if(target.matches("[data-picker-select]")) {
