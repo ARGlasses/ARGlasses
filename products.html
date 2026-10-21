@@ -179,14 +179,14 @@
         padding-bottom:clamp(2.4rem,5vw,4.5rem);
         color:#5f6872;
       }
-      .product-viewport .story-content * { color:#5f6872; text-shadow:none; }
-      .product-viewport .story-title { max-width:18ch; color:#414b56; }
-      .product-viewport .story-teaser { max-width:68ch; line-height:1.55; }
-      .product-viewport .product-price { font-size:.9rem; margin:.15rem 0 0; max-width:75ch; color:#626d78; }
-      .product-viewport .product-category { display:inline-block; margin-left:.35rem; padding:.22rem .55rem; border:1px solid #cbd5df; border-radius:999px; font-size:.72rem; letter-spacing:.02em; color:#586573; }
+      .product-viewport .story-content * { color:#424b55 !important; text-shadow:none !important; }
+      .product-viewport .story-title { max-width:18ch; color:#252d35 !important; font-weight:700; }
+      .product-viewport .story-teaser { max-width:68ch; line-height:1.55; color:#424b55 !important; }
+      .product-viewport .product-price { font-size:.9rem; margin:.15rem 0 0; max-width:75ch; color:#343d46 !important; font-weight:600; }
+      .product-viewport .product-category { display:inline-block; margin-left:.35rem; padding:.22rem .55rem; border:1px solid #aab5c0; border-radius:999px; font-size:.72rem; letter-spacing:.02em; color:#424b55 !important; background:#f5f7f9; }
       .gallery-topline { position:absolute; top:clamp(5rem,10vh,7rem); left:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); right:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); z-index:70; display:flex; align-items:center; justify-content:space-between; gap:1rem; color:#586573; text-shadow:none; font-size:.72rem; letter-spacing:.12em; pointer-events:none; }
       .gallery-topline strong { font-size:.72rem; font-weight:500; letter-spacing:.04em; }
-      .product-viewport .story::after { background:linear-gradient(to top,#fff 0%,rgba(255,255,255,.99) 32%,rgba(255,255,255,.25) 58%,rgba(255,255,255,0) 72%); z-index:1; }
+      .product-viewport .story::after { background:linear-gradient(to top,#fff 0%,#fff 39%,rgba(255,255,255,.96) 43%,rgba(255,255,255,0) 49%); z-index:1; }
       .product-viewport .story img.bg { object-position:center; }
       @media(max-width:700px) {
         /* Mobile-only product image treatment: show the whole product instead of cropping it. */
@@ -208,9 +208,8 @@
         .product-viewport .story::after {
           background:linear-gradient(to bottom,
             rgba(255,255,255,0) 0%,
-            rgba(255,255,255,0) 35%,
-            rgba(255,255,255,.84) 48%,
-            #fff 59%,
+            rgba(255,255,255,0) 44%,
+            #fff 52%,
             #fff 100%);
           z-index:1;
           pointer-events:none;
