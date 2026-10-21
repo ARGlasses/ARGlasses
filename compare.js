@@ -185,8 +185,7 @@
         hoverFact("Resolution", product.resolution) +
         hoverFact("Tracking", product.tracking) +
         hoverFact("Compatibility", product.compatibility) +
-      '</div>' +
-      '<a class="product-hover-source" href="' + esc(product.source || "#") + '" target="_blank" rel="noopener noreferrer" tabindex="-1">Manufacturer source ↗</a>';
+      '</div>';
     card.hidden = false;
     const rect = nameEl.getBoundingClientRect();
     const margin = 12;
