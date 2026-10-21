@@ -130,7 +130,7 @@ body.comparison-page .compare-explainer{margin:42px 0 55px}
 
 
 /* Inline catalogue redesign: compact controls beside a wide, readable product list. */
-body.comparison-page .compare-shell{max-width:1500px;padding-top:76px}
+body.comparison-page .compare-shell{max-width:1500px;padding-top:108px}
 body.comparison-page .explorer-section{margin:0 0 26px}
 .catalogue-title{align-items:center;margin-bottom:16px}
 .catalogue-title h1{font-size:clamp(1.55rem,2.5vw,2.2rem);line-height:1.18;color:#064f82;margin:.15rem 0 .45rem}
@@ -169,7 +169,7 @@ body.comparison-page .compare-hero .compare-intro{max-width:900px;color:#536779;
 body.comparison-page .compare-hero .compare-trust{color:#5b6b7a;margin:8px 0 0}
 body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
 @media(max-width:760px){
- body.comparison-page .compare-shell{padding:76px 14px 24px}
+ body.comparison-page .compare-shell{padding:108px 14px 24px}
  .catalogue-layout{grid-template-columns:minmax(0,1fr);gap:12px}
  .catalogue-sidebar{position:static}
  .catalogue-sidebar .compare-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
