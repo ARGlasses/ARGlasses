@@ -111,20 +111,36 @@
       (state.budget==="all" || numericPrice(p)===null || numericPrice(p)<=Number(state.budget))
     );
     list.sort((a,b) => {
-      if (state.use!=="all") {
-        const relevance = useScore(b,state.use)-useScore(a,state.use);
-        if (relevance) return relevance;
-      }
+      // The selected sort is always the primary order. Use-case relevance is only
+      // a tie-breaker, so choosing a use case cannot override price/weight/year.
+      let primary = 0;
       if (state.sort==="price-low" || state.sort==="price-high") {
         const ap=numericPrice(a), bp=numericPrice(b);
-        if(ap===null&&bp!==null)return 1;if(bp===null&&ap!==null)return -1;
-        if(ap!==null&&bp!==null&&ap!==bp)return state.sort==="price-high"?bp-ap:ap-bp;
-      } else if(state.sort==="weight") {
-        const aw=numericWeight(a.weight), bw=numericWeight(b.weight); if(aw!==bw)return aw<bw?-1:1;
-      } else if(state.sort==="newest") {
-        const result=(Number(b.year)||0)-(Number(a.year)||0);if(result)return result;
+        // Unpriced products stay after products with a comparable numeric price.
+        if (ap===null && bp!==null) primary=1;
+        else if (bp===null && ap!==null) primary=-1;
+        else if (ap!==null && bp!==null && ap!==bp) primary=state.sort==="price-high" ? bp-ap : ap-bp;
+      } else if (state.sort==="weight") {
+        const aw=numericWeight(a.weight), bw=numericWeight(b.weight);
+        if (aw!==bw) primary=aw<bw ? -1 : 1;
+      } else if (state.sort==="newest") {
+        const ay=Number.isFinite(Number(a.year)) && Number(a.year)>0 ? Number(a.year) : null;
+        const by=Number.isFinite(Number(b.year)) && Number(b.year)>0 ? Number(b.year) : null;
+        if (ay===null && by!==null) primary=1;
+        else if (by===null && ay!==null) primary=-1;
+        else if (ay!==null && by!==null && ay!==by) primary=by-ay;
+      } else {
+        primary=String(a.brand||"").localeCompare(String(b.brand||"")) ||
+          String(a.name||"").localeCompare(String(b.name||""));
       }
-      return String(a.brand||"").localeCompare(String(b.brand||""))||String(a.name||"").localeCompare(String(b.name||""));
+      if (primary) return primary;
+      if (state.use!=="all") {
+        const relevance=useScore(b,state.use)-useScore(a,state.use);
+        if (relevance) return relevance;
+      }
+      // Deterministic, predictable order when the primary sort values tie.
+      return String(a.brand||"").localeCompare(String(b.brand||"")) ||
+        String(a.name||"").localeCompare(String(b.name||""));
     });
     return list;
   }
