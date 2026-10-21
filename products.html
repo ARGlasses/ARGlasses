@@ -164,24 +164,37 @@
       body.news-page .story-content * { color: white !important; }
       html body .viewport .dots { bottom: 1rem !important; }
     
-      /* Product gallery details — preserves the existing full-screen carousel style */
-      .product-viewport { background:#e8eef4; }
-      .product-viewport .story { min-width:clamp(82%, 88vw, 1180px); }
-      .product-viewport .story-content { max-width: min(850px, 92%); padding-bottom:clamp(2.4rem,5vw,4.5rem); }
-      .product-viewport .story-title { max-width: 18ch; }
-      .product-viewport .story-teaser { max-width: 68ch; line-height:1.55; }
-      .product-viewport .product-price { font-size:.9rem; margin:.15rem 0 0; opacity:.92; max-width:75ch; }
-      .product-viewport .product-category { display:inline-block; margin-left:.35rem; padding:.22rem .55rem; border:1px solid rgba(255,255,255,.48); border-radius:999px; font-size:.72rem; letter-spacing:.02em; }
-      .gallery-topline { position:absolute; top:clamp(5rem,10vh,7rem); left:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); right:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); z-index:70; display:flex; align-items:center; justify-content:space-between; gap:1rem; color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.55); font-size:.72rem; letter-spacing:.12em; pointer-events:none; }
+      /* Product Gallery: clean white cards with readable grey typography */
+      .product-viewport { background:#fff; }
+      .product-viewport .story {
+        min-width:clamp(82%, 88vw, 1180px);
+        background:#fff;
+        color:#5f6872;
+        box-shadow:0 12px 36px rgba(32,48,64,.12),0 2px 8px rgba(32,48,64,.08);
+      }
+      .product-viewport .story-content {
+        z-index:2;
+        max-width:min(850px,92%);
+        padding:clamp(1.4rem,3vw,2.6rem);
+        padding-bottom:clamp(2.4rem,5vw,4.5rem);
+        color:#5f6872;
+      }
+      .product-viewport .story-content * { color:#5f6872; text-shadow:none; }
+      .product-viewport .story-title { max-width:18ch; color:#414b56; }
+      .product-viewport .story-teaser { max-width:68ch; line-height:1.55; }
+      .product-viewport .product-price { font-size:.9rem; margin:.15rem 0 0; max-width:75ch; color:#626d78; }
+      .product-viewport .product-category { display:inline-block; margin-left:.35rem; padding:.22rem .55rem; border:1px solid #cbd5df; border-radius:999px; font-size:.72rem; letter-spacing:.02em; color:#586573; }
+      .gallery-topline { position:absolute; top:clamp(5rem,10vh,7rem); left:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); right:max(1.25rem,calc((100vw - min(85vw,1100px))/2)); z-index:70; display:flex; align-items:center; justify-content:space-between; gap:1rem; color:#586573; text-shadow:none; font-size:.72rem; letter-spacing:.12em; pointer-events:none; }
       .gallery-topline strong { font-size:.72rem; font-weight:500; letter-spacing:.04em; }
-      .product-viewport .story::after { background:linear-gradient(to top,rgba(13,55,88,.68) 0%,rgba(20,73,111,.36) 32%,rgba(25,83,124,.10) 65%,rgba(19,66,103,.22) 100%); }
+      .product-viewport .story::after { background:linear-gradient(to top,#fff 0%,rgba(255,255,255,.99) 32%,rgba(255,255,255,.25) 58%,rgba(255,255,255,0) 72%); z-index:1; }
       .product-viewport .story img.bg { object-position:center; }
       @media(max-width:700px) {
         /* Mobile-only product image treatment: show the whole product instead of cropping it. */
         .product-viewport .story {
           min-width:88vw;
           height:calc(100svh - 6.2rem);
-          background:#e8f1f8;
+          background:#fff;
+          color:#5f6872;
         }
         .product-viewport .story img.bg {
           inset:0 0 auto;
@@ -194,11 +207,11 @@
         }
         .product-viewport .story::after {
           background:linear-gradient(to bottom,
-            rgba(17,61,94,0) 0%,
-            rgba(17,61,94,0) 38%,
-            rgba(20,69,105,.26) 53%,
-            rgba(18,59,91,.80) 72%,
-            rgba(15,48,76,.88) 100%);
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,0) 35%,
+            rgba(255,255,255,.84) 48%,
+            #fff 59%,
+            #fff 100%);
           z-index:1;
           pointer-events:none;
         }
