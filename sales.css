@@ -177,3 +177,10 @@
 #sales-top{width:min(1160px,calc(100% - 2.5rem));max-width:1160px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}
 body:has(#sales-top) footer.professional-footer{width:min(1160px,calc(100% - 2.5rem));max-width:1160px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}
 @media(max-width:650px){#sales-top,body:has(#sales-top) footer.professional-footer{width:calc(100% - 2rem)}}
+
+
+/* Requested page-level vertical spacing: Sales content starts two lines lower. */
+@media(min-width:901px){#sales-top{padding-top:6.15rem}}
+@media(min-width:901px) and (max-height:800px){#sales-top{padding-top:5.7rem}}
+@media(max-width:900px){#sales-top{padding-top:6.6rem}}
+@media(max-width:600px){#sales-top{padding-top:6.2rem}}
