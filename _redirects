@@ -3,10 +3,16 @@ http://arglasses.com/*    https://www.arglasses.com/:splat    301!
 http://www.arglasses.com/*    https://www.arglasses.com/:splat    301!
 https://arglasses.com/*    https://www.arglasses.com/:splat    301!
 
-# Use the .html URLs as the canonical versions for these pages.
-# This aligns redirects with the canonical tags and sitemap entries.
-/guide       /guide.html       301!
-/database    /database.html    301!
+# Canonical clean URLs for the four main content pages.
+# Internally serve the existing HTML files at clean paths; redirect legacy .html URLs.
+/guide       /guide.html       200!
+/reviews     /reviews.html     200!
+/news        /news.html        200!
+/database    /database.html    200!
+/guide.html      /guide       301!
+/reviews.html    /reviews     301!
+/news.html       /news        301!
+/database.html   /database    301!
 
 # Gallery uses a clean URL; preserve the old Products URL as a permanent redirect.
 /products    /gallery    301!
