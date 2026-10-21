@@ -171,3 +171,9 @@
 @media(min-width:901px){.sales-intro h1{font-size:clamp(2.2rem,3.5vw,3.5rem);line-height:1.08;letter-spacing:-.03em}.sales-intro{gap:1.25rem}.sales-controls{flex-shrink:0}}
 @media(max-width:900px){.sales-intro>div:first-child{max-width:100%}.sales-intro h1{font-size:clamp(2.2rem,5vw,3.2rem)}.sales-controls{margin-left:0}}
 @media(max-width:600px){.sales-intro h1{font-size:clamp(2rem,8vw,2.7rem)}.year-control input{width: min(220px, 40vw)}}
+
+
+/* Match the shared 1160px editorial content width used by News and other main sections. */
+#sales-top{width:min(1160px,calc(100% - 2.5rem));max-width:1160px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}
+body:has(#sales-top) footer.professional-footer{width:min(1160px,calc(100% - 2.5rem));max-width:1160px;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}
+@media(max-width:650px){#sales-top,body:has(#sales-top) footer.professional-footer{width:calc(100% - 2rem)}}
