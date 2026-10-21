@@ -49,9 +49,16 @@
 <h1 class="visually-hidden">The Future of AR Glasses</h1>
 
 <section class="fx-chapter fx-timeline" id="timeline">
-  <div class="fx-section-head">
-    <div><span class="fx-overline">THE DECADE</span><h2>Drag through the years.</h2><p>Every step changes what the glasses can do — and what has to be solved.</p></div>
-    <div class="fx-year-readout"><small>EXPLORING</small><strong id="fxYear">2026</strong><span id="fxEra">ASSISTANT ERA</span></div>
+  <div class="fx-section-head fx-timeline-head">
+    <div class="fx-timeline-heading"><span class="fx-overline">THE DECADE</span><h2>Drag through the <i>years.</i></h2><p>Every step changes what the glasses can do — and what has to be solved.</p></div>
+    <div class="fx-timeline-controls">
+      <div class="fx-year-readout"><small>EXPLORING</small><strong id="fxYear">2026</strong><span id="fxEra">ASSISTANT ERA</span></div>
+      <div class="fx-range-wrap">
+        <div class="fx-range-label"><span>2026</span><span>2036</span></div>
+        <input id="fxRange" type="range" min="2026" max="2036" value="2026" step="1" aria-label="Explore the future year by year">
+        <div class="fx-year-labels"><button data-year="2026">26</button><button data-year="2027">27</button><button data-year="2028">28</button><button data-year="2029">29</button><button data-year="2030">30</button><button data-year="2031">31</button><button data-year="2032">32</button><button data-year="2033">33</button><button data-year="2034">34</button><button data-year="2035">35</button><button data-year="2036">36</button></div>
+      </div>
+    </div>
   </div>
   <div class="fx-timeline-grid">
     <div class="fx-timeline-visual">
@@ -72,11 +79,6 @@
       </div>
       <div class="fx-confidence"><span title="An editorial confidence score showing how closely the scenario follows visible trends today. It is not a statistical probability.">EDITORIAL CONFIDENCE <b id="fxConfidence">86%</b></span><i><em id="fxConfidenceBar"></em></i></div>
     </div>
-  </div>
-  <div class="fx-range-wrap">
-    <div class="fx-range-label"><span>2026</span><span>2036</span></div>
-    <input id="fxRange" type="range" min="2026" max="2036" value="2026" step="1" aria-label="Explore the future year by year">
-    <div class="fx-year-labels"><button data-year="2026">26</button><button data-year="2027">27</button><button data-year="2028">28</button><button data-year="2029">29</button><button data-year="2030">30</button><button data-year="2031">31</button><button data-year="2032">32</button><button data-year="2033">33</button><button data-year="2034">34</button><button data-year="2035">35</button><button data-year="2036">36</button></div>
   </div>
 </section>
 
@@ -218,6 +220,42 @@
 }
 <style>
 </style>
+</style>
+
+<style>
+/* Align the Future timeline heading and year slider with the shared Sales-page header rhythm. */
+.future-page .fx-timeline-head{align-items:center;gap:2rem;margin-bottom:1.5rem}
+.future-page .fx-timeline-heading{min-width:0}
+.future-page .fx-timeline-heading .fx-overline{color:#167f95;letter-spacing:.16em}
+.future-page .fx-timeline-heading h2{font-size:clamp(1.85rem,3.2vw,3rem);line-height:.95;letter-spacing:-.06em;color:#004f88;margin:.35rem 0 .65rem}
+.future-page .fx-timeline-heading h2 i{font-style:normal;font-weight:300;color:#b13fd4}
+.future-page .fx-timeline-heading p{font-size:.78rem;line-height:1.45;color:#5f737a;max-width:500px}
+.future-page .fx-timeline-controls{display:grid;grid-template-columns:auto minmax(190px,300px);align-items:center;gap:1rem;flex:0 1 470px}
+.future-page .fx-timeline-controls .fx-year-readout{min-width:88px;text-align:left}
+.future-page .fx-timeline-controls .fx-year-readout small{font-size:.5rem;letter-spacing:.12em;color:#80949a}
+.future-page .fx-timeline-controls .fx-year-readout strong{font-size:1.65rem;line-height:1.05;letter-spacing:-.06em;color:#004f88}
+.future-page .fx-timeline-controls .fx-year-readout span{font-size:.46rem;letter-spacing:.08em;color:#66808b;white-space:nowrap}
+.future-page .fx-timeline-controls .fx-range-wrap{min-width:0;margin:0;padding:.5rem .65rem;border:1px solid #bdd2d8;border-radius:10px;background:#fff;box-shadow:0 2px 7px rgba(18,54,64,.05)}
+.future-page .fx-timeline-controls .fx-range-label{font-size:.5rem;color:#80949a}
+.future-page .fx-timeline-controls .fx-range-wrap input{display:block;width:100%;margin:.25rem 0 .1rem;accent-color:#004f88}
+.future-page .fx-timeline-controls .fx-year-labels{margin-top:0}
+.future-page .fx-timeline-controls .fx-year-labels button{font-size:.48rem;padding:2px 0;color:#66808b}
+.future-page .fx-timeline-controls .fx-year-labels button.active{color:#004f88;font-weight:700}
+@media(max-width:900px){
+ .future-page .fx-timeline-head{align-items:flex-start;gap:1rem}
+ .future-page .fx-timeline-controls{grid-template-columns:auto minmax(170px,1fr);flex:1 1 100%;width:100%}
+}
+@media(max-width:650px){
+ .future-page .fx-timeline-head{display:flex;flex-direction:column;align-items:stretch;gap:1rem}
+ .future-page .fx-timeline-heading h2{font-size:clamp(2rem,8vw,2.7rem)}
+ .future-page .fx-timeline-heading p{display:block;font-size:.8rem;margin-bottom:0}
+ .future-page .fx-timeline-controls{grid-template-columns:76px minmax(0,1fr);gap:.65rem}
+ .future-page .fx-timeline-controls .fx-year-readout{min-width:0}
+ .future-page .fx-timeline-controls .fx-year-readout strong{font-size:1.5rem}
+ .future-page .fx-timeline-controls .fx-year-readout span{font-size:.4rem;white-space:normal}
+ .future-page .fx-timeline-controls .fx-range-wrap{padding:.45rem .5rem}
+ .future-page .fx-timeline-controls .fx-year-labels button{font-size:.42rem}
+}
 </style>
 
 <script src="header.js" defer></script>
