@@ -814,7 +814,7 @@
       #gallery-compare-dialog form{margin:0}
       #gallery-compare-dialog p{line-height:1.55}
       #gallery-compare-dialog button{margin:0}
-      .product-card .gallery-compare-picked{outline:3px solid #58c4f4;outline-offset:-5px}
+      .product-card.gallery-compare-picked{outline:3px solid #58c4f4;outline-offset:-5px}
     </style>
     <script>
       (function () {
@@ -875,27 +875,35 @@
           else if (selected.length >= 2 && window.confirm("Compare " + selected.map(id => names.get(id)).join(", ") + "?")) goCompare();
           save();
         }
-        cards.forEach(card => {
-          const link = card.querySelector('a[href*="index.html?compare="]');
+        // Use one capture-phase delegated listener so comparison clicks are
+        // intercepted even if card markup or other click handlers change.
+        document.addEventListener("click", event => {
+          const target = event.target;
+          const link = target && typeof target.closest === "function"
+            ? target.closest('a[href*="index.html?compare="]')
+            : null;
           if (!link) return;
-          link.addEventListener("click", event => {
-            event.preventDefault();
-            const id = card.dataset.productId;
-            if (selected.includes(id)) {
-              showDialog();
-              return;
-            }
-            if (selected.length >= 3) {
-              message.textContent = "You can compare up to three products. Compare your current selection or start again by reloading the Gallery.";
-              showDialog();
-              return;
-            }
-            selected.push(id);
-            save();
-            if (selected.length === 3) goCompare();
-            else showDialog();
-          });
-        });
+          const card = link.closest(".product-card[data-product-id]");
+          if (!card || !cards.includes(card)) return;
+          event.preventDefault();
+          event.stopPropagation();
+          if (typeof event.stopImmediatePropagation === "function") event.stopImmediatePropagation();
+          const id = card.dataset.productId;
+          if (!id) return;
+          if (selected.includes(id)) {
+            showDialog();
+            return;
+          }
+          if (selected.length >= 3) {
+            message.textContent = "You can compare up to three products. Compare your current selection or start again by reloading the Gallery.";
+            showDialog();
+            return;
+          }
+          selected.push(id);
+          save();
+          if (selected.length === 3) goCompare();
+          else showDialog();
+        }, true);
         cancelButton.addEventListener("click", () => dialog.close());
         addButton.addEventListener("click", () => dialog.close());
         goButton.addEventListener("click", goCompare);
