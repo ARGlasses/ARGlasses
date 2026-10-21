@@ -4,7 +4,7 @@
   padding:16px 17px;border:1px solid #cbdde8;border-radius:12px;
   background:#fff;color:#26394a;box-shadow:0 16px 44px rgba(18,48,69,.22);
   font-family:Poppins,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:12px;line-height:1.5;pointer-events:none;
+  font-size:12px;line-height:1.5;pointer-events:auto;
 }
 .product-hover-card[hidden]{display:none}
 .product-hover-topline{margin-bottom:4px;color:#0874a9;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
