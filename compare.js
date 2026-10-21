@@ -245,7 +245,8 @@
   });
   document.addEventListener("pointerout", e => {
     const name = e.target.closest && e.target.closest(".picker-option-name");
-    if (name && !name.contains(e.relatedTarget)) hideProductDetails(name);
+    if (name && !name.contains(e.relatedTarget) && !(hoverCard && hoverCard.contains(e.relatedTarget))) hideProductDetails(name);
+    if (hoverCard && hoverCard.contains(e.target) && !hoverCard.contains(e.relatedTarget) && !(hoverTarget && hoverTarget.contains(e.relatedTarget))) hideProductDetails();
   });
   document.addEventListener("focusin", e => {
     const name = e.target.closest && e.target.closest(".picker-option-name");
