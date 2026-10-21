@@ -48,6 +48,7 @@
   .comparison-table-wrap{overflow:visible;border:0}
   .comparison-table{min-width:0!important;font-size:9pt!important}
   .comparison-table th,.comparison-table td{padding:6px!important;break-inside:avoid}
+  .comparison-table tbody th{font-size:8pt!important}
   .comparison-table thead th,.comparison-table tbody th{position:static!important}
   .comparison-table thead{display:table-header-group}
   .comparison-table tr{break-inside:avoid}
