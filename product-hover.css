@@ -15,7 +15,7 @@
 .product-hover-fact span{color:#718091;font-size:11px}
 .product-hover-fact strong{min-width:0;color:#26394a;font-size:11px;font-weight:500;overflow-wrap:anywhere}
 .product-hover-source{display:inline-block;margin-top:11px;color:#0874a9;font-size:11px;font-weight:600}
-.picker-option-name{cursor:help;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#a8bdcc;text-underline-offset:3px}
+.picker-option-name{align-self:flex-start;width:fit-content;max-width:100%;cursor:help;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#a8bdcc;text-underline-offset:3px}
 .picker-option-name:focus-visible{outline:2px solid #1681b7;outline-offset:3px;border-radius:3px}
 @media(max-width:760px){
   .product-hover-card{max-height:60vh;padding:13px 14px}
