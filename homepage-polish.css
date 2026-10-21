@@ -1,0 +1,43 @@
+/* AR Glasses homepage polish: simpler selection controls and clearer hierarchy. */
+body.comparison-page .catalogue-layout{grid-template-columns:minmax(220px, .27fr) minmax(0, .73fr);gap:20px}
+body.comparison-page .catalogue-sidebar .compare-controls{gap:15px;padding:18px;background:#f8fafc;border-color:#e7edf3}
+body.comparison-page .picker-field{display:none!important}
+body.comparison-page .catalogue-sidebar .compare-selection-bar{padding:16px 0 0;border-bottom:0;gap:10px}
+body.comparison-page .catalogue-sidebar .compare-selection-bar p{gap:5px}
+body.comparison-page #selected-count{font-size:1.05rem;font-weight:700;letter-spacing:-.02em;color:#163d5b}
+body.comparison-page .compare-selection-bar p span{font-size:.76rem;line-height:1.5}
+body.comparison-page .selection-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+body.comparison-page #compare-selected{min-height:44px;border-radius:8px;background:#075b91;box-shadow:0 3px 8px rgba(7,91,145,.13);transition:background .18s,transform .18s}
+body.comparison-page #compare-selected:not(:disabled):hover{background:#064773;transform:translateY(-1px)}
+body.comparison-page #compare-selected:disabled{background:#dce3e9;color:#778593}
+body.comparison-page #clear-picker-selection{min-height:44px;padding:9px 12px;border:1px solid #d8e1e9;border-radius:8px;background:#fff;color:#536577;font:500 .75rem inherit;cursor:pointer;white-space:nowrap}
+body.comparison-page #clear-picker-selection:hover:not(:disabled){background:#f0f5f8;border-color:#b9cbd8;color:#173b55}
+body.comparison-page #clear-picker-selection:disabled{opacity:.45;cursor:not-allowed}
+body.comparison-page .catalogue-list-panel{border-color:#dce5ed;border-radius:14px;box-shadow:0 10px 30px rgba(24,55,78,.055)}
+body.comparison-page .catalogue-list-heading{padding:15px 18px;background:#f8fafc}
+body.comparison-page .catalogue-list-heading strong{font-size:.9rem;color:#173b55}
+body.comparison-page .product-picker-option{padding:12px 18px;transition:background .16s,box-shadow .16s}
+body.comparison-page .picker-option-name{font-size:.84rem}
+body.comparison-page .picker-option-description{font-size:.75rem;line-height:1.5}
+body.comparison-page .product-picker-option.is-selected{background:#edf7fc;box-shadow:inset 3px 0 #087db5}
+body.comparison-page .product-picker-option input{width:18px;height:18px}
+body.comparison-page .catalogue-title{margin-bottom:20px}
+body.comparison-page .catalogue-title h1{letter-spacing:-.035em}
+body.comparison-page .catalogue-count{padding:7px 11px;border:1px solid #e2eaf0;border-radius:999px;background:#f8fafc;font-size:.75rem}
+body.comparison-page .catalogue-sidebar .compare-controls select{width:100%;min-height:44px}
+body.comparison-page .compare-selection-bar button:focus-visible,
+body.comparison-page #clear-picker-selection:focus-visible{outline:3px solid #1681b7;outline-offset:3px}
+@media(max-width:760px){
+ body.comparison-page .catalogue-layout{grid-template-columns:minmax(0,1fr);gap:14px}
+ body.comparison-page .catalogue-sidebar{position:static}
+ body.comparison-page .catalogue-sidebar .compare-controls{padding:14px}
+ body.comparison-page .catalogue-sidebar .compare-selection-bar{padding-top:12px}
+ body.comparison-page .catalogue-list-panel .product-picker-options{max-height:55vh}
+ body.comparison-page .catalogue-title{gap:10px}
+ body.comparison-page .catalogue-count{align-self:flex-start}
+}
+@media(max-width:420px){
+ body.comparison-page .selection-actions{grid-template-columns:minmax(0,1fr) auto}
+ body.comparison-page #clear-picker-selection{padding-inline:10px}
+ body.comparison-page .catalogue-list-heading{align-items:flex-start;flex-direction:column;gap:3px}
+}
