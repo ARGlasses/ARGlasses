@@ -10,7 +10,7 @@ body.comparison-page .selection-actions{display:grid;grid-template-columns:minma
 body.comparison-page #compare-selected{min-height:44px;border-radius:8px;background:#075b91;box-shadow:0 3px 8px rgba(7,91,145,.13);transition:background .18s,transform .18s}
 body.comparison-page #compare-selected:not(:disabled):hover{background:#064773;transform:translateY(-1px)}
 body.comparison-page #compare-selected:disabled{background:#dce3e9;color:#778593}
-body.comparison-page #clear-picker-selection{min-height:44px;padding:9px 12px;border:1px solid #d8e1e9;border-radius:8px;background:#fff;color:#536577;font:500 .75rem inherit;cursor:pointer;white-space:nowrap}
+body.comparison-page #clear-picker-selection{min-height:44px;padding:9px 12px;border:1px solid #d8e1e9;border-radius:8px;background:#fff;color:#536577;font-family:inherit;font-size:.75rem;font-weight:500;cursor:pointer;white-space:nowrap}
 body.comparison-page #clear-picker-selection:hover:not(:disabled){background:#f0f5f8;border-color:#b9cbd8;color:#173b55}
 body.comparison-page #clear-picker-selection:disabled{opacity:.45;cursor:not-allowed}
 body.comparison-page .catalogue-list-panel{border-color:#dce5ed;border-radius:14px;box-shadow:0 10px 30px rgba(24,55,78,.055)}
