@@ -158,3 +158,16 @@
 .country.selected{stroke:#274f40;stroke-width:1.8;filter:brightness(1.06) saturate(1.08)}
 .lakes path{opacity:.88}
 .rivers path{mix-blend-mode:multiply}
+
+
+/* Keep the Sales intro in the same editorial type system as Guide, Reviews and News. */
+.sales-intro>div:first-child{flex:1 1 auto;min-width:0;max-width:620px}
+.sales-intro h1{font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.08;letter-spacing:-.03em;margin:0 0 .75rem;color:#004f88;max-width:100%}
+.sales-intro h1 i{font-style:normal;font-weight:600;color:inherit}
+.sales-intro p{font-size:1.05rem;line-height:1.75;max-width:560px;color:#56656e;margin:0}
+.sales-kicker{font-size:.72rem;line-height:1.4;letter-spacing:.14em;color:#0071b9;margin:0 0 .75rem}
+.sales-controls{flex:0 0 auto;margin-left:auto}
+.year-control input{width:220px;max-width:100%}
+@media(min-width:901px){.sales-intro h1{font-size:clamp(2.2rem,3.5vw,3.5rem);line-height:1.08;letter-spacing:-.03em}.sales-intro{gap:1.25rem}.sales-controls{flex-shrink:0}}
+@media(max-width:900px){.sales-intro>div:first-child{max-width:100%}.sales-intro h1{font-size:clamp(2.2rem,5vw,3.2rem)}.sales-controls{margin-left:0}}
+@media(max-width:600px){.sales-intro h1{font-size:clamp(2rem,8vw,2.7rem)}.year-control input{width: min(220px, 40vw)}}
