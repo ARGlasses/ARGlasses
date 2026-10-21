@@ -277,8 +277,8 @@
   });
 
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{$("comparison").hidden=false;$("comparison").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});});
-  if($("clear-comparison")) $("clear-comparison").addEventListener("click",()=>{selected.clear();render();});
-  if($("clear-picker-selection")) $("clear-picker-selection").addEventListener("click",()=>{selected.clear();render();});
+  if($("clear-comparison")) $("clear-comparison").addEventListener("click",()=>{selected.clear();render();window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});});
+  if($("clear-picker-selection")) $("clear-picker-selection").addEventListener("click",()=>{selected.clear();render();window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});});
   if($("copy-comparison-link")) $("copy-comparison-link").addEventListener("click",async()=>{
     updateUrl();
     const url=window.location.href,button=$("copy-comparison-link");
