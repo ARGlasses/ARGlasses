@@ -40,12 +40,12 @@
     const text = String(p.priceText || "");
     // Recover explicit GBP amounts omitted from the budget-safe numeric field
     // (for example, a UK listing that is out of stock).
-    const gbp = text.match(/£\\s*([\\d,]+(?:\\.\\d+)?)/);
+    const gbp = text.match(/£\s*([\d,]+(?:\.\d+)?)/);
     if (gbp) return Number(gbp[1].replace(/,/g, ""));
     // The Snap Specs announcement is in USD, not GBP. Convert only for ordering
     // with a dated reference rate; never use this estimate for budget filtering
     // or present it as a confirmed UK retail price.
-    const usd = text.match(/US\\$\\s*([\\d,]+(?:\\.\\d+)?)/i);
+    const usd = text.match(/US\$\s*([\d,]+(?:\.\d+)?)/i);
     if (usd) return Number(usd[1].replace(/,/g, "")) * 0.7495; // USD→GBP reference rate, 2026-10-21
     return null;
   }
