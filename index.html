@@ -17,7 +17,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8"><link rel="stylesheet" href="compare.css">
+  <link rel="stylesheet" href="style.css?v=8"><link rel="stylesheet" href="compare.css"><link rel="stylesheet" href="homepage-polish.css?v=1">
   <link rel="icon" href="images/logo40x40.webp" type="image/webp">
   <script src="./header.js?v=6" defer></script><script src="./products-data.js" defer></script>
   <script src="./compare.js?v=2" defer></script>
@@ -54,10 +54,10 @@
       <div class="catalogue-layout">
         <aside class="catalogue-sidebar" aria-label="Comparison controls">
           <div class="compare-controls">
-            <div class="picker-field"><span class="picker-field-label">Selected products</span><div class="picker-selection-box"><strong id="picker-selection-summary">Choose up to 3 glasses</strong><span>Tick products in the list to add them.</span></div></div>
+            
             <label><span>Sort by</span><select id="sort-filter"><option value="brand">Manufacturer A–Z</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="weight">Weight: light to heavy</option><option value="newest">Recently announced</option></select></label>
           </div>
-          <div class="compare-selection-bar"><p><strong id="selected-count">0 selected</strong><span>Choose up to three products.</span></p><button id="compare-selected" disabled>Compare selected <span aria-hidden="true">→</span></button></div>
+          <div class="compare-selection-bar"><p><strong id="selected-count" aria-live="polite">0 selected</strong><span id="selection-hint">Select 2 or 3 glasses from the list to compare them side by side.</span></p><div class="selection-actions"><button id="compare-selected" disabled>Compare selected <span aria-hidden="true">→</span></button><button id="clear-picker-selection" type="button" disabled>Clear all</button></div></div>
         </aside>
         <div class="catalogue-list-panel">
           <div class="catalogue-list-heading"><strong>All products</strong><span>Tick a box on the right to select</span></div>
