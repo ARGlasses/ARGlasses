@@ -34,6 +34,21 @@
     return match ? Number(match[1]) : Infinity;
   }
   function numericPrice(p) { return Number.isFinite(p.price) && p.price >= 0 ? p.price : null; }
+  function sortablePriceGBP(p) {
+    const confirmedGBP = numericPrice(p);
+    if (confirmedGBP !== null) return confirmedGBP;
+    const text = String(p.priceText || "");
+    // Recover explicit GBP amounts omitted from the budget-safe numeric field
+    // (for example, a UK listing that is out of stock).
+    const gbp = text.match(/£\s*([\d,]+(?:\.\d+)?)/);
+    if (gbp) return Number(gbp[1].replace(/,/g, ""));
+    // The Snap Specs announcement is in USD, not GBP. Convert only for ordering
+    // with a dated reference rate; never use this estimate for budget filtering
+    // or present it as a confirmed UK retail price.
+    const usd = text.match(/US\$\s*([\d,]+(?:\.\d+)?)/i);
+    if (usd) return Number(usd[1].replace(/,/g, "")) * 0.7495; // USD→GBP reference rate, 2026-10-21
+    return null;
+  }
   function useScore(p, use) {
     if (use === "all" || !useCases[use]) return 0;
     const rule = useCases[use], haystack = textOf(p);
@@ -111,20 +126,36 @@
       (state.budget==="all" || numericPrice(p)===null || numericPrice(p)<=Number(state.budget))
     );
     list.sort((a,b) => {
+      // The selected sort is always the primary order. Use-case relevance is only
+      // a tie-breaker, so choosing a use case cannot override price/weight/year.
+      let primary = 0;
+      if (state.sort==="price-low" || state.sort==="price-high") {
+        const ap=sortablePriceGBP(a), bp=sortablePriceGBP(b);
+        // Unpriced products stay after products with a comparable numeric price.
+        if (ap===null && bp!==null) primary=1;
+        else if (bp===null && ap!==null) primary=-1;
+        else if (ap!==null && bp!==null && ap!==bp) primary=state.sort==="price-high" ? bp-ap : ap-bp;
+      } else if (state.sort==="weight") {
+        const aw=numericWeight(a.weight), bw=numericWeight(b.weight);
+        if (aw!==bw) primary=aw<bw ? -1 : 1;
+      } else if (state.sort==="newest") {
+        const ay=Number.isFinite(Number(a.year)) && Number(a.year)>0 ? Number(a.year) : null;
+        const by=Number.isFinite(Number(b.year)) && Number(b.year)>0 ? Number(b.year) : null;
+        if (ay===null && by!==null) primary=1;
+        else if (by===null && ay!==null) primary=-1;
+        else if (ay!==null && by!==null && ay!==by) primary=by-ay;
+      } else {
+        primary=String(a.brand||"").localeCompare(String(b.brand||"")) ||
+          String(a.name||"").localeCompare(String(b.name||""));
+      }
+      if (primary) return primary;
       if (state.use!=="all") {
-        const relevance = useScore(b,state.use)-useScore(a,state.use);
+        const relevance=useScore(b,state.use)-useScore(a,state.use);
         if (relevance) return relevance;
       }
-      if (state.sort==="price-low" || state.sort==="price-high") {
-        const ap=numericPrice(a), bp=numericPrice(b);
-        if(ap===null&&bp!==null)return 1;if(bp===null&&ap!==null)return -1;
-        if(ap!==null&&bp!==null&&ap!==bp)return state.sort==="price-high"?bp-ap:ap-bp;
-      } else if(state.sort==="weight") {
-        const aw=numericWeight(a.weight), bw=numericWeight(b.weight); if(aw!==bw)return aw<bw?-1:1;
-      } else if(state.sort==="newest") {
-        const result=(Number(b.year)||0)-(Number(a.year)||0);if(result)return result;
-      }
-      return String(a.brand||"").localeCompare(String(b.brand||""))||String(a.name||"").localeCompare(String(b.name||""));
+      // Deterministic, predictable order when the primary sort values tie.
+      return String(a.brand||"").localeCompare(String(b.brand||"")) ||
+        String(a.name||"").localeCompare(String(b.name||""));
     });
     return list;
   }
