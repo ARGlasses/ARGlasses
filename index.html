@@ -406,11 +406,16 @@
 }
 
 
-      #gallery-compare-dialog{border:0;border-radius:14px;padding:0;max-width:calc(100vw - 2rem);width:min(25rem,calc(100vw - 2rem));max-height:min(78vh,34rem);overflow:auto;box-shadow:0 14px 40px rgba(0,0,0,.2)}
-      #gallery-compare-dialog::backdrop{background:rgba(8,20,34,.28);backdrop-filter:blur(1px)}
-      #gallery-compare-dialog form{margin:0}
-      #gallery-compare-dialog p{line-height:1.55}
-      #gallery-compare-dialog button{margin:0}
+      #gallery-compare-dialog{position:fixed;inset:50% auto auto 50%;transform:translate(-50%,-50%);margin:0;border:1px solid rgba(15,35,55,.14);border-radius:14px;padding:0;width:min(22rem,calc(100vw - 2rem));max-width:calc(100vw - 2rem);max-height:calc(100dvh - 2rem);overflow-y:auto;overscroll-behavior:contain;background:#fff;color:#172433;box-shadow:0 12px 36px rgba(10,25,40,.2);z-index:1000}
+      #gallery-compare-dialog[open]{display:block}
+      #gallery-compare-dialog::backdrop{background:transparent;backdrop-filter:none}
+      #gallery-compare-dialog form{margin:0;max-width:none!important;width:auto;box-sizing:border-box;padding:1rem}
+      #gallery-compare-dialog h2{font-size:1.15rem;line-height:1.3;margin:0 1.75rem .55rem 0}
+      #gallery-compare-dialog p{font-size:.9rem;line-height:1.45;margin:.4rem 0}
+      #gallery-compare-dialog #gallery-compare-selected{font-size:.82rem;overflow-wrap:anywhere;margin:.65rem 0 .85rem!important}
+      #gallery-compare-dialog button{margin:0;min-height:2.35rem;padding:.5rem .75rem;font-size:.85rem}
+      #gallery-compare-dialog .gallery-compare-close{position:absolute;top:.55rem;right:.55rem;border:0;background:#f0f4f7;color:#263746;border-radius:50%;width:2rem;height:2rem;min-height:2rem;padding:0;font-size:1.15rem;line-height:1}
+      @media(max-width:480px){#gallery-compare-dialog{width:calc(100vw - 1.5rem)}#gallery-compare-dialog form{padding:.85rem}#gallery-compare-dialog .gallery-compare-actions{gap:.4rem!important}#gallery-compare-dialog button{padding:.45rem .6rem}}
       .product-card.gallery-compare-picked{outline:3px solid #58c4f4;outline-offset:-5px}
       /* Gallery layout refinement: keep one generous hero card and only reveal the side cards. */
       .product-viewport .rail {
@@ -1068,11 +1073,12 @@
 
     <!-- Guided product comparison dialog -->
     <dialog id="gallery-compare-dialog" aria-labelledby="gallery-compare-title">
-      <form method="dialog" style="max-width:32rem;padding:1.5rem;">
-        <h2 id="gallery-compare-title" style="margin-top:0;">Choose products to compare</h2>
+      <button type="button" class="gallery-compare-close" id="gallery-compare-close" aria-label="Close comparison popup">×</button>
+      <form method="dialog">
+        <h2 id="gallery-compare-title">Choose products to compare</h2>
         <p id="gallery-compare-message">Select another product to compare its specifications side by side.</p>
-        <div id="gallery-compare-selected" aria-live="polite" style="margin:.75rem 0 1rem;font-weight:600;"></div>
-        <div style="display:flex;flex-wrap:wrap;gap:.6rem;justify-content:flex-end;">
+        <div id="gallery-compare-selected" aria-live="polite" style="font-weight:600;"></div>
+        <div class="gallery-compare-actions" style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;">
           <button id="gallery-compare-cancel" type="button" class="secondary">Keep choosing</button>
           <button id="gallery-compare-add" type="button" hidden>Add a third product</button>
           <button id="gallery-compare-go" type="button">Compare now →</button>
@@ -1162,6 +1168,7 @@
         const addButton = document.getElementById("gallery-compare-add");
         const goButton = document.getElementById("gallery-compare-go");
         const cancelButton = document.getElementById("gallery-compare-cancel");
+        const closeButton = document.getElementById("gallery-compare-close");
         const storageKey = "arglasses-gallery-compare-selection";
         const cards = Array.from(document.querySelectorAll(".product-card[data-product-id]"));
         const names = new Map(cards.map(card => [card.dataset.productId, (card.dataset.brand ? card.dataset.brand + " " : "") + (card.dataset.productName || "Product")]));
@@ -1208,7 +1215,7 @@
             goButton.textContent = "Compare all three →";
             cancelButton.textContent = "Cancel";
           }
-          if (typeof dialog.showModal === "function") dialog.showModal();
+          if (typeof dialog.show === "function") dialog.show();
           else if (selected.length >= 2 && window.confirm("Compare " + selected.map(id => names.get(id)).join(", ") + "?")) goCompare();
           save();
         }
@@ -1240,6 +1247,8 @@
           return false;
         };
         cancelButton.addEventListener("click", () => dialog.close());
+         closeButton.addEventListener("click", () => dialog.close());
+         dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
         addButton.addEventListener("click", () => dialog.close());
         goButton.addEventListener("click", goCompare);
         dialog.addEventListener("close", save);
