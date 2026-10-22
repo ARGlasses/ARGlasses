@@ -406,9 +406,8 @@
 }
 
 
-      #gallery-compare-dialog{position:fixed;inset:50% auto auto 50%;transform:translate(-50%,-50%);margin:0;border:1px solid rgba(15,35,55,.14);border-radius:14px;padding:0;width:min(22rem,calc(100vw - 2rem));max-width:calc(100vw - 2rem);max-height:calc(100dvh - 2rem);overflow-y:auto;overscroll-behavior:contain;background:#fff;color:#172433;box-shadow:0 12px 36px rgba(10,25,40,.2);z-index:1000}
-      #gallery-compare-dialog[open]{display:block}
-      #gallery-compare-dialog::backdrop{background:transparent;backdrop-filter:none}
+      #gallery-compare-dialog{position:fixed!important;inset:50% auto auto 50%!important;transform:translate(-50%,-50%)!important;display:block;box-sizing:border-box;margin:0;border:1px solid rgba(15,35,55,.14);border-radius:14px;padding:0;width:22rem;max-width:calc(100vw - 2rem);max-height:calc(100dvh - 2rem);overflow-y:auto;overscroll-behavior:contain;background:#fff;color:#172433;box-shadow:0 12px 36px rgba(10,25,40,.2);z-index:1000}
+      #gallery-compare-dialog[hidden]{display:none!important}
       #gallery-compare-dialog form{margin:0;max-width:none!important;width:auto;box-sizing:border-box;padding:1rem}
       #gallery-compare-dialog h2{font-size:1.15rem;line-height:1.3;margin:0 1.75rem .55rem 0}
       #gallery-compare-dialog p{font-size:.9rem;line-height:1.45;margin:.4rem 0}
@@ -1072,7 +1071,7 @@
     </section>
 
     <!-- Guided product comparison dialog -->
-    <dialog id="gallery-compare-dialog" aria-labelledby="gallery-compare-title">
+    <div id="gallery-compare-dialog" role="dialog" aria-modal="false" aria-labelledby="gallery-compare-title" hidden>
       <button type="button" class="gallery-compare-close" id="gallery-compare-close" aria-label="Close comparison popup">×</button>
       <form method="dialog">
         <h2 id="gallery-compare-title">Choose products to compare</h2>
@@ -1084,7 +1083,7 @@
           <button id="gallery-compare-go" type="button">Compare now →</button>
         </div>
       </form>
-    </dialog>
+    </div>
 
   <main class="compare-shell">
     <section id="explorer" class="explorer-section">
@@ -1215,8 +1214,8 @@
             goButton.textContent = "Compare all three →";
             cancelButton.textContent = "Cancel";
           }
-          if (typeof dialog.show === "function") dialog.show();
-          else if (selected.length >= 2 && window.confirm("Compare " + selected.map(id => names.get(id)).join(", ") + "?")) goCompare();
+          dialog.hidden = false;
+          dialog.classList.add("is-open");
           save();
         }
         // Called directly by each Compare specs link. The link itself points
@@ -1246,12 +1245,12 @@
           else showDialog();
           return false;
         };
-        cancelButton.addEventListener("click", () => dialog.close());
-         closeButton.addEventListener("click", () => dialog.close());
-         dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
-        addButton.addEventListener("click", () => dialog.close());
+        function closeDialog() { dialog.hidden = true; dialog.classList.remove("is-open"); save(); }
+        cancelButton.addEventListener("click", closeDialog);
+        closeButton.addEventListener("click", closeDialog);
+        dialog.addEventListener("click", event => { if (event.target === dialog) closeDialog(); });
+        addButton.addEventListener("click", closeDialog);
         goButton.addEventListener("click", goCompare);
-        dialog.addEventListener("close", save);
         save();
       })();
     </script>
