@@ -1064,7 +1064,7 @@
           }));
           return clone;
         };
-        originals.slice(-cloneCount).forEach((card, i) => rail.insertBefore(makeClone(card, count - cloneCount + i), rail.firstChild));
+        originals.slice(-cloneCount).map((card, i) => makeClone(card, count - cloneCount + i)).reverse().forEach(card => rail.insertBefore(card, rail.firstChild));
         originals.slice(0, cloneCount).forEach((card, i) => rail.appendChild(makeClone(card, i)));
         const allCards = Array.from(rail.querySelectorAll('.story'));
         let active = 0, scrollFrame = 0, resetting = false;
