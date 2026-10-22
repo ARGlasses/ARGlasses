@@ -289,6 +289,33 @@
   }
 }
 </script>
+<style>
+
+    .product-viewport { perspective: 1400px; overflow: hidden; }
+    .product-viewport .rail {
+      gap: clamp(.65rem, 1.2vw, 1.1rem);
+      padding-inline: calc((100vw - min(30vw, 390px)) / 2);
+      perspective: 1400px; perspective-origin: 50% 48%;
+      scroll-snap-type: x mandatory; overflow-x: auto; overflow-y: hidden; align-items: center;
+    }
+    .product-viewport .story {
+      flex: 0 0 clamp(245px, 30vw, 390px); min-width: 0 !important;
+      width: clamp(245px, 30vw, 390px); height: clamp(430px, 69svh, 720px);
+      scroll-snap-align: center; transform-origin: center center; backface-visibility: hidden;
+    }
+    .product-viewport .story img.bg { height: 56%; }
+    .product-viewport .story-content { height: 44%; padding-bottom: 2.5rem; }
+    .product-viewport .story.is-gallery-active { z-index: 3; }
+    .product-viewport .story.is-gallery-neighbour { z-index: 2; }
+    .product-viewport .arrow[disabled] { opacity: .7; cursor: pointer; }
+    @media (max-width: 700px) {
+      .product-viewport .rail { gap: .75rem; padding-inline: 12vw; }
+      .product-viewport .story { flex-basis: 76vw; width: 76vw; min-width: 0 !important; height: calc(100svh - 7rem); max-height: 700px; }
+      .product-viewport .story img.bg { height: 54%; }
+      .product-viewport .story-content { height: 46%; padding: 1rem 1.1rem 3rem; }
+    }
+
+</style>
 </head>
   <body class="news-page">
     <!-- Shared header mount -->
@@ -1010,85 +1037,112 @@
       });
     </script>
 
-    <!-- News carousel behavior (unchanged) -->
+    <!-- Product carousel: centred focus, visible neighbours and seamless wraparound -->
     <script>
       (function () {
-        const rail = document.querySelector('.rail');
-        const prev = document.querySelector('.arrow.left');
-        const next = document.querySelector('.arrow.right');
-        const dotsWrap = document.querySelector('.dots');
-        const cards = Array.from(document.querySelectorAll('.story'));
-        if (!rail || cards.length === 0) return;
-
-        cards.forEach((_, i) => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.setAttribute('aria-label', 'Go to product ' + (i + 1));
-          b.addEventListener('click', () => goTo(i));
-          dotsWrap.appendChild(b);
-        });
-
-        function cardWidth() {
-          const w = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
-          const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap || 20);
-          return w + gap;
-        }
-
-        function goTo(index) {
-          const clampIndex = Math.max(0, Math.min(index, cards.length - 1));
-          cards[clampIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-
-        function atStart() { return rail.scrollLeft <= 2; }
-        function atEnd() {
-          const max = rail.scrollWidth - rail.clientWidth - 2;
-          return rail.scrollLeft >= max;
-        }
-
-        function updateUI() {
-          prev.disabled = atStart();
-          next.disabled = atEnd();
-
-          const railRect = rail.getBoundingClientRect();
-          const railCenter = railRect.left + railRect.width / 2;
-
-          let active = 0, min = Infinity;
-          cards.forEach((c, i) => {
-            const rect = c.getBoundingClientRect();
-            const center = rect.left + rect.width / 2;
-            const delta = center - railCenter;
-            const dist = Math.abs(delta);
-            if (dist < min) { min = dist; active = i; }
-            if (rail.closest('.product-viewport')) {
-              const spread = Math.min(1, dist / Math.max(railRect.width * 0.72, 1));
-              const angle = Math.max(-34, Math.min(34, (delta / Math.max(railRect.width, 1)) * 66));
-              const scale = 1 - spread * 0.075;
-              const depth = spread * 70;
-              c.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' + angle.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
-              c.classList.toggle('is-gallery-active', dist < rect.width * 0.22);
+        const rail = document.querySelector('.product-viewport .rail');
+        const prev = document.querySelector('.product-viewport .arrow.left');
+        const next = document.querySelector('.product-viewport .arrow.right');
+        const dotsWrap = document.querySelector('.product-viewport .dots');
+        if (!rail || !prev || !next || !dotsWrap) return;
+        const originals = Array.from(rail.querySelectorAll('.story'));
+        const count = originals.length;
+        if (!count) return;
+        const cloneCount = Math.min(3, count);
+        const makeClone = (card, originalIndex) => {
+          const clone = card.cloneNode(true);
+          clone.removeAttribute('id');
+          clone.dataset.loopClone = 'true';
+          clone.dataset.originalIndex = String(originalIndex);
+          clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+          clone.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
+            if (link.textContent.includes('Compare specs')) {
+              event.preventDefault();
+              const originalLink = originals[originalIndex].querySelector('a.amazon-button');
+              if (originalLink) originalLink.click();
             }
-          });
-
-          dotsWrap.querySelectorAll('button').forEach((b, i) => {
-            b.setAttribute('aria-current', i === active ? 'true' : 'false');
-          });
-        }
-
-        function scrollByStep(dir) {
-          rail.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
-        }
-
-        prev.addEventListener('click', () => scrollByStep(-1));
-        next.addEventListener('click', () => scrollByStep(1));
-
-        rail.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
-          if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollByStep(-1); }
+          }));
+          return clone;
+        };
+        originals.slice(-cloneCount).forEach((card, i) => rail.insertBefore(makeClone(card, count - cloneCount + i), rail.firstChild));
+        originals.slice(0, cloneCount).forEach((card, i) => rail.appendChild(makeClone(card, i)));
+        const allCards = Array.from(rail.querySelectorAll('.story'));
+        let active = 0, scrollFrame = 0, resetting = false;
+        originals.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.type = 'button'; dot.setAttribute('aria-label', 'Go to product ' + (i + 1));
+          dot.addEventListener('click', () => goTo(i, true));
+          dotsWrap.appendChild(dot);
         });
-
-        rail.addEventListener('scroll', updateUI, { passive: true });
-        window.addEventListener('resize', updateUI);
-        updateUI();     
+        function centerOn(card, smooth) {
+          rail.scrollTo({ left: card.offsetLeft + card.offsetWidth / 2 - rail.clientWidth / 2, behavior: smooth ? 'smooth' : 'auto' });
+        }
+        function goTo(index, smooth) {
+          active = ((index % count) + count) % count;
+          centerOn(originals[active], smooth);
+          updateUI();
+        }
+        function closestCard() {
+          const center = rail.getBoundingClientRect().left + rail.clientWidth / 2;
+          let best = allCards[0], bestDist = Infinity;
+          allCards.forEach(card => {
+            const r = card.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - center);
+            if (d < bestDist) { best = card; bestDist = d; }
+          });
+          return best;
+        }
+        function updateUI() {
+          const railRect = rail.getBoundingClientRect(), railCenter = railRect.left + rail.clientWidth / 2;
+          let closest = 0, min = Infinity;
+          allCards.forEach((card, i) => {
+            const rect = card.getBoundingClientRect(), delta = rect.left + rect.width / 2 - railCenter, dist = Math.abs(delta);
+            if (dist < min) { min = dist; closest = i; }
+            const spread = Math.min(1, dist / Math.max(rail.clientWidth * .68, 1));
+            const angle = Math.max(-38, Math.min(38, delta / Math.max(rail.clientWidth, 1) * 78));
+            const scale = 1 - spread * .18, depth = spread * 105;
+            card.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' + angle.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
+            card.classList.toggle('is-gallery-active', dist < rect.width * .28);
+            card.classList.toggle('is-gallery-neighbour', dist < rect.width * 1.15);
+          });
+          const card = allCards[closest];
+          active = card.dataset.loopClone === 'true' ? Number(card.dataset.originalIndex) : originals.indexOf(card);
+          if (active < 0) active = 0;
+          dotsWrap.querySelectorAll('button').forEach((dot, i) => dot.setAttribute('aria-current', i === active ? 'true' : 'false'));
+          prev.disabled = false; next.disabled = false;
+        }
+        function wrapIfNeeded() {
+          if (resetting) return;
+          const index = allCards.indexOf(closestCard());
+          const cloneCountNow = Math.min(3, count);
+          if (index < cloneCountNow) {
+            resetting = true; centerOn(originals[count - cloneCountNow + index], false);
+            requestAnimationFrame(() => { resetting = false; updateUI(); });
+          } else if (index >= cloneCountNow + count) {
+            resetting = true; centerOn(originals[index - cloneCountNow - count], false);
+            requestAnimationFrame(() => { resetting = false; updateUI(); });
+          }
+        }
+        function onScroll() {
+          if (scrollFrame) cancelAnimationFrame(scrollFrame);
+          scrollFrame = requestAnimationFrame(() => {
+            updateUI();
+            clearTimeout(rail._galleryScrollEnd);
+            rail._galleryScrollEnd = setTimeout(wrapIfNeeded, 120);
+          });
+        }
+        function step(dir) {
+          const index = allCards.indexOf(closestCard());
+          centerOn(allCards[Math.max(0, Math.min(allCards.length - 1, index + dir))], true);
+        }
+        prev.addEventListener('click', () => step(-1));
+        next.addEventListener('click', () => step(1));
+        rail.addEventListener('keydown', e => {
+          if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        });
+        rail.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', () => { centerOn(originals[active], false); updateUI(); });
+        requestAnimationFrame(() => { centerOn(originals[0], false); updateUI(); });
       })();
     </script>
 
