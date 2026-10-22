@@ -1063,8 +1063,8 @@
               const spread = Math.min(1, dist / Math.max(railRect.width * 0.72, 1));
               const angle = Math.max(-34, Math.min(34, (delta / Math.max(railRect.width, 1)) * 66));
               const scale = 1 - spread * 0.075;
-              const depth = -spread * 110;
-              c.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' + (-angle).toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
+              const depth = spread * 70;
+              c.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' + angle.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
               c.classList.toggle('is-gallery-active', dist < rect.width * 0.22);
             }
           });
