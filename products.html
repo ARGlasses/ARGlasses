@@ -350,7 +350,29 @@
     padding: .55rem .55rem 1.6rem !important;
     gap: .22rem !important;
     overflow: hidden;
-    justify-content: flex-start;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+  /* Keep the call-to-action row at the same vertical position on every card. */
+  .product-viewport .story-content .story-teaser {
+    min-height: calc(2 * 1.32em);
+    max-height: calc(2 * 1.32em);
+  }
+  .product-viewport .story-content .product-price {
+    min-height: 1.3em;
+  }
+  .product-viewport .story-content .story-actions {
+    margin-top: auto !important;
+    padding-top: .35rem;
+    min-height: 2.5rem;
+    justify-content: flex-end;
+  }
+  .product-viewport .story-content .story-actions .amazon-button {
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .product-viewport .story-content .story-kicker { font-size: .64rem !important; line-height: 1.2; }
   .product-viewport .story-content .product-category { font-size: .56rem !important; padding: .1rem .25rem; margin: .1rem 0 0; }
