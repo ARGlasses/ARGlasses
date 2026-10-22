@@ -953,6 +953,41 @@
           flex: 0 0 clamp(300px, 58vw, 760px);
           width: clamp(300px, 58vw, 760px);
         }
+        /* Compact typography for the narrower desktop cards; mobile styles stay untouched. */
+        .product-viewport .story-content {
+          gap: .3rem;
+          padding: 1rem clamp(1rem, 2vw, 1.6rem) 2rem;
+        }
+        .product-viewport .story-content .story-kicker {
+          font-size: .68rem;
+          line-height: 1.25;
+        }
+        .product-viewport .story-content .story-title {
+          font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+          line-height: 1.12;
+          max-width: 100%;
+        }
+        .product-viewport .story-content .story-teaser {
+          font-size: clamp(.78rem, .95vw, .9rem);
+          line-height: 1.3;
+        }
+        .product-viewport .story-content .product-price {
+          font-size: .78rem;
+          line-height: 1.25;
+        }
+        .product-viewport .story-content .product-category {
+          font-size: .65rem;
+          padding: .15rem .4rem;
+        }
+        .product-viewport .story-content .story-actions {
+          margin-top: .35rem;
+          gap: .4rem;
+        }
+        .product-viewport .story-content .story-actions .amazon-button,
+        .product-viewport .story-content .story-actions button {
+          font-size: .78rem;
+          padding: .55rem .8rem;
+        }
       }
     </style>
     <script>
