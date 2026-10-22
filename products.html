@@ -1080,7 +1080,7 @@
       });
     </script>
 
-    <!-- Product carousel: layout-coordinate centering and stable bidirectional looping -->
+    <!-- Product carousel: layout-coordinate centering and momentum-safe bidirectional looping -->
     <script>
       (function () {
         const rail = document.querySelector('.product-viewport .rail');
@@ -1215,6 +1215,8 @@
             }
           } else {
             // Make touch, trackpad and scrollbar scrolling land exactly on centre.
+            // Wait for momentum scrolling to finish before this runs; settling too early
+            // interrupts a gesture and can make the rail appear to jump several cards.
             const expected = targetLeft(card);
             if (Math.abs(rail.scrollLeft - expected) > 1.5) centerOn(card, false);
           }
@@ -1228,7 +1230,7 @@
           const token = ++settleToken;
           settleTimer = setTimeout(() => {
             if (token === settleToken) settle();
-          }, 160);
+          }, 420);
         }
 
         function step(direction) {
