@@ -1107,7 +1107,9 @@
           }));
           return clone;
         };
-        originals.slice(-cloneCount).map((card, i) => makeClone(card, count - cloneCount + i)).reverse().forEach(card => rail.insertBefore(card, rail.firstChild));
+        originals.slice(-cloneCount).reverse().forEach(card => {
+          rail.insertBefore(makeClone(card, originals.indexOf(card)), rail.firstChild);
+        });
         originals.slice(0, cloneCount).forEach((card, i) => rail.appendChild(makeClone(card, i)));
         const allCards = Array.from(rail.querySelectorAll('.story'));
         let active = 0, scrollFrame = 0, resetting = false;
@@ -1118,7 +1120,11 @@
           dotsWrap.appendChild(dot);
         });
         function centerOn(card, smooth) {
-          rail.scrollTo({ left: card.offsetLeft + card.offsetWidth / 2 - rail.clientWidth / 2, behavior: smooth ? 'smooth' : 'auto' });
+          if (!card) return;
+          const cardRect = card.getBoundingClientRect();
+          const railRect = rail.getBoundingClientRect();
+          const targetLeft = rail.scrollLeft + cardRect.left + cardRect.width / 2 - (railRect.left + rail.clientWidth / 2);
+          rail.scrollTo({ left: targetLeft, behavior: smooth ? 'smooth' : 'auto' });
         }
         function goTo(index, smooth) {
           active = ((index % count) + count) % count;
