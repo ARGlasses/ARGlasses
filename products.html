@@ -1080,7 +1080,7 @@
       });
     </script>
 
-    <!-- Product carousel: layout-coordinate centering and momentum-safe bidirectional looping -->
+    <!-- Product carousel: full-cycle buffering for stable bidirectional scrolling -->
     <script>
       (function () {
         const rail = document.querySelector('.product-viewport .rail');
@@ -1093,37 +1093,50 @@
         const count = originals.length;
         if (!count) return;
 
-        const cloneCount = Math.min(3, count);
-        const makeClone = (card, originalIndex) => {
+        // Keep two complete cycles on either side. Small edge-only clone buffers
+        // fail when a wheel/trackpad gesture crosses more than a few cards.
+        const makeClone = (card, index, copy) => {
           const clone = card.cloneNode(true);
           clone.removeAttribute('id');
           clone.dataset.loopClone = 'true';
-          clone.dataset.originalIndex = String(originalIndex);
+          clone.dataset.originalIndex = String(index);
+          clone.dataset.copyIndex = String(copy);
           clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
           clone.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
             if (link.textContent.includes('Compare specs')) {
               event.preventDefault();
-              const originalLink = originals[originalIndex].querySelector('a.amazon-button');
+              const originalLink = originals[index].querySelector('a.amazon-button');
               if (originalLink) originalLink.click();
             }
           }));
           return clone;
         };
 
-        originals.slice(-cloneCount).reverse().forEach(card =>
-          rail.insertBefore(makeClone(card, originals.indexOf(card)), rail.firstChild));
-        originals.slice(0, cloneCount).forEach((card, i) => rail.appendChild(makeClone(card, i)));
+        // Two full cycles before and after the real cycle give momentum plenty
+        // of room in either direction. The real cycle is always our safe home.
+        for (let copy = -2; copy < 0; copy++) {
+          const fragment = document.createDocumentFragment();
+          originals.forEach((card, index) => fragment.appendChild(makeClone(card, index, copy)));
+          rail.insertBefore(fragment, rail.firstChild);
+        }
+        for (let copy = 1; copy <= 2; copy++) {
+          const fragment = document.createDocumentFragment();
+          originals.forEach((card, index) => fragment.appendChild(makeClone(card, index, copy)));
+          rail.appendChild(fragment);
+        }
 
         const allCards = Array.from(rail.querySelectorAll('.story'));
         let active = 0;
         let frame = 0;
         let settleTimer = 0;
-        let isProgrammatic = false;
+        let programmatic = false;
         let settleToken = 0;
+        let initialised = false;
 
-        // Native scroll snapping measures transformed card bounds inconsistently
-        // with the 3D transforms. We snap using untransformed layout coordinates.
+        // Use one source of truth for positioning; native snap and 3D transformed
+        // bounding boxes can fight the scroll position and cause forward jumps.
         rail.style.scrollSnapType = 'none';
+        rail.style.scrollBehavior = 'auto';
 
         originals.forEach((_, i) => {
           const dot = document.createElement('button');
@@ -1134,33 +1147,26 @@
         });
 
         function layoutCenter(card) {
-          // offsetLeft/offsetWidth are layout dimensions and are not distorted
-          // by rotateY/scale transforms, unlike getBoundingClientRect().
           return card.offsetLeft + card.offsetWidth / 2;
         }
-
         function targetLeft(card) {
           return layoutCenter(card) - rail.clientWidth / 2;
         }
-
         function centerOn(card, smooth) {
           if (!card) return;
           const max = Math.max(0, rail.scrollWidth - rail.clientWidth);
           const left = Math.max(0, Math.min(max, targetLeft(card)));
-          isProgrammatic = true;
+          programmatic = true;
           rail.scrollTo({ left, behavior: smooth ? 'smooth' : 'auto' });
-          if (!smooth) {
+          if (!smooth) requestAnimationFrame(() => {
+            programmatic = false;
             updateUI();
-            requestAnimationFrame(() => { isProgrammatic = false; });
-          }
+          });
         }
-
-        function goTo(index, smooth) {
-          active = ((index % count) + count) % count;
-          centerOn(originals[active], smooth);
-          updateUI();
+        function originalFor(card) {
+          const index = Number(card.dataset.originalIndex);
+          return Number.isInteger(index) ? originals[index] : card;
         }
-
         function closestCard() {
           const center = rail.scrollLeft + rail.clientWidth / 2;
           let best = allCards[0], bestDist = Infinity;
@@ -1170,76 +1176,64 @@
           }
           return best;
         }
-
         function updateUI() {
           const center = rail.scrollLeft + rail.clientWidth / 2;
-          let closest = 0, min = Infinity;
-          allCards.forEach((card, i) => {
+          let closest = allCards[0], min = Infinity;
+          allCards.forEach(card => {
             const delta = layoutCenter(card) - center;
             const dist = Math.abs(delta);
-            if (dist < min) { min = dist; closest = i; }
-
+            if (dist < min) { min = dist; closest = card; }
             const spread = Math.min(1, dist / Math.max(rail.clientWidth * .68, 1));
             const angle = Math.max(-24, Math.min(24, delta / Math.max(rail.clientWidth, 1) * 48));
-            const scale = 1 - spread * .08;
-            const depth = -spread * 65;
-            card.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' +
-              angle.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
+            card.style.transform = 'translateZ(' + (-spread * 65).toFixed(1) +
+              'px) rotateY(' + angle.toFixed(2) + 'deg) scale(' + (1 - spread * .08).toFixed(3) + ')';
             card.classList.toggle('is-gallery-active', dist < card.offsetWidth * .28);
             card.classList.toggle('is-gallery-neighbour', dist < card.offsetWidth * 1.15);
           });
-
-          const card = allCards[closest];
-          active = card.dataset.loopClone === 'true'
-            ? Number(card.dataset.originalIndex)
-            : originals.indexOf(card);
+          const index = Number(closest.dataset.originalIndex);
+          active = Number.isInteger(index) ? index : originals.indexOf(closest);
           if (active < 0) active = 0;
           dotsWrap.querySelectorAll('button').forEach((dot, i) =>
             dot.setAttribute('aria-current', i === active ? 'true' : 'false'));
           prev.disabled = false;
           next.disabled = false;
         }
-
         function settle() {
-          if (isProgrammatic) isProgrammatic = false;
           const card = closestCard();
           if (!card) return;
-
-          if (card.dataset.loopClone === 'true') {
-            const index = Number(card.dataset.originalIndex);
-            const original = originals[index];
-            if (Number.isInteger(index) && original) {
-              // Jump to the real card at the identical layout centre. No smooth
-              // animation here: an animated reset is what causes visible drift.
-              centerOn(original, false);
-            }
+          const index = Number(card.dataset.originalIndex);
+          const isHomeCycle = !card.dataset.loopClone;
+          if (!isHomeCycle && Number.isInteger(index) && originals[index]) {
+            // Rebase only after momentum ends. Since every cycle is a full copy,
+            // the visible card and its neighbours match exactly across the jump.
+            centerOn(originals[index], false);
           } else {
-            // Make touch, trackpad and scrollbar scrolling land exactly on centre.
-            // Wait for momentum scrolling to finish before this runs; settling too early
-            // interrupts a gesture and can make the rail appear to jump several cards.
             const expected = targetLeft(card);
             if (Math.abs(rail.scrollLeft - expected) > 1.5) centerOn(card, false);
           }
           updateUI();
         }
-
         function onScroll() {
           if (frame) cancelAnimationFrame(frame);
           frame = requestAnimationFrame(updateUI);
           clearTimeout(settleTimer);
           const token = ++settleToken;
+          // Long enough to let touch/trackpad momentum finish; do not interrupt it.
           settleTimer = setTimeout(() => {
             if (token === settleToken) settle();
-          }, 420);
+          }, 500);
         }
-
+        function goTo(index, smooth) {
+          active = ((index % count) + count) % count;
+          centerOn(originals[active], smooth);
+          updateUI();
+        }
         function step(direction) {
           const current = closestCard();
           const index = allCards.indexOf(current);
           const target = allCards[Math.max(0, Math.min(allCards.length - 1, index + direction))];
           if (target) centerOn(target, true);
         }
-
         prev.addEventListener('click', () => step(-1));
         next.addEventListener('click', () => step(1));
         rail.addEventListener('keydown', event => {
@@ -1252,71 +1246,18 @@
           updateUI();
         });
 
-        requestAnimationFrame(() => {
+        // Initialise directly at Vision Pro without animating the page or rail.
+        function initialise() {
+          if (initialised) return;
+          initialised = true;
           centerOn(originals[0], false);
           updateUI();
-        });
+        }
+        if (document.readyState === 'complete') requestAnimationFrame(initialise);
+        else window.addEventListener('load', () => requestAnimationFrame(initialise), { once: true });
       })();
     </script>
 
-    <!-- Scroll stabilization: only when arriving without a hash; doesn't affect links -->
-    <script>
-      (function () {
-        var shouldForceTop = !location.hash;
-
-        function stabilizeTop(durationMs) {
-          var start = performance.now();
-          var stoppedByUser = false;
-
-          function forceTop() {
-            if (stoppedByUser) return;
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-
-            if (performance.now() - start < durationMs) {
-              requestAnimationFrame(forceTop);
-            }
-          }
-
-          function onUserScroll() {
-            if (Math.abs(window.scrollY) > 2) {
-              stoppedByUser = true;
-              window.removeEventListener('wheel', onUserScroll, { passive: true });
-              window.removeEventListener('touchmove', onUserScroll, { passive: true });
-              window.removeEventListener('scroll', onUserScroll, { passive: true });
-            }
-          }
-
-          window.addEventListener('wheel', onUserScroll, { passive: true });
-          window.addEventListener('touchmove', onUserScroll, { passive: true });
-          window.addEventListener('scroll', onUserScroll, { passive: true });
-
-          forceTop();
-          window.addEventListener('load', function () { window.scrollTo(0, 0); }, { once: true });
-        }
-
-        function run() {
-          if (!shouldForceTop) return;
-          stabilizeTop(380);
-        }
-
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-          setTimeout(run, 0);
-        } else {
-          document.addEventListener('DOMContentLoaded', run, { once: true });
-        }
-
-        window.addEventListener('header:ready', function () {
-          if (shouldForceTop) stabilizeTop(220);
-        });
-
-        window.addEventListener('pageshow', function (e) {
-          if (shouldForceTop && e.persisted) stabilizeTop(220);
-        });
-      })();
-    </script>
-   
     <script src="cookie-consent.js" defer></script>
 </body>
 </html>
