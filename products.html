@@ -943,6 +943,22 @@
         .product-viewport .story img.bg { height: 54%; padding: 1rem; }
         .product-viewport .story-content { height: 46%; padding: 1rem 1.1rem 3.2rem; }
       }
+      /* Mouse / pointer dragging for the gallery rail. */
+      .product-viewport .rail {
+        cursor: grab;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: pan-y;
+      }
+      .product-viewport .rail.is-dragging {
+        cursor: grabbing;
+        scroll-behavior: auto !important;
+      }
+      .product-viewport .rail img {
+        -webkit-user-drag: none;
+        user-drag: none;
+      }
+
       /* Desktop only: minimize the gutters and narrow cards to reveal more of both neighbours. */
       @media (min-width: 701px) {
         .product-viewport .rail {
@@ -1287,6 +1303,55 @@
           if (event.key === 'ArrowLeft') { event.preventDefault(); step(-1); }
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
+
+        // Drag the gallery horizontally with a mouse (or pen). Keep normal clicks
+        // on links/buttons working unless the pointer actually moved the rail.
+        let dragState = null;
+        let suppressClick = false;
+        rail.addEventListener('pointerdown', event => {
+          if (event.pointerType === 'touch' || event.button !== 0) return;
+          if (event.target.closest('a, button, input, select, textarea, [role="button"]')) return;
+          dragState = {
+            pointerId: event.pointerId,
+            startX: event.clientX,
+            startScrollLeft: rail.scrollLeft,
+            moved: false
+          };
+          rail.classList.add('is-dragging');
+          rail.setPointerCapture(event.pointerId);
+        });
+        rail.addEventListener('pointermove', event => {
+          if (!dragState || event.pointerId !== dragState.pointerId) return;
+          const dx = event.clientX - dragState.startX;
+          if (Math.abs(dx) > 4) dragState.moved = true;
+          if (dragState.moved) {
+            event.preventDefault();
+            rail.scrollLeft = dragState.startScrollLeft - dx;
+          }
+        });
+        function finishDrag(event) {
+          if (!dragState || (event && event.pointerId !== dragState.pointerId)) return;
+          suppressClick = dragState.moved;
+          const pointerId = dragState.pointerId;
+          dragState = null;
+          rail.classList.remove('is-dragging');
+          if (rail.hasPointerCapture(pointerId)) rail.releasePointerCapture(pointerId);
+        }
+        rail.addEventListener('pointerup', finishDrag);
+        rail.addEventListener('pointercancel', finishDrag);
+        rail.addEventListener('lostpointercapture', () => {
+          if (dragState) {
+            suppressClick = dragState.moved;
+            dragState = null;
+            rail.classList.remove('is-dragging');
+          }
+        });
+        rail.addEventListener('click', event => {
+          if (!suppressClick) return;
+          event.preventDefault();
+          event.stopPropagation();
+          suppressClick = false;
+        }, true);
         window.addEventListener('resize', () => {
           centerOn(originals[active] || originals[0], false);
           updateUI();
