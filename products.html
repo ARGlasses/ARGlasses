@@ -293,7 +293,7 @@
 
     .product-viewport { perspective: 1400px; overflow: hidden; }
     .product-viewport .rail {
-      gap: clamp(.65rem, 1.2vw, 1.1rem);
+      gap: clamp(.35rem, .65vw, .65rem);
       padding-inline: calc((100vw - min(30vw, 390px)) / 2);
       perspective: 1400px; perspective-origin: 50% 48%;
       scroll-snap-type: x mandatory; overflow-x: auto; overflow-y: hidden; align-items: center;
@@ -1184,7 +1184,7 @@
             const dist = Math.abs(delta);
             if (dist < min) { min = dist; closest = card; }
             const spread = Math.min(1, dist / Math.max(rail.clientWidth * .68, 1));
-            const angle = Math.max(-24, Math.min(24, delta / Math.max(rail.clientWidth, 1) * 48));
+            const angle = Math.max(-32, Math.min(32, delta / Math.max(rail.clientWidth, 1) * 64));
             card.style.transform = 'translateZ(' + (-spread * 65).toFixed(1) +
               'px) rotateY(' + angle.toFixed(2) + 'deg) scale(' + (1 - spread * .08).toFixed(3) + ')';
             card.classList.toggle('is-gallery-active', dist < card.offsetWidth * .28);
