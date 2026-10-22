@@ -165,7 +165,42 @@
       html body .viewport .dots { bottom: 1rem !important; }
     
       /* Product Gallery: solid white text panel, dark typography, and un-faded images */
-      .product-viewport { background:#fff; }
+      .product-viewport { background:#f6f8fb; perspective: 1500px; perspective-origin: 50% 45%; }
+      /* A subtle curved gallery: neighbouring product tiles turn away in 3D as you swipe. */
+      .product-viewport .rail {
+        gap: clamp(1rem, 2.5vw, 2.25rem);
+        padding-inline: max(6vw, calc((100vw - min(76vw, 980px)) / 2));
+        perspective: 1500px;
+        transform-style: preserve-3d;
+        overscroll-behavior-x: contain;
+      }
+      .product-viewport .story {
+        min-width: clamp(320px, 68vw, 900px);
+        height: clamp(430px, 76svh, 820px);
+        flex-shrink: 0;
+        transform: translateZ(0) rotateY(0deg) scale(1);
+        transform-origin: center center;
+        transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+        backface-visibility: hidden;
+        will-change: transform;
+        box-shadow: 0 28px 70px rgba(26,42,62,.15), 0 5px 18px rgba(26,42,62,.08);
+      }
+      .product-viewport .story.is-gallery-active {
+        box-shadow: 0 32px 82px rgba(26,42,62,.20), 0 8px 24px rgba(26,42,62,.09);
+      }
+      @media (max-width:700px) {
+        .product-viewport { perspective: 1000px; }
+        .product-viewport .rail { gap: 1rem; padding-inline: 6vw; }
+        .product-viewport .story {
+          min-width: 84vw;
+          height: calc(100svh - 7rem);
+          max-height: 760px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .product-viewport .story { transition: none; }
+        .product-viewport .rail { scroll-behavior: auto; }
+      }
       .product-viewport .story {
         min-width:clamp(82%, 88vw, 1180px);
         background:#fff;
@@ -1021,8 +1056,17 @@
           cards.forEach((c, i) => {
             const rect = c.getBoundingClientRect();
             const center = rect.left + rect.width / 2;
-            const dist = Math.abs(center - railCenter);
+            const delta = center - railCenter;
+            const dist = Math.abs(delta);
             if (dist < min) { min = dist; active = i; }
+            if (rail.closest('.product-viewport')) {
+              const spread = Math.min(1, dist / Math.max(railRect.width * 0.72, 1));
+              const angle = Math.max(-34, Math.min(34, (delta / Math.max(railRect.width, 1)) * 66));
+              const scale = 1 - spread * 0.075;
+              const depth = -spread * 110;
+              c.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' + (-angle).toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
+              c.classList.toggle('is-gallery-active', dist < rect.width * 0.22);
+            }
           });
 
           dotsWrap.querySelectorAll('button').forEach((b, i) => {
