@@ -319,4 +319,15 @@
   });
   if($("print-comparison")) $("print-comparison").addEventListener("click",()=>window.print());
   readUrl();populateBrands();syncControls();render();
+  // When a comparison is launched from a product card, show the result rather
+  // than leaving the visitor at the top of the homepage with no visible feedback.
+  if (new URLSearchParams(window.location.search).has("compare") && selected.size >= 2) {
+    requestAnimationFrame(() => {
+      const section = $("comparison");
+      if (section && !section.hidden) section.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+  }
 })();
