@@ -900,6 +900,49 @@
       #gallery-compare-dialog p{line-height:1.55}
       #gallery-compare-dialog button{margin:0}
       .product-card.gallery-compare-picked{outline:3px solid #58c4f4;outline-offset:-5px}
+      /* Gallery layout refinement: keep one generous hero card and only reveal the side cards. */
+      .product-viewport .rail {
+        gap: clamp(1.25rem, 3vw, 2.75rem);
+        padding-inline: 14vw;
+        align-items: center;
+        perspective: 1600px;
+      }
+      .product-viewport .story {
+        flex: 0 0 clamp(320px, 72vw, 980px);
+        width: clamp(320px, 72vw, 980px);
+        min-width: 0;
+        max-width: none;
+        height: clamp(430px, 74svh, 780px);
+        overflow: hidden;
+      }
+      .product-viewport .story img.bg {
+        height: 54%;
+        padding: 1.5rem 2rem .5rem;
+        object-fit: contain;
+      }
+      .product-viewport .story-content {
+        height: 46%;
+        padding: 1.25rem clamp(1.5rem, 3.2vw, 3rem) clamp(2.5rem, 4vw, 3.5rem);
+      }
+      .product-viewport .story-content .story-title {
+        font-size: clamp(1.7rem, 3vw, 2.6rem);
+      }
+      .product-viewport .story-content .story-teaser {
+        font-size: clamp(.95rem, 1.25vw, 1.1rem);
+        line-height: 1.45;
+      }
+      @media (max-width: 700px) {
+        .product-viewport .rail { gap: 1rem; padding-inline: 6vw; }
+        .product-viewport .story {
+          flex-basis: 88vw;
+          width: 88vw;
+          min-width: 0;
+          height: calc(100svh - 6.2rem);
+          max-height: 760px;
+        }
+        .product-viewport .story img.bg { height: 54%; padding: 1rem; }
+        .product-viewport .story-content { height: 46%; padding: 1rem 1.1rem 3.2rem; }
+      }
     </style>
     <script>
       (function () {
