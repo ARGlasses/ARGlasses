@@ -14,9 +14,7 @@ https://arglasses.com/*    https://www.arglasses.com/:splat    301!
 /news.html       /news        301!
 /database.html   /database    301!
 
-# The product carousel now lives on the homepage; redirect legacy gallery URLs there.
-/products       /       301!
-/products.html  /       301!
+# The legacy gallery URL redirects to the homepage.
 /gallery        /       301!
 
 # Permanent redirects from legacy news .html URLs to the canonical clean URLs.
