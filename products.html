@@ -943,6 +943,17 @@
         .product-viewport .story img.bg { height: 54%; padding: 1rem; }
         .product-viewport .story-content { height: 46%; padding: 1rem 1.1rem 3.2rem; }
       }
+      /* Desktop only: minimize the gutters and narrow cards to reveal more of both neighbours. */
+      @media (min-width: 701px) {
+        .product-viewport .rail {
+          gap: .2rem;
+          padding-inline: calc((100vw - min(58vw, 760px)) / 2);
+        }
+        .product-viewport .story {
+          flex: 0 0 clamp(300px, 58vw, 760px);
+          width: clamp(300px, 58vw, 760px);
+        }
+      }
     </style>
     <script>
       (function () {
