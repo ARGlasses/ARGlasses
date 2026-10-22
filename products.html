@@ -1080,7 +1080,7 @@
       });
     </script>
 
-    <!-- Product carousel: centred focus, visible neighbours and seamless wraparound -->
+    <!-- Product carousel: precise centering, bidirectional loop and stable snap reset -->
     <script>
       (function () {
         const rail = document.querySelector('.product-viewport .rail');
@@ -1088,9 +1088,11 @@
         const next = document.querySelector('.product-viewport .arrow.right');
         const dotsWrap = document.querySelector('.product-viewport .dots');
         if (!rail || !prev || !next || !dotsWrap) return;
+
         const originals = Array.from(rail.querySelectorAll('.story'));
         const count = originals.length;
         if (!count) return;
+
         const cloneCount = Math.min(3, count);
         const makeClone = (card, originalIndex) => {
           const clone = card.cloneNode(true);
@@ -1107,85 +1109,136 @@
           }));
           return clone;
         };
+
         originals.slice(-cloneCount).reverse().forEach(card => {
           rail.insertBefore(makeClone(card, originals.indexOf(card)), rail.firstChild);
         });
         originals.slice(0, cloneCount).forEach((card, i) => rail.appendChild(makeClone(card, i)));
+
         const allCards = Array.from(rail.querySelectorAll('.story'));
-        let active = 0, scrollFrame = 0, resetting = false;
+        let active = 0;
+        let scrollFrame = 0;
+        let settleTimer = 0;
+        let resetting = false;
+
         originals.forEach((_, i) => {
           const dot = document.createElement('button');
-          dot.type = 'button'; dot.setAttribute('aria-label', 'Go to product ' + (i + 1));
+          dot.type = 'button';
+          dot.setAttribute('aria-label', 'Go to product ' + (i + 1));
           dot.addEventListener('click', () => goTo(i, true));
           dotsWrap.appendChild(dot);
         });
+
+        // Calculate the destination from the rail's own scroll coordinates.
+        // This avoids transform/perspective bounding-box drift at either end.
+        function targetLeft(card) {
+          const railRect = rail.getBoundingClientRect();
+          const cardRect = card.getBoundingClientRect();
+          return rail.scrollLeft + cardRect.left + cardRect.width / 2 -
+            (railRect.left + rail.clientWidth / 2);
+        }
+
         function centerOn(card, smooth) {
           if (!card) return;
-          const cardRect = card.getBoundingClientRect();
-          const railRect = rail.getBoundingClientRect();
-          const targetLeft = rail.scrollLeft + cardRect.left + cardRect.width / 2 - (railRect.left + rail.clientWidth / 2);
-          rail.scrollTo({ left: targetLeft, behavior: smooth ? 'smooth' : 'auto' });
+          rail.scrollTo({
+            left: Math.max(0, Math.min(targetLeft(card), rail.scrollWidth - rail.clientWidth)),
+            behavior: smooth ? 'smooth' : 'auto'
+          });
         }
+
         function goTo(index, smooth) {
           active = ((index % count) + count) % count;
           centerOn(originals[active], smooth);
           updateUI();
         }
+
         function closestCard() {
-          const center = rail.getBoundingClientRect().left + rail.clientWidth / 2;
+          const railRect = rail.getBoundingClientRect();
+          const center = railRect.left + rail.clientWidth / 2;
           let best = allCards[0], bestDist = Infinity;
           allCards.forEach(card => {
-            const r = card.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - center);
+            const r = card.getBoundingClientRect();
+            const d = Math.abs(r.left + r.width / 2 - center);
             if (d < bestDist) { best = card; bestDist = d; }
           });
           return best;
         }
+
         function updateUI() {
-          const railRect = rail.getBoundingClientRect(), railCenter = railRect.left + rail.clientWidth / 2;
+          const railRect = rail.getBoundingClientRect();
+          const railCenter = railRect.left + rail.clientWidth / 2;
           let closest = 0, min = Infinity;
+
           allCards.forEach((card, i) => {
-            const rect = card.getBoundingClientRect(), delta = rect.left + rect.width / 2 - railCenter, dist = Math.abs(delta);
+            const rect = card.getBoundingClientRect();
+            const delta = rect.left + rect.width / 2 - railCenter;
+            const dist = Math.abs(delta);
             if (dist < min) { min = dist; closest = i; }
+
             const spread = Math.min(1, dist / Math.max(rail.clientWidth * .68, 1));
             const angle = Math.max(-24, Math.min(24, delta / Math.max(rail.clientWidth, 1) * 48));
-            const scale = 1 - spread * .08, depth = -spread * 65;
-            card.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' + angle.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
+            const scale = 1 - spread * .08;
+            const depth = -spread * 65;
+            card.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' +
+              angle.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
             card.classList.toggle('is-gallery-active', dist < rect.width * .28);
             card.classList.toggle('is-gallery-neighbour', dist < rect.width * 1.15);
           });
+
           const card = allCards[closest];
-          active = card.dataset.loopClone === 'true' ? Number(card.dataset.originalIndex) : originals.indexOf(card);
+          active = card.dataset.loopClone === 'true'
+            ? Number(card.dataset.originalIndex)
+            : originals.indexOf(card);
           if (active < 0) active = 0;
-          dotsWrap.querySelectorAll('button').forEach((dot, i) => dot.setAttribute('aria-current', i === active ? 'true' : 'false'));
-          prev.disabled = false; next.disabled = false;
+          dotsWrap.querySelectorAll('button').forEach((dot, i) =>
+            dot.setAttribute('aria-current', i === active ? 'true' : 'false'));
+          prev.disabled = false;
+          next.disabled = false;
         }
+
         function wrapIfNeeded() {
           if (resetting) return;
           const card = closestCard();
           if (!card || card.dataset.loopClone !== 'true') return;
+
           const originalIndex = Number(card.dataset.originalIndex);
-          if (!Number.isInteger(originalIndex) || !originals[originalIndex]) return;
-          // Re-center the matching real card, using the clone's explicit identity.
-          // This avoids index arithmetic drifting at either end of the loop.
+          const original = originals[originalIndex];
+          if (!Number.isInteger(originalIndex) || !original) return;
+
+          // Turn snapping off for the one-frame jump so the browser cannot
+          // snap back to the clone after we have moved to its real counterpart.
           resetting = true;
-          centerOn(originals[originalIndex], false);
+          const previousSnap = rail.style.scrollSnapType;
+          const previousBehavior = rail.style.scrollBehavior;
+          rail.style.scrollSnapType = 'none';
+          rail.style.scrollBehavior = 'auto';
+          rail.scrollLeft = targetLeft(original);
+          updateUI();
+
           requestAnimationFrame(() => {
+            rail.style.scrollSnapType = previousSnap;
+            rail.style.scrollBehavior = previousBehavior;
             updateUI();
             requestAnimationFrame(() => { resetting = false; });
           });
         }
+
         function onScroll() {
           if (scrollFrame) cancelAnimationFrame(scrollFrame);
-          scrollFrame = requestAnimationFrame(() => {
-            updateUI();
-            clearTimeout(rail._galleryScrollEnd);
-            rail._galleryScrollEnd = setTimeout(wrapIfNeeded, 120);
-          });
+          scrollFrame = requestAnimationFrame(updateUI);
+          clearTimeout(settleTimer);
+          settleTimer = setTimeout(wrapIfNeeded, 180);
         }
+
         function step(dir) {
-          const index = allCards.indexOf(closestCard());
-          centerOn(allCards[Math.max(0, Math.min(allCards.length - 1, index + dir))], true);
+          // Use the nearest physical card, not the logical dot index: this
+          // preserves direction when moving through either set of loop clones.
+          const current = closestCard();
+          const index = allCards.indexOf(current);
+          const target = allCards[Math.max(0, Math.min(allCards.length - 1, index + dir))];
+          if (target) centerOn(target, true);
         }
+
         prev.addEventListener('click', () => step(-1));
         next.addEventListener('click', () => step(1));
         rail.addEventListener('keydown', e => {
@@ -1193,8 +1246,15 @@
           if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', () => { centerOn(originals[active], false); updateUI(); });
-        requestAnimationFrame(() => { centerOn(originals[0], false); updateUI(); });
+        window.addEventListener('resize', () => {
+          centerOn(originals[active], false);
+          updateUI();
+        });
+
+        requestAnimationFrame(() => {
+          centerOn(originals[0], false);
+          updateUI();
+        });
       })();
     </script>
 
