@@ -1155,15 +1155,18 @@
         }
         function wrapIfNeeded() {
           if (resetting) return;
-          const index = allCards.indexOf(closestCard());
-          const cloneCountNow = Math.min(3, count);
-          if (index < cloneCountNow) {
-            resetting = true; centerOn(originals[count - cloneCountNow + index], false);
-            requestAnimationFrame(() => { resetting = false; updateUI(); });
-          } else if (index >= cloneCountNow + count) {
-            resetting = true; centerOn(originals[index - cloneCountNow - count], false);
-            requestAnimationFrame(() => { resetting = false; updateUI(); });
-          }
+          const card = closestCard();
+          if (!card || card.dataset.loopClone !== 'true') return;
+          const originalIndex = Number(card.dataset.originalIndex);
+          if (!Number.isInteger(originalIndex) || !originals[originalIndex]) return;
+          // Re-center the matching real card, using the clone's explicit identity.
+          // This avoids index arithmetic drifting at either end of the loop.
+          resetting = true;
+          centerOn(originals[originalIndex], false);
+          requestAnimationFrame(() => {
+            updateUI();
+            requestAnimationFrame(() => { resetting = false; });
+          });
         }
         function onScroll() {
           if (scrollFrame) cancelAnimationFrame(scrollFrame);
