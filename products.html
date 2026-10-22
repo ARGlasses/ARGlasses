@@ -347,7 +347,8 @@
   .product-viewport .story-content {
     height: 67% !important;
     box-sizing: border-box;
-    padding: .55rem .55rem 1.6rem !important;
+    /* Shift the centred text group down roughly two lines, closer to the bottom-aligned buttons. */
+    padding: calc(.55rem + 2.5em) .55rem 1.6rem !important;
     gap: .22rem !important;
     overflow: hidden;
     display: flex !important;
