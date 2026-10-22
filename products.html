@@ -1080,7 +1080,7 @@
       });
     </script>
 
-    <!-- Product carousel: precise centering, bidirectional loop and stable snap reset -->
+    <!-- Product carousel: layout-coordinate centering and stable bidirectional looping -->
     <script>
       (function () {
         const rail = document.querySelector('.product-viewport .rail');
@@ -1110,16 +1110,20 @@
           return clone;
         };
 
-        originals.slice(-cloneCount).reverse().forEach(card => {
-          rail.insertBefore(makeClone(card, originals.indexOf(card)), rail.firstChild);
-        });
+        originals.slice(-cloneCount).reverse().forEach(card =>
+          rail.insertBefore(makeClone(card, originals.indexOf(card)), rail.firstChild));
         originals.slice(0, cloneCount).forEach((card, i) => rail.appendChild(makeClone(card, i)));
 
         const allCards = Array.from(rail.querySelectorAll('.story'));
         let active = 0;
-        let scrollFrame = 0;
+        let frame = 0;
         let settleTimer = 0;
-        let resetting = false;
+        let isProgrammatic = false;
+        let settleToken = 0;
+
+        // Native scroll snapping measures transformed card bounds inconsistently
+        // with the 3D transforms. We snap using untransformed layout coordinates.
+        rail.style.scrollSnapType = 'none';
 
         originals.forEach((_, i) => {
           const dot = document.createElement('button');
@@ -1129,21 +1133,26 @@
           dotsWrap.appendChild(dot);
         });
 
-        // Calculate the destination from the rail's own scroll coordinates.
-        // This avoids transform/perspective bounding-box drift at either end.
+        function layoutCenter(card) {
+          // offsetLeft/offsetWidth are layout dimensions and are not distorted
+          // by rotateY/scale transforms, unlike getBoundingClientRect().
+          return card.offsetLeft + card.offsetWidth / 2;
+        }
+
         function targetLeft(card) {
-          const railRect = rail.getBoundingClientRect();
-          const cardRect = card.getBoundingClientRect();
-          return rail.scrollLeft + cardRect.left + cardRect.width / 2 -
-            (railRect.left + rail.clientWidth / 2);
+          return layoutCenter(card) - rail.clientWidth / 2;
         }
 
         function centerOn(card, smooth) {
           if (!card) return;
-          rail.scrollTo({
-            left: Math.max(0, Math.min(targetLeft(card), rail.scrollWidth - rail.clientWidth)),
-            behavior: smooth ? 'smooth' : 'auto'
-          });
+          const max = Math.max(0, rail.scrollWidth - rail.clientWidth);
+          const left = Math.max(0, Math.min(max, targetLeft(card)));
+          isProgrammatic = true;
+          rail.scrollTo({ left, behavior: smooth ? 'smooth' : 'auto' });
+          if (!smooth) {
+            updateUI();
+            requestAnimationFrame(() => { isProgrammatic = false; });
+          }
         }
 
         function goTo(index, smooth) {
@@ -1153,25 +1162,20 @@
         }
 
         function closestCard() {
-          const railRect = rail.getBoundingClientRect();
-          const center = railRect.left + rail.clientWidth / 2;
+          const center = rail.scrollLeft + rail.clientWidth / 2;
           let best = allCards[0], bestDist = Infinity;
-          allCards.forEach(card => {
-            const r = card.getBoundingClientRect();
-            const d = Math.abs(r.left + r.width / 2 - center);
-            if (d < bestDist) { best = card; bestDist = d; }
-          });
+          for (const card of allCards) {
+            const dist = Math.abs(layoutCenter(card) - center);
+            if (dist < bestDist) { best = card; bestDist = dist; }
+          }
           return best;
         }
 
         function updateUI() {
-          const railRect = rail.getBoundingClientRect();
-          const railCenter = railRect.left + rail.clientWidth / 2;
+          const center = rail.scrollLeft + rail.clientWidth / 2;
           let closest = 0, min = Infinity;
-
           allCards.forEach((card, i) => {
-            const rect = card.getBoundingClientRect();
-            const delta = rect.left + rect.width / 2 - railCenter;
+            const delta = layoutCenter(card) - center;
             const dist = Math.abs(delta);
             if (dist < min) { min = dist; closest = i; }
 
@@ -1181,8 +1185,8 @@
             const depth = -spread * 65;
             card.style.transform = 'translateZ(' + depth.toFixed(1) + 'px) rotateY(' +
               angle.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
-            card.classList.toggle('is-gallery-active', dist < rect.width * .28);
-            card.classList.toggle('is-gallery-neighbour', dist < rect.width * 1.15);
+            card.classList.toggle('is-gallery-active', dist < card.offsetWidth * .28);
+            card.classList.toggle('is-gallery-neighbour', dist < card.offsetWidth * 1.15);
           });
 
           const card = allCards[closest];
@@ -1196,58 +1200,53 @@
           next.disabled = false;
         }
 
-        function wrapIfNeeded() {
-          if (resetting) return;
+        function settle() {
+          if (isProgrammatic) isProgrammatic = false;
           const card = closestCard();
-          if (!card || card.dataset.loopClone !== 'true') return;
+          if (!card) return;
 
-          const originalIndex = Number(card.dataset.originalIndex);
-          const original = originals[originalIndex];
-          if (!Number.isInteger(originalIndex) || !original) return;
-
-          // Turn snapping off for the one-frame jump so the browser cannot
-          // snap back to the clone after we have moved to its real counterpart.
-          resetting = true;
-          const previousSnap = rail.style.scrollSnapType;
-          const previousBehavior = rail.style.scrollBehavior;
-          rail.style.scrollSnapType = 'none';
-          rail.style.scrollBehavior = 'auto';
-          rail.scrollLeft = targetLeft(original);
+          if (card.dataset.loopClone === 'true') {
+            const index = Number(card.dataset.originalIndex);
+            const original = originals[index];
+            if (Number.isInteger(index) && original) {
+              // Jump to the real card at the identical layout centre. No smooth
+              // animation here: an animated reset is what causes visible drift.
+              centerOn(original, false);
+            }
+          } else {
+            // Make touch, trackpad and scrollbar scrolling land exactly on centre.
+            const expected = targetLeft(card);
+            if (Math.abs(rail.scrollLeft - expected) > 1.5) centerOn(card, false);
+          }
           updateUI();
-
-          requestAnimationFrame(() => {
-            rail.style.scrollSnapType = previousSnap;
-            rail.style.scrollBehavior = previousBehavior;
-            updateUI();
-            requestAnimationFrame(() => { resetting = false; });
-          });
         }
 
         function onScroll() {
-          if (scrollFrame) cancelAnimationFrame(scrollFrame);
-          scrollFrame = requestAnimationFrame(updateUI);
+          if (frame) cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(updateUI);
           clearTimeout(settleTimer);
-          settleTimer = setTimeout(wrapIfNeeded, 180);
+          const token = ++settleToken;
+          settleTimer = setTimeout(() => {
+            if (token === settleToken) settle();
+          }, 160);
         }
 
-        function step(dir) {
-          // Use the nearest physical card, not the logical dot index: this
-          // preserves direction when moving through either set of loop clones.
+        function step(direction) {
           const current = closestCard();
           const index = allCards.indexOf(current);
-          const target = allCards[Math.max(0, Math.min(allCards.length - 1, index + dir))];
+          const target = allCards[Math.max(0, Math.min(allCards.length - 1, index + direction))];
           if (target) centerOn(target, true);
         }
 
         prev.addEventListener('click', () => step(-1));
         next.addEventListener('click', () => step(1));
-        rail.addEventListener('keydown', e => {
-          if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
-          if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        rail.addEventListener('keydown', event => {
+          if (event.key === 'ArrowRight') { event.preventDefault(); step(1); }
+          if (event.key === 'ArrowLeft') { event.preventDefault(); step(-1); }
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', () => {
-          centerOn(originals[active], false);
+          centerOn(originals[active] || originals[0], false);
           updateUI();
         });
 
