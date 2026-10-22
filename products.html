@@ -352,9 +352,9 @@
     overflow: hidden;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
   }
-  /* Keep the call-to-action row at the same vertical position on every card. */
+  /* Spread spare room evenly between the content groups instead of leaving one large gap above the buttons. */
   .product-viewport .story-content .story-teaser {
     min-height: calc(2 * 1.32em);
     max-height: calc(2 * 1.32em);
@@ -363,8 +363,8 @@
     min-height: 1.3em;
   }
   .product-viewport .story-content .story-actions {
-    margin-top: auto !important;
-    padding-top: .35rem;
+    margin-top: 0 !important;
+    padding-top: 0;
     min-height: 2.5rem;
     justify-content: flex-end;
   }
