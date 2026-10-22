@@ -308,8 +308,22 @@
   });
 
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{$("comparison").hidden=false;$("comparison").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});});
-  if($("clear-comparison")) $("clear-comparison").addEventListener("click",()=>{selected.clear();render();window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});});
-  if($("clear-picker-selection")) $("clear-picker-selection").addEventListener("click",()=>{selected.clear();render();window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});});
+  function clearSelectionAndReturnToCarousel() {
+    selected.clear();
+    render();
+    // Make the carousel the explicit return destination, even when clearing from
+    // a comparison URL whose previous hash points at the results table.
+    const url = new URL(window.location.href);
+    url.hash = "products";
+    window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    const carousel = $("products");
+    if (carousel) carousel.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    });
+  }
+  if($("clear-comparison")) $("clear-comparison").addEventListener("click",clearSelectionAndReturnToCarousel);
+  if($("clear-picker-selection")) $("clear-picker-selection").addEventListener("click",clearSelectionAndReturnToCarousel);
   if($("copy-comparison-link")) $("copy-comparison-link").addEventListener("click",async()=>{
     updateUrl();
     const url=window.location.href,button=$("copy-comparison-link");
