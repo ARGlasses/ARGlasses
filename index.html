@@ -1848,4 +1848,48 @@
     });
   </script>
   <script src="cookie-consent.js" defer></script>
+
+  <style>
+    /* Mobile product cards: keep the image, product name, price and purchase actions;
+       hide the extra metadata and specification rows to give the card breathing room. */
+    @media (max-width: 700px) {
+      .product-viewport .story-content .story-kicker,
+      .product-viewport .story-content .product-category,
+      .product-viewport .story-content .story-teaser .spec-line {
+        display: none !important;
+      }
+      .product-viewport .story-content {
+        gap: .45rem !important;
+        justify-content: center !important;
+        padding: 1rem 1.1rem 3rem !important;
+      }
+      .product-viewport .story-content .story-title {
+        max-width: 100% !important;
+        font-size: clamp(1.45rem, 6.5vw, 2rem) !important;
+        line-height: 1.15 !important;
+        overflow-wrap: anywhere;
+      }
+      .product-viewport .story-content .story-teaser {
+        display: block !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        margin: 0 !important;
+        font-size: 1rem !important;
+        line-height: 1.35 !important;
+        overflow: visible !important;
+      }
+      .product-viewport .story-content .story-teaser .price-line {
+        display: block !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        font-size: 1rem !important;
+        line-height: 1.35 !important;
+        margin: 0 !important;
+      }
+      .product-viewport .story-content .story-actions {
+        margin-top: .4rem !important;
+      }
+    }
+  </style>
+
 </body></html>
