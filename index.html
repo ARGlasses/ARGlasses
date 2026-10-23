@@ -1685,5 +1685,50 @@
       })();
     </script>
 
+  <style>
+    /* Bring the product information up by one line while keeping room for the actions. */
+    @media (min-width: 1100px) {
+      .product-viewport .story-content { padding-top: calc(.55rem + 1.5em) !important; }
+    }
+  </style>
+  <script>
+    // Prefer concise, comparable specifications over long marketing descriptions.
+    window.addEventListener("DOMContentLoaded", function () {
+      const products = Array.isArray(window.ARG_PRODUCTS) ? window.ARG_PRODUCTS : [];
+      const byId = new Map(products.map(product => [product.id, product]));
+      const useful = value => {
+        if (value == null) return "";
+        const text = String(value).trim();
+        return !text || /^(not stated|not published|not disclosed|check |business \/ channel|—|-|n\/a)/i.test(text) ? "" : text;
+      };
+      document.querySelectorAll(".product-viewport .product-card[data-product-id]").forEach(card => {
+        const product = byId.get(card.dataset.productId);
+        const teaser = card.querySelector(".story-teaser");
+        if (!product || !teaser) return;
+        const facts = [];
+        const resolution = useful(product.resolution);
+        if (resolution) facts.push(resolution.replace(/ per eye/i, "/eye"));
+        const refresh = useful(product.refresh);
+        if (refresh) facts.push(refresh);
+        const fov = useful(product.fov);
+        if (fov) facts.push(fov + (/°/.test(fov) ? " FOV" : ""));
+        const weight = useful(product.weight);
+        if (weight) facts.push(weight);
+        const tracking = useful(product.tracking);
+        if (tracking && /6DoF|3DoF|SLAM|hand tracking|spatial tracking/i.test(tracking)) {
+          const conciseTracking = tracking.match(/6DoF|3DoF|SLAM|hand tracking|spatial tracking/i);
+          if (conciseTracking) facts.push(conciseTracking[0]);
+        }
+        const display = useful(product.display);
+        if (facts.length < 2 && display && !/not stated|not published|not disclosed/i.test(display)) facts.unshift(display);
+        if (facts.length) {
+          teaser.textContent = facts.slice(0, 4).join(" · ");
+          teaser.setAttribute("aria-label", "Key specifications: " + teaser.textContent);
+        } else if (useful(product.summary)) {
+          teaser.textContent = product.summary;
+        }
+      });
+    });
+  </script>
   <script src="cookie-consent.js" defer></script>
 </body></html>
