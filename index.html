@@ -578,6 +578,35 @@
 }
 </style>
 
+
+<style>
+/* Keep desktop card actions anchored to the same bottom edge on every tile. */
+@media (min-width: 1100px) {
+  .product-viewport .story-content {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    justify-content: flex-start !important;
+    min-height: 0;
+    padding-bottom: 1rem !important;
+  }
+  .product-viewport .story-content .story-teaser {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+  }
+  .product-viewport .story-content .story-actions {
+    flex: 0 0 auto !important;
+    margin-top: auto !important;
+    padding-top: .5rem !important;
+    min-height: 2.5rem !important;
+  }
+}
+</style>
+
 </head>
 <body class="comparison-page">
   <div id="site-header"></div>
