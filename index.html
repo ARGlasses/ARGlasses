@@ -1404,26 +1404,30 @@
     <style>
       /* Use one consistent font size for every text element on product cards. */
       .product-viewport .story-content .story-kicker,
-      .product-viewport .story-content .story-title,
       .product-viewport .story-content .story-teaser,
       .product-viewport .story-content .product-price,
       .product-viewport .story-content .product-category,
-      .product-viewport .story-content .story-actions .amazon-button,
-      .product-viewport .story-content .manufacturer-inline {
+      .product-viewport .story-content .story-actions .amazon-button {
         font-size: clamp(.63rem, .68vw, .73rem) !important;
+      }
+      .product-viewport .story-content .story-title,
+      .product-viewport .story-content .manufacturer-inline {
+        font-size: clamp(.70rem, .78vw, .82rem) !important;
       }
       .product-viewport .story-content .story-title { line-height: 1.32 !important; }
       .product-viewport .story-content .story-kicker { font-weight: 400 !important; }
       .product-viewport .story-content .story-title .manufacturer-inline { font-weight: 700 !important; }
       @media (max-width: 700px) {
         .product-viewport .story-content .story-kicker,
-        .product-viewport .story-content .story-title,
         .product-viewport .story-content .story-teaser,
         .product-viewport .story-content .product-price,
         .product-viewport .story-content .product-category,
-        .product-viewport .story-content .story-actions .amazon-button,
-        .product-viewport .story-content .manufacturer-inline {
+        .product-viewport .story-content .story-actions .amazon-button {
           font-size: .95rem !important;
+        }
+        .product-viewport .story-content .story-title,
+        .product-viewport .story-content .manufacturer-inline {
+          font-size: 1.02rem !important;
         }
       }
     </style>
