@@ -1722,11 +1722,16 @@
     .product-viewport .story-content .product-price {
       display: none !important;
     }
-    .product-viewport .story-content .story-teaser .price-line {
+    .product-viewport .story-content .story-teaser .price-line,
+    .product-viewport .story-content .story-teaser .spec-line {
       display: block;
+      width: 100%;
+      box-sizing: border-box;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+    .product-viewport .story-content .story-teaser .price-line {
       font-weight: 700;
       margin-bottom: .15em;
     }
@@ -1780,19 +1785,22 @@
         }
 
         teaser.textContent = "";
-        const priceLine = document.createElement("span");
-        priceLine.className = "price-line";
-        priceLine.textContent = "• Price: " + priceText;
-        teaser.appendChild(priceLine);
-        teaser.appendChild(document.createTextNode("\n" + [
-          "• Best for: " + use,
-          "• Display: " + display,
-          "• Resolution: " + resolution,
-          "• Refresh: " + refresh,
-          "• FOV: " + fov,
-          "• Weight: " + weight
-        ].join("\n")));
-        teaser.setAttribute("aria-label", teaser.textContent.replace(/\n/g, ". "));
+        const lines = [
+          ["price-line", "Price: " + priceText],
+          ["spec-line", "Best for: " + use],
+          ["spec-line", "Display: " + display],
+          ["spec-line", "Resolution: " + resolution],
+          ["spec-line", "Refresh: " + refresh],
+          ["spec-line", "FOV: " + fov],
+          ["spec-line", "Weight: " + weight]
+        ];
+        lines.forEach(([className, text]) => {
+          const line = document.createElement("span");
+          line.className = className;
+          line.textContent = "• " + text;
+          teaser.appendChild(line);
+        });
+        teaser.setAttribute("aria-label", lines.map(([, text]) => text).join(". "));
 
         if (price) price.setAttribute("aria-hidden", "true");
       });
