@@ -195,3 +195,39 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
 .catalogue-list-panel .picker-option-description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:.7rem;line-height:1.35;color:#64748b}
 .catalogue-list-panel .picker-option-match{margin-top:3px}
 @media(max-width:760px){.catalogue-list-panel .product-picker-option{padding:8px 11px}.catalogue-list-panel .picker-option-description{font-size:.69rem}}
+
+
+/* Make comparison utility buttons visibly distinct from the page background. */
+#comparison .comparison-actions .clear-button{
+  border:1.5px solid #8da7ba;
+  border-radius:8px;
+  background:#fff;
+  color:#173b55;
+  padding:10px 15px;
+  font-weight:600;
+  box-shadow:0 2px 0 rgba(23,59,85,.08);
+  transition:background .16s,border-color .16s,box-shadow .16s,transform .16s;
+}
+#comparison .comparison-actions .clear-button:hover{
+  border-color:#075b91;
+  background:#f0f8fd;
+  box-shadow:0 3px 8px rgba(7,91,145,.13);
+  transform:translateY(-1px);
+}
+#comparison .comparison-actions .clear-button:focus-visible{
+  outline:3px solid #1681b7;
+  outline-offset:3px;
+}
+#comparison #clear-comparison{
+  border-color:#b77979;
+  color:#8a3030;
+  background:#fffafa;
+}
+#comparison #clear-comparison:hover{
+  border-color:#a64242;
+  background:#fff0f0;
+  box-shadow:0 3px 8px rgba(138,48,48,.12);
+}
+@media(max-width:620px){
+  #comparison .comparison-actions .clear-button{padding:11px 13px;min-height:42px}
+}
