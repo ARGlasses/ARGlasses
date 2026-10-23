@@ -1751,11 +1751,32 @@
         const text = String(value).trim();
         return !text || /^(not stated|not published|not disclosed|check |business \/ channel|—|-|n\/a)/i.test(text) ? "" : text;
       };
+      const compact = (value, max = 26) => {
+        let text = String(value || "").trim()
+          .replace(/\b(inches|inch)\b/gi, "in")
+          .replace(/\b(micro-oled)\b/gi, "Micro-OLED")
+          .replace(/\b(per eye)\b/gi, "/eye")
+          .replace(/\b(up to)\b/gi, "to")
+          .replace(/\b(with compatible source|with compatible setup)\b/gi, "")
+          .replace(/\b(manufacturer claim|manufacturer figure|manufacturer specification)\b/gi, "")
+          .replace(/\s*\([^)]*\)/g, "")
+          .replace(/\s*\/\s*/g, "/")
+          .replace(/\s+/g, " ")
+          .replace(/[;,]\s*$/, "");
+        if (text.length <= max) return text;
+        const shortened = text.slice(0, max - 1).replace(/\s+\S*$/, "").replace(/[;,/\s]+$/, "");
+        return (shortened || text.slice(0, max - 1)) + "…";
+      };
       const shortUse = product => {
         const text = String(product.summary || "").trim();
-        const first = text.split(/[.;]/)[0].trim();
-        if (first.length <= 58) return first;
-        return first.slice(0, 55).replace(/\s+\S*$/, "") + "…";
+        const first = text.split(/[.;]/)[0].trim()
+          .replace(/glasses/gi, "glasses")
+          .replace(/personal spatial display/gi, "spatial display")
+          .replace(/everyday smart eyewear/gi, "Everyday AI eyewear")
+          .replace(/entertainment-focused/gi, "Entertainment")
+          .replace(/designed for/gi, "For")
+          .replace(/focused on/gi, "For");
+        return compact(first, 25);
       };
       document.querySelectorAll(".product-viewport .product-card[data-product-id]").forEach(card => {
         const product = byId.get(card.dataset.productId);
@@ -1786,13 +1807,13 @@
 
         teaser.textContent = "";
         const lines = [
-          ["price-line", "Price: " + priceText],
-          ["spec-line", "Best for: " + use],
-          ["spec-line", "Display: " + display],
-          ["spec-line", "Resolution: " + resolution],
-          ["spec-line", "Refresh: " + refresh],
-          ["spec-line", "FOV: " + fov],
-          ["spec-line", "Weight: " + weight]
+          ["price-line", "Price: " + compact(priceText, 29)],
+          ["spec-line", "Use: " + use],
+          ["spec-line", "Display: " + compact(display, 25)],
+          ["spec-line", "Res: " + compact(resolution, 27)],
+          ["spec-line", "Hz: " + compact(refresh, 24)],
+          ["spec-line", "FOV: " + compact(fov, 24)],
+          ["spec-line", "Wt: " + compact(weight, 24)]
         ];
         lines.forEach(([className, text]) => {
           const line = document.createElement("span");
