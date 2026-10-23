@@ -1251,7 +1251,16 @@
           return false;
         };
         function closeDialog() { dialog.hidden = true; dialog.classList.remove("is-open"); save(); }
-        cancelButton.addEventListener("click", closeDialog);
+        cancelButton.addEventListener("click", function () {
+          // With one item selected, this action means keep that choice and return
+          // to the gallery to choose another product. Once a comparison is ready,
+          // Cancel should abandon the pending comparison and clear its highlights.
+          if (selected.length >= 2) {
+            selected = [];
+            save();
+          }
+          closeDialog();
+        });
         closeButton.addEventListener("click", closeDialog);
         dialog.addEventListener("click", event => { if (event.target === dialog) closeDialog(); });
         addButton.addEventListener("click", closeDialog);
