@@ -1428,8 +1428,7 @@
       }
     </style>
     <script>
-      // Show each product's manufacturer immediately beside its name at the
-      // same typographic size, while leaving the category pill in the kicker.
+      // Put the manufacturer first in bold, followed by the glasses model name.
       (function () {
         function alignManufacturerNames() {
           document.querySelectorAll(".product-viewport .product-card[data-brand]").forEach(function (card) {
@@ -1437,15 +1436,17 @@
             const title = card.querySelector(".story-title");
             const kicker = card.querySelector(".story-kicker");
             if (!brand || !title || title.querySelector(".manufacturer-inline")) return;
-            const label = document.createElement("span");
+            const modelName = title.textContent.trim();
+            const label = document.createElement("strong");
             label.className = "manufacturer-inline";
-            label.textContent = " · " + brand;
-            label.style.font = "inherit";
+            label.textContent = brand;
             label.style.fontSize = "inherit";
-            label.style.fontWeight = "inherit";
+            label.style.fontWeight = "700";
             label.style.color = "inherit";
             label.style.overflowWrap = "anywhere";
+            title.textContent = "";
             title.appendChild(label);
+            title.appendChild(document.createTextNode(" " + modelName));
             if (kicker) {
               Array.from(kicker.childNodes).forEach(function (node) {
                 if (node.nodeType === Node.TEXT_NODE) node.remove();
