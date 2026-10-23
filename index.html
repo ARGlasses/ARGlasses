@@ -1883,11 +1883,18 @@
         overflow: visible !important;
         text-overflow: clip !important;
       }
+      /* Mobile-only positioning: raise the image and copy one line, lower actions two lines. */
+      .product-viewport .story img.bg {
+        transform: translateY(-1.35em) !important;
+      }
       .product-viewport .story-content {
         gap: .45rem !important;
         justify-content: center !important;
         padding: 1rem 1.1rem 3rem !important;
-        transform: translateY(-2.7em) !important;
+        transform: translateY(-4.05em) !important;
+      }
+      .product-viewport .story-content .story-actions {
+        transform: translateY(2.7em) !important;
       }
       .product-viewport .story-content .story-title {
         max-width: 100% !important;
