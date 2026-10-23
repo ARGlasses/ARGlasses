@@ -1821,12 +1821,17 @@
         } else if (rawPriceText.includes("US$")) {
           const usPrice = rawPriceText.match(/US\$[\d,]+/);
           priceText = (usPrice ? usPrice[0] + " (UK price TBC)" : "UK price TBC");
+        } else if (/£\s?[\d,]+(?:\.\d{2})?/.test(rawPriceText)) {
+          const gbpPrice = rawPriceText.match(/£\s?[\d,]+(?:\.\d{2})?/);
+          priceText = gbpPrice ? gbpPrice[0].replace(/\s/g, "") + (/(out of stock|availability restricted)/i.test(rawPriceText) ? " (check availability)" : "") : "UK price TBC";
         } else if (/business|enterprise|channel/i.test(rawPriceText)) {
           priceText = "Business pricing";
+        } else if (/announced|not confirmed|not disclosed/i.test(rawPriceText)) {
+          priceText = "Price not confirmed";
         } else if (/check|regional|UK price|store/i.test(rawPriceText)) {
-          priceText = "UK price TBC";
+          priceText = "See UK store";
         } else {
-          priceText = "Not listed";
+          priceText = "Price not listed";
         }
 
         teaser.textContent = "";
