@@ -415,7 +415,10 @@
       #gallery-compare-dialog button{margin:0;min-height:2.35rem;padding:.5rem .75rem;font-size:.85rem}
       #gallery-compare-dialog .gallery-compare-close{position:absolute;top:.55rem;right:.55rem;border:0;background:#f0f4f7;color:#263746;border-radius:50%;width:2rem;height:2rem;min-height:2rem;padding:0;font-size:1.15rem;line-height:1}
       @media(max-width:480px){#gallery-compare-dialog{width:calc(100vw - 1.5rem)}#gallery-compare-dialog form{padding:.85rem}#gallery-compare-dialog .gallery-compare-actions{gap:.4rem!important}#gallery-compare-dialog button{padding:.45rem .6rem}}
-      .product-card.gallery-compare-picked{outline:3px solid #58c4f4;outline-offset:-5px}
+      .product-viewport .story.product-card.gallery-compare-picked{position:relative;border:3px solid #087db5!important;background:#edf8ff!important;box-shadow:inset 0 0 0 2px rgba(8,125,181,.16),0 0 0 3px rgba(8,125,181,.2),0 12px 30px rgba(8,75,115,.2)!important;}
+      .product-viewport .story.product-card.gallery-compare-picked .story-content{background:#edf8ff!important;}
+      .product-viewport .story.product-card.gallery-compare-picked::before{content:'✓ Selected to compare';position:absolute;top:.65rem;left:.65rem;z-index:5;padding:.35rem .6rem;border-radius:999px;background:#087db5;color:#fff;font:600 .72rem/1.2 Poppins,system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.14);pointer-events:none;}
+      @media(prefers-reduced-motion:reduce){.product-viewport .story.product-card{transition:none!important}}
       /* Gallery layout refinement: keep one generous hero card and only reveal the side cards. */
       .product-viewport .rail {
         gap: clamp(1.25rem, 3vw, 2.75rem);
@@ -1178,10 +1181,12 @@
         } catch (_) {}
         function save() {
           try { sessionStorage.setItem(storageKey, JSON.stringify(selected)); } catch (_) {}
-          cards.forEach(card => {
+          // Apply the selected state to original cards and carousel loop clones,
+          // so the entire visible tile is highlighted wherever it appears.
+          document.querySelectorAll(".product-viewport .product-card[data-product-id]").forEach(card => {
             const picked = selected.includes(card.dataset.productId);
             card.classList.toggle("gallery-compare-picked", picked);
-            const link = card.querySelector('a[href*="index.html?compare="]');
+            const link = card.querySelector('a[href*="index.html?compare="], a[href="#gallery-compare-dialog"]');
             if (link) link.setAttribute("aria-pressed", picked ? "true" : "false");
           });
         }
