@@ -331,7 +331,40 @@
     catch { window.prompt("Copy your comparison link:",url); }
     window.setTimeout(()=>{button.textContent="Copy comparison link";},1800);
   });
-  if($("print-comparison")) $("print-comparison").addEventListener("click",()=>window.print());
+  function cleanupComparisonPrint() {
+    const printRoot = $("comparison-print-root");
+    if (printRoot) printRoot.remove();
+    document.body.classList.remove("comparison-print-mode");
+  }
+  function printComparison() {
+    const section = $("comparison");
+    const tableWrap = $("comparison-table-wrap");
+    if (!section || !tableWrap || selected.size < 2 || !tableWrap.querySelector("table")) {
+      window.alert("Choose at least two products and wait for the comparison table to appear before printing.");
+      return;
+    }
+    cleanupComparisonPrint();
+    const printRoot = section.cloneNode(true);
+    printRoot.id = "comparison-print-root";
+    printRoot.hidden = false;
+    printRoot.setAttribute("aria-label", "Printable product comparison");
+    printRoot.querySelectorAll(".comparison-actions, .difference-toggle").forEach(el => el.remove());
+    printRoot.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+    const title = printRoot.querySelector("h2");
+    if (title) title.textContent = "AR Glasses — Product Comparison";
+    const note = document.createElement("p");
+    note.className = "comparison-print-meta";
+    note.textContent = "Specifications as published by manufacturers. Prices, availability and compatibility may vary; confirm details with the linked sources.";
+    const heading = printRoot.querySelector(".section-heading");
+    if (heading) heading.appendChild(note);
+    document.body.appendChild(printRoot);
+    document.body.classList.add("comparison-print-mode");
+    window.addEventListener("afterprint", cleanupComparisonPrint, { once: true });
+    // Allow the browser to apply print-only layout to the dedicated document
+    // fragment before opening the native print dialog.
+    requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
+  }
+  if ($("print-comparison")) $("print-comparison").addEventListener("click", printComparison);
   readUrl();populateBrands();syncControls();render();
   // When a comparison is launched from a product card, show the result rather
   // than leaving the visitor at the top of the homepage with no visible feedback.
