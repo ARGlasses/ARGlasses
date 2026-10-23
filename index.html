@@ -1764,17 +1764,20 @@
         const fov = clean(product.fov) || "Not published";
         const weight = clean(product.weight) || "Not published";
         const use = shortUse(product) || "Everyday smart eyewear";
-        let priceText = clean(product.priceText) || (product.price != null ? "£" + product.price : "Price not listed");
-        priceText = priceText
-          .replace(/ UK (official )?(direct-store )?(store )?(listing|price)/ig, "")
-          .replace(/ UK listed/ig, "")
-          .replace(/ \(check current price\)|; check current price|; check stock status|; frame\/lens variants may differ|; frame and lens variants vary/ig, "")
-          .replace(/Business \/ channel pricing; check current availability/ig, "Business pricing")
-          .replace(/Check UK store; regional pricing varies|Check UK store; official page lists regional pricing|Check official store; regional pricing varies/ig, "Check UK price")
-          .replace(/Check regional store/ig, "Check regional price")
-          .replace(/Check current availability/ig, "Check availability")
-          .replace(/\s+/g, " ").trim();
-        if (priceText.length > 48) priceText = priceText.slice(0, 45).replace(/\s+\S*$/, "") + "…";
+        const rawPriceText = clean(product.priceText) || "";
+        let priceText;
+        if (product.price != null && Number.isFinite(Number(product.price))) {
+          priceText = "£" + Number(product.price).toLocaleString("en-GB");
+        } else if (rawPriceText.includes("US$")) {
+          const usPrice = rawPriceText.match(/US\$[\d,]+/);
+          priceText = (usPrice ? usPrice[0] + "; " : "") + "UK price TBC";
+        } else if (/business|enterprise|channel/i.test(rawPriceText)) {
+          priceText = "Business pricing";
+        } else if (/check|regional|UK price|store/i.test(rawPriceText)) {
+          priceText = "UK price TBC";
+        } else {
+          priceText = "Not listed";
+        }
 
         teaser.textContent = "";
         const priceLine = document.createElement("span");
