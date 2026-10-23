@@ -580,7 +580,7 @@
 
 
 <style>
-/* Refined desktop product cards: balanced image, centred copy and compact actions. */
+/* Refined desktop product cards: centred copy with actions aligned to a shared bottom edge. */
 @media (min-width: 1100px) {
   .product-viewport .story img.bg {
     height: 38% !important;
@@ -592,10 +592,10 @@
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     text-align: center !important;
-    gap: .38rem !important;
-    padding: .75rem .65rem 1.1rem !important;
+    gap: .3rem !important;
+    padding: .65rem .65rem 1.1rem !important;
     overflow: hidden !important;
   }
   .product-viewport .story-content .story-kicker,
@@ -629,16 +629,17 @@
     margin: .08rem 0 !important;
   }
   .product-viewport .story-content .product-price {
-    min-height: 0 !important;
+    min-height: 1.2em !important;
     margin: .12rem 0 !important;
     font-size: .72rem !important;
   }
   .product-viewport .story-content .story-actions {
     flex: 0 0 auto !important;
-    align-self: stretch !important;
-    margin: .35rem 0 0 !important;
-    padding: 0 !important;
+    width: 100% !important;
+    margin: auto 0 0 !important;
+    padding: .45rem 0 0 !important;
     min-height: 0 !important;
+    margin-top: auto !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
@@ -652,6 +653,7 @@
     line-height: 1.2 !important;
     border-radius: 7px !important;
     margin: 0 !important;
+    box-sizing: border-box !important;
   }
 }
 </style>
