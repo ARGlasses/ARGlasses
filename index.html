@@ -1716,8 +1716,19 @@
     /* Compact, scannable bullet specs with one short fact per line. */
     .product-viewport .story-content .story-teaser {
       white-space: pre-line !important;
-      line-height: 1.45 !important;
+      line-height: 1.4 !important;
       overflow-wrap: anywhere;
+    }
+    .product-viewport .story-content .product-price {
+      display: none !important;
+    }
+    .product-viewport .story-content .story-teaser .price-line {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 700;
+      margin-bottom: .15em;
     }
     @media (min-width: 1100px) {
       .product-viewport .story-content .story-teaser {
@@ -1753,21 +1764,34 @@
         const fov = clean(product.fov) || "Not published";
         const weight = clean(product.weight) || "Not published";
         const use = shortUse(product) || "Everyday smart eyewear";
+        let priceText = clean(product.priceText) || (product.price != null ? "£" + product.price : "Price not listed");
+        priceText = priceText
+          .replace(/ UK (official )?(direct-store )?(store )?(listing|price)/ig, "")
+          .replace(/ UK listed/ig, "")
+          .replace(/ \(check current price\)|; check current price|; check stock status|; frame\/lens variants may differ|; frame and lens variants vary/ig, "")
+          .replace(/Business \/ channel pricing; check current availability/ig, "Business pricing")
+          .replace(/Check UK store; regional pricing varies|Check UK store; official page lists regional pricing|Check official store; regional pricing varies/ig, "Check UK price")
+          .replace(/Check regional store/ig, "Check regional price")
+          .replace(/Check current availability/ig, "Check availability")
+          .replace(/\s+/g, " ").trim();
+        if (priceText.length > 48) priceText = priceText.slice(0, 45).replace(/\s+\S*$/, "") + "…";
 
-        teaser.textContent = [
+        teaser.textContent = "";
+        const priceLine = document.createElement("span");
+        priceLine.className = "price-line";
+        priceLine.textContent = "• Price: " + priceText;
+        teaser.appendChild(priceLine);
+        teaser.appendChild(document.createTextNode("\n" + [
           "• Best for: " + use,
           "• Display: " + display,
           "• Resolution: " + resolution,
           "• Refresh: " + refresh,
           "• FOV: " + fov,
           "• Weight: " + weight
-        ].join("\n");
+        ].join("\n")));
         teaser.setAttribute("aria-label", teaser.textContent.replace(/\n/g, ". "));
 
-        if (price) {
-          const existing = price.textContent.trim();
-          if (!/^Price:/i.test(existing)) price.textContent = "Price: " + existing;
-        }
+        if (price) price.setAttribute("aria-hidden", "true");
       });
     });
   </script>
