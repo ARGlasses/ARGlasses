@@ -1853,8 +1853,7 @@
     /* Mobile product cards: keep the image, product name, price and purchase actions;
        hide the extra metadata and specification rows to give the card breathing room. */
     @media (max-width: 700px) {
-      .product-viewport .story-content .product-category,
-      .product-viewport .story-content .story-teaser .spec-line:not(.display-line):not(.res-line):not(.hz-line):not(.fov-line) {
+      .product-viewport .story-content .product-category {
         display: none !important;
       }
       .product-viewport .story-content .story-kicker,
@@ -1909,8 +1908,11 @@
         white-space: normal !important;
         overflow: visible !important;
         font-size: 1rem !important;
+        font-weight: 400 !important;
         line-height: 1.35 !important;
-        margin: 0 !important;
+        margin: 0 0 .1rem 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
       }
       .product-viewport .story-content .story-actions {
         margin-top: .4rem !important;
