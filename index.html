@@ -1829,8 +1829,8 @@
         const lines = [
           ["price-line", "Price: " + compact(priceText, 29)],
           ["spec-line", "Use: " + use],
-          ["spec-line", "Display: " + compact(display, 25)],
-          ["spec-line", "Res: " + compact(resolution, 27)],
+          ["spec-line display-line", "Display: " + compact(display, 25)],
+          ["spec-line res-line", "Res: " + compact(resolution, 27)],
           ["spec-line", "Hz: " + compact(refresh, 24)],
           ["spec-line", "FOV: " + compact(fov, 24)],
           ["spec-line", "Wt: " + compact(weight, 24)]
@@ -1855,8 +1855,16 @@
     @media (max-width: 700px) {
       .product-viewport .story-content .story-kicker,
       .product-viewport .story-content .product-category,
-      .product-viewport .story-content .story-teaser .spec-line {
+      .product-viewport .story-content .story-teaser .spec-line:not(.display-line):not(.res-line) {
         display: none !important;
+      }
+      .product-viewport .story-content .story-teaser .display-line,
+      .product-viewport .story-content .story-teaser .res-line {
+        display: block !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        line-height: 1.35 !important;
       }
       .product-viewport .story-content {
         gap: .45rem !important;
