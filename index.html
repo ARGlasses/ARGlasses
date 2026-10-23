@@ -1401,6 +1401,37 @@
       })();
     </script>
 
+    <script>
+      // Show each product's manufacturer immediately beside its name at the
+      // same typographic size, while leaving the category pill in the kicker.
+      (function () {
+        function alignManufacturerNames() {
+          document.querySelectorAll(".product-viewport .product-card[data-brand]").forEach(function (card) {
+            const brand = (card.dataset.brand || "").trim();
+            const title = card.querySelector(".story-title");
+            const kicker = card.querySelector(".story-kicker");
+            if (!brand || !title || title.querySelector(".manufacturer-inline")) return;
+            const label = document.createElement("span");
+            label.className = "manufacturer-inline";
+            label.textContent = " · " + brand;
+            label.style.font = "inherit";
+            label.style.fontSize = "inherit";
+            label.style.fontWeight = "inherit";
+            label.style.color = "inherit";
+            label.style.overflowWrap = "anywhere";
+            title.appendChild(label);
+            if (kicker) {
+              Array.from(kicker.childNodes).forEach(function (node) {
+                if (node.nodeType === Node.TEXT_NODE) node.remove();
+              });
+              kicker.style.minHeight = "0";
+            }
+          });
+        }
+        alignManufacturerNames();
+      })();
+    </script>
+
     <!-- Product carousel: full-cycle buffering for stable bidirectional scrolling -->
     <script>
       (function () {
