@@ -1729,7 +1729,7 @@
       box-sizing: border-box;
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis;
+      text-overflow: clip;
     }
     .product-viewport .story-content .story-teaser .price-line {
       font-weight: 700;
@@ -1754,29 +1754,49 @@
       const compact = (value, max = 26) => {
         let text = String(value || "").trim()
           .replace(/\b(inches|inch)\b/gi, "in")
-          .replace(/\b(micro-oled)\b/gi, "Micro-OLED")
           .replace(/\b(per eye)\b/gi, "/eye")
           .replace(/\b(up to)\b/gi, "to")
-          .replace(/\b(with compatible source|with compatible setup)\b/gi, "")
+          .replace(/\b(micro-oled)\b/gi, "Micro-OLED")
+          .replace(/\b(full hd)\b/gi, "1080p")
           .replace(/\b(manufacturer claim|manufacturer figure|manufacturer specification)\b/gi, "")
           .replace(/\s*\([^)]*\)/g, "")
           .replace(/\s*\/\s*/g, "/")
+          .replace(/\s*[;,].*$/, "")
           .replace(/\s+/g, " ")
-          .replace(/[;,]\s*$/, "");
+          .trim();
+        const replacements = [
+          [/Sony 0\.55 in Micro-OLED/i, "0.55in Sony Micro-OLED"],
+          [/Sony 0\.68 in Micro-OLED/i, "0.68in Sony Micro-OLED"],
+          [/Sony Micro-OLED/i, "Sony Micro-OLED"],
+          [/binocular monochrome green waveguide/i, "Mono-green waveguide"],
+          [/binocular monochrome waveguide/i, "Mono waveguide"],
+          [/full-colour integrated display/i, "Full-colour display"],
+          [/single-lens full-colour integrated display/i, "Single-lens colour"],
+          [/1920 × 1080 per eye/i, "1920×1080/eye"],
+          [/1920 × 1200 per eye/i, "1920×1200/eye"],
+          [/640 × 480 per eye/i, "640×480/eye"],
+          [/not published/i, "Not stated"],
+          [/not stated in source checked/i, "Not stated"],
+          [/varies by model/i, "Model-dependent"],
+          [/wired USB-C/i, "USB-C wired"],
+          [/integrated speakers/i, "Built-in audio"]
+        ];
+        replacements.forEach(([pattern, value]) => { text = text.replace(pattern, value); });
         if (text.length <= max) return text;
-        const shortened = text.slice(0, max - 1).replace(/\s+\S*$/, "").replace(/[;,/\s]+$/, "");
-        return (shortened || text.slice(0, max - 1)) + "…";
+        const words = text.split(" ");
+        while (words.length > 1 && words.join(" ").length > max) words.pop();
+        return words.join(" ") || "Varies";
       };
       const shortUse = product => {
-        const text = String(product.summary || "").trim();
-        const first = text.split(/[.;]/)[0].trim()
-          .replace(/glasses/gi, "glasses")
-          .replace(/personal spatial display/gi, "spatial display")
-          .replace(/everyday smart eyewear/gi, "Everyday AI eyewear")
-          .replace(/entertainment-focused/gi, "Entertainment")
-          .replace(/designed for/gi, "For")
-          .replace(/focused on/gi, "For");
-        return compact(first, 25);
+        const text = String(product.summary || "").toLowerCase();
+        if (/gaming|high-refresh|gaming-focused/.test(text)) return "Gaming and video";
+        if (/enterprise|industrial|workflow|inspection|field workflow|remote assistance/.test(text)) return "Work and industry";
+        if (/camera|translation|voice assistance|ai assistant|ai glasses/.test(text)) return "AI, camera and audio";
+        if (/spatial computing|6dof|spatial positioning|hand tracking/.test(text)) return "Spatial AR";
+        if (/virtual-screen|virtual screen|productivity/.test(text)) return "Virtual screens";
+        if (/notification|teleprompter|meeting notes/.test(text)) return "Prompts and notifications";
+        if (/entertainment|video/.test(text)) return "Video and entertainment";
+        return "Everyday smart glasses";
       };
       document.querySelectorAll(".product-viewport .product-card[data-product-id]").forEach(card => {
         const product = byId.get(card.dataset.productId);
