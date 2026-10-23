@@ -1482,11 +1482,12 @@
           updateUI();
         });
 
-        // Initialise directly at Vision Pro without animating the page or rail.
+        // Initialise with Snap Specs (2026) centred, without animating the page or rail.
         function initialise() {
           if (initialised) return;
           initialised = true;
-          centerOn(originals[0], false);
+          const snapIndex = originals.findIndex(card => card.dataset.productId === 'snap-specs-2026');
+          centerOn(originals[snapIndex >= 0 ? snapIndex : 0], false);
           updateUI();
         }
         if (document.readyState === 'complete') requestAnimationFrame(initialise);
