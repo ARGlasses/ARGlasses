@@ -1783,6 +1783,8 @@
         const tracking = clean(product.tracking) || "Not stated";
         const camera = clean(product.camera) || "Not stated";
         const audio = clean(product.audio) || "Not stated";
+        const brightness = clean(product.brightness) || "Not stated";
+        const power = clean(product.power) || "Not stated";
         const use = shortUse(product) || "Everyday smart eyewear";
         const rawPriceText = clean(product.priceText) || "";
         let priceText;
@@ -1815,7 +1817,9 @@
           ["spec-line", "Wt: " + compact(weight, 24)],
           ["spec-line", "Tracking: " + compact(tracking, 22)],
           ["spec-line", "Camera: " + compact(camera, 22)],
-          ["spec-line", "Audio: " + compact(audio, 22)]
+          ["spec-line", "Audio: " + compact(audio, 22)],
+          ["spec-line", "Bright: " + compact(brightness, 22)],
+          ["spec-line", "Power: " + compact(power, 22)]
         ];
         lines.forEach(([className, text]) => {
           const line = document.createElement("span");
