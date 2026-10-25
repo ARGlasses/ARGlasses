@@ -1779,7 +1779,10 @@
         const resolution = clean(product.resolution) || "Not published";
         const refresh = clean(product.refresh) || "Not published";
         const fov = clean(product.fov) || "Not published";
-        const weight = clean(product.weight) || "Not published";
+        const weight = clean(product.weight) || "Not stated";
+        const tracking = clean(product.tracking) || "Not stated";
+        const camera = clean(product.camera) || "Not stated";
+        const audio = clean(product.audio) || "Not stated";
         const use = shortUse(product) || "Everyday smart eyewear";
         const rawPriceText = clean(product.priceText) || "";
         let priceText;
@@ -1809,7 +1812,10 @@
           ["spec-line res-line", "Res: " + compact(resolution, 27)],
           ["spec-line hz-line", "Hz: " + compact(refresh, 24)],
           ["spec-line fov-line", "FOV: " + compact(fov, 24)],
-          ["spec-line", "Wt: " + compact(weight, 24)]
+          ["spec-line", "Wt: " + compact(weight, 24)],
+          ["spec-line", "Tracking: " + compact(tracking, 22)],
+          ["spec-line", "Camera: " + compact(camera, 22)],
+          ["spec-line", "Audio: " + compact(audio, 22)]
         ];
         lines.forEach(([className, text]) => {
           const line = document.createElement("span");
