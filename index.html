@@ -1730,7 +1730,7 @@
           .replace(/\b(micro-oled)\b/gi, "Micro-OLED")
           .replace(/\b(full hd)\b/gi, "1080p")
           .replace(/\b(manufacturer claim|manufacturer figure|manufacturer specification)\b/gi, "")
-          .replace(/\s*\([^)]*\)/g, "")
+          .replace(/\s*\(([^)]*)\)/g, " — $1")
           .replace(/\s*\/\s*/g, "/")
           .replace(/\s+/g, " ")
           .trim();
@@ -1788,7 +1788,8 @@
         const rawPriceText = String(product.priceText || "").trim();
         let priceText;
         if (product.price != null && Number.isFinite(Number(product.price))) {
-          priceText = "£" + Number(product.price).toLocaleString("en-GB");
+          priceText = "£" + Number(product.price).toLocaleString("en-GB") +
+            (/(check stock status|out of stock|availability restricted|register for stock notification)/i.test(rawPriceText) ? " (check stock)" : "");
         } else if (rawPriceText.includes("US$")) {
           const usPrice = rawPriceText.match(/US\$[\d,]+/);
           priceText = (usPrice ? usPrice[0] + " (UK price TBC)" : "UK price TBC");
