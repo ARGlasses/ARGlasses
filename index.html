@@ -1868,6 +1868,40 @@
           text = text.replace(pattern, replacement);
           return true;
         });
+        // Keep only the comparison-ready detail; abbreviations are applied uniformly to every card.
+        if (key === "display") {
+          text = text
+            .replace(/^Sony (0\\.\\d+in )?Micro-OLED.*$/i, (_, size) => (size || "") + "Sony OLED")
+            .replace(/^Sony 0\\.\\d+in Micro-OLED.*$/i, match => match.match(/0\\.\\d+in/i)[0] + " Sony OLED")
+            .replace(/^0\\.\\d+in SeeYa Micro-OLED.*$/i, match => match.match(/0\\.\\d+in/i)[0] + " SeeYa OLED")
+            .replace(/^0\\.\\d+in Micro-OLED.*$/i, match => match.match(/0\\.\\d+in/i)[0] + " Micro-OLED")
+            .replace(/^See-through AR display using .*$/i, "See-through AR · LCoS")
+            .replace(/^Optical see-through waveguide$/i, "Optical waveguide")
+            .replace(/^Binocular Si-OLED see-through display$/i, "Binocular Si-OLED")
+            .replace(/^Dual micro-OLED displays$/i, "Dual micro-OLED")
+            .replace(/^Sony Micro-OLED with .*$/i, "Sony Micro-OLED")
+            .replace(/ with X Prism optics.*$/i, "")
+            .replace(/; HDR10$/i, " · HDR10");
+        }
+        if (key === "resolution") {
+          text = text.replace(/\\s*\\(.*?\\)/g, "").replace(/;.*$/, "").replace(/\\s+by default.*$/i, "");
+        }
+        if (key === "fov") text = text.replace(/ diagonal$/i, "");
+        if (key === "refresh") text = text.replace(/^Up to /i, "To ").replace(/;.*$/, "");
+        if (key === "weight") text = text.replace(/ \\(.*?\\)/g, "").replace(/;.*$/, "");
+        if (key === "tracking") text = text.replace(/;.*$/, "").replace(/,.*$/, "").replace(/ spatial computing chip/i, " X1");
+        if (key === "camera") text = text.replace(/;.*$/, "").replace(/,.*$/, "");
+        if (key === "audio") text = text.replace(/;.*$/, "");
+        if (key === "brightness") text = text.replace(/^(?:Up to|To) ([\\d,]+) nits.*$/i, "To $1 nits").replace(/\\s*\\(.*?\\)/g, "");
+        if (key === "power") {
+          text = text.replace(/^Wired USB-C$/i, "USB-C wired")
+            .replace(/^USB-C DP Alt Mode.*$/i, "USB-C DP Alt Mode")
+            .replace(/^Up to ([\\d.]+) hours.*$/i, "To $1h")
+            .replace(/^Up to ([\\d.]+) days.*$/i, "To $1 days")
+            .replace(/; real-world runtime varies.*$/i, "")
+            .replace(/; runtime depends.*$/i, "")
+            .replace(/; usage-dependent.*$/i, "");
+        }
         text = text
           .replace(/\b(1920|1440|1280|1080|854|640|600|480|400) × (1920|1760|1200|1080|720|600|480|400|350)\b/g, "$1×$2")
           .replace(/\b(\d+) × (\d+)\b/g, "$1×$2")
