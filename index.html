@@ -1753,8 +1753,18 @@
         ];
         replacements.forEach(([pattern, value]) => { text = text.replace(pattern, value); });
         if (text.length <= max) return text;
-        const shortened = text.slice(0, max - 1).replace(/\s+\S*$/, "").trim();
-        return (shortened || text.slice(0, max - 1)).replace(/[;,.:]$/, "") + "…";
+        // Prefer compact terminology; never append an ellipsis to card bullets.
+        const aliases = [
+          [/Micro-OLED/gi, "OLED"], [/waveguide/gi, "WG"],
+          [/monochrome/gi, "mono"], [/full-colour/gi, "colour"],
+          [/integrated display/gi, "display"], [/spatial positioning/gi, "spatial"],
+          [/hand tracking/gi, "hand track"], [/USB-C wired/gi, "USB-C"],
+          [/model-dependent/gi, "varies"], [/not stated/gi, "n/stated"],
+          [/not published/gi, "n/published"], [/manufacturer/gi, "mfr."]
+        ];
+        aliases.forEach(([pattern, value]) => { text = text.replace(pattern, value); });
+        if (text.length <= max) return text;
+        return text.slice(0, max).replace(/\\s+\\S*$/, "").trim() || text.slice(0, max);
       };
       const shortUse = product => {
         const text = String(product.summary || "").toLowerCase();
@@ -1808,18 +1818,19 @@
 
         teaser.textContent = "";
         const lines = [
-          ["price-line", "Price: " + priceText],
-          ["spec-line", "Use: " + use],
-          ["spec-line display-line", "Display: " + compact(display, 25)],
-          ["spec-line res-line", "Res: " + compact(resolution, 27)],
-          ["spec-line hz-line", "Refresh rate: " + compact(refresh, 24)],
-          ["spec-line fov-line", "FOV: " + compact(fov, 24)],
-          ["spec-line", "Weight: " + compact(weight, 24)],
-          ["spec-line", "Tracking: " + compact(tracking, 22)],
-          ["spec-line", "Camera: " + compact(camera, 22)],
-          ["spec-line", "Audio: " + compact(audio, 22)],
-          ["spec-line", "Bright: " + compact(brightness, 22)],
-          ["spec-line", "Power: " + compact(power, 22)]
+          // Priority order: price and use first, then core display specs, fit, and extra features.
+          ["price-line", "£: " + compact(priceText, 20)],
+          ["spec-line", "Use: " + compact(use, 16)],
+          ["spec-line display-line", "Disp: " + compact(display, 18)],
+          ["spec-line res-line", "Res: " + compact(resolution, 18)],
+          ["spec-line fov-line", "FOV: " + compact(fov, 16)],
+          ["spec-line hz-line", "Hz: " + compact(refresh, 15)],
+          ["spec-line", "Wt: " + compact(weight, 16)],
+          ["spec-line", "Track: " + compact(tracking, 15)],
+          ["spec-line", "Cam: " + compact(camera, 15)],
+          ["spec-line", "Audio: " + compact(audio, 15)],
+          ["spec-line", "Bright: " + compact(brightness, 14)],
+          ["spec-line", "Power: " + compact(power, 15)]
         ];
         lines.forEach(([className, text]) => {
           const line = document.createElement("span");
@@ -1944,10 +1955,10 @@
     .product-viewport .story-content .story-teaser .spec-line {
       display: block !important;
       width: 100% !important;
-      white-space: normal !important;
-      overflow: visible !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
       text-overflow: clip !important;
-      overflow-wrap: anywhere !important;
+      overflow-wrap: normal !important;
       word-break: normal !important;
     }
     @media (min-width: 1100px) {
