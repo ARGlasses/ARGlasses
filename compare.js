@@ -365,74 +365,7 @@
     requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
   }
   if ($("print-comparison")) $("print-comparison").addEventListener("click", printComparison);
-  function addGallerySpecBullets() {
-    const styles = document.createElement("style");
-    styles.textContent = `
-      .gallery-spec-bullets { display:none; }
-      @media (min-width:1100px) {
-        .product-viewport .story-content .gallery-spec-bullets {
-          display:flex; flex-direction:column; gap:.16rem;
-          list-style:none; padding:0; margin:.12rem 0 .2rem; width:100%;
-          font-size:clamp(.59rem,.63vw,.68rem); line-height:1.25; color:#526273;
-        }
-        .product-viewport .story-content .gallery-spec-bullets li {
-          display:block; width:100%; min-width:0; margin:0; padding:0;
-          white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-        }
-        .product-viewport .story-content .gallery-spec-bullets strong {
-          color:#26394a; font-weight:600;
-        }
-        .product-viewport .story-content .story-actions { margin-top:auto !important; }
-      }`;
-    document.head.appendChild(styles);
-    const priorities = {
-      display: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]],
-      ai: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Battery","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]],
-      spatial: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Battery","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]],
-      enterprise: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]]
-    };
-    const normalize = value => String(value || "").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
-    const labelTerms = {
-      Weight:["weight","lightweight","lightweight"], Display:["display","screen","microled","micro oled","waveguide"],
-      Resolution:["resolution","pixels","1080p","1200p"], FOV:["fov","field of view"],
-      Refresh:["refresh","hz"], Brightness:["brightness","nits"], Tracking:["tracking","6dof","3dof","slam","spatial"],
-      Battery:["battery","hours per charge","runtime","charge"], Power:["power","usb c","wired","battery"],
-      Camera:["camera","video capture"], Audio:["audio","speakers","microphone"], Compatibility:["compatibility","ios","android","usb c","bluetooth"],
-      Prescription:["prescription","diopter","lens insert"]
-    };
-    document.querySelectorAll(".product-viewport .story[data-product-id]").forEach(card => {
-      if (card.querySelector(".gallery-spec-bullets")) return;
-      const product = PRODUCTS.find(item => item.id === card.dataset.productId);
-      if (!product) return;
-      const teaser = normalize(card.querySelector(".story-teaser")?.textContent);
-      const price = normalize(card.querySelector(".product-price")?.textContent);
-      const visible = teaser + " " + price;
-      const candidates = priorities[product.category] || priorities.display;
-      const facts = candidates.filter(([label,key]) => {
-        const value = String(product[key] || "").trim();
-        if (!known(value) || /^(—|–|-|none|not stated|not disclosed|not published|not confirmed|check exact|check manufacturer|varies by)/i.test(value)) return false;
-        const normalizedValue = normalize(value);
-        if (normalizedValue.length > 3 && (teaser.includes(normalizedValue) || price.includes(normalizedValue))) return false;
-        const terms = labelTerms[label] || [label.toLowerCase()];
-        if (terms.some(term => visible.includes(normalize(term)))) return false;
-        return true;
-      }).slice(0,10);
-      if (!facts.length) return;
-      const list = document.createElement("ul");
-      list.className = "gallery-spec-bullets";
-      list.setAttribute("aria-label", "Key specifications");
-      list.innerHTML = facts.map(([label,key]) => {
-        let value = String(product[key]).replace(/\\s+/g," ").trim();
-        value = value.replace(/\\s*\\([^)]*\\)/g,"").trim();
-        if (value.length > 36) value = value.slice(0,33).replace(/\\s+\\S*$/,"") + "…";
-        return "<li>• <strong>" + esc(label) + ":</strong> " + esc(value) + "</li>";
-      }).join("");
-      const actions = card.querySelector(".story-actions");
-      if (actions) actions.parentNode.insertBefore(list, actions);
-    });
-  }
   readUrl();populateBrands();syncControls();render();
-  addGallerySpecBullets();
   // When a comparison is launched from a product card, show the result rather
   // than leaving the visitor at the top of the homepage with no visible feedback.
   if (new URLSearchParams(window.location.search).has("compare") && selected.size >= 2) {
