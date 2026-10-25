@@ -406,7 +406,7 @@
       list.setAttribute("aria-label", "Key specifications");
       list.innerHTML = facts.map(([label,key]) => {
         let value = String(product[key]).replace(/\s+/g," ").trim();
-        if (value.length > 48) value = value.slice(0,45).replace(/\\s+\\S*$/,"") + "…";
+        if (value.length > 48) value = value.slice(0,45).replace(/\s+\S*$/,"") + "…";
         return "<li><strong>" + esc(label) + "</strong><span>" + esc(value) + "</span></li>";
       }).join("");
       const price = card.querySelector(".product-price");
