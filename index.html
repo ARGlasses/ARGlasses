@@ -1792,7 +1792,12 @@
             [/^48\.5–49 g with lenses; 42\.8–45\.5 g without lenses, depending on frame$/i, "43–49g"]
           ],
           tracking: [
-            [/^Follow Mode and 3DoF Anchor Mode; 6DoF spatial anchoring requires .*$/i, "3DoF · 6DoF with accessory"],
+            [/^Follow Mode and 3DoF Anchor Mode; 6DoF spatial anchoring requires .*$/i, "3DoF · 6DoF add-on"],
+            [/^3DoF via X1 chip$/i, "3DoF · X1"],
+            [/^3DoF via X1 spatial computing chip$/i, "3DoF · X1"],
+            [/^6DoF \/ SLAM features$/i, "6DoF / SLAM"],
+            [/^6DoF spatial tracking$/i, "6DoF"],
+            [/^Built-in VisionPair 3DoF$/i, "Built-in 3DoF"],
             [/^3DoF via X1 spatial computing chip$/i, "3DoF · X1 chip"],
             [/^3DoF via X1 chip; Anchor and Follow modes$/i, "3DoF · Anchor/Follow"],
             [/^Built-in VisionPair 3DoF$/i, "Built-in 3DoF"],
@@ -1841,6 +1846,9 @@
           ],
           power: [
             [/^Wired USB-C$/i, "USB-C wired"],
+            [/^USB-C DP Alt Mode; included Control Dock provides additional inputs$/i, "USB-C · HDMI/DP dock"],
+            [/^USB-C DP Alt Mode devices; supported adapters$/i, "USB-C DP Alt Mode"],
+            [/^USB-C DP Alt Mode; supported devices$/i, "USB-C DP Alt Mode"],
             [/^Up to (\d+(?:\.\d+)?) hours.*$/i, "To $1h"],
             [/^Up to (\d+(?:\.\d+)?) days.*$/i, "To $1 days"],
             [/^Up to (\d+(?:\.\d+)?) hours on a charge.*$/i, "To $1h/charge"],
