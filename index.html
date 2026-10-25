@@ -1752,19 +1752,8 @@
           [/integrated speakers/i, "Built-in audio"]
         ];
         replacements.forEach(([pattern, value]) => { text = text.replace(pattern, value); });
-        if (text.length <= max) return text;
-        // Prefer compact terminology; never append an ellipsis to card bullets.
-        const aliases = [
-          [/Micro-OLED/gi, "OLED"], [/waveguide/gi, "WG"],
-          [/monochrome/gi, "mono"], [/full-colour/gi, "colour"],
-          [/integrated display/gi, "display"], [/spatial positioning/gi, "spatial"],
-          [/hand tracking/gi, "hand track"], [/USB-C wired/gi, "USB-C"],
-          [/model-dependent/gi, "varies"], [/not stated/gi, "n/stated"],
-          [/not published/gi, "n/published"], [/manufacturer/gi, "mfr."]
-        ];
-        aliases.forEach(([pattern, value]) => { text = text.replace(pattern, value); });
-        if (text.length <= max) return text;
-        return text.slice(0, max).replace(/\\s+\\S*$/, "").trim() || text.slice(0, max);
+        // Preserve complete wording by default; fit and abbreviate only when a row overflows.
+        return text;
       };
       const shortUse = product => {
         const text = String(product.summary || "").toLowerCase();
@@ -1818,25 +1807,55 @@
 
         teaser.textContent = "";
         const lines = [
-          // Priority order: price and use first, then core display specs, fit, and extra features.
-          ["price-line", "£: " + compact(priceText, 20)],
-          ["spec-line", "Use: " + compact(use, 16)],
-          ["spec-line display-line", "Disp: " + compact(display, 18)],
-          ["spec-line res-line", "Res: " + compact(resolution, 18)],
-          ["spec-line fov-line", "FOV: " + compact(fov, 16)],
-          ["spec-line hz-line", "Hz: " + compact(refresh, 15)],
-          ["spec-line", "Wt: " + compact(weight, 16)],
-          ["spec-line", "Track: " + compact(tracking, 15)],
-          ["spec-line", "Cam: " + compact(camera, 15)],
-          ["spec-line", "Audio: " + compact(audio, 15)],
-          ["spec-line", "Bright: " + compact(brightness, 14)],
-          ["spec-line", "Power: " + compact(power, 15)]
+          // Importance order: price/use, core display specs, fit, then secondary features.
+          ["price-line", "Price: " + priceText, "price"],
+          ["spec-line", "Use: " + use, "use"],
+          ["spec-line display-line", "Display: " + display, "display"],
+          ["spec-line res-line", "Res: " + resolution, "resolution"],
+          ["spec-line fov-line", "FOV: " + fov, "fov"],
+          ["spec-line hz-line", "Refresh: " + refresh, "refresh"],
+          ["spec-line", "Weight: " + weight, "weight"],
+          ["spec-line", "Track: " + tracking, "tracking"],
+          ["spec-line", "Camera: " + camera, "camera"],
+          ["spec-line", "Audio: " + audio, "audio"],
+          ["spec-line", "Brightness: " + brightness, "brightness"],
+          ["spec-line", "Power: " + power, "power"]
         ];
+        const abbreviations = [
+          [/micro-oled/gi, "OLED"], [/monochrome/gi, "mono"],
+          [/integrated display/gi, "display"], [/spatial positioning/gi, "spatial tracking"],
+          [/manufacturer specification/gi, "manufacturer spec"],
+          [/per eye/gi, "/eye"], [/inches\\b/gi, "in"], [/inch\\b/gi, "in"],
+          [/up to/gi, "to"], [/not published/gi, "not listed"]
+        ];
+        const makeReadable = value => {
+          let result = value;
+          abbreviations.forEach(([pattern, replacement]) => { result = result.replace(pattern, replacement); });
+          return result;
+        };
+        const createdLines = [];
         lines.forEach(([className, text]) => {
           const line = document.createElement("span");
           line.className = className;
           line.textContent = "• " + text;
+          line.dataset.fullText = "• " + text;
           teaser.appendChild(line);
+          createdLines.push(line);
+        });
+        // Keep full text when it fits. If it overflows, try standard abbreviations,
+        // then reduce only that row's font slightly rather than cutting words off.
+        requestAnimationFrame(() => {
+          createdLines.forEach(line => {
+            if (line.scrollWidth <= line.clientWidth + 1) return;
+            const full = line.dataset.fullText;
+            const split = full.indexOf(": ");
+            if (split >= 0) line.textContent = full.slice(0, split + 2) + makeReadable(full.slice(split + 2));
+            let size = parseFloat(getComputedStyle(line).fontSize);
+            while (line.scrollWidth > line.clientWidth + 1 && size > 9) {
+              size -= 0.5;
+              line.style.fontSize = size + "px";
+            }
+          });
         });
         teaser.setAttribute("aria-label", lines.map(([, text]) => text).join(". "));
 
