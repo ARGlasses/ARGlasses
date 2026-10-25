@@ -45,8 +45,8 @@ body.comparison-page #clear-picker-selection:focus-visible{outline:3px solid #16
 /* Subtle favicon-blue accents across the homepage, without changing layout. */
 body.comparison-page .product-viewport .story-content .product-category {
   border-color: #075b91 !important;
-  color: #075b91 !important;
-  background: #eef7fc !important;
+  color: #000 !important;
+  background: #fff !important;
 }
 body.comparison-page .compare-eyebrow {
   color: #075b91;
