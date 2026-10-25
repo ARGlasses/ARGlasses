@@ -1756,10 +1756,10 @@
           if (/23 million pixels/i.test(raw)) return "23MP total";
           return "Not listed";
         }
-        if (key === "fov") return first(/\d+(?:\.\d+)?°/) || "—";
+        if (key === "fov") return first(/\d+(?:\.\d+)?°/) || "Not listed";
         if (key === "refresh") {
           const hz = [...raw.matchAll(/(\d+)\s*Hz/gi)].map(m => m[1]);
-          if (!hz.length) return "—";
+          if (!hz.length) return "Not listed";
           return [...new Set(hz)].slice(0, 2).join("–") + "Hz";
         }
         if (key === "weight") {
@@ -1786,7 +1786,7 @@
           const mp = first(/(\d+(?:\.\d+)?\s*MP)/i);
           if (mp) return mp.replace(/\s/g, "");
           if (/camera/i.test(v)) return "Camera";
-          return "—";
+          return "Not listed";
         }
         if (key === "audio") {
           if (/no conventional speaker|no integrated speaker|no speaker system/i.test(v)) return "None";
@@ -1801,7 +1801,7 @@
         }
         if (key === "brightness") {
           const nits = first(/([\d,]+)\s*nits/i);
-          return nits ? nits.replace(/,/g, "") + " nits" : "—";
+          return nits ? nits.replace(/,/g, "") + " nits" : "Not listed";
         }
         if (key === "power") {
           if (/wired usb-c|usb-c dp alt mode|usb-c displayport alt mode|usb-c \/ model-specific connector/i.test(v)) return "USB-C";
