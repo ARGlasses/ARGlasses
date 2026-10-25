@@ -1726,7 +1726,7 @@
         const raw = String(value || "").trim();
         const v = raw.toLowerCase();
         const unavailable = /^(not stated|not published|not disclosed|check |business \/ channel|—|-|n\/a)/i.test(raw);
-        if (!raw || unavailable) return "—";
+        if (!raw || unavailable) return "Not listed";
         const first = (pattern, fallback = "") => {
           const m = raw.match(pattern);
           return m ? (m[1] || m[0]) : fallback;
@@ -1737,8 +1737,8 @@
           if (/microled/i.test(raw)) return "MicroLED";
           if (/lcos|liquid-crystal-on-silicon/i.test(raw)) return "LCoS";
           if (/waveguide/i.test(raw)) return /colour|full-colour|full colour/i.test(raw) ? "Colour waveguide" : "Waveguide";
-          if (/oled/i.test(raw)) return "OLED";
           if (/si-oled/i.test(raw)) return "Si-OLED";
+          if (/oled/i.test(raw)) return "OLED";
           if (/single-lens/i.test(raw)) return "Single-lens display";
           if (/see-through/i.test(raw)) return "See-through AR";
           if (/monocular/i.test(raw)) return "Monocular display";
@@ -1754,7 +1754,7 @@
           }
           if (/full hd|1080p/i.test(raw)) return "1080p";
           if (/23 million pixels/i.test(raw)) return "23MP total";
-          return "—";
+          return "Not listed";
         }
         if (key === "fov") return first(/\d+(?:\.\d+)?°/) || "—";
         if (key === "refresh") {
@@ -1766,7 +1766,7 @@
           const range = first(/(\d+(?:\.\d+)?\s*[–-]\s*\d+(?:\.\d+)?\s*g)/i);
           if (range) return range.replace(/\s/g, "");
           const grams = first(/(\d+(?:\.\d+)?\s*g)/i);
-          return grams ? grams.replace(/\s/g, "") : "—";
+          return grams ? grams.replace(/\s/g, "") : "Not listed";
         }
         if (key === "tracking") {
           if (/no spatial tracking|no spatial display tracking|no spatial tracking stated|not a consumer 6dof|not consumer spatial ar|no spatial display tracking|not full 6dof/i.test(v)) return "None";
@@ -1823,6 +1823,35 @@
         }
         return raw;
       };
+      const shortCapability = (key, value) => {
+        const raw = String(value || "").trim();
+        const v = raw.toLowerCase();
+        if (!raw || /^(not stated|not published|not disclosed|check |business \/ channel|—|-|n\/a)/i.test(raw)) return "Not listed";
+        if (key === "compatibility") {
+          if (/standalone/i.test(v)) return "Standalone";
+          if (/usb-c dp alt mode/i.test(v)) return "USB-C DP Alt Mode";
+          if (/ios.*android|android.*ios/i.test(v)) return "iOS + Android";
+          if (/ios/i.test(v) && /app/i.test(v)) return "iOS app";
+          if (/android/i.test(v) && /app/i.test(v)) return "Android app";
+          if (/bluetooth/i.test(v)) return firstCompat(raw, /bluetooth\s*\d*(?:\.\d+)?/i);
+          if (/apple ecosystem/i.test(v)) return "Apple ecosystem";
+          if (/android-based/i.test(v)) return "Android-based";
+          return raw.split(/[;.]/)[0].trim().slice(0, 30) || "Check compatibility";
+        }
+        if (key === "prescription") {
+          if (/^(no|none|not supported)/i.test(raw)) return "None";
+          if (/zeiss/i.test(v)) return "ZEISS inserts";
+          if (/diopter/i.test(v)) return "Diopter adjustment";
+          if (/safety eyewear/i.test(v)) return "Safety eyewear fit";
+          if (/prescription|optical insert|lens option|lens configuration/i.test(v)) return "Prescription options";
+          return "Check configuration";
+        }
+        return "Not listed";
+      };
+      const firstCompat = (raw, pattern) => {
+        const match = raw.match(pattern);
+        return match ? match[0].replace(/\s+/g, " ") : "Bluetooth";
+      };
       const shortUse = product => {
         const text = String(product.summary || "").toLowerCase();
         if (/gaming|high-refresh/.test(text)) return "Gaming & video";
@@ -1864,7 +1893,9 @@
           ["spec-line", "Cam", shortValue("camera", clean(product.camera) || "Not stated"), "camera"],
           ["spec-line", "Audio", shortValue("audio", clean(product.audio) || "Not stated"), "audio"],
           ["spec-line", "Bright", shortValue("brightness", clean(product.brightness) || "Not stated"), "brightness"],
-          ["spec-line", "Power", shortValue("power", clean(product.power) || "Not stated"), "power"]
+          ["spec-line", "Power", shortValue("power", clean(product.power) || "Not stated"), "power"],
+          ["spec-line", "Compat", shortCapability("compatibility", clean(product.compatibility) || "Not stated"), "compatibility"],
+          ["spec-line", "Rx", shortCapability("prescription", clean(product.prescription) || "Not stated"), "prescription"]
         ];
         teaser.textContent = "";
         specs.forEach(([className, label, value]) => {
