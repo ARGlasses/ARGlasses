@@ -410,7 +410,7 @@
       const candidates = priorities[product.category] || priorities.display;
       const facts = candidates.filter(([label,key]) => {
         const value = String(product[key] || "").trim();
-        if (!known(value) || /^(—|–|-|no|none|not stated|not disclosed|not published|not confirmed)$/i.test(value)) return false;
+        if (!known(value) || /^(—|–|-|none|not stated|not disclosed|not published|not confirmed|check exact|check manufacturer|varies by)/i.test(value)) return false;
         const normalizedValue = normalize(value);
         if (normalizedValue.length > 3 && (teaser.includes(normalizedValue) || price.includes(normalizedValue))) return false;
         const terms = labelTerms[label] || [label.toLowerCase()];
