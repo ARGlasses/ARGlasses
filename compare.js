@@ -399,13 +399,13 @@
       const product = PRODUCTS.find(item => item.id === card.dataset.productId);
       if (!product) return;
       const candidates = priorities[product.category] || priorities.display;
-      const facts = candidates.filter(([,key]) => known(product[key]) && !/^(no|none)$/i.test(String(product[key]).trim())).slice(0,3);
+      const facts = candidates.filter(([,key]) => known(product[key])).slice(0,3);
       if (!facts.length) return;
       const list = document.createElement("ul");
       list.className = "gallery-spec-bullets";
       list.setAttribute("aria-label", "Key specifications");
       list.innerHTML = facts.map(([label,key]) => {
-        let value = String(product[key]).replace(/\\s+/g," ").trim();
+        let value = String(product[key]).replace(/\s+/g," ").trim();
         if (value.length > 48) value = value.slice(0,45).replace(/\\s+\\S*$/,"") + "…";
         return "<li><strong>" + esc(label) + "</strong><span>" + esc(value) + "</span></li>";
       }).join("");
