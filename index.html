@@ -1713,7 +1713,7 @@
     }
   </style>
   <script>
-    // Keep every product card scannable: short bullets, one fact per line.
+    // Concise, consistently formatted catalogue specs: prioritise the useful fact, never shrink individual rows.
     window.addEventListener("DOMContentLoaded", function () {
       const products = Array.isArray(window.ARG_PRODUCTS) ? window.ARG_PRODUCTS : [];
       const byId = new Map(products.map(product => [product.id, product]));
@@ -1722,143 +1722,208 @@
         const text = String(value).trim();
         return !text || /^(not stated|not published|not disclosed|check |business \/ channel|—|-|n\/a)/i.test(text) ? "" : text;
       };
-      const compact = (value, max = 26) => {
+      const shortValue = (key, value) => {
         let text = String(value || "").trim()
           .replace(/\b(inches|inch)\b/gi, "in")
           .replace(/\b(per eye)\b/gi, "/eye")
+          .replace(/\b(binocular)\b/gi, "2-eye")
           .replace(/\b(up to)\b/gi, "to")
           .replace(/\b(micro-oled)\b/gi, "Micro-OLED")
           .replace(/\b(full hd)\b/gi, "1080p")
           .replace(/\b(manufacturer claim|manufacturer figure|manufacturer specification)\b/gi, "")
-          .replace(/\s*\(([^)]*)\)/g, " — $1")
+          .replace(/\s*\(([^)]*)\)/g, " · $1")
           .replace(/\s*\/\s*/g, "/")
           .replace(/\s+/g, " ")
           .trim();
-        const replacements = [
-          [/Sony 0\.55 in Micro-OLED/i, "0.55in Sony Micro-OLED"],
-          [/Sony 0\.68 in Micro-OLED/i, "0.68in Sony Micro-OLED"],
-          [/Sony Micro-OLED/i, "Sony Micro-OLED"],
-          [/binocular monochrome green waveguide/i, "Mono-green waveguide"],
-          [/binocular monochrome waveguide/i, "Mono waveguide"],
-          [/full-colour integrated display/i, "Full-colour display"],
-          [/single-lens full-colour integrated display/i, "Single-lens colour"],
-          [/1920 × 1080 per eye/i, "1920×1080/eye"],
-          [/1920 × 1200 per eye/i, "1920×1200/eye"],
-          [/640 × 480 per eye/i, "640×480/eye"],
-          [/not published/i, "Not stated"],
-          [/not stated in source checked/i, "Not stated"],
-          [/varies by model/i, "Model-dependent"],
-          [/wired USB-C/i, "USB-C wired"],
-          [/integrated speakers/i, "Built-in audio"]
-        ];
-        replacements.forEach(([pattern, value]) => { text = text.replace(pattern, value); });
-        // Preserve complete wording by default; fit and abbreviate only when a row overflows.
-        return text;
+        const rules = {
+          price: [
+            [/^£([\d,]+) UK direct-store listing.*$/i, "£$1"],
+            [/^£([\d,]+) UK official store price.*$/i, "£$1"],
+            [/^From £([\d,]+).*$/i, "From £$1"],
+            [/^£([\d,]+) listed.*$/i, "£$1"],
+            [/^£([\d,]+) launch offer.*$/i, "£$1 offer"],
+            [/^US\$([\d,]+).*$/i, "US$ $1 · UK TBC"],
+            [/^Check UK store.*$/i, "UK price TBC"],
+            [/^Check regional store.*$/i, "Regional price TBC"],
+            [/^Check official store.*$/i, "Price TBC"],
+            [/^Business \/ channel pricing.*$/i, "Business pricing"],
+            [/^Enterprise pricing.*$/i, "Business pricing"],
+            [/^Regional pricing.*$/i, "Price varies"],
+            [/^Price not confirmed$/i, "TBC"],
+            [/^Price not listed$/i, "Not listed"],
+            [/;.*$/, ""]
+          ],
+          display: [
+            [/^Sony (0\.\d+in )?Micro-OLED.*$/i, (_, size) => (size || "") + "Sony Micro-OLED"],
+            [/^0\.\d+in SeeYa Micro-OLED; HDR10$/i, "SeeYa Micro-OLED · HDR10"],
+            [/^Single-lens full-colour integrated display$/i, "Single-lens colour"],
+            [/^Binocular green MicroLED waveguide$/i, "Green MicroLED waveguide"],
+            [/^Binocular monochrome MicroLED \+ diffractive waveguide$/i, "Mono MicroLED waveguide"],
+            [/^See-through AR display using .*$/i, "See-through AR · LCoS"],
+            [/^Dual-eye full-colour MicroLED waveguide$/i, "Colour MicroLED waveguide"],
+            [/^Monocular monochrome transparent waveguide$/i, "Mono waveguide"],
+            [/^Monocular monochrome-green microLED waveguide display in safety-glasses form$/i, "Mono-green safety waveguide"],
+            [/^No display$/i, "None"],
+            [/^Wired USB-C$/i, "USB-C wired"]
+          ],
+          resolution: [
+            [/^Full HD \(1920 × 1080\/eye\)$/i, "1920×1080/eye"],
+            [/^1920 × 1080\/eye$/i, "1920×1080/eye"],
+            [/^Up to 1920 × 1200\/eye$/i, "To 1920×1200/eye"],
+            [/^1920 × 1080\/eye by default;.*$/i, "1920×1080/eye"],
+            [/^3840 × 1200 binocular \(1920 × 1200\/eye\)$/i, "1920×1200/eye"],
+            [/^Not stated in source checked$/i, "Not stated"],
+            [/^Not disclosed in official launch materials$/i, "Not stated"]
+          ],
+          refresh: [
+            [/^Up to 120 Hz in 2D; 60 Hz in 3D$/i, "120Hz 2D · 60Hz 3D"],
+            [/^90 Hz binocular; up to 120 Hz$/i, "90–120Hz"],
+            [/^90 Hz fixed; up to 120 Hz$/i, "90–120Hz"],
+            [/^Up to 240 Hz with Frame Rate Boost; 120 Hz standard mode$/i, "120Hz · 240Hz boost"],
+            [/^Not stated in source checked$/i, "Not stated"],
+            [/^Not disclosed in official launch materials$/i, "Not stated"]
+          ],
+          weight: [
+            [/^Not published in the official specification reviewed$/i, "Not stated"],
+            [/^Not stated in source checked$/i, "Not stated"],
+            [/^68 g \(Standard\) \/ 70 g \(Large\)$/i, "68–70g"],
+            [/^88 g \(Regular\) \/ 90 g \(Large\)$/i, "88–90g"],
+            [/^79 g \(Regular\) \/ 81 g \(Large\)$/i, "79–81g"],
+            [/^48\.5–49 g with lenses; 42\.8–45\.5 g without lenses, depending on frame$/i, "43–49g"]
+          ],
+          tracking: [
+            [/^Follow Mode and 3DoF Anchor Mode; 6DoF spatial anchoring requires .*$/i, "3DoF · 6DoF with accessory"],
+            [/^3DoF via X1 spatial computing chip$/i, "3DoF · X1 chip"],
+            [/^3DoF via X1 chip; Anchor and Follow modes$/i, "3DoF · Anchor/Follow"],
+            [/^Built-in VisionPair 3DoF$/i, "Built-in 3DoF"],
+            [/^3DoF with compatible accessory\/software$/i, "3DoF · accessory required"],
+            [/^No native spatial tracking stated$/i, "No spatial tracking"],
+            [/^No spatial display tracking.*$/i, "No spatial tracking"],
+            [/^No full 6DoF spatial mapping claimed$/i, "No 6DoF mapping"],
+            [/^Head tracking; not consumer spatial AR$/i, "Head tracking"],
+            [/^Neural Band EMG gesture controls; not a spatial AR display$/i, "Neural Band gestures"],
+            [/^Head-gesture input; no 6DoF spatial mapping stated$/i, "Head gestures"],
+            [/^IMU; navigation and spatial features vary by software$/i, "IMU · software-dependent"],
+            [/^6DoF spatial computing and hand gestures with compatible host\/accessory$/i, "6DoF · hand tracking"],
+            [/^Spatial positioning and hand tracking$/i, "Spatial + hand tracking"]
+          ],
+          camera: [
+            [/^12 MP ultra-wide with 3× zoom; 1440 × 1920 video at 30 fps.*$/i, "12MP · 3× zoom · 1440p video"],
+            [/^12 MP camera; up to 3K video at 30 fps$/i, "12MP · 3K/30fps"],
+            [/^12 MP ultra-wide camera; up to 3K video at 30 fps and 720p at 120 fps$/i, "12MP · 3K/30fps"],
+            [/^12 MP Sony IMX681; up to 3K video$/i, "12MP · 3K video"],
+            [/^16 MP photo camera; video modes vary$/i, "16MP photo"],
+            [/^No integrated camera$/i, "None"],
+            [/^No front camera$/i, "None"],
+            [/^No camera specification stated$/i, "Not stated"],
+            [/^Camera\/sensor specifications not fully disclosed in launch materials$/i, "Details not disclosed"],
+            [/^Camera and computer-vision sensors$/i, "Camera + vision sensors"],
+            [/^Front RGB camera hardware; some spatial features listed as pending software availability$/i, "RGB camera · features pending"]
+          ],
+          audio: [
+            [/^Two open-ear speakers; six-microphone array$/i, "Open-ear · 6 mics"],
+            [/^Two open-ear speakers; five-microphone array$/i, "Open-ear · 5 mics"],
+            [/^Dual directional speakers; four-microphone array$/i, "Directional audio · 4 mics"],
+            [/^Four-microphone array and bone-conduction sensor; no conventional speakers$/i, "4 mics · bone conduction"],
+            [/^No conventional speaker system$/i, "No speakers"],
+            [/^No integrated speaker$/i, "No speaker"],
+            [/^Integrated speakers$/i, "Built-in speakers"],
+            [/^Integrated audio$/i, "Built-in audio"]
+          ],
+          brightness: [
+            [/^Up to ([\d,]+) nits perceived brightness.*$/i, "To $1 nits"],
+            [/^Up to ([\d,]+) nits perceived.*$/i, "To $1 nits"],
+            [/^Up to ([\d,]+) nits \(manufacturer rating\)$/i, "To $1 nits"],
+            [/^([\d,]+) nits eye-level brightness.*$/i, "$1 nits eye-level"],
+            [/^Not stated in source checked$/i, "Not stated"],
+            [/^Not disclosed in official launch materials$/i, "Not stated"],
+            [/^Not published$/i, "Not stated"]
+          ],
+          power: [
+            [/^Wired USB-C$/i, "USB-C wired"],
+            [/^Up to (\d+(?:\.\d+)?) hours.*$/i, "To $1h"],
+            [/^Up to (\d+(?:\.\d+)?) days.*$/i, "To $1 days"],
+            [/^Up to (\d+(?:\.\d+)?) hours on a charge.*$/i, "To $1h/charge"],
+            [/^Up to (\d+(?:\.\d+)?) hours typical use.*$/i, "To $1h typical"],
+            [/^Not stated in source checked$/i, "Not stated"],
+            [/^Not disclosed in official launch materials$/i, "Not stated"],
+            [/^245 mAh battery; real-world runtime varies by workload$/i, "245mAh · runtime varies"],
+            [/^External compute pack$/i, "External battery"],
+            [/^Hot-swappable battery; runtime depends on workload$/i, "Hot-swap battery"],
+            [/^USB-C DisplayPort Alt Mode$/i, "USB-C DP Alt Mode"],
+            [/^USB-C DP Alt Mode devices.*$/i, "USB-C DP Alt Mode"],
+            [/^Bluetooth 5\.4; MFi certified.*$/i, "Bluetooth 5.4 · MFi"]
+          ]
+        };
+        (rules[key] || []).some(([pattern, replacement]) => {
+          if (!pattern.test(text)) return false;
+          text = text.replace(pattern, replacement);
+          return true;
+        });
+        text = text
+          .replace(/\b(1920|1440|1280|1080|854|640|600|480|400) × (1920|1760|1200|1080|720|600|480|400|350)\b/g, "$1×$2")
+          .replace(/\b(\d+) × (\d+)\b/g, "$1×$2")
+          .replace(/\b(\d+) Hz\b/g, "$1Hz")
+          .replace(/\b(\d+) MP\b/g, "$1MP")
+          .replace(/\b(\d+) g\b/g, "$1g")
+          .replace(/\b(\d+) mAh\b/g, "$1mAh")
+          .replace(/\b(nits|Hz|MP)\s*\([^)]*\)/gi, "$1")
+          .replace(/\s+·\s*$/, "")
+          .replace(/\s+/g, " ")
+          .trim();
+        return text || "Not stated";
       };
       const shortUse = product => {
         const text = String(product.summary || "").toLowerCase();
-        if (/gaming|high-refresh|gaming-focused/.test(text)) return "Gaming and video";
-        if (/enterprise|industrial|workflow|inspection|field workflow|remote assistance/.test(text)) return "Work and industry";
-        if (/camera|translation|voice assistance|ai assistant|ai glasses/.test(text)) return "AI, camera and audio";
+        if (/gaming|high-refresh/.test(text)) return "Gaming & video";
+        if (/enterprise|industrial|workflow|inspection|field workflow|remote assistance/.test(text)) return "Work & industry";
+        if (/camera|translation|voice assistance|ai assistant|ai glasses/.test(text)) return "AI, camera & audio";
         if (/spatial computing|6dof|spatial positioning|hand tracking/.test(text)) return "Spatial AR";
         if (/virtual-screen|virtual screen|productivity/.test(text)) return "Virtual screens";
-        if (/notification|teleprompter|meeting notes/.test(text)) return "Prompts and notifications";
-        if (/entertainment|video/.test(text)) return "Video and entertainment";
+        if (/notification|teleprompter|meeting notes/.test(text)) return "Prompts & alerts";
+        if (/entertainment|video/.test(text)) return "Video & entertainment";
         return "Everyday smart glasses";
+      };
+      const makePrice = product => {
+        const raw = String(product.priceText || "").trim();
+        if (product.price != null && Number.isFinite(Number(product.price))) {
+          return "£" + Number(product.price).toLocaleString("en-GB") +
+            (/(check stock status|out of stock|availability restricted|register for stock notification)/i.test(raw) ? " · check stock" : "");
+        }
+        if (/US\$([\d,]+)/.test(raw)) return "US$" + raw.match(/US\$([\d,]+)/)[1] + " · UK TBC";
+        if (/£\s?[\d,]+(?:\.\d{2})?/.test(raw)) return raw.match(/£\s?[\d,]+(?:\.\d{2})?/)[0].replace(/\s/g, "") + " · check price";
+        if (/business|enterprise|channel/i.test(raw)) return "Business pricing";
+        if (/announced|not confirmed|not disclosed/i.test(raw)) return "Price TBC";
+        if (/check|regional|UK price|store/i.test(raw)) return "UK price TBC";
+        return "Not listed";
       };
       document.querySelectorAll(".product-viewport .product-card[data-product-id]").forEach(card => {
         const product = byId.get(card.dataset.productId);
         const teaser = card.querySelector(".story-teaser");
         const price = card.querySelector(".product-price");
         if (!product || !teaser) return;
-
-        const display = clean(product.display) || (product.category === "ai" ? "Varies by model" : "Not published");
-        const resolution = clean(product.resolution) || "Not published";
-        const refresh = clean(product.refresh) || "Not published";
-        const fov = clean(product.fov) || "Not published";
-        const weight = clean(product.weight) || "Not stated";
-        const tracking = clean(product.tracking) || "Not stated";
-        const camera = clean(product.camera) || "Not stated";
-        const audio = clean(product.audio) || "Not stated";
-        const brightness = clean(product.brightness) || "Not stated";
-        const power = clean(product.power) || "Not stated";
-        const use = shortUse(product) || "Everyday smart eyewear";
-        // Keep availability wording intact until it has been classified below.
-        const rawPriceText = String(product.priceText || "").trim();
-        let priceText;
-        if (product.price != null && Number.isFinite(Number(product.price))) {
-          priceText = "£" + Number(product.price).toLocaleString("en-GB") +
-            (/(check stock status|out of stock|availability restricted|register for stock notification)/i.test(rawPriceText) ? " (check stock)" : "");
-        } else if (rawPriceText.includes("US$")) {
-          const usPrice = rawPriceText.match(/US\$[\d,]+/);
-          priceText = (usPrice ? usPrice[0] + " (UK price TBC)" : "UK price TBC");
-        } else if (/£\s?[\d,]+(?:\.\d{2})?/.test(rawPriceText)) {
-          const gbpPrice = rawPriceText.match(/£\s?[\d,]+(?:\.\d{2})?/);
-          priceText = gbpPrice ? gbpPrice[0].replace(/\s/g, "") + (/(out of stock|availability restricted)/i.test(rawPriceText) ? " (check availability)" : "") : "UK price TBC";
-        } else if (/business|enterprise|channel/i.test(rawPriceText)) {
-          priceText = "Business pricing";
-        } else if (/announced|not confirmed|not disclosed/i.test(rawPriceText)) {
-          priceText = "Price not confirmed";
-        } else if (/check|regional|UK price|store/i.test(rawPriceText)) {
-          priceText = "See UK store";
-        } else {
-          priceText = "Price not listed";
-        }
-
+        const specs = [
+          ["price-line", "Price", makePrice(product), "price"],
+          ["spec-line", "Use", shortUse(product), "use"],
+          ["spec-line display-line", "Display", shortValue("display", clean(product.display) || (product.category === "ai" ? "No display" : "Not stated")), "display"],
+          ["spec-line res-line", "Res", shortValue("resolution", clean(product.resolution) || "Not stated"), "resolution"],
+          ["spec-line fov-line", "FOV", shortValue("fov", clean(product.fov) || "Not stated"), "fov"],
+          ["spec-line hz-line", "Hz", shortValue("refresh", clean(product.refresh) || "Not stated"), "refresh"],
+          ["spec-line", "Wt", shortValue("weight", clean(product.weight) || "Not stated"), "weight"],
+          ["spec-line", "Track", shortValue("tracking", clean(product.tracking) || "Not stated"), "tracking"],
+          ["spec-line", "Cam", shortValue("camera", clean(product.camera) || "Not stated"), "camera"],
+          ["spec-line", "Audio", shortValue("audio", clean(product.audio) || "Not stated"), "audio"],
+          ["spec-line", "Bright", shortValue("brightness", clean(product.brightness) || "Not stated"), "brightness"],
+          ["spec-line", "Power", shortValue("power", clean(product.power) || "Not stated"), "power"]
+        ];
         teaser.textContent = "";
-        const lines = [
-          // Importance order: price/use, core display specs, fit, then secondary features.
-          ["price-line", "Price: " + priceText, "price"],
-          ["spec-line", "Use: " + use, "use"],
-          ["spec-line display-line", "Display: " + display, "display"],
-          ["spec-line res-line", "Res: " + resolution, "resolution"],
-          ["spec-line fov-line", "FOV: " + fov, "fov"],
-          ["spec-line hz-line", "Refresh: " + refresh, "refresh"],
-          ["spec-line", "Weight: " + weight, "weight"],
-          ["spec-line", "Track: " + tracking, "tracking"],
-          ["spec-line", "Camera: " + camera, "camera"],
-          ["spec-line", "Audio: " + audio, "audio"],
-          ["spec-line", "Brightness: " + brightness, "brightness"],
-          ["spec-line", "Power: " + power, "power"]
-        ];
-        const abbreviations = [
-          [/micro-oled/gi, "OLED"], [/monochrome/gi, "mono"],
-          [/integrated display/gi, "display"], [/spatial positioning/gi, "spatial tracking"],
-          [/manufacturer specification/gi, "manufacturer spec"],
-          [/per eye/gi, "/eye"], [/inches\\b/gi, "in"], [/inch\\b/gi, "in"],
-          [/up to/gi, "to"], [/not published/gi, "not listed"]
-        ];
-        const makeReadable = value => {
-          let result = value;
-          abbreviations.forEach(([pattern, replacement]) => { result = result.replace(pattern, replacement); });
-          return result;
-        };
-        const createdLines = [];
-        lines.forEach(([className, text]) => {
+        specs.forEach(([className, label, value]) => {
           const line = document.createElement("span");
           line.className = className;
-          line.textContent = "• " + text;
-          line.dataset.fullText = "• " + text;
+          line.textContent = "• " + label + ": " + value;
           teaser.appendChild(line);
-          createdLines.push(line);
         });
-        // Keep full text when it fits. If it overflows, try standard abbreviations,
-        // then reduce only that row's font slightly rather than cutting words off.
-        requestAnimationFrame(() => {
-          createdLines.forEach(line => {
-            if (line.scrollWidth <= line.clientWidth + 1) return;
-            const full = line.dataset.fullText;
-            const split = full.indexOf(": ");
-            if (split >= 0) line.textContent = full.slice(0, split + 2) + makeReadable(full.slice(split + 2));
-            let size = parseFloat(getComputedStyle(line).fontSize);
-            while (line.scrollWidth > line.clientWidth + 1 && size > 9) {
-              size -= 0.5;
-              line.style.fontSize = size + "px";
-            }
-          });
-        });
-        teaser.setAttribute("aria-label", lines.map(([, text]) => text).join(". "));
-
+        teaser.setAttribute("aria-label", specs.map(([, label, value]) => label + ": " + value).join(". "));
         if (price) price.setAttribute("aria-hidden", "true");
       });
     });
