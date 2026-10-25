@@ -416,7 +416,7 @@
         const terms = labelTerms[label] || [label.toLowerCase()];
         if (terms.some(term => visible.includes(normalize(term)))) return false;
         return true;
-      }).slice(0,3);
+      }).slice(0,6);
       if (!facts.length) return;
       const list = document.createElement("ul");
       list.className = "gallery-spec-bullets";
