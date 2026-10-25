@@ -21,6 +21,35 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=8"><link rel="stylesheet" href="compare.css"><link rel="stylesheet" href="product-hover.css"><link rel="stylesheet" href="homepage-polish.css?v=1">
+  <style>
+    /* Apply product action colours before the browser can paint the cards. */
+    .product-viewport .story-content .story-actions a.amazon-button,
+    .product-viewport .story-actions a.amazon-button {
+      background: #075b91 !important;
+      background-image: none !important;
+      color: #fff !important;
+      border: 1px solid #075b91 !important;
+      text-decoration: none !important;
+    }
+    .product-viewport .story-content .story-actions a.amazon-button:hover,
+    .product-viewport .story-actions a.amazon-button:hover {
+      background: #064773 !important;
+      background-image: none !important;
+      border-color: #064773 !important;
+      color: #fff !important;
+    }
+    .product-viewport .story-content .story-actions a.amazon-button:focus-visible,
+    .product-viewport .story-actions a.amazon-button:focus-visible {
+      outline: 3px solid #8bc8ed !important;
+      outline-offset: 2px !important;
+    }
+    /* Preserve the card lift on desktop without overriding the mobile layout reset. */
+    @media (min-width: 701px) {
+      .product-viewport .story-content {
+        transform: translateY(-1.2em) !important;
+      }
+    }
+  </style>
   <link rel="icon" href="images/logo40x40.webp" type="image/webp">
   <script src="./header.js?v=6" defer></script><script src="./products-data.js" defer></script>
   <script src="./compare.js?v=3" defer></script>
@@ -1449,7 +1478,7 @@
           clone.dataset.copyIndex = String(copy);
           clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
           clone.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
-            if (link.textContent.includes('Compare specs')) {
+            if (link.textContent.includes('Compare models')) {
               event.preventDefault();
               const originalLink = originals[index].querySelector('a.amazon-button');
               if (originalLink) originalLink.click();
@@ -2072,31 +2101,8 @@
       }
     }
   </style>
-  <style>
-    /* Nudge all product-card text and actions up by approximately one line. */
-    .product-viewport .story-content {
-      transform: translateY(-1.2em) !important;
-    }
-  </style>
 
-  <style>
-    /* Final product-card action styling: both actions use the ARGlasses brand blue. */
-    .product-viewport .story-actions .amazon-button,
-    .product-viewport .story-content .story-actions .amazon-button {
-      background: #075b91 !important;
-      color: #fff !important;
-      border: 1px solid #075b91 !important;
-      text-decoration: none !important;
-    }
-    .product-viewport .story-actions .amazon-button:hover {
-      background: #064773 !important;
-      border-color: #064773 !important;
-      color: #fff !important;
-    }
-    .product-viewport .story-actions .amazon-button:focus-visible {
-      outline: 3px solid #8bc8ed !important;
-      outline-offset: 2px !important;
-    }
-  </style>
+
+
 
 </body></html>
