@@ -386,10 +386,10 @@
       }`;
     document.head.appendChild(styles);
     const priorities = {
-      display: [["Weight","weight"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power","power"],["Audio","audio"],["Prescription","prescription"],["Compatibility","compatibility"]],
-      ai: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Battery","power"],["Compatibility","compatibility"],["Prescription","prescription"],["Audio","audio"],["Camera","camera"],["Tracking","tracking"]],
-      spatial: [["Weight","weight"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Battery","power"],["Compatibility","compatibility"],["Prescription","prescription"],["Audio","audio"]],
-      enterprise: [["Weight","weight"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]]
+      display: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]],
+      ai: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Battery","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]],
+      spatial: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Battery","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]],
+      enterprise: [["Weight","weight"],["Display","display"],["Resolution","resolution"],["FOV","fov"],["Refresh","refresh"],["Brightness","brightness"],["Tracking","tracking"],["Power","power"],["Camera","camera"],["Audio","audio"],["Compatibility","compatibility"],["Prescription","prescription"]]
     };
     const normalize = value => String(value || "").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
     const labelTerms = {
@@ -416,7 +416,7 @@
         const terms = labelTerms[label] || [label.toLowerCase()];
         if (terms.some(term => visible.includes(normalize(term)))) return false;
         return true;
-      }).slice(0,6);
+      }).slice(0,10);
       if (!facts.length) return;
       const list = document.createElement("ul");
       list.className = "gallery-spec-bullets";
@@ -432,6 +432,7 @@
     });
   }
   readUrl();populateBrands();syncControls();render();
+  addGallerySpecBullets();
   // When a comparison is launched from a product card, show the result rather
   // than leaving the visitor at the top of the homepage with no visible feedback.
   if (new URLSearchParams(window.location.search).has("compare") && selected.size >= 2) {
