@@ -2299,6 +2299,16 @@
   </style>
 
 
+  <style id="mobile-smoother-carousel-scroll">
+    @media screen and (max-width: 700px) {
+      /* Avoid animating every finger-move; the touch handler updates scrollLeft directly. */
+      html body .product-viewport .rail {
+        scroll-behavior: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+    }
+  </style>
+
   <style id="mobile-full-card-horizontal-swipe">
     @media screen and (max-width: 700px) {
       /* Let horizontal swipes start anywhere on the card, including the text panel. */
