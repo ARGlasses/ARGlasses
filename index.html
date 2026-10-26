@@ -2292,9 +2292,10 @@
 
   <style id="mobile-product-card-position">
     @media screen and (max-width: 700px) {
-      /* Drop the whole product card by one additional text line on mobile only. */
-      html body .product-viewport .story {
-        transform: translateY(2.3em) !important;
+      /* Use the independent translate property so the carousel's inline transform
+         cannot override this mobile-only vertical card position. */
+      html body .product-viewport .rail > .story {
+        translate: 0 2.3em !important;
       }
     }
   </style>
