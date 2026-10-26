@@ -72,7 +72,7 @@
         <div title="The old behaviour or friction that could become less necessary as the interface improves."><small>WHAT FADES</small><b id="fxLoss">Constant phone checking</b></div>
         <div title="The biggest engineering, social or governance obstacle standing between the scenario and a genuinely good experience."><small>THE HARD PART</small><b id="fxHard">Battery + camera privacy</b></div>
       </div>
-      <div class="fx-confidence"><span title="An editorial confidence score showing how closely the scenario follows visible trends today. It is not a statistical probability.">EDITORIAL CONFIDENCE <b id="fxConfidence">86%</b></span><i><em id="fxConfidenceBar"></em></i></div>
+      <div class="fx-confidence"><span title="A qualitative editorial view of how close the scenario is to current capabilities. This is not a forecast or statistical probability.">SCENARIO OUTLOOK <b id="fxConfidence">Current direction</b></span><i aria-hidden="true"><em id="fxConfidenceBar"></em></i></div>
     </div>
   </div>
 </section>
@@ -103,7 +103,7 @@
     <div class="fx-scenario-stage">
       <div class="fx-stage-orbit"></div><div class="fx-stage-core"><span id="fxScenarioIcon">01</span></div>
       <span class="fx-stage-label label-a" id="fxScenarioTagA">TRANSLATE</span><span class="fx-stage-label label-b" id="fxScenarioTagB">LISTEN</span><span class="fx-stage-label label-c" id="fxScenarioTagC">TALK</span>
-      <div class="fx-scenario-copy"><span id="fxScenarioKicker">LANGUAGE</span><h3 id="fxScenarioTitle">A conversation without the language barrier.</h3><p id="fxScenarioText">Look at a person speaking another language and hear or see a translation that preserves timing and eye contact. The goal is not perfect translation — it is less social friction.</p></div>
+      <div class="fx-scenario-copy"><span id="fxScenarioKicker">LANGUAGE</span><h3 id="fxScenarioTitle">A conversation without the language barrier.</h3><p id="fxScenarioText">Look at a person speaking another language and hear or see a translation that preserves timing and eye contact. The goal is not perfect translation, but a more natural conversation with less need to interrupt eye contact.</p></div>
     </div>
   </div>
 </section>
@@ -122,7 +122,7 @@
   <div class="fx-day-copy">
     <span class="fx-overline">A DAY IN 2034</span>
     <h2>The future should feel like intuition.</h2>
-    <p>Nothing asks for your attention unless it has a reason. The glasses quietly connect place, memory, people and intent — then disappear again. You do not open an app to navigate, remember, translate or learn. The world simply becomes a little more legible.</p>
+    <p>In this optimistic scenario, the glasses surface useful context only when appropriate, then recede. Navigation, translation and reminders could require fewer deliberate app interactions, while the phone remains available for tasks that need it.</p>
     <div class="fx-day-stats"><span><b>06</b><small>useful moments</small></span><span><b>00</b><small>feeds opened</small></span><span><b>01</b><small>explicit pause</small></span></div>
     <div class="fx-day-rule"><span>07:10</span><b>Morning</b><i>the glasses notice the rain window, suggest the faster route, then go quiet</i></div>
     <div class="fx-day-rule"><span>09:05</span><b>Work</b><i>yesterday's unfinished decision appears beside the right document — no search required</i></div>
@@ -142,11 +142,12 @@
 </section>
 
 <section class="fx-chapter fx-sources" id="sources">
-  <div><span class="fx-overline">RESEARCH BASIS</span><h2>Big imagination.<br>Real trend lines.</h2><p>The dates are scenarios, not promises. The direction is anchored in current evidence around AI adoption, responsible AI, energy demand and work.</p></div>
+  <div><span class="fx-overline">RESEARCH BASIS</span><h2>Big imagination.<br>Real trend lines.</h2><p>These dates are illustrative scenarios, not forecasts or promises. Current research can inform the pressures shaping smart glasses—adoption, display and battery constraints, AI capability and privacy—but it cannot establish exactly when these experiences will arrive.</p></div>
   <div class="fx-source-grid">
     <a href="https://hai.stanford.edu/ai-index/2026-ai-index-report" target="_blank" rel="noopener"><b>01</b><strong>Stanford AI Index 2026</strong><span>AI capability, adoption and impact ↗</span></a>
-    <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/responsible-ai" target="_blank" rel="noopener"><b>02</b><strong>Stanford Responsible AI</strong><span>Evaluation, incidents and risk ↗</span></a>
+    <a href="https://www.edpb.europa.eu/news/edpb-publishes-statement-on-the-data-protection-challenges-of-smart-glasses_ga" target="_blank" rel="noopener"><b>02</b><strong>European Data Protection Board</strong><span>Smart-glasses privacy and transparency ↗</span></a>
     <a href="https://www.iea.org/reports/key-questions-on-energy-and-ai" target="_blank" rel="noopener"><b>03</b><strong>IEA · Energy & AI</strong><span>Compute and infrastructure constraints ↗</span></a>
+    <a href="https://www.idc.com/resource-center/blog/smart-glasses-growth-cools-to-35-as-meta-doubles-down-on-distribution/" target="_blank" rel="noopener"><b>05</b><strong>IDC · Smart glasses market</strong><span>2026 market trends and near-term outlook ↗</span></a>
     <a href="https://www.weforum.org/reports/the-future-of-jobs-report-2025/" target="_blank" rel="noopener"><b>04</b><strong>World Economic Forum</strong><span>Skills and work through 2030 ↗</span></a>
   </div>
 </section>
@@ -273,17 +274,17 @@ window.addEventListener("DOMContentLoaded",function(){
  });
 
  const years={
- 2026:["TODAY","Glasses begin to see, hear and answer.","Audio, cameras and AI assistants converge. The phone still does most of the heavy lifting.","Hands-free answers","Constant phone checking","Battery + camera privacy",86,"ASSISTANT ERA","Your glasses become an AI companion.","ASK","LOOK","LISTEN"],
- 2027:["THE FIRST REAL HABIT","The glasses remember the little things.","Names, places, messages and reminders begin appearing at the right moment instead of living in another app.","Fewer tiny searches","Checking your phone for context","Comfort + reliable voice AI",83,"CONTEXT ERA","A glance can replace a small task.","REMEMBER","RECALL","NOTICE"],
- 2028:["GLANCEABLE","The phone starts moving out of your pocket.","Navigation, translation and messages become glanceable. The display learns when to stay quiet.","Information without interruption","Opening the phone for every small thing","Optics + battery + social comfort",81,"GLANCEABLE ERA","Your attention becomes the interface.","GUIDE","TRANSLATE","NAVIGATE"],
- 2029:["SOCIAL SHIFT","People stop asking what the glasses are for.","A few killer experiences become ordinary: live translation, directions, camera help and hands-free communication.","Natural conversations","Device checking during conversations","Social acceptance",78,"NORMALITY ERA","The weirdness starts to disappear.","TALK","SHARE","UNDERSTAND"],
- 2030:["THE AGENT YEAR","Glasses stop only answering — they start helping.","Bounded AI agents can act on your behalf: book, summarise, find, compare and prepare, with permission before consequential actions.","Delegated chores","Context switching","Trust + permissions",72,"AGENT ERA","You give the computer intentions, not questions.","PLAN","DO","CONFIRM"],
- 2031:["THE SPATIAL TURN","The places around you become interactive.","Objects, rooms and streets can carry persistent digital information. A repair, lesson or workflow can live where it belongs.","Context anchored to reality","Searching for instructions","Spatial mapping",67,"SPATIAL ERA","The world starts remembering what belongs where.","POINT","ANCHOR","FOLLOW"],
- 2032:["AMBIENT","The room becomes part of the computer.","Multimodal AI understands what you see, hear and are trying to accomplish — without demanding a screen.","Less screen time","Switching between worlds","Privacy + compute",61,"AMBIENT ERA","The computer fades into the background.","SEE","HEAR","KNOW"],
- 2033:["PRESENCE","Distance becomes less flat.","Remote people can leave spatial annotations, guide your hands or share the same virtual object from different places.","Remote expertise","Travel for every small collaboration","Latency + social design",54,"PRESENCE ERA","A video call becomes a place you can both inhabit.","JOIN","POINT","COLLABORATE"],
- 2034:["MEMORY","Your history becomes useful — if you own it.","With consent and strong local controls, glasses could retrieve names, decisions and moments when you need them.","Continuity","Reconstructing conversations","Memory privacy + control",49,"MEMORY ERA","Your life can have a searchable thread without surveillance.","RECALL","CONNECT","FORGET"],
- 2035:["ORCHESTRATION","Different services begin working as one.","Your glasses coordinate travel, communication, work, home and learning around your intent instead of making you operate separate apps.","Fewer interfaces","Managing disconnected services","Interoperability",41,"ORCHESTRATED ERA","You tell the system what matters; it coordinates the details.","INTEND","COORDINATE","ACT"],
- 2036:["THE QUIET COMPUTER","The interface becomes a layer between intention and reality.","In the optimistic scenario, glasses become almost invisible: useful when invited, silent when not, and deeply personal without becoming invasive.","More capability with less friction","Context switching","Trust, governance + energy",34,"QUIET ERA","The best computer may be the one you barely notice.","ANTICIPATE","CONNECT","ACT"]
+ 2026:["CURRENT DIRECTION","AI features become part of everyday eyewear.","Audio, cameras and AI assistants are converging in products already on the market. Phones and cloud services still handle many connected features.","Hands-free assistance","Repeated screen checks","Battery life + privacy","Current direction","ASSISTANT ERA","Your glasses become an AI companion.","ASK","LOOK","LISTEN"],
+ 2027:["EARLY ADOPTION","Contextual assistance becomes more useful.","If software, permissions and reliability improve, glasses could surface selected reminders or personal context when requested. Consistent usefulness will matter more than novelty.","Timely reminders","Searching across apps","Comfort + reliable assistance","Near-term possibility","CONTEXT ERA","A glance can replace a small task.","REMEMBER","RECALL","NOTICE"],
+ 2028:["GLANCEABLE","Your phone stays in your pocket for more everyday tasks.","Navigation prompts, translations and short messages could appear at a glance on display-equipped glasses. Phones will still matter for setup, connectivity and tasks that need a larger screen.","Information at a glance","Frequent screen checks","Display quality + battery + social comfort","Near-term possibility","GLANCEABLE ERA","Your attention becomes the interface.","GUIDE","TRANSLATE","NAVIGATE"],
+ 2029:["EVERYDAY UTILITY","Smart glasses find clearer everyday roles.","If comfort, reliability and privacy improve, translation, navigation, capture and hands-free communication could become familiar uses. Adoption will vary by person and setting.","More natural interactions","Unnecessary screen checks","Social acceptance + privacy","Plausible development","NORMALITY ERA","The technology becomes more familiar.","TALK","SHARE","UNDERSTAND"],
+ 2030:["ASSISTIVE AGENTS","AI assistants take on more defined tasks.","With explicit permissions, assistants could prepare bookings, summaries and comparisons. Actions with financial, personal or safety consequences should remain subject to clear confirmation.","Help with routine tasks","Switching between services","Permissions + reliable execution","Plausible development","AGENT ERA","You give the computer intentions, not just questions.","PLAN","DO","CONFIRM"],
+ 2031:["SPATIAL CONTEXT","Digital information gains more spatial context.","As tracking and mapping improve, selected instructions or annotations could stay aligned with objects and places. Accuracy, lighting and supported environments will limit where this works well.","Context-aware guidance","Searching for instructions","Tracking + mapping reliability","Exploratory","SPATIAL ERA","The world gains a digital layer where useful.","POINT","ANCHOR","FOLLOW"],
+ 2032:["CONTEXT-AWARE","Computing becomes more context-aware.","Multimodal systems could combine visual, audio and situational cues to offer help without a separate screen. Making this dependable without excessive sensing or interruptions will be difficult.","More contextual assistance","Switching between interfaces","Privacy + on-device processing","Exploratory","AMBIENT ERA","The computer fades into the background.","SEE","HEAR","KNOW"],
+ 2033:["SPATIAL COLLABORATION","Remote collaboration becomes more spatial.","Some systems could let remote collaborators place annotations in a shared view or guide a task from another location. Latency, bandwidth, equipment and app compatibility will shape the experience.","Remote guidance","Travel for routine collaboration","Latency + interoperability","Exploratory","PRESENCE ERA","A video call could become a shared workspace.","JOIN","POINT","COLLABORATE"],
+ 2034:["PERSONAL CONTEXT","Personal context becomes more useful — and more sensitive.","With clear consent and user-controlled retention, systems might retrieve selected notes, names or decisions. Reliable recall, bystander privacy and effective deletion controls remain hard problems.","Useful recall","Reconstructing selected details","Privacy + memory controls","Highly speculative","MEMORY ERA","Personal history could become searchable—with safeguards.","RECALL","CONNECT","FORGET"],
+ 2035:["CONNECTED SERVICES","Services coordinate across apps.","If standards and permissions improve, assistants could coordinate travel, communication and work across services. Fragmented platforms, incompatible systems and vendor lock-in could slow progress.","Fewer manual hand-offs","Managing disconnected services","Interoperability + user control","Highly speculative","ORCHESTRATED ERA","You tell the system what matters; it coordinates the details.","INTEND","COORDINATE","ACT"],
+ 2036:["THE QUIET COMPUTER","Computing becomes less visible, not absent.","In one optimistic scenario, glasses become one interface among several: useful when invited and easy to pause. Comfort, cost, accessibility, trust and battery life will shape how widely they are adopted.","More capability with less friction","Unnecessary context switching","Trust + energy + accessibility","Highly speculative","QUIET ERA","The best computer may be the one you barely notice.","ANTICIPATE","CONNECT","ACT"],
  };
  const $=id=>document.getElementById(id),range=$("fxRange");
  function updateYear(){
@@ -291,7 +292,7 @@ window.addEventListener("DOMContentLoaded",function(){
    $("fxYear").textContent=range.value;$("fxSceneYear").textContent=range.value;$("fxEra").textContent=d[8];
    $("fxKicker").textContent=d[0];$("fxTitle").textContent=d[1];$("fxText").textContent=d[2];
    $("fxGain").textContent=d[3];$("fxLoss").textContent=d[4];$("fxHard").textContent=d[5];
-   $("fxConfidence").textContent=d[6]+"%";$("fxConfidenceBar").style.width="86%";
+   $("fxConfidence").textContent=d[6];const outlookWidths={"Current direction":"92%","Near-term possibility":"78%","Plausible development":"62%","Exploratory":"44%","Highly speculative":"26%"};$("fxConfidenceBar").style.width=outlookWidths[d[6]]||"44%";
    $("fxCaption").textContent=d[9];$("fxTag1").textContent=d[10];$("fxTag2").textContent=d[11];$("fxTag3").textContent=d[12];
    document.querySelectorAll(".fx-year-labels button").forEach(b=>b.classList.toggle("active",+b.dataset.year===+range.value));
    const p=(+range.value-2026)/10;
