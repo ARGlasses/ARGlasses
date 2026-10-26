@@ -2256,4 +2256,14 @@
     }
   </style>
 
+
+  <style id="mobile-product-copy-nudge">
+    @media screen and (max-width: 700px) {
+      /* Raise the copy only; keep the card, image, and buttons in place. */
+      html body .product-viewport .story-content > :not(.story-actions) {
+        transform: translateY(-1.3em) !important;
+      }
+    }
+  </style>
+
 </body></html>
