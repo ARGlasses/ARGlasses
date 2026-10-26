@@ -1680,7 +1680,7 @@
           const token = ++settleToken;
           // Give mobile touch momentum plenty of time to finish before correcting
           // the invisible loop cycle. Desktop keeps the shorter settle delay.
-          const settleDelay = window.matchMedia('(max-width: 700px)').matches ? 1400 : 500;
+          const settleDelay = window.matchMedia('(max-width: 700px)').matches ? 2400 : 500;
           settleTimer = setTimeout(() => {
             if (token === settleToken) settle();
           }, settleDelay);
@@ -2275,15 +2275,16 @@
 
   <style id="mobile-smoother-carousel-scroll">
     @media screen and (max-width: 700px) {
-      /* Let native touch momentum carry the rail; proximity snapping avoids a hard
-         magnetic jump to the nearest card while preserving gentle alignment. */
+      /* Do not let CSS scroll snapping pull a card back to centre during a mobile
+         flick. Native scrolling keeps its momentum until the user stops. */
       html body .product-viewport .rail {
         scroll-behavior: auto !important;
-        scroll-snap-type: x proximity !important;
+        scroll-snap-type: none !important;
         -webkit-overflow-scrolling: touch !important;
         overscroll-behavior-x: contain !important;
       }
       html body .product-viewport .rail > .story {
+        scroll-snap-align: none !important;
         scroll-snap-stop: normal !important;
       }
     }
@@ -2291,16 +2292,14 @@
 
   <style id="mobile-full-card-horizontal-swipe">
     @media screen and (max-width: 700px) {
-      /* Keep touch gestures available across the entire rail, including the lower
-         copy/buttons, without blocking vertical page scrolling. Let the browser
-         decide the gesture direction rather than forcing pan-x on every child. */
-      html body .product-viewport .rail {
-        touch-action: pan-x pan-y !important;
-      }
+      /* Ensure a horizontal gesture can begin on any part of a card, including
+         text, links and buttons. Keep vertical page gestures available too. */
+      html body .product-viewport .rail,
       html body .product-viewport .rail .story,
+      html body .product-viewport .rail .story img.bg,
       html body .product-viewport .rail .story-content,
       html body .product-viewport .rail .story-content * {
-        touch-action: auto !important;
+        touch-action: pan-x pan-y !important;
       }
     }
   </style>
