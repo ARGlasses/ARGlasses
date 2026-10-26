@@ -753,6 +753,30 @@
 }
 </style>
 
+
+  <style>
+    /* Mobile only: make every product bullet use one consistent, readable size. */
+    @media (max-width: 700px) {
+      .product-viewport .story-content .story-teaser,
+      .product-viewport .story-content .story-teaser .price-line,
+      .product-viewport .story-content .story-teaser .spec-line,
+      .product-viewport .story-content .story-teaser span {
+        font-size: .8rem !important;
+        line-height: 1.35 !important;
+        font-weight: 400 !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+        text-overflow: clip !important;
+      }
+      .product-viewport .story-content .story-teaser .price-line {
+        font-weight: 400 !important;
+        margin-bottom: .1rem !important;
+      }
+    }
+  </style>
+
 </head>
 <body class="comparison-page">
   <div id="site-header"></div>
