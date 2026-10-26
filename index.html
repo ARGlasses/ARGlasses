@@ -2352,21 +2352,78 @@
 
   <style id="mobile-full-card-horizontal-swipe">
     @media screen and (max-width: 700px) {
-      /* Keep native horizontal rail swipes available across the full card, including
-         the lower text panel; retain vertical page gestures elsewhere on the page. */
+      /* Keep native scrolling on the rail and image; horizontal gestures begun in
+         the vertically scrollable text panel are handled by the small mobile-only
+         controller below, while vertical scrolling and taps remain native. */
       html body .product-viewport,
       html body .product-viewport .rail,
       html body .product-viewport .rail .story,
       html body .product-viewport .rail .story img.bg {
         touch-action: pan-x pan-y !important;
       }
-      /* The text panel is itself vertically scrollable, which can capture gestures
-         started in the lower half. Give that panel and its contents horizontal intent. */
       html body .product-viewport .rail .story-content,
       html body .product-viewport .rail .story-content * {
-        touch-action: pan-x !important;
+        touch-action: pan-y !important;
       }
     }
   </style>
+
+  <script id="mobile-text-panel-horizontal-swipe">
+    window.addEventListener("DOMContentLoaded", function () {
+      if (!window.matchMedia("(max-width: 700px)").matches) return;
+      document.querySelectorAll(".product-viewport .rail").forEach(function (rail) {
+        let gesture = null;
+        let suppressNextClick = false;
+        rail.querySelectorAll(".story-content").forEach(function (panel) {
+          panel.addEventListener("touchstart", function (event) {
+            if (event.touches.length !== 1) {
+              gesture = null;
+              return;
+            }
+            const touch = event.touches[0];
+            gesture = {
+              startX: touch.clientX,
+              startY: touch.clientY,
+              startScrollLeft: rail.scrollLeft,
+              horizontal: false,
+              moved: false
+            };
+          }, { passive: true });
+
+          panel.addEventListener("touchmove", function (event) {
+            if (!gesture || event.touches.length !== 1) return;
+            const touch = event.touches[0];
+            const dx = touch.clientX - gesture.startX;
+            const dy = touch.clientY - gesture.startY;
+            if (!gesture.horizontal && !gesture.moved) {
+              if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+              if (Math.abs(dx) <= Math.abs(dy) * 1.15) {
+                gesture.moved = true;
+                return;
+              }
+              gesture.horizontal = true;
+            }
+            if (!gesture.horizontal) return;
+            if (event.cancelable) event.preventDefault();
+            rail.scrollLeft = gesture.startScrollLeft - dx;
+            suppressNextClick = true;
+          }, { passive: false });
+
+          function finishGesture() {
+            gesture = null;
+          }
+          panel.addEventListener("touchend", finishGesture, { passive: true });
+          panel.addEventListener("touchcancel", finishGesture, { passive: true });
+        });
+
+        rail.addEventListener("click", function (event) {
+          if (!suppressNextClick) return;
+          suppressNextClick = false;
+          event.preventDefault();
+          event.stopPropagation();
+        }, true);
+      });
+    });
+  </script>
 
 </body></html>
