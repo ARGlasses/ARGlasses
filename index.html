@@ -2372,7 +2372,9 @@
         overscroll-behavior-y: contain;
       }
       html body .product-viewport .rail .story-content * {
-        touch-action: pan-y pinch-zoom !important;
+        /* Let text, links and buttons keep their native touch behaviour. The
+           panel itself permits vertical panning; JS takes only horizontal drags. */
+        touch-action: auto !important;
       }
     }
   </style>
@@ -2383,6 +2385,7 @@
       document.querySelectorAll(".product-viewport .rail").forEach(function (rail) {
         let gesture = null;
         let suppressNextClick = false;
+        let clickResetTimer = null;
         rail.querySelectorAll(".story-content").forEach(function (panel) {
           panel.addEventListener("touchstart", function (event) {
             if (event.touches.length !== 1) {
@@ -2394,8 +2397,7 @@
               startX: touch.clientX,
               startY: touch.clientY,
               startScrollLeft: rail.scrollLeft,
-              horizontal: false,
-              moved: false
+              axis: null
             };
           }, { passive: true });
 
@@ -2404,16 +2406,22 @@
             const touch = event.touches[0];
             const dx = touch.clientX - gesture.startX;
             const dy = touch.clientY - gesture.startY;
-            if (!gesture.horizontal) {
-              /* Leave vertical gestures completely native, including continued
-                 movement after the initial direction has been identified. */
-              if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-              if (Math.abs(dx) <= Math.abs(dy) * 1.15) return;
-              gesture.horizontal = true;
+
+            /* Lock direction once, so vertical scrolling cannot turn into a
+               carousel swipe just because the finger drifts sideways later. */
+            if (!gesture.axis) {
+              if (Math.max(Math.abs(dx), Math.abs(dy)) < 10) return;
+              gesture.axis = Math.abs(dx) > Math.abs(dy) * 1.2 ? "x" : "y";
             }
+            if (gesture.axis !== "x") return;
+
             if (event.cancelable) event.preventDefault();
             rail.scrollLeft = gesture.startScrollLeft - dx;
             suppressNextClick = true;
+            clearTimeout(clickResetTimer);
+            clickResetTimer = setTimeout(function () {
+              suppressNextClick = false;
+            }, 700);
           }, { passive: false });
 
           function finishGesture() {
@@ -2426,6 +2434,7 @@
         rail.addEventListener("click", function (event) {
           if (!suppressNextClick) return;
           suppressNextClick = false;
+          clearTimeout(clickResetTimer);
           event.preventDefault();
           event.stopPropagation();
         }, true);
