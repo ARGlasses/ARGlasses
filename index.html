@@ -685,6 +685,74 @@
 }
 </style>
 
+
+<style>
+/* Mobile-only carousel readability: give product copy enough room and keep it scrollable. */
+@media (max-width: 700px) {
+  .product-viewport .story img.bg {
+    height: 42% !important;
+    padding: .65rem .8rem .25rem !important;
+  }
+  .product-viewport .story-content {
+    height: 58% !important;
+    padding: .85rem 1rem 3.1rem !important;
+    gap: .42rem !important;
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .product-viewport .story-content .story-kicker {
+    font-size: .8rem !important;
+    line-height: 1.35 !important;
+  }
+  .product-viewport .story-content .product-category {
+    font-size: .72rem !important;
+    line-height: 1.35 !important;
+    padding: .12rem .4rem !important;
+    margin: .15rem 0 !important;
+  }
+  .product-viewport .story-content .story-title {
+    font-size: clamp(1.35rem, 6vw, 1.8rem) !important;
+    line-height: 1.18 !important;
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+  }
+  .product-viewport .story-content .story-teaser {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+    margin: .15rem 0 !important;
+    display: block !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    -webkit-line-clamp: unset !important;
+    overflow-wrap: anywhere !important;
+  }
+  .product-viewport .story-content .product-price {
+    font-size: .9rem !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+  .product-viewport .story-content .story-actions {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .45rem !important;
+    margin-top: .35rem !important;
+  }
+  .product-viewport .story-content .story-actions .amazon-button {
+    font-size: .85rem !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    padding: .55rem .7rem !important;
+  }
+}
+</style>
+
 </head>
 <body class="comparison-page">
   <div id="site-header"></div>
