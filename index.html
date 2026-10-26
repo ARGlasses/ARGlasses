@@ -1589,6 +1589,15 @@
         }
 
         const allCards = Array.from(rail.querySelectorAll('.story'));
+        let cardCenters = [];
+        function refreshCardCenters() {
+          cardCenters = allCards.map(card => card.offsetLeft + card.offsetWidth / 2);
+        }
+        refreshCardCenters();
+        function cachedCenter(card) {
+          const index = allCards.indexOf(card);
+          return index >= 0 ? cardCenters[index] : card.offsetLeft + card.offsetWidth / 2;
+        }
         let active = 0;
         let frame = 0;
         let settleTimer = 0;
@@ -1610,7 +1619,7 @@
         });
 
         function layoutCenter(card) {
-          return card.offsetLeft + card.offsetWidth / 2;
+          return cachedCenter(card);
         }
         function targetLeft(card) {
           return layoutCenter(card) - rail.clientWidth / 2;
@@ -1643,23 +1652,33 @@
           const center = rail.scrollLeft + rail.clientWidth / 2;
           let closest = allCards[0], min = Infinity;
           const mobileLayout = window.matchMedia('(max-width: 700px)').matches;
-          allCards.forEach(card => {
-            const delta = layoutCenter(card) - center;
+          allCards.forEach((card, cardIndex) => {
+            const delta = cardCenters[cardIndex] - center;
             const dist = Math.abs(delta);
             if (dist < min) { min = dist; closest = card; }
             if (mobileLayout) {
-              // Keep card geometry stable during touch scrolling. Recalculating a
-              // 3D angle/scale every frame, combined with CSS transitions, makes
-              // images appear to wobble or lag behind the finger on phones.
-              card.style.transform = 'translateZ(0) rotateY(0deg) scale(1)';
+              // Set this once, not on every scroll frame.
+              if (card.dataset.mobileFlat !== 'true') {
+                card.style.transform = 'translateZ(0) rotateY(0deg) scale(1)';
+                card.dataset.mobileFlat = 'true';
+              }
             } else {
+              if (card.dataset.mobileFlat === 'true') delete card.dataset.mobileFlat;
               const spread = Math.min(1, dist / Math.max(rail.clientWidth * .68, 1));
               const angle = Math.max(-32, Math.min(32, delta / Math.max(rail.clientWidth, 1) * 64));
               card.style.transform = 'translateZ(' + (-spread * 65).toFixed(1) +
                 'px) rotateY(' + angle.toFixed(2) + 'deg) scale(' + (1 - spread * .08).toFixed(3) + ')';
             }
-            card.classList.toggle('is-gallery-active', dist < card.offsetWidth * .28);
-            card.classList.toggle('is-gallery-neighbour', dist < card.offsetWidth * 1.15);
+            const isActive = dist < card.offsetWidth * .28;
+            const isNeighbour = dist < card.offsetWidth * 1.15;
+            if ((card.dataset.galleryActive === 'true') !== isActive) {
+              card.classList.toggle('is-gallery-active', isActive);
+              card.dataset.galleryActive = String(isActive);
+            }
+            if ((card.dataset.galleryNeighbour === 'true') !== isNeighbour) {
+              card.classList.toggle('is-gallery-neighbour', isNeighbour);
+              card.dataset.galleryNeighbour = String(isNeighbour);
+            }
           });
           const index = Number(closest.dataset.originalIndex);
           active = Number.isInteger(index) ? index : originals.indexOf(closest);
@@ -1713,11 +1732,13 @@
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
 
-        // Mobile-only, viewport-level touch controller. Listening on the viewport
-        // (not just the rail) catches gestures that begin over lower-card copy,
-        // action links, or positioned child elements. Vertical gestures remain native.
+        // Mobile-only touch controller. Coalesce finger updates to animation frames,
+        // move incrementally with a slightly reduced gain, and use gentle momentum.
+        // Pointer capture keeps drags working when they begin over card text or buttons.
         let mobileDrag = null;
         let mobileGlideFrame = 0;
+        let mobileMoveFrame = 0;
+        let pendingTouchX = null;
         const stopMobileGlide = () => {
           if (mobileGlideFrame) cancelAnimationFrame(mobileGlideFrame);
           mobileGlideFrame = 0;
@@ -1726,16 +1747,19 @@
           viewport.addEventListener('pointerdown', event => {
             if (event.pointerType !== 'touch' || !window.matchMedia('(max-width: 700px)').matches) return;
             stopMobileGlide();
+            if (mobileMoveFrame) cancelAnimationFrame(mobileMoveFrame);
+            mobileMoveFrame = 0;
+            pendingTouchX = null;
             mobileDrag = {
               pointerId: event.pointerId,
               startX: event.clientX,
               startY: event.clientY,
-              startScrollLeft: rail.scrollLeft,
               lastX: event.clientX,
               lastTime: performance.now(),
               velocity: 0,
               horizontal: false
             };
+            try { viewport.setPointerCapture(event.pointerId); } catch (_) {}
           }, { passive: true });
 
           viewport.addEventListener('pointermove', event => {
@@ -1744,10 +1768,10 @@
             const dx = event.clientX - drag.startX;
             const dy = event.clientY - drag.startY;
             if (!drag.horizontal) {
-              if (Math.abs(dx) < 7 && Math.abs(dy) < 7) return;
-              // Let the page handle a clearly vertical gesture; claim horizontal ones.
-              if (Math.abs(dy) > Math.abs(dx) * 1.15) {
+              if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+              if (Math.abs(dy) > Math.abs(dx) * 1.2) {
                 mobileDrag = null;
+                try { if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId); } catch (_) {}
                 return;
               }
               drag.horizontal = true;
@@ -1755,36 +1779,52 @@
               drag.lastTime = performance.now();
             }
             if (event.cancelable) event.preventDefault();
-            rail.scrollLeft = drag.startScrollLeft - dx;
-            const now = performance.now();
-            const elapsed = Math.max(1, now - drag.lastTime);
-            const instantVelocity = (drag.lastX - event.clientX) / elapsed;
-            drag.velocity = drag.velocity * 0.55 + instantVelocity * 0.45;
-            drag.lastX = event.clientX;
-            drag.lastTime = now;
+            pendingTouchX = event.clientX;
+            if (!mobileMoveFrame) {
+              mobileMoveFrame = requestAnimationFrame(() => {
+                mobileMoveFrame = 0;
+                const current = mobileDrag;
+                if (!current || !current.horizontal || pendingTouchX === null) return;
+                const now = performance.now();
+                const deltaX = current.lastX - pendingTouchX;
+                const elapsed = Math.max(1, now - current.lastTime);
+                // A little lower gain makes the gallery less twitchy and easier to control.
+                const appliedDelta = deltaX * 0.82;
+                rail.scrollLeft += appliedDelta;
+                const instantVelocity = appliedDelta / elapsed;
+                current.velocity = current.velocity * 0.72 + instantVelocity * 0.28;
+                current.lastX = pendingTouchX;
+                current.lastTime = now;
+                pendingTouchX = null;
+              });
+            }
           }, { passive: false });
 
           const finishMobileDrag = event => {
             const drag = mobileDrag;
             if (!drag || (event && event.pointerId !== drag.pointerId)) return;
             mobileDrag = null;
+            if (mobileMoveFrame) {
+              cancelAnimationFrame(mobileMoveFrame);
+              mobileMoveFrame = 0;
+              if (drag.horizontal && pendingTouchX !== null) {
+                rail.scrollLeft += (drag.lastX - pendingTouchX) * 0.82;
+              }
+            }
+            pendingTouchX = null;
+            try { if (viewport.hasPointerCapture(drag.pointerId)) viewport.releasePointerCapture(drag.pointerId); } catch (_) {}
             if (!drag.horizontal) return;
-            // Small, decaying release glide keeps the gallery moving naturally
-            // without an abrupt snap or a long-running scripted animation.
-            let velocity = Math.max(-2.1, Math.min(2.1, drag.velocity * 16));
+            let velocity = Math.max(-1.15, Math.min(1.15, drag.velocity * 13));
             let previous = performance.now();
             const glide = now => {
-              const dt = Math.min(32, now - previous);
+              const dt = Math.min(24, now - previous);
               previous = now;
               rail.scrollLeft += velocity * dt;
-              velocity *= Math.pow(0.92, dt / 16);
-              if (Math.abs(velocity) > 0.035 && now - (drag.finishedAt || (drag.finishedAt = now)) < 900) {
-                mobileGlideFrame = requestAnimationFrame(glide);
-              } else {
-                mobileGlideFrame = 0;
-              }
+              velocity *= Math.pow(0.90, dt / 16);
+              if (Math.abs(velocity) > 0.025) mobileGlideFrame = requestAnimationFrame(glide);
+              else mobileGlideFrame = 0;
             };
-            if (Math.abs(velocity) > 0.08) mobileGlideFrame = requestAnimationFrame(glide);
+            if (Math.abs(velocity) > 0.06) mobileGlideFrame = requestAnimationFrame(glide);
           };
           viewport.addEventListener('pointerup', finishMobileDrag, { passive: true });
           viewport.addEventListener('pointercancel', finishMobileDrag, { passive: true });
@@ -1839,6 +1879,7 @@
           suppressClick = false;
         }, true);
         window.addEventListener('resize', () => {
+          refreshCardCenters();
           centerOn(originals[active] || originals[0], false);
           updateUI();
         });
@@ -2369,11 +2410,15 @@
         scroll-snap-align: none !important;
         scroll-snap-stop: normal !important;
       }
-      /* Avoid transition lag on image cards while their scroll position changes. */
+      /* Keep mobile cards compositor-friendly; don't animate geometry during a swipe. */
       html body .product-viewport .rail .story {
         transition: none !important;
+        animation: none !important;
         backface-visibility: hidden;
-        will-change: auto;
+        will-change: transform;
+      }
+      html body .product-viewport .rail {
+        scroll-padding-inline: 0 !important;
       }
     }
   </style>
