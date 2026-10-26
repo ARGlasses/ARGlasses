@@ -1702,56 +1702,9 @@
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
 
-        // Explicit touch dragging makes horizontal swipes work even when they start
-        // inside the vertically scrollable text panel on mobile.
-        let touchDragState = null;
-        const touchScrollGain = 1.7;
-        rail.addEventListener('touchstart', event => {
-          if (!event.touches || event.touches.length !== 1) {
-            touchDragState = null;
-            return;
-          }
-          const touch = event.touches[0];
-          touchDragState = {
-            startX: touch.clientX,
-            startY: touch.clientY,
-            lastX: touch.clientX,
-            lastTime: performance.now(),
-            velocityX: 0,
-            startScrollLeft: rail.scrollLeft,
-            moved: false
-          };
-        }, { passive: true });
-        rail.addEventListener('touchmove', event => {
-          if (!touchDragState || !event.touches || event.touches.length !== 1) return;
-          const touch = event.touches[0];
-          const now = performance.now();
-          const dx = touch.clientX - touchDragState.startX;
-          const dy = touch.clientY - touchDragState.startY;
-          if (!touchDragState.moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy) * 1.15) {
-            touchDragState.moved = true;
-          }
-          if (touchDragState.moved) {
-            const elapsed = Math.max(1, now - touchDragState.lastTime);
-            const instantVelocity = (touch.clientX - touchDragState.lastX) / elapsed;
-            touchDragState.velocityX = touchDragState.velocityX * 0.35 + instantVelocity * 0.65;
-            touchDragState.lastX = touch.clientX;
-            touchDragState.lastTime = now;
-            if (event.cancelable) event.preventDefault();
-            // More travel per finger movement, with a small release glide for flicks.
-            rail.scrollLeft = touchDragState.startScrollLeft - dx * touchScrollGain;
-          }
-        }, { passive: false });
-        rail.addEventListener('touchend', () => {
-          if (touchDragState && touchDragState.moved) {
-            const releaseVelocity = touchDragState.velocityX;
-            if (Math.abs(releaseVelocity) > 0.12) {
-              rail.scrollLeft -= releaseVelocity * 180 * touchScrollGain;
-            }
-          }
-          touchDragState = null;
-        }, { passive: true });
-        rail.addEventListener('touchcancel', () => { touchDragState = null; }, { passive: true });
+        // On phones, use the browser's native touch momentum rather than manually
+        // changing scrollLeft on every touchmove (which can fight scroll snapping).
+        // CSS below keeps the rail swipeable while allowing a natural coast on release.
 
         // Drag the gallery horizontally with a mouse (or pen). Keep normal clicks
         // on links/buttons working unless the pointer actually moved the rail.
@@ -2320,10 +2273,16 @@
 
   <style id="mobile-smoother-carousel-scroll">
     @media screen and (max-width: 700px) {
-      /* Avoid animating every finger-move; the touch handler updates scrollLeft directly. */
+      /* Let native touch momentum carry the rail; proximity snapping avoids a hard
+         magnetic jump to the nearest card while preserving gentle alignment. */
       html body .product-viewport .rail {
         scroll-behavior: auto !important;
+        scroll-snap-type: x proximity !important;
         -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-x: contain !important;
+      }
+      html body .product-viewport .rail > .story {
+        scroll-snap-stop: normal !important;
       }
     }
   </style>
