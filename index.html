@@ -1702,15 +1702,22 @@
           updateUI();
         }
         function onScroll() {
-          if (frame) cancelAnimationFrame(frame);
-          frame = requestAnimationFrame(updateUI);
+          const mobileLayout = window.matchMedia('(max-width: 700px)').matches;
+          // Native mobile scrolling must stay out of the animation-frame hot path.
+          // Update card classes/dots only on desktop; on phones, do one lightweight
+          // correction after scrolling has fully settled.
+          if (!mobileLayout) {
+            if (frame) cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(updateUI);
+          }
           clearTimeout(settleTimer);
           const token = ++settleToken;
-          // Give mobile touch momentum plenty of time to finish before correcting
-          // the invisible loop cycle. Desktop keeps the shorter settle delay.
-          const settleDelay = window.matchMedia('(max-width: 700px)').matches ? 2400 : 500;
+          const settleDelay = mobileLayout ? 700 : 500;
           settleTimer = setTimeout(() => {
-            if (token === settleToken) settle();
+            if (token === settleToken) {
+              settle();
+              if (mobileLayout) updateUI();
+            }
           }, settleDelay);
         }
         function goTo(index, smooth) {
