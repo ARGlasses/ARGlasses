@@ -1732,104 +1732,11 @@
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
 
-        // Mobile-only touch controller. Coalesce finger updates to animation frames,
-        // move incrementally with a slightly reduced gain, and use gentle momentum.
-        // Pointer capture keeps drags working when they begin over card text or buttons.
-        let mobileDrag = null;
-        let mobileGlideFrame = 0;
-        let mobileMoveFrame = 0;
-        let pendingTouchX = null;
-        const stopMobileGlide = () => {
-          if (mobileGlideFrame) cancelAnimationFrame(mobileGlideFrame);
-          mobileGlideFrame = 0;
-        };
-        if (viewport) {
-          viewport.addEventListener('pointerdown', event => {
-            if (event.pointerType !== 'touch' || !window.matchMedia('(max-width: 700px)').matches) return;
-            stopMobileGlide();
-            if (mobileMoveFrame) cancelAnimationFrame(mobileMoveFrame);
-            mobileMoveFrame = 0;
-            pendingTouchX = null;
-            mobileDrag = {
-              pointerId: event.pointerId,
-              startX: event.clientX,
-              startY: event.clientY,
-              lastX: event.clientX,
-              lastTime: performance.now(),
-              velocity: 0,
-              horizontal: false
-            };
-            try { viewport.setPointerCapture(event.pointerId); } catch (_) {}
-          }, { passive: true });
-
-          viewport.addEventListener('pointermove', event => {
-            const drag = mobileDrag;
-            if (!drag || event.pointerId !== drag.pointerId) return;
-            const dx = event.clientX - drag.startX;
-            const dy = event.clientY - drag.startY;
-            if (!drag.horizontal) {
-              if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-              if (Math.abs(dy) > Math.abs(dx) * 1.2) {
-                mobileDrag = null;
-                try { if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId); } catch (_) {}
-                return;
-              }
-              drag.horizontal = true;
-              drag.lastX = event.clientX;
-              drag.lastTime = performance.now();
-            }
-            if (event.cancelable) event.preventDefault();
-            pendingTouchX = event.clientX;
-            if (!mobileMoveFrame) {
-              mobileMoveFrame = requestAnimationFrame(() => {
-                mobileMoveFrame = 0;
-                const current = mobileDrag;
-                if (!current || !current.horizontal || pendingTouchX === null) return;
-                const now = performance.now();
-                const deltaX = current.lastX - pendingTouchX;
-                const elapsed = Math.max(1, now - current.lastTime);
-                // A little lower gain makes the gallery less twitchy and easier to control.
-                const appliedDelta = deltaX * 0.82;
-                rail.scrollLeft += appliedDelta;
-                const instantVelocity = appliedDelta / elapsed;
-                current.velocity = current.velocity * 0.72 + instantVelocity * 0.28;
-                current.lastX = pendingTouchX;
-                current.lastTime = now;
-                pendingTouchX = null;
-              });
-            }
-          }, { passive: false });
-
-          const finishMobileDrag = event => {
-            const drag = mobileDrag;
-            if (!drag || (event && event.pointerId !== drag.pointerId)) return;
-            mobileDrag = null;
-            if (mobileMoveFrame) {
-              cancelAnimationFrame(mobileMoveFrame);
-              mobileMoveFrame = 0;
-              if (drag.horizontal && pendingTouchX !== null) {
-                rail.scrollLeft += (drag.lastX - pendingTouchX) * 0.82;
-              }
-            }
-            pendingTouchX = null;
-            try { if (viewport.hasPointerCapture(drag.pointerId)) viewport.releasePointerCapture(drag.pointerId); } catch (_) {}
-            if (!drag.horizontal) return;
-            let velocity = Math.max(-1.15, Math.min(1.15, drag.velocity * 13));
-            let previous = performance.now();
-            const glide = now => {
-              const dt = Math.min(24, now - previous);
-              previous = now;
-              rail.scrollLeft += velocity * dt;
-              velocity *= Math.pow(0.90, dt / 16);
-              if (Math.abs(velocity) > 0.025) mobileGlideFrame = requestAnimationFrame(glide);
-              else mobileGlideFrame = 0;
-            };
-            if (Math.abs(velocity) > 0.06) mobileGlideFrame = requestAnimationFrame(glide);
-          };
-          viewport.addEventListener('pointerup', finishMobileDrag, { passive: true });
-          viewport.addEventListener('pointercancel', finishMobileDrag, { passive: true });
-        }
-
+        // Mobile touch scrolling is deliberately native. Browser-managed overflow
+        // scrolling uses the compositor and its built-in momentum; custom pointer
+        // handlers that repeatedly assign scrollLeft create visible judder on phones.
+        // Keep JavaScript out of the touch path entirely.
+        
         // Drag the gallery horizontally with a mouse (or pen). Keep normal clicks
         // on links/buttons working unless the pointer actually moved the rail.
         let dragState = null;
@@ -2410,31 +2317,42 @@
         scroll-snap-align: none !important;
         scroll-snap-stop: normal !important;
       }
-      /* Keep mobile cards compositor-friendly; don't animate geometry during a swipe. */
+      /* Let the browser own touch momentum; avoid JS-driven scroll animation. */
+      html body .product-viewport .rail {
+        display: flex !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        touch-action: pan-x pan-y !important;
+        scroll-behavior: auto !important;
+        scroll-snap-type: none !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-x: contain !important;
+        scrollbar-width: none;
+      }
+      html body .product-viewport .rail::-webkit-scrollbar {
+        display: none;
+      }
       html body .product-viewport .rail .story {
         transition: none !important;
         animation: none !important;
+        transform: translateZ(0) !important;
         backface-visibility: hidden;
-        will-change: transform;
-      }
-      html body .product-viewport .rail {
-        scroll-padding-inline: 0 !important;
+        will-change: auto;
       }
     }
   </style>
 
   <style id="mobile-full-card-horizontal-swipe">
     @media screen and (max-width: 700px) {
-      /* Horizontal movement is handled by the viewport's touch-pointer controller.
-         Reserve native touch handling for vertical page scrolling. Applying this
-         through the full card tree prevents links/text from stealing horizontal drags. */
+      /* Native horizontal overflow gestures should work from every part of each card,
+         while still allowing the page to scroll vertically. */
       html body .product-viewport,
       html body .product-viewport .rail,
       html body .product-viewport .rail .story,
       html body .product-viewport .rail .story img.bg,
       html body .product-viewport .rail .story-content,
       html body .product-viewport .rail .story-content * {
-        touch-action: pan-y !important;
+        touch-action: pan-x pan-y !important;
       }
     }
   </style>
