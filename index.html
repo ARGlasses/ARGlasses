@@ -2350,96 +2350,29 @@
     }
   </style>
 
-  <style id="mobile-full-card-horizontal-swipe">
+  <style id="mobile-full-card-native-gestures">
     @media screen and (max-width: 700px) {
-      /* Keep native scrolling on the rail and image; horizontal gestures begun in
-         the vertically scrollable text panel are handled by the small mobile-only
-         controller below, while vertical scrolling and taps remain native. */
+      /* Use the same browser-native gesture handling over the whole card.
+         The text panel remains vertically scrollable, but must not block the
+         carousel's horizontal scroll or page scroll chaining at its edges. */
       html body .product-viewport,
       html body .product-viewport .rail,
       html body .product-viewport .rail .story,
-      html body .product-viewport .rail .story img.bg {
-        touch-action: pan-x pan-y !important;
+      html body .product-viewport .rail .story img.bg,
+      html body .product-viewport .rail .story-content,
+      html body .product-viewport .rail .story-content * {
+        touch-action: pan-x pan-y pinch-zoom !important;
       }
+
       html body .product-viewport .rail .story-content {
-        /* Keep the text panel as a real vertical scroll container. The JS below
-           intercepts only clearly horizontal gestures; vertical movement stays
-           with the browser's native scrolling. */
         overflow-x: hidden !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
-        touch-action: pan-y pinch-zoom !important;
-        overscroll-behavior-y: contain;
-      }
-      html body .product-viewport .rail .story-content * {
-        /* Let text, links and buttons keep their native touch behaviour. The
-           panel itself permits vertical panning; JS takes only horizontal drags. */
-        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+        overscroll-behavior-x: auto !important;
+        overscroll-behavior-y: auto !important;
       }
     }
   </style>
-
-  <script id="mobile-text-panel-horizontal-swipe">
-    window.addEventListener("DOMContentLoaded", function () {
-      if (!window.matchMedia("(max-width: 700px)").matches) return;
-      document.querySelectorAll(".product-viewport .rail").forEach(function (rail) {
-        let gesture = null;
-        let suppressNextClick = false;
-        let clickResetTimer = null;
-        rail.querySelectorAll(".story-content").forEach(function (panel) {
-          panel.addEventListener("touchstart", function (event) {
-            if (event.touches.length !== 1) {
-              gesture = null;
-              return;
-            }
-            const touch = event.touches[0];
-            gesture = {
-              startX: touch.clientX,
-              startY: touch.clientY,
-              startScrollLeft: rail.scrollLeft,
-              axis: null
-            };
-          }, { passive: true });
-
-          panel.addEventListener("touchmove", function (event) {
-            if (!gesture || event.touches.length !== 1) return;
-            const touch = event.touches[0];
-            const dx = touch.clientX - gesture.startX;
-            const dy = touch.clientY - gesture.startY;
-
-            /* Lock direction once, so vertical scrolling cannot turn into a
-               carousel swipe just because the finger drifts sideways later. */
-            if (!gesture.axis) {
-              if (Math.max(Math.abs(dx), Math.abs(dy)) < 10) return;
-              gesture.axis = Math.abs(dx) > Math.abs(dy) * 1.2 ? "x" : "y";
-            }
-            if (gesture.axis !== "x") return;
-
-            if (event.cancelable) event.preventDefault();
-            rail.scrollLeft = gesture.startScrollLeft - dx;
-            suppressNextClick = true;
-            clearTimeout(clickResetTimer);
-            clickResetTimer = setTimeout(function () {
-              suppressNextClick = false;
-            }, 700);
-          }, { passive: false });
-
-          function finishGesture() {
-            gesture = null;
-          }
-          panel.addEventListener("touchend", finishGesture, { passive: true });
-          panel.addEventListener("touchcancel", finishGesture, { passive: true });
-        });
-
-        rail.addEventListener("click", function (event) {
-          if (!suppressNextClick) return;
-          suppressNextClick = false;
-          clearTimeout(clickResetTimer);
-          event.preventDefault();
-          event.stopPropagation();
-        }, true);
-      });
-    });
-  </script>
 
 </body></html>
