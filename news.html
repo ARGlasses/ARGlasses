@@ -58,6 +58,47 @@ body.news-hub{margin:0;background:#fff;color:#182636;font-family:Poppins,system-
 .news-meta{display:inline-block;margin-top:1.2rem;padding:.42rem .7rem;border:1px solid #dce6ec;border-radius:999px;background:#f7fafc;color:#4b5b65;font-size:.75rem;line-height:1.5;letter-spacing:0;text-transform:none}
 @media(max-width:700px){.news-hero{padding-top:.5rem;padding-bottom:2rem}.news-hero h1{font-size:clamp(2rem,8vw,2.7rem)}}
 
+
+/* Compact, scannable news grid: more stories visible with less vertical scrolling. */
+.latest-list{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:start;
+  gap:1rem;
+  margin-bottom:2rem;
+}
+.latest-card{
+  grid-template-columns:1fr;
+  align-content:start;
+  border-radius:18px;
+}
+.latest-image,
+.latest-image img{
+  height:190px;
+  min-height:190px;
+}
+.latest-copy{
+  padding:1.05rem 1.15rem 1.15rem;
+  justify-content:flex-start;
+}
+.latest-top{margin-bottom:.45rem}
+.latest-copy h2{
+  font-size:clamp(1.2rem,1.7vw,1.55rem);
+  line-height:1.22;
+  margin:.15rem 0 .55rem;
+}
+.latest-copy p{
+  font-size:.84rem;
+  line-height:1.62;
+  margin-bottom:.8rem;
+}
+.latest-source{margin-top:.6rem}
+@media(max-width:760px){
+  .latest-list{grid-template-columns:1fr;gap:.9rem}
+  .latest-image,.latest-image img{height:220px;min-height:220px}
+  .latest-copy{padding:1.05rem 1.05rem 1.15rem}
+  .latest-copy h2{font-size:1.35rem}
+}
+
 </style>
 </head>
 <body class="news-hub">
