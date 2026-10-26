@@ -1411,7 +1411,7 @@
           selectedText.textContent = "Selected: " + selected.map(id => names.get(id)).join(" · ");
           if (selected.length === 1) {
             document.getElementById("gallery-compare-title").textContent = "Choose one more product";
-            message.textContent = "You’ve selected one pair of glasses. Choose another product’s “Compare specs” button to build a side-by-side comparison. You can compare two or add a third.";
+            message.textContent = "You’ve selected one pair of glasses. Choose another product’s “Compare models” button to build a side-by-side comparison. You can compare two or add a third.";
             addButton.hidden = true;
             goButton.hidden = true;
             cancelButton.textContent = "Choose another product";
@@ -1434,7 +1434,7 @@
           dialog.classList.add("is-open");
           save();
         }
-        // Called directly by each Compare specs link. The link itself points
+        // Called directly by each Compare models link. The link itself points
         // to this dialog, never to the comparison page, so a failed script
         // cannot silently send users into the old one-product flow.
         window.arglassesGalleryComparePick = function (event, link) {
