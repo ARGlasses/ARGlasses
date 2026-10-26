@@ -59,44 +59,153 @@ body.news-hub{margin:0;background:#fff;color:#182636;font-family:Poppins,system-
 @media(max-width:700px){.news-hero{padding-top:.5rem;padding-bottom:2rem}.news-hero h1{font-size:clamp(2rem,8vw,2.7rem)}}
 
 
-/* Compact, scannable news grid: more stories visible with less vertical scrolling. */
+/* Editorial news grid: consistent tile sizing, rhythm and responsive behaviour. */
 .latest-list{
+  display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  align-items:start;
-  gap:1rem;
+  grid-auto-rows:480px;
+  align-items:stretch;
+  gap:1.25rem;
   margin-bottom:2rem;
 }
 .latest-card{
-  grid-template-columns:1fr;
-  align-content:start;
+  min-width:0;
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:180px minmax(0,1fr);
+  align-content:stretch;
+  border:1px solid #dce8ed;
   border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 6px 20px rgba(19,59,82,.055);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
 }
-.latest-image,
+.latest-card:hover{
+  transform:translateY(-3px);
+  border-color:#c7dce6;
+  box-shadow:0 14px 30px rgba(19,59,82,.11);
+}
+.latest-image{
+  min-width:0;
+  min-height:0;
+  height:180px;
+  overflow:hidden;
+  background:#f0f6f8;
+}
 .latest-image img{
-  height:190px;
-  min-height:190px;
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .35s ease;
 }
+.latest-card:hover .latest-image img{transform:scale(1.025)}
 .latest-copy{
-  padding:1.05rem 1.15rem 1.15rem;
+  min-width:0;
+  min-height:0;
+  padding:1rem 1.15rem 1.05rem;
+  display:flex;
+  flex-direction:column;
   justify-content:flex-start;
+  align-items:flex-start;
+  overflow:hidden;
 }
-.latest-top{margin-bottom:.45rem}
+.latest-top{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.65rem;
+  margin:0 0 .5rem;
+}
+.latest-tag{
+  min-width:0;
+  color:#075985;
+  font-size:.65rem;
+  line-height:1.35;
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.latest-date{
+  flex-shrink:0;
+  color:#71828d;
+  font-size:.68rem;
+  line-height:1.35;
+  white-space:nowrap;
+}
 .latest-copy h2{
-  font-size:clamp(1.2rem,1.7vw,1.55rem);
-  line-height:1.22;
-  margin:.15rem 0 .55rem;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  overflow:hidden;
+  min-height:0;
+  color:#123b5d;
+  font-size:clamp(1.15rem,1.55vw,1.45rem);
+  line-height:1.24;
+  letter-spacing:-.025em;
+  margin:0 0 .5rem;
+  text-wrap:pretty;
 }
 .latest-copy p{
-  font-size:.84rem;
-  line-height:1.62;
-  margin-bottom:.8rem;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:4;
+  overflow:hidden;
+  color:#566d7c;
+  font-size:.81rem;
+  line-height:1.55;
+  margin:0 0 .65rem;
+  max-width:62ch;
 }
-.latest-source{margin-top:.6rem}
+.latest-link{
+  display:inline-flex;
+  align-items:center;
+  color:#075985;
+  font-weight:700;
+  font-size:.79rem;
+  line-height:1.4;
+  text-decoration:none;
+  text-underline-offset:3px;
+  margin-top:auto;
+}
+.latest-link:hover{text-decoration:underline}
+.latest-source{
+  margin-top:.45rem;
+  color:#81909a;
+  font-size:.67rem;
+  line-height:1.4;
+}
+@media(min-width:761px){
+  .latest-card:nth-child(odd){clear:both}
+}
 @media(max-width:760px){
-  .latest-list{grid-template-columns:1fr;gap:.9rem}
-  .latest-image,.latest-image img{height:220px;min-height:220px}
-  .latest-copy{padding:1.05rem 1.05rem 1.15rem}
-  .latest-copy h2{font-size:1.35rem}
+  .latest-list{
+    grid-template-columns:minmax(0,1fr);
+    grid-auto-rows:500px;
+    gap:1rem;
+  }
+  .latest-card{grid-template-rows:210px minmax(0,1fr)}
+  .latest-image{height:210px}
+  .latest-copy{padding:1rem 1.05rem 1.05rem}
+  .latest-copy h2{font-size:1.3rem}
+  .latest-copy p{font-size:.84rem;-webkit-line-clamp:4}
+}
+@media(max-width:380px){
+  .latest-list{grid-auto-rows:510px}
+  .latest-card{grid-template-rows:190px minmax(0,1fr)}
+  .latest-image{height:190px}
+  .latest-top{align-items:flex-start;flex-direction:column;gap:.2rem}
+  .latest-date{white-space:normal}
+}
+@media(prefers-reduced-motion:reduce){
+  .latest-card,.latest-image img{transition:none}
+  .latest-card:hover{transform:none}
+  .latest-card:hover .latest-image img{transform:none}
 }
 
 </style>
