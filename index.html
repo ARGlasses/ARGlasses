@@ -1678,10 +1678,12 @@
           frame = requestAnimationFrame(updateUI);
           clearTimeout(settleTimer);
           const token = ++settleToken;
-          // Long enough to let touch/trackpad momentum finish; do not interrupt it.
+          // Give mobile touch momentum plenty of time to finish before correcting
+          // the invisible loop cycle. Desktop keeps the shorter settle delay.
+          const settleDelay = window.matchMedia('(max-width: 700px)').matches ? 1400 : 500;
           settleTimer = setTimeout(() => {
             if (token === settleToken) settle();
-          }, 500);
+          }, settleDelay);
         }
         function goTo(index, smooth) {
           active = ((index % count) + count) % count;
@@ -2289,13 +2291,16 @@
 
   <style id="mobile-full-card-horizontal-swipe">
     @media screen and (max-width: 700px) {
-      /* Let horizontal swipes start anywhere on the card, including the text panel. */
-      html body .product-viewport .story {
-        touch-action: pan-x !important;
+      /* Keep touch gestures available across the entire rail, including the lower
+         copy/buttons, without blocking vertical page scrolling. Let the browser
+         decide the gesture direction rather than forcing pan-x on every child. */
+      html body .product-viewport .rail {
+        touch-action: pan-x pan-y !important;
       }
-      html body .product-viewport .story-content,
-      html body .product-viewport .story-content * {
-        touch-action: pan-x !important;
+      html body .product-viewport .rail .story,
+      html body .product-viewport .rail .story-content,
+      html body .product-viewport .rail .story-content * {
+        touch-action: auto !important;
       }
     }
   </style>
