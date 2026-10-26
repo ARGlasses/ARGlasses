@@ -1702,6 +1702,38 @@
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
 
+        // Explicit touch dragging makes horizontal swipes work even when they start
+        // inside the vertically scrollable text panel on mobile.
+        let touchDragState = null;
+        rail.addEventListener('touchstart', event => {
+          if (!event.touches || event.touches.length !== 1) {
+            touchDragState = null;
+            return;
+          }
+          const touch = event.touches[0];
+          touchDragState = {
+            startX: touch.clientX,
+            startY: touch.clientY,
+            startScrollLeft: rail.scrollLeft,
+            moved: false
+          };
+        }, { passive: true });
+        rail.addEventListener('touchmove', event => {
+          if (!touchDragState || !event.touches || event.touches.length !== 1) return;
+          const touch = event.touches[0];
+          const dx = touch.clientX - touchDragState.startX;
+          const dy = touch.clientY - touchDragState.startY;
+          if (!touchDragState.moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+            touchDragState.moved = true;
+          }
+          if (touchDragState.moved) {
+            if (event.cancelable) event.preventDefault();
+            rail.scrollLeft = touchDragState.startScrollLeft - dx;
+          }
+        }, { passive: false });
+        rail.addEventListener('touchend', () => { touchDragState = null; }, { passive: true });
+        rail.addEventListener('touchcancel', () => { touchDragState = null; }, { passive: true });
+
         // Drag the gallery horizontally with a mouse (or pen). Keep normal clicks
         // on links/buttons working unless the pointer actually moved the rail.
         let dragState = null;
