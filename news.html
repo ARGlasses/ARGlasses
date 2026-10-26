@@ -61,12 +61,22 @@ body.news-hub{margin:0;background:#fff;color:#182636;font-family:Poppins,system-
 
 /* Editorial news grid: consistent tile sizing, rhythm and responsive behaviour. */
 .latest-list{
+  position:relative;
+  isolation:isolate;
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   grid-auto-rows:480px;
   align-items:stretch;
   gap:1.25rem;
-  margin-bottom:2rem;
+  margin-bottom:3.5rem;
+}
+/* Keep the editorial note clearly separated from the final row of cards. */
+.news-note{
+  position:relative;
+  z-index:1;
+  clear:both;
+  margin-top:1.5rem;
+  margin-bottom:4rem;
 }
 .latest-card{
   min-width:0;
