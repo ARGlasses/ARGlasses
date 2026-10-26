@@ -2352,15 +2352,19 @@
 
   <style id="mobile-full-card-horizontal-swipe">
     @media screen and (max-width: 700px) {
-      /* Native horizontal overflow gestures should work from every part of each card,
-         while still allowing the page to scroll vertically. */
+      /* Keep native horizontal rail swipes available across the full card, including
+         the lower text panel; retain vertical page gestures elsewhere on the page. */
       html body .product-viewport,
       html body .product-viewport .rail,
       html body .product-viewport .rail .story,
-      html body .product-viewport .rail .story img.bg,
+      html body .product-viewport .rail .story img.bg {
+        touch-action: pan-x pan-y !important;
+      }
+      /* The text panel is itself vertically scrollable, which can capture gestures
+         started in the lower half. Give that panel and its contents horizontal intent. */
       html body .product-viewport .rail .story-content,
       html body .product-viewport .rail .story-content * {
-        touch-action: pan-x pan-y !important;
+        touch-action: pan-x !important;
       }
     }
   </style>
