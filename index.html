@@ -1546,6 +1546,7 @@
     <script>
       (function () {
         const rail = document.querySelector('.product-viewport .rail');
+        const viewport = rail && rail.closest('.product-viewport');
         const prev = document.querySelector('.product-viewport .arrow.left');
         const next = document.querySelector('.product-viewport .arrow.right');
         const dotsWrap = document.querySelector('.product-viewport .dots');
@@ -1704,9 +1705,82 @@
         });
         rail.addEventListener('scroll', onScroll, { passive: true });
 
-        // On phones, use the browser's native touch momentum rather than manually
-        // changing scrollLeft on every touchmove (which can fight scroll snapping).
-        // CSS below keeps the rail swipeable while allowing a natural coast on release.
+        // Mobile-only, viewport-level touch controller. Listening on the viewport
+        // (not just the rail) catches gestures that begin over lower-card copy,
+        // action links, or positioned child elements. Vertical gestures remain native.
+        let mobileDrag = null;
+        let mobileGlideFrame = 0;
+        const stopMobileGlide = () => {
+          if (mobileGlideFrame) cancelAnimationFrame(mobileGlideFrame);
+          mobileGlideFrame = 0;
+        };
+        if (viewport) {
+          viewport.addEventListener('pointerdown', event => {
+            if (event.pointerType !== 'touch' || !window.matchMedia('(max-width: 700px)').matches) return;
+            stopMobileGlide();
+            mobileDrag = {
+              pointerId: event.pointerId,
+              startX: event.clientX,
+              startY: event.clientY,
+              startScrollLeft: rail.scrollLeft,
+              lastX: event.clientX,
+              lastTime: performance.now(),
+              velocity: 0,
+              horizontal: false
+            };
+          }, { passive: true });
+
+          viewport.addEventListener('pointermove', event => {
+            const drag = mobileDrag;
+            if (!drag || event.pointerId !== drag.pointerId) return;
+            const dx = event.clientX - drag.startX;
+            const dy = event.clientY - drag.startY;
+            if (!drag.horizontal) {
+              if (Math.abs(dx) < 7 && Math.abs(dy) < 7) return;
+              // Let the page handle a clearly vertical gesture; claim horizontal ones.
+              if (Math.abs(dy) > Math.abs(dx) * 1.15) {
+                mobileDrag = null;
+                return;
+              }
+              drag.horizontal = true;
+              drag.lastX = event.clientX;
+              drag.lastTime = performance.now();
+            }
+            if (event.cancelable) event.preventDefault();
+            rail.scrollLeft = drag.startScrollLeft - dx;
+            const now = performance.now();
+            const elapsed = Math.max(1, now - drag.lastTime);
+            const instantVelocity = (drag.lastX - event.clientX) / elapsed;
+            drag.velocity = drag.velocity * 0.55 + instantVelocity * 0.45;
+            drag.lastX = event.clientX;
+            drag.lastTime = now;
+          }, { passive: false });
+
+          const finishMobileDrag = event => {
+            const drag = mobileDrag;
+            if (!drag || (event && event.pointerId !== drag.pointerId)) return;
+            mobileDrag = null;
+            if (!drag.horizontal) return;
+            // Small, decaying release glide keeps the gallery moving naturally
+            // without an abrupt snap or a long-running scripted animation.
+            let velocity = Math.max(-2.1, Math.min(2.1, drag.velocity * 16));
+            let previous = performance.now();
+            const glide = now => {
+              const dt = Math.min(32, now - previous);
+              previous = now;
+              rail.scrollLeft += velocity * dt;
+              velocity *= Math.pow(0.92, dt / 16);
+              if (Math.abs(velocity) > 0.035 && now - (drag.finishedAt || (drag.finishedAt = now)) < 900) {
+                mobileGlideFrame = requestAnimationFrame(glide);
+              } else {
+                mobileGlideFrame = 0;
+              }
+            };
+            if (Math.abs(velocity) > 0.08) mobileGlideFrame = requestAnimationFrame(glide);
+          };
+          viewport.addEventListener('pointerup', finishMobileDrag, { passive: true });
+          viewport.addEventListener('pointercancel', finishMobileDrag, { passive: true });
+        }
 
         // Drag the gallery horizontally with a mouse (or pen). Keep normal clicks
         // on links/buttons working unless the pointer actually moved the rail.
@@ -2292,14 +2366,16 @@
 
   <style id="mobile-full-card-horizontal-swipe">
     @media screen and (max-width: 700px) {
-      /* Ensure a horizontal gesture can begin on any part of a card, including
-         text, links and buttons. Keep vertical page gestures available too. */
+      /* Horizontal movement is handled by the viewport's touch-pointer controller.
+         Reserve native touch handling for vertical page scrolling. Applying this
+         through the full card tree prevents links/text from stealing horizontal drags. */
+      html body .product-viewport,
       html body .product-viewport .rail,
       html body .product-viewport .rail .story,
       html body .product-viewport .rail .story img.bg,
       html body .product-viewport .rail .story-content,
       html body .product-viewport .rail .story-content * {
-        touch-action: pan-x pan-y !important;
+        touch-action: pan-y !important;
       }
     }
   </style>
