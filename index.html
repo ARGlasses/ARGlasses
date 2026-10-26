@@ -2266,4 +2266,18 @@
     }
   </style>
 
+
+  <style id="mobile-full-card-horizontal-swipe">
+    @media screen and (max-width: 700px) {
+      /* Let horizontal swipes start anywhere on the card, including the text panel. */
+      html body .product-viewport .story {
+        touch-action: pan-x !important;
+      }
+      html body .product-viewport .story-content,
+      html body .product-viewport .story-content * {
+        touch-action: pan-x !important;
+      }
+    }
+  </style>
+
 </body></html>
