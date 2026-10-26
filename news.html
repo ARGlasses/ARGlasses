@@ -71,12 +71,16 @@ body.news-hub{margin:0;background:#fff;color:#182636;font-family:Poppins,system-
   margin-bottom:3.5rem;
 }
 /* Keep the editorial note clearly separated from the final row of cards. */
-.news-note{
+.news-shell.news-note{
   position:relative;
   z-index:1;
   clear:both;
-  margin-top:1.5rem;
+  /* Match the two-class shell selector so this spacing wins over base styles. */
+  margin-top:6rem;
   margin-bottom:4rem;
+}
+@media(max-width:760px){
+  .news-shell.news-note{margin-top:4rem}
 }
 .latest-card{
   min-width:0;
