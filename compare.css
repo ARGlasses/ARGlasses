@@ -278,3 +278,140 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
   #comparison-print-root .empty-differences{color:#111!important}
   #comparison-print-root *{box-shadow:none!important;text-shadow:none!important}
 }
+
+
+/* Selected-product preview: keeps the first comparison step inside the gallery. */
+.comparison-preview[hidden] { display: none !important; }
+.comparison-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 75;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 270px);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
+  padding: clamp(5.25rem, 10vh, 7rem) clamp(1rem, 2vw, 2rem) 2rem;
+  background: #f6f8fb;
+  color: #172433;
+}
+.comparison-preview-heading { grid-column: 1 / -1; min-width: 0; }
+.comparison-preview-heading h2 {
+  margin: .15rem 0 .2rem;
+  color: #172433;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.2;
+}
+.comparison-preview-heading p { margin: .15rem 0; color: #526273; font-size: .88rem; }
+.gallery-preview-eyebrow, .comparison-preview-step {
+  color: #075b91 !important;
+  font-size: .68rem !important;
+  font-weight: 700;
+  letter-spacing: .13em;
+  margin: 0;
+}
+.comparison-preview-rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(.5rem, 1vw, 1rem);
+  min-width: 0;
+  min-height: 0;
+  align-items: stretch;
+}
+.comparison-preview-card.story {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 100% !important;
+  max-height: none !important;
+  flex: initial !important;
+  transform: none !important;
+  overflow: hidden;
+  border: 1px solid #d9e1e9;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(32,48,64,.10) !important;
+  background: #fff;
+}
+.comparison-preview-card.story img.bg {
+  position: absolute;
+  inset: 0 0 auto !important;
+  width: 100% !important;
+  height: 44% !important;
+  padding: 1rem !important;
+  object-fit: contain !important;
+  background: #fff;
+}
+.comparison-preview-card .story-content {
+  position: absolute !important;
+  inset: auto 0 0 !important;
+  width: 100%;
+  height: 56% !important;
+  box-sizing: border-box;
+  padding: 1rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: .45rem !important;
+  overflow: auto !important;
+  background: #fff !important;
+  color: #172433 !important;
+}
+.comparison-preview-card .story-kicker { font-size: .7rem !important; line-height: 1.3; color: #526273 !important; }
+.comparison-preview-card .product-category { display: inline-block; margin: .25rem 0 0 !important; font-size: .62rem !important; }
+.comparison-preview-card .story-title { font-size: clamp(1rem, 1.5vw, 1.45rem) !important; line-height: 1.18 !important; color: #172433 !important; overflow-wrap: anywhere; }
+.comparison-preview-card .story-teaser { font-size: .78rem !important; line-height: 1.45 !important; color: #465565 !important; max-width: none !important; display: block !important; overflow: visible !important; }
+.comparison-preview-card .product-price { font-size: .76rem !important; color: #172433 !important; }
+.comparison-preview-card .story-actions { margin-top: auto !important; padding-top: .35rem; }
+.comparison-preview-card .story-actions a { font-size: .7rem !important; padding: .45rem .55rem !important; }
+.comparison-preview-actions {
+  align-self: stretch;
+  box-sizing: border-box;
+  border: 1px solid #dce4ec;
+  border-radius: 14px;
+  background: #fff;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .8rem;
+  box-shadow: 0 8px 24px rgba(32,48,64,.06);
+}
+.comparison-preview-actions h3 { font-size: 1.2rem; line-height: 1.25; margin: 0; color: #172433; }
+.comparison-preview-actions p { margin: 0; color: #526273; font-size: .85rem; line-height: 1.55; }
+.comparison-preview-actions button { width: 100%; margin: 0; font-size: .82rem; white-space: normal; }
+.comparison-preview-actions #comparison-preview-details {
+  background: #075b91;
+  border-color: #075b91;
+  color: #fff;
+}
+.comparison-preview-actions #comparison-preview-details:hover { background: #064773; border-color: #064773; }
+@media (max-width: 760px) {
+  .comparison-preview {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: .65rem;
+    padding: 5.1rem .8rem .7rem;
+    overflow: auto;
+  }
+  .comparison-preview-heading h2 { font-size: 1.2rem; }
+  .comparison-preview-heading p { font-size: .75rem; }
+  .comparison-preview-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; min-height: 0; }
+  .comparison-preview-card.story { min-height: 0; }
+  .comparison-preview-card.story img.bg { height: 38% !important; padding: .4rem !important; }
+  .comparison-preview-card .story-content { height: 62% !important; padding: .55rem !important; gap: .25rem !important; }
+  .comparison-preview-card .story-kicker { font-size: .58rem !important; }
+  .comparison-preview-card .story-title { font-size: .95rem !important; }
+  .comparison-preview-card .story-teaser { font-size: .66rem !important; line-height: 1.3 !important; }
+  .comparison-preview-card .product-price { font-size: .64rem !important; }
+  .comparison-preview-card .story-actions a { font-size: .62rem !important; padding: .3rem !important; }
+  .comparison-preview-actions { padding: .75rem; gap: .45rem; }
+  .comparison-preview-actions h3 { font-size: 1rem; }
+  .comparison-preview-actions p { font-size: .75rem; }
+  .comparison-preview-actions button { min-height: 2.2rem; }
+}
+@media (max-width: 420px) {
+  .comparison-preview-rail { grid-template-columns: minmax(0, 1fr); }
+  .comparison-preview-card.story { min-height: 260px; }
+  .comparison-preview-card.story img.bg { height: 42% !important; }
+  .comparison-preview-card .story-content { height: 58% !important; }
+}
