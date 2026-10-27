@@ -459,3 +459,9 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
 @media (max-width: 420px) {
   #comparison-preview .comparison-preview-card .story-content { height: 58% !important; }
 }
+
+
+/* Comparison preview is intentionally desktop-only; preserve the original mobile flow. */
+@media (max-width: 760px) {
+  #comparison-preview { display: none !important; }
+}
