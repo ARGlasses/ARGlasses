@@ -1309,9 +1309,10 @@
         <p id="gallery-compare-message">Select another product to compare its specifications side by side.</p>
         <div id="gallery-compare-selected" aria-live="polite" style="font-weight:600;"></div>
         <div class="gallery-compare-actions" style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;">
+          <button id="gallery-compare-clear" type="button" class="secondary">Clear selection</button>
           <button id="gallery-compare-cancel" type="button" class="secondary">Keep choosing</button>
-          <button id="gallery-compare-add" type="button" hidden>Add a third product</button>
-          <button id="gallery-compare-go" type="button">Compare now →</button>
+          <button id="gallery-compare-add" type="button" hidden>Add a third</button>
+          <button id="gallery-compare-go" type="button">Compare →</button>
         </div>
       </form>
     </div>
@@ -1398,6 +1399,7 @@
         const addButton = document.getElementById("gallery-compare-add");
         const goButton = document.getElementById("gallery-compare-go");
         const cancelButton = document.getElementById("gallery-compare-cancel");
+        const clearButton = document.getElementById("gallery-compare-clear");
         const closeButton = document.getElementById("gallery-compare-close");
         const storageKey = "arglasses-gallery-compare-selection";
         const cards = Array.from(document.querySelectorAll(".product-card[data-product-id]"));
@@ -1428,20 +1430,20 @@
           selectedText.textContent = "Selected: " + selected.map(id => names.get(id)).join(" · ");
           if (selected.length === 1) {
             document.getElementById("gallery-compare-title").textContent = "Choose one more product";
-            message.textContent = "You’ve selected one pair of glasses. Choose another product’s “Compare models” button to build a side-by-side comparison. You can compare two or add a third.";
+            message.textContent = "Choose another model to compare. Select two or three products.";
             addButton.hidden = true;
             goButton.hidden = true;
             cancelButton.textContent = "Choose another product";
           } else if (selected.length === 2) {
             document.getElementById("gallery-compare-title").textContent = "Ready to compare?";
-            message.textContent = "You have two products selected. Compare these now, or add one more product (up to three total).";
+            message.textContent = "Compare these two, or add a third.";
             addButton.hidden = false;
             goButton.hidden = false;
             goButton.textContent = "Compare these two →";
             cancelButton.textContent = "Cancel";
           } else {
             document.getElementById("gallery-compare-title").textContent = "Three products selected";
-            message.textContent = "You’ve reached the three-product limit. Your comparison is ready.";
+            message.textContent = "All three are selected and ready to compare.";
             addButton.hidden = true;
             goButton.hidden = false;
             goButton.textContent = "Compare all three →";
@@ -1489,6 +1491,7 @@
           }
           closeDialog();
         });
+        clearButton.addEventListener("click", function () { selected = []; closeDialog(); });
         closeButton.addEventListener("click", closeDialog);
         dialog.addEventListener("click", event => { if (event.target === dialog) closeDialog(); });
         addButton.addEventListener("click", closeDialog);
