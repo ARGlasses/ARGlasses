@@ -918,6 +918,7 @@ html body a.shop-all-btn:focus {
 #cookie-banner {
   position: relative;
   inset: auto;
+  display: block;
   width: min(100%, 580px);
   max-height: calc(100vh - 48px);
   overflow-y: auto;
