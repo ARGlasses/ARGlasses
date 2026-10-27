@@ -1,5 +1,5 @@
-/* Site-wide cookie preference banner.
-   This script records the visitor's choice; it does not load tracking tools. */
+/* Site-wide cookie preferences dialog.
+   Stores the visitor's choice; this file does not load analytics or advertising tools. */
 (function () {
   'use strict';
 
@@ -10,59 +10,98 @@
     : 'cookie-policy.html';
 
   function initCookieConsent() {
-    let banner = document.getElementById('cookie-banner');
-
-    if (!banner) {
-      banner = document.createElement('aside');
-      banner.id = 'cookie-banner';
-      banner.setAttribute('role', 'region');
-      banner.setAttribute('aria-label', 'Cookie preferences');
-      banner.innerHTML =
-        '<div class="container">' +
-          '<p>We use browser storage to remember your choice. This banner records your preference; it does not itself load analytics or advertising tools. ' +
-          '<a href="' + policyUrl + '">Read our Cookie Policy</a>.</p>' +
-          '<div>' +
-            '<button class="contrast" id="accept-cookies" type="button">Accept optional cookies</button>' +
-            '<button class="secondary" id="decline-cookies" type="button">Reject optional cookies</button>' +
-          '</div>' +
-        '</div>';
-      document.body.appendChild(banner);
-    }
-
-    const acceptButton = document.getElementById('accept-cookies');
-    const declineButton = document.getElementById('decline-cookies');
-    if (!acceptButton || !declineButton) return;
+    if (document.getElementById('cookie-banner')) return;
 
     let consent = null;
-    try {
-      consent = window.localStorage.getItem(STORAGE_KEY);
-    } catch (error) {
-      // If browser storage is unavailable, show the banner for this visit.
-    }
+    try { consent = window.localStorage.getItem(STORAGE_KEY); } catch (error) {}
+    if (consent === 'accepted' || consent === 'essential') return;
 
-    const hasChoice = consent === 'accepted' || consent === 'declined';
-    banner.style.display = hasChoice ? 'none' : 'block';
-    banner.setAttribute('aria-hidden', String(hasChoice));
+    const overlay = document.createElement('div');
+    overlay.id = 'cookie-overlay';
+    overlay.setAttribute('aria-hidden', 'false');
+    overlay.innerHTML =
+      '<section id="cookie-banner" role="dialog" aria-modal="true" aria-labelledby="cookie-title" aria-describedby="cookie-description">' +
+        '<div class="cookie-dialog-top">' +
+          '<span class="cookie-language-label">Language</span>' +
+          '<label class="cookie-language-select"><span class="sr-only">Language</span>' +
+            '<select id="cookie-language" aria-label="Language"><option value="en" selected>English (US)</option></select>' +
+          '</label>' +
+        '</div>' +
+        '<div class="cookie-dialog-content">' +
+          '<p class="cookie-eyebrow">YOUR PRIVACY, YOUR CHOICE</p>' +
+          '<h2 id="cookie-title">Cookies</h2>' +
+          '<p id="cookie-description">Cookies help us make AR Glasses work well and understand how people use our website.</p>' +
+          '<p class="cookie-list-heading">Cookies help us:</p>' +
+          '<ul class="cookie-benefits">' +
+            '<li>Keep the website working and monitor its performance.</li>' +
+            '<li>Remember your preferences and improve your experience.</li>' +
+            '<li>Understand how visitors use the website.</li>' +
+            '<li>Measure the effectiveness of our content and advertising.</li>' +
+          '</ul>' +
+          '<p class="cookie-choice-hint">Choose how you’d like to continue. You can change your mind at any time.</p>' +
+          '<div id="cookie-settings" hidden>' +
+            '<div class="cookie-category"><div><strong>Essential</strong><p>Required for core site functionality and saving your cookie choice.</p></div><span class="cookie-always-on">Always on</span></div>' +
+            '<label class="cookie-category cookie-category-toggle"><span><strong>Analytics</strong><p>Help us understand site usage so we can improve it.</p></span><input id="cookie-analytics" type="checkbox"></label>' +
+            '<label class="cookie-category cookie-category-toggle"><span><strong>Advertising</strong><p>Help measure advertising performance and relevance.</p></span><input id="cookie-advertising" type="checkbox"></label>' +
+            '<button type="button" class="cookie-save-settings" id="save-cookie-settings">Save my choices</button>' +
+          '</div>' +
+          '<p class="cookie-policy-link">Want to know more? Read our <a href="' + policyUrl + '">Cookie Policy</a>.</p>' +
+          '<div class="cookie-actions">' +
+            '<button type="button" class="cookie-button cookie-button-outline" id="cookie-menu">Cookie settings</button>' +
+            '<button type="button" class="cookie-button cookie-button-primary" id="accept-cookies">Accept all</button>' +
+            '<button type="button" class="cookie-button cookie-button-primary" id="decline-cookies">Essential only</button>' +
+          '</div>' +
+        '</div>' +
+      '</section>';
+    document.body.appendChild(overlay);
 
-    function saveChoice(value) {
+    const settings = overlay.querySelector('#cookie-settings');
+    const menuButton = overlay.querySelector('#cookie-menu');
+    const acceptButton = overlay.querySelector('#accept-cookies');
+    const essentialButton = overlay.querySelector('#decline-cookies');
+    const saveButton = overlay.querySelector('#save-cookie-settings');
+    const analytics = overlay.querySelector('#cookie-analytics');
+    const advertising = overlay.querySelector('#cookie-advertising');
+
+    function closeDialog(value, preferences) {
+      const record = preferences || { analytics: value === 'accepted', advertising: value === 'accepted' };
       try {
         window.localStorage.setItem(STORAGE_KEY, value);
-      } catch (error) {
-        // The choice still applies for this page view if storage is blocked.
-      }
-      banner.style.display = 'none';
-      banner.setAttribute('aria-hidden', 'true');
+        window.localStorage.setItem('cookiePreferences', JSON.stringify(record));
+      } catch (error) {}
+      overlay.remove();
+      document.dispatchEvent(new CustomEvent('cookieconsentchange', {
+        detail: { consent: value, preferences: record }
+      }));
       window.dispatchEvent(new CustomEvent('cookieconsentchange', {
-        detail: { consent: value }
+        detail: { consent: value, preferences: record }
       }));
     }
 
+    menuButton.addEventListener('click', function () {
+      const opening = settings.hidden;
+      settings.hidden = !opening;
+      menuButton.textContent = opening ? 'Hide settings' : 'Cookie settings';
+      if (opening) settings.querySelector('input').focus();
+    });
     acceptButton.addEventListener('click', function () {
-      saveChoice('accepted');
+      closeDialog('accepted', { analytics: true, advertising: true });
     });
-    declineButton.addEventListener('click', function () {
-      saveChoice('declined');
+    essentialButton.addEventListener('click', function () {
+      closeDialog('essential', { analytics: false, advertising: false });
     });
+    saveButton.addEventListener('click', function () {
+      const preferences = { analytics: analytics.checked, advertising: advertising.checked };
+      closeDialog(preferences.analytics || preferences.advertising ? 'accepted' : 'essential', preferences);
+    });
+
+    overlay.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        // Do not treat dismissing the dialog as consent; visitors must make a choice.
+        event.preventDefault();
+      }
+    });
+    acceptButton.focus();
   }
 
   if (document.readyState === 'loading') {
