@@ -415,3 +415,47 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
   .comparison-preview-card.story img.bg { height: 42% !important; }
   .comparison-preview-card .story-content { height: 58% !important; }
 }
+
+
+/* Higher-specificity overrides keep the preview cards independent of gallery defaults. */
+#comparison-preview .comparison-preview-card.story {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 100% !important;
+  max-height: none !important;
+  flex: initial !important;
+  transform: none !important;
+}
+#comparison-preview .comparison-preview-card .story-content {
+  position: absolute !important;
+  inset: auto 0 0 !important;
+  height: 56% !important;
+  padding: 1rem !important;
+  gap: .45rem !important;
+  justify-content: flex-start !important;
+  overflow: auto !important;
+}
+#comparison-preview .comparison-preview-card .story-title {
+  font-size: clamp(1rem, 1.5vw, 1.45rem) !important;
+  line-height: 1.18 !important;
+}
+#comparison-preview .comparison-preview-card .story-teaser {
+  font-size: .78rem !important;
+  line-height: 1.45 !important;
+  display: block !important;
+  overflow: visible !important;
+  max-height: none !important;
+}
+@media (max-width: 760px) {
+  #comparison-preview .comparison-preview-card .story-content {
+    height: 62% !important;
+    padding: .55rem !important;
+    gap: .25rem !important;
+  }
+  #comparison-preview .comparison-preview-card .story-title { font-size: .95rem !important; }
+  #comparison-preview .comparison-preview-card .story-teaser { font-size: .66rem !important; line-height: 1.3 !important; }
+}
+@media (max-width: 420px) {
+  #comparison-preview .comparison-preview-card .story-content { height: 58% !important; }
+}
