@@ -461,7 +461,35 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
 }
 
 
-/* Comparison preview is intentionally desktop-only; preserve the original mobile flow. */
+/* Desktop comparison keeps the original carousel cards and dimensions; only the controls overlay. */
+@media (min-width: 761px) {
+  #comparison-preview {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    padding: 0 !important;
+    background: transparent !important;
+    pointer-events: none !important;
+  }
+  #comparison-preview[hidden] { display: none !important; }
+  #comparison-preview .comparison-preview-heading,
+  #comparison-preview .comparison-preview-rail { display: none !important; }
+  #comparison-preview .comparison-preview-actions {
+    position: absolute;
+    top: 50%;
+    right: clamp(.75rem, 1.5vw, 1.5rem);
+    transform: translateY(-50%);
+    width: min(220px, 19vw);
+    min-width: 185px;
+    align-self: auto;
+    padding: 1rem;
+    gap: .65rem;
+    pointer-events: auto;
+    box-shadow: 0 8px 24px rgba(32,48,64,.12);
+  }
+  #comparison-preview .comparison-preview-actions h3 { font-size: 1rem; }
+  #comparison-preview .comparison-preview-actions p { font-size: .78rem; }
+}
 @media (max-width: 760px) {
   #comparison-preview { display: none !important; }
 }
