@@ -1310,7 +1310,6 @@
         <div id="gallery-compare-selected" aria-live="polite" style="font-weight:600;"></div>
         <div class="gallery-compare-actions" style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;">
           <button id="gallery-compare-clear" type="button" class="secondary">Clear selection</button>
-          <button id="gallery-compare-cancel" type="button" class="secondary">Keep choosing</button>
           <button id="gallery-compare-add" type="button" hidden>Add a third</button>
           <button id="gallery-compare-go" type="button">Compare →</button>
         </div>
@@ -1398,7 +1397,6 @@
         const selectedText = document.getElementById("gallery-compare-selected");
         const addButton = document.getElementById("gallery-compare-add");
         const goButton = document.getElementById("gallery-compare-go");
-        const cancelButton = document.getElementById("gallery-compare-cancel");
         const clearButton = document.getElementById("gallery-compare-clear");
         const closeButton = document.getElementById("gallery-compare-close");
         const storageKey = "arglasses-gallery-compare-selection";
@@ -1433,21 +1431,18 @@
             message.textContent = "Choose another model to compare. Select two or three products.";
             addButton.hidden = true;
             goButton.hidden = true;
-            cancelButton.textContent = "Choose another product";
           } else if (selected.length === 2) {
             document.getElementById("gallery-compare-title").textContent = "Ready to compare?";
             message.textContent = "Compare these two, or add a third.";
             addButton.hidden = false;
             goButton.hidden = false;
             goButton.textContent = "Compare these two →";
-            cancelButton.textContent = "Cancel";
           } else {
             document.getElementById("gallery-compare-title").textContent = "Three products selected";
             message.textContent = "All three are selected and ready to compare.";
             addButton.hidden = true;
             goButton.hidden = false;
             goButton.textContent = "Compare all three →";
-            cancelButton.textContent = "Cancel";
           }
           dialog.hidden = false;
           dialog.classList.add("is-open");
@@ -1481,11 +1476,6 @@
           return false;
         };
         function closeDialog() { dialog.hidden = true; dialog.classList.remove("is-open"); save(); }
-        cancelButton.addEventListener("click", function () {
-          // Cancel only dismisses the popup and preserves the current selection.
-          // Use Clear selection when the user wants to remove all picked products.
-          closeDialog();
-        });
         clearButton.addEventListener("click", function () { selected = []; closeDialog(); });
         closeButton.addEventListener("click", closeDialog);
         dialog.addEventListener("click", event => { if (event.target === dialog) closeDialog(); });
