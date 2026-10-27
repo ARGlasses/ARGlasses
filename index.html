@@ -1482,13 +1482,8 @@
         };
         function closeDialog() { dialog.hidden = true; dialog.classList.remove("is-open"); save(); }
         cancelButton.addEventListener("click", function () {
-          // With one item selected, this action means keep that choice and return
-          // to the gallery to choose another product. Once a comparison is ready,
-          // Cancel should abandon the pending comparison and clear its highlights.
-          if (selected.length >= 2) {
-            selected = [];
-            save();
-          }
+          // Cancel only dismisses the popup and preserves the current selection.
+          // Use Clear selection when the user wants to remove all picked products.
           closeDialog();
         });
         clearButton.addEventListener("click", function () { selected = []; closeDialog(); });
