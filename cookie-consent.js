@@ -28,26 +28,24 @@
           '</label>' +
         '</div>' +
         '<div class="cookie-dialog-content">' +
-          '<p class="cookie-eyebrow">YOUR PRIVACY, YOUR CHOICE</p>' +
           '<h2 id="cookie-title">Cookies</h2>' +
-          '<p id="cookie-description">Cookies help us make AR Glasses work well and understand how people use our website.</p>' +
-          '<p class="cookie-list-heading">Cookies help us:</p>' +
+          '<p id="cookie-description" class="cookie-list-heading">Cookies help us:</p>' +
           '<ul class="cookie-benefits">' +
-            '<li>Keep the website working and monitor its performance.</li>' +
+            '<li>Power this website and monitor its performance.</li>' +
             '<li>Remember your preferences and improve your experience.</li>' +
-            '<li>Understand how visitors use the website.</li>' +
-            '<li>Measure the effectiveness of our content and advertising.</li>' +
+            '<li>Understand how you use this website.</li>' +
+            '<li>Deliver relevant ads and measure their effectiveness.</li>' +
           '</ul>' +
-          '<p class="cookie-choice-hint">Choose how you’d like to continue. You can change your mind at any time.</p>' +
+          '<p class="cookie-choice-hint">To continue, select one of the following options:</p>' +
           '<div id="cookie-settings" hidden>' +
             '<div class="cookie-category"><div><strong>Essential</strong><p>Required for core site functionality and saving your cookie choice.</p></div><span class="cookie-always-on">Always on</span></div>' +
             '<label class="cookie-category cookie-category-toggle"><span><strong>Analytics</strong><p>Help us understand site usage so we can improve it.</p></span><input id="cookie-analytics" type="checkbox"></label>' +
             '<label class="cookie-category cookie-category-toggle"><span><strong>Advertising</strong><p>Help measure advertising performance and relevance.</p></span><input id="cookie-advertising" type="checkbox"></label>' +
             '<button type="button" class="cookie-save-settings" id="save-cookie-settings">Save my choices</button>' +
           '</div>' +
-          '<p class="cookie-policy-link">Want to know more? Read our <a href="' + policyUrl + '">Cookie Policy</a>.</p>' +
+          '<p class="cookie-policy-link">Interested in the details? Read our <a href="' + policyUrl + '">Cookie Policy</a>.</p>' +
           '<div class="cookie-actions">' +
-            '<button type="button" class="cookie-button cookie-button-outline" id="cookie-menu">Cookie settings</button>' +
+            '<button type="button" class="cookie-button cookie-button-outline" id="cookie-menu">Cookie Menu</button>' +
             '<button type="button" class="cookie-button cookie-button-primary" id="accept-cookies">Accept all</button>' +
             '<button type="button" class="cookie-button cookie-button-primary" id="decline-cookies">Essential only</button>' +
           '</div>' +
