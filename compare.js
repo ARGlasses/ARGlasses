@@ -4,6 +4,7 @@
   const PRODUCTS = Array.isArray(window.ARG_PRODUCTS) ? window.ARG_PRODUCTS : [];
   const $ = id => document.getElementById(id);
   const selected = new Set();
+  let detailExpanded = false;
   const fields = [
     ["Price / availability", "priceText"], ["Weight", "weight"], ["Display technology", "display"],
     ["Resolution", "resolution"], ["Field of view", "fov"], ["Refresh rate", "refresh"],
@@ -170,6 +171,7 @@
     if($("no-results")) $("no-results").hidden=list.length>0;
     const options=$("product-picker-options");
     if(options && !PRODUCTS.length) options.innerHTML='<p class="catalogue-error" role="alert">The product data could not be loaded. Please refresh the page; if this continues, contact us so we can fix the catalogue.</p>';
+    renderPreview();
     renderComparison();
     updateUrl();
   }
@@ -256,12 +258,32 @@
         '<input type="checkbox" data-picker-select="'+esc(p.id)+'" '+(checked?'checked ':'')+(disabled?'disabled ':'')+' aria-label="Select '+esc(p.brand+" "+p.name)+' for comparison"></label>';
     }).join("");
   }
+  function renderPreview() {
+    const preview = $("comparison-preview");
+    const rail = $("comparison-preview-rail");
+    if (!preview || !rail) return;
+    const active = selected.size >= 2;
+    preview.hidden = !active;
+    const cards = [...selected].map(id => [...document.querySelectorAll("#products .product-card")].find(card => card.dataset.productId === id)).filter(Boolean);
+    rail.innerHTML = cards.map(card => {
+      const clone = card.cloneNode(true);
+      clone.removeAttribute("id");
+      clone.classList.add("comparison-preview-card");
+      clone.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+      clone.querySelectorAll("a").forEach(link => {
+        if (link.textContent.includes("Compare models")) link.remove();
+      });
+      return clone.outerHTML;
+    }).join("");
+    const count = $("comparison-preview-count");
+    if (count) count.textContent = cards.length + " products selected";
+  }
   function renderComparison() {
     const products=[...selected].map(id=>PRODUCTS.find(p=>p.id===id)).filter(Boolean);
     const section=$("comparison");
     if(!section)return;
     if(products.length<2){section.hidden=true;return;}
-    section.hidden=false;
+    section.hidden=!detailExpanded;
     const rows=fields.map(([label,key])=>({label,values:products.map(p=>known(p[key])?String(p[key]).trim():"Not disclosed")}));
     const visible=state.differences ? rows.filter(row=>new Set(row.values.map(v=>v.toLowerCase())).size>1) : rows;
     const differenceNote=state.differences ? '<p class="difference-summary">'+visible.length+' differing specification'+(visible.length===1?"":"s")+' shown. Identical and unavailable values are hidden only when they are identical across all selected products.</p>' : "";
@@ -307,9 +329,32 @@
     if(target.id==="differences-only"){state.differences=target.checked;render();}
   });
 
-  if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{$("comparison").hidden=false;$("comparison").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});});
+  if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{
+    if (selected.size < 2) return;
+    detailExpanded = false;
+    renderPreview();
+    renderComparison();
+    const dialog = $("gallery-compare-dialog");
+    if (dialog) dialog.hidden = true;
+    const url = new URL(window.location.href);
+    url.hash = "products";
+    window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    const gallery = $("products");
+    if (gallery) gallery.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+  });
+  if($("comparison-preview-details")) $("comparison-preview-details").addEventListener("click",()=>{
+    if (selected.size < 2) return;
+    detailExpanded = true;
+    renderComparison();
+    const section = $("comparison");
+    if (section) section.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+  });
+  if($("comparison-preview-clear")) $("comparison-preview-clear").addEventListener("click",clearSelectionAndReturnToCarousel);
   function clearSelectionAndReturnToCarousel() {
     selected.clear();
+    detailExpanded = false;
+    const dialog = $("gallery-compare-dialog");
+    if (dialog) dialog.hidden = true;
     render();
     // Make the carousel the explicit return destination, even when clearing from
     // a comparison URL whose previous hash points at the results table.
@@ -369,12 +414,10 @@
   // When a comparison is launched from a product card, show the result rather
   // than leaving the visitor at the top of the homepage with no visible feedback.
   if (new URLSearchParams(window.location.search).has("compare") && selected.size >= 2) {
-    requestAnimationFrame(() => {
-      const section = $("comparison");
-      if (section && !section.hidden) section.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        block: "start"
-      });
-    });
+    // Shared comparison links open the selected-card preview first; details remain opt-in.
+    renderPreview();
+    const url = new URL(window.location.href);
+    url.hash = "products";
+    window.history.replaceState({}, "", url.pathname + url.search + url.hash);
   }
 })();
