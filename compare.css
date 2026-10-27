@@ -378,7 +378,49 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
 }
 .comparison-preview-actions h3 { font-size: 1.2rem; line-height: 1.25; margin: 0; color: #172433; }
 .comparison-preview-actions p { margin: 0; color: #526273; font-size: .85rem; line-height: 1.55; }
-.comparison-preview-actions button { width: 100%; margin: 0; font-size: .82rem; white-space: normal; }
+.comparison-preview-actions button {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: .45rem .55rem !important;
+  border: 1px solid #075b91 !important;
+  border-radius: 4px !important;
+  font-family: inherit !important;
+  font-size: .7rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+  white-space: normal !important;
+  cursor: pointer !important;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease !important;
+}
+.comparison-preview-actions #comparison-preview-details {
+  background: #075b91 !important;
+  color: #fff !important;
+}
+.comparison-preview-actions #comparison-preview-details:hover {
+  background: #064773 !important;
+  border-color: #064773 !important;
+}
+.comparison-preview-actions #comparison-preview-clear {
+  background: #fff !important;
+  color: #075b91 !important;
+}
+.comparison-preview-actions #comparison-preview-clear:hover {
+  background: #f1f6fa !important;
+  border-color: #064773 !important;
+  color: #064773 !important;
+}
+.comparison-preview-actions button:focus-visible {
+  outline: 3px solid #8bc8ed !important;
+  outline-offset: 2px !important;
+}
 .comparison-preview-actions #comparison-preview-details {
   background: #075b91;
   border-color: #075b91;
