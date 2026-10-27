@@ -331,16 +331,26 @@
 
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{
     if (selected.size < 2) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const behavior = reduceMotion ? "auto" : "smooth";
+    const dialog = $("gallery-compare-dialog");
+    if (dialog) dialog.hidden = true;
+    // The preview flow is desktop-only; retain the existing detailed comparison flow on mobile.
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      detailExpanded = true;
+      renderComparison();
+      const section = $("comparison");
+      if (section) section.scrollIntoView({behavior, block:"start"});
+      return;
+    }
     detailExpanded = false;
     renderPreview();
     renderComparison();
-    const dialog = $("gallery-compare-dialog");
-    if (dialog) dialog.hidden = true;
     const url = new URL(window.location.href);
     url.hash = "products";
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
     const gallery = $("products");
-    if (gallery) gallery.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+    if (gallery) gallery.scrollIntoView({behavior, block:"start"});
   });
   if($("comparison-preview-details")) $("comparison-preview-details").addEventListener("click",()=>{
     if (selected.size < 2) return;
@@ -414,10 +424,22 @@
   // When a comparison is launched from a product card, show the result rather
   // than leaving the visitor at the top of the homepage with no visible feedback.
   if (new URLSearchParams(window.location.search).has("compare") && selected.size >= 2) {
-    // Shared comparison links open the selected-card preview first; details remain opt-in.
-    renderPreview();
-    const url = new URL(window.location.href);
-    url.hash = "products";
-    window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      detailExpanded = true;
+      renderComparison();
+      requestAnimationFrame(() => {
+        const section = $("comparison");
+        if (section && !section.hidden) section.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          block: "start"
+        });
+      });
+    } else {
+      // Desktop shared comparison links open the selected-card preview first.
+      renderPreview();
+      const url = new URL(window.location.href);
+      url.hash = "products";
+      window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    }
   }
 })();
