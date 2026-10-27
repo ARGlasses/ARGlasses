@@ -52,7 +52,7 @@
   </style>
   <link rel="icon" href="images/logo40x40.webp" type="image/webp">
   <script src="./header.js?v=6" defer></script><script src="./products-data.js" defer></script>
-  <script src="./compare.js?v=4" defer></script>
+  <script src="./compare.js?v=5" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1570,7 +1570,8 @@
         if (!rail || !prev || !next || !dotsWrap) return;
 
         const originals = Array.from(rail.querySelectorAll('.story'));
-        const count = originals.length;
+        let filteredOriginals = originals.slice();
+        let count = filteredOriginals.length;
         if (!count) return;
 
         // Keep two complete cycles on either side. Small edge-only clone buffers
@@ -1605,11 +1606,42 @@
           rail.appendChild(fragment);
         }
 
-        const allCards = Array.from(rail.querySelectorAll('.story'));
+        let allCards = Array.from(rail.querySelectorAll('.story'));
         let cardCenters = [];
         function refreshCardCenters() {
           cardCenters = allCards.map(card => card.offsetLeft + card.offsetWidth / 2);
         }
+        function renderDots() {
+          dotsWrap.innerHTML = '';
+          filteredOriginals.forEach((card, i) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', 'Go to selected product ' + (i + 1));
+            dot.addEventListener('click', () => goTo(i, true));
+            dotsWrap.appendChild(dot);
+          });
+        }
+        function applyComparisonFilter(ids) {
+          const desktop = !window.matchMedia('(max-width: 760px)').matches;
+          const wanted = desktop && Array.isArray(ids) && ids.length >= 2 ? new Set(ids) : null;
+          rail.querySelectorAll('.story').forEach(card => {
+            card.style.display = !wanted || wanted.has(card.dataset.productId) ? '' : 'none';
+          });
+          filteredOriginals = wanted ? originals.filter(card => wanted.has(card.dataset.productId)) : originals.slice();
+          count = filteredOriginals.length;
+          allCards = Array.from(rail.querySelectorAll('.story')).filter(card => card.style.display !== 'none');
+          refreshCardCenters();
+          renderDots();
+          if (filteredOriginals.length) {
+            active = originals.indexOf(filteredOriginals[0]);
+            requestAnimationFrame(() => {
+              refreshCardCenters();
+              centerOn(filteredOriginals[0], false);
+              updateUI();
+            });
+          }
+        }
+        window.__setGalleryComparisonFilter = applyComparisonFilter;
         refreshCardCenters();
         function cachedCenter(card) {
           const index = allCards.indexOf(card);
@@ -1627,13 +1659,7 @@
         rail.style.scrollSnapType = 'none';
         rail.style.scrollBehavior = 'auto';
 
-        originals.forEach((_, i) => {
-          const dot = document.createElement('button');
-          dot.type = 'button';
-          dot.setAttribute('aria-label', 'Go to product ' + (i + 1));
-          dot.addEventListener('click', () => goTo(i, true));
-          dotsWrap.appendChild(dot);
-        });
+        renderDots();
 
         function layoutCenter(card) {
           return cachedCenter(card);
@@ -1701,7 +1727,7 @@
           active = Number.isInteger(index) ? index : originals.indexOf(closest);
           if (active < 0) active = 0;
           dotsWrap.querySelectorAll('button').forEach((dot, i) =>
-            dot.setAttribute('aria-current', i === active ? 'true' : 'false'));
+            dot.setAttribute('aria-current', filteredOriginals[i] === originals[active] ? 'true' : 'false'));
           prev.disabled = false;
           next.disabled = false;
         }
@@ -1738,14 +1764,19 @@
           }, settleDelay);
         }
         function goTo(index, smooth) {
-          active = ((index % count) + count) % count;
-          centerOn(originals[active], smooth);
+          const targetIndex = ((index % count) + count) % count;
+          const target = filteredOriginals[targetIndex];
+          active = originals.indexOf(target);
+          centerOn(target, smooth);
           updateUI();
         }
         function step(direction) {
           const current = closestCard();
-          const index = allCards.indexOf(current);
-          const target = allCards[Math.max(0, Math.min(allCards.length - 1, index + direction))];
+          const currentOriginal = originalFor(current);
+          let index = filteredOriginals.indexOf(currentOriginal);
+          if (index < 0) index = 0;
+          const nextIndex = Math.max(0, Math.min(filteredOriginals.length - 1, index + direction));
+          const target = filteredOriginals[nextIndex];
           if (target) centerOn(target, true);
         }
         prev.addEventListener('click', () => step(-1));
