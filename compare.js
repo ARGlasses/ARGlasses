@@ -262,21 +262,17 @@
     const preview = $("comparison-preview");
     const rail = $("comparison-preview-rail");
     if (!preview || !rail) return;
-    const active = selected.size >= 2;
+    const desktop = !window.matchMedia("(max-width: 760px)").matches;
+    const active = desktop && selected.size >= 2;
     preview.hidden = !active;
-    const cards = [...selected].map(id => [...document.querySelectorAll("#products .product-card")].find(card => card.dataset.productId === id)).filter(Boolean);
-    rail.innerHTML = cards.map(card => {
-      const clone = card.cloneNode(true);
-      clone.removeAttribute("id");
-      clone.classList.add("comparison-preview-card");
-      clone.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
-      clone.querySelectorAll("a").forEach(link => {
-        if (link.textContent.includes("Compare models")) link.remove();
-      });
-      return clone.outerHTML;
-    }).join("");
+    // Keep the actual carousel cards in place so their existing dimensions,
+    // typography, imagery, and layout are unchanged. Only filter the desktop rail.
+    rail.innerHTML = "";
+    if (window.__setGalleryComparisonFilter) {
+      window.__setGalleryComparisonFilter(active ? [...selected] : null);
+    }
     const count = $("comparison-preview-count");
-    if (count) count.textContent = cards.length + " products selected";
+    if (count) count.textContent = selected.size + " products selected";
   }
   function renderComparison() {
     const products=[...selected].map(id=>PRODUCTS.find(p=>p.id===id)).filter(Boolean);
