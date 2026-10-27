@@ -493,7 +493,7 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
   /* Keep original card dimensions. Reserve a right-hand column for the actions
      on narrower desktop screens; wide desktop cards already fit to the left. */
   .product-viewport.comparison-filter-active .rail {
-    justify-content: flex-start !important;
+    justify-content: center !important;
     scroll-padding-inline: 1rem !important;
   }
   @media (max-width: 1099px) {
