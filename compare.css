@@ -477,7 +477,7 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
   #comparison-preview .comparison-preview-actions {
     position: absolute;
     top: 50%;
-    right: clamp(.75rem, 1.5vw, 1.5rem);
+    right: clamp(2rem, 4vw, 4rem);
     transform: translateY(-50%);
     width: min(220px, 19vw);
     min-width: 185px;
