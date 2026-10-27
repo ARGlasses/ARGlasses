@@ -1621,9 +1621,13 @@
             dotsWrap.appendChild(dot);
           });
         }
+        let comparisonFilterKey = '';
         function applyComparisonFilter(ids) {
           const desktop = !window.matchMedia('(max-width: 760px)').matches;
           const wanted = desktop && Array.isArray(ids) && ids.length >= 2 ? new Set(ids) : null;
+          const nextKey = wanted ? Array.from(wanted).sort().join('|') : '';
+          if (nextKey === comparisonFilterKey) return;
+          comparisonFilterKey = nextKey;
           rail.querySelectorAll('.story').forEach(card => {
             card.style.display = !wanted || wanted.has(card.dataset.productId) ? '' : 'none';
           });
