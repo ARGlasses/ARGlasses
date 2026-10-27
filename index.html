@@ -1310,7 +1310,7 @@
         <div id="gallery-compare-selected" aria-live="polite" style="font-weight:600;"></div>
         <div class="gallery-compare-actions" style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;">
           <button id="gallery-compare-clear" type="button" class="secondary">Clear selection</button>
-          <button id="gallery-compare-add" type="button" hidden>Add a third</button>
+          <button id="gallery-compare-add" type="button" hidden>Add another product</button>
           <button id="gallery-compare-go" type="button">Compare →</button>
         </div>
       </form>
@@ -1429,12 +1429,14 @@
           if (selected.length === 1) {
             document.getElementById("gallery-compare-title").textContent = "Choose one more product";
             message.textContent = "Choose another model to compare. Select two or three products.";
-            addButton.hidden = true;
+            addButton.hidden = false;
+            addButton.textContent = "Choose another product";
             goButton.hidden = true;
           } else if (selected.length === 2) {
             document.getElementById("gallery-compare-title").textContent = "Ready to compare?";
             message.textContent = "Compare these two, or add a third.";
             addButton.hidden = false;
+            addButton.textContent = "Add a third product";
             goButton.hidden = false;
             goButton.textContent = "Compare these two →";
           } else {
@@ -1479,7 +1481,13 @@
         clearButton.addEventListener("click", function () { selected = []; closeDialog(); });
         closeButton.addEventListener("click", closeDialog);
         dialog.addEventListener("click", event => { if (event.target === dialog) closeDialog(); });
-        addButton.addEventListener("click", closeDialog);
+        addButton.addEventListener("click", function () {
+          // Dismiss the prompt but keep selected products highlighted, so the
+          // user can return to the carousel and choose the next product.
+          closeDialog();
+          const carousel = document.querySelector(".product-viewport");
+          if (carousel) carousel.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
         goButton.addEventListener("click", goCompare);
         save();
       })();
