@@ -489,6 +489,22 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
   }
   #comparison-preview .comparison-preview-actions h3 { font-size: 1rem; }
   #comparison-preview .comparison-preview-actions p { font-size: .78rem; }
+
+  /* Keep original card dimensions. Reserve a right-hand column for the actions
+     on narrower desktop screens; wide desktop cards already fit to the left. */
+  .product-viewport.comparison-filter-active .rail {
+    justify-content: flex-start !important;
+    scroll-padding-inline: 1rem !important;
+  }
+  @media (max-width: 1099px) {
+    .product-viewport.comparison-filter-active .rail {
+      width: calc(100% - 245px) !important;
+      padding-inline: 1rem !important;
+      box-sizing: border-box !important;
+    }
+  }
+  .product-viewport.comparison-filter-active .arrow { display: none !important; }
+  .product-viewport.comparison-filter-active .dots { display: none !important; }
 }
 @media (max-width: 760px) {
   #comparison-preview { display: none !important; }
