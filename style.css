@@ -919,25 +919,25 @@ html body a.shop-all-btn:focus {
   position: relative;
   inset: auto;
   display: block;
-  width: min(100%, 390px);
+  width: min(100%, 580px);
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   margin: auto;
-  padding: 16px 16px 17px;
+  padding: 10px 16px 11px;
   background: #fff;
   color: #111;
   border: 1px solid #202020;
   border-radius: 2px;
   box-shadow: 0 18px 60px rgba(0,0,0,.16);
   font-family: "Poppins", sans-serif;
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 11px;
+  line-height: 1.35;
 }
 #cookie-banner .cookie-dialog-top {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 #cookie-banner .cookie-language-label { 
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -945,7 +945,7 @@ html body a.shop-all-btn:focus {
 }
 #cookie-banner .cookie-language-select select {
   min-width: 132px;
-  min-height: 36px;
+  min-height: 30px;
   padding: 0 28px 0 10px;
   color: #111;
   background: #fff;
@@ -963,7 +963,7 @@ html body a.shop-all-btn:focus {
   letter-spacing: .12em;
 }
 #cookie-banner h2#cookie-title {
-  margin: 0 0 12px;
+  margin: 0 0 6px;
   color: #111;
   font-family: inherit;
   font-size: 17px;
@@ -971,12 +971,12 @@ html body a.shop-all-btn:focus {
   line-height: 1.25;
   text-transform: uppercase;
 }
-#cookie-banner p { margin: 0 0 10px; line-height: 1.5; }
+#cookie-banner p { margin: 0 0 5px; line-height: 1.3; }
 #cookie-banner .cookie-list-heading { margin-bottom: 0; }
-#cookie-banner .cookie-benefits { margin: 0 0 8px; padding-left: 20px; }
-#cookie-banner .cookie-benefits li { margin: 2px 0; padding-left: 1px; }
-#cookie-banner .cookie-choice-hint { margin: 8px 0 5px; }
-#cookie-banner .cookie-policy-link { margin: 8px 0 0; }
+#cookie-banner .cookie-benefits { margin: 0 0 5px; padding-left: 20px; }
+#cookie-banner .cookie-benefits li { margin: 0; padding-left: 1px; }
+#cookie-banner .cookie-choice-hint { margin: 5px 0 3px; }
+#cookie-banner .cookie-policy-link { margin: 5px 0 0; }
 #cookie-banner .cookie-policy-link a {
   color: #111; text-decoration: underline; text-underline-offset: 2px; font-weight: 600;
 }
@@ -987,13 +987,13 @@ html body a.shop-all-btn:focus {
   align-items: center;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: 14px;
+  margin-top: 9px;
 }
 #cookie-banner .cookie-button,
 #cookie-banner .cookie-save-settings {
-  min-height: 34px;
+  min-height: 30px;
   margin: 0;
-  padding: 7px 9px;
+  padding: 5px 9px;
   border: 1px solid #111;
   border-radius: 0;
   font: inherit;
@@ -1015,11 +1015,11 @@ html body a.shop-all-btn:focus {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 12px 0;
+  padding: 7px 0;
   border-top: 1px solid #e5e5e5;
 }
 #cookie-banner .cookie-category strong { display: block; font-size: 13px; }
-#cookie-banner .cookie-category p { margin: 3px 0 0; color: #555; font-size: 12px; }
+#cookie-banner .cookie-category p { margin: 2px 0 0; color: #555; font-size: 11px; }
 #cookie-banner .cookie-always-on { flex-shrink: 0; font-size: 11px; color: #555; }
 #cookie-banner .cookie-category-toggle input {
   width: 18px; height: 18px; flex-shrink: 0; accent-color: #111; cursor: pointer;
