@@ -919,34 +919,34 @@ html body a.shop-all-btn:focus {
   position: relative;
   inset: auto;
   display: block;
-  width: min(100%, 580px);
+  width: min(100%, 390px);
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   margin: auto;
-  padding: 24px 24px 25px;
+  padding: 16px 16px 17px;
   background: #fff;
   color: #111;
   border: 1px solid #202020;
   border-radius: 2px;
   box-shadow: 0 18px 60px rgba(0,0,0,.16);
   font-family: "Poppins", sans-serif;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.45;
 }
 #cookie-banner .cookie-dialog-top {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 #cookie-banner .cookie-language-label { 
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 #cookie-banner .cookie-language-select select {
-  min-width: 160px;
-  min-height: 44px;
-  padding: 0 34px 0 13px;
+  min-width: 132px;
+  min-height: 36px;
+  padding: 0 28px 0 10px;
   color: #111;
   background: #fff;
   border: 2px solid #111;
@@ -966,17 +966,17 @@ html body a.shop-all-btn:focus {
   margin: 0 0 12px;
   color: #111;
   font-family: inherit;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 1.25;
   text-transform: uppercase;
 }
 #cookie-banner p { margin: 0 0 10px; line-height: 1.5; }
 #cookie-banner .cookie-list-heading { margin-bottom: 0; }
-#cookie-banner .cookie-benefits { margin: 0 0 12px; padding-left: 23px; }
+#cookie-banner .cookie-benefits { margin: 0 0 8px; padding-left: 20px; }
 #cookie-banner .cookie-benefits li { margin: 2px 0; padding-left: 1px; }
-#cookie-banner .cookie-choice-hint { margin: 12px 0 7px; }
-#cookie-banner .cookie-policy-link { margin: 12px 0 0; }
+#cookie-banner .cookie-choice-hint { margin: 8px 0 5px; }
+#cookie-banner .cookie-policy-link { margin: 8px 0 0; }
 #cookie-banner .cookie-policy-link a {
   color: #111; text-decoration: underline; text-underline-offset: 2px; font-weight: 600;
 }
@@ -986,18 +986,18 @@ html body a.shop-all-btn:focus {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
+  gap: 7px;
+  margin-top: 14px;
 }
 #cookie-banner .cookie-button,
 #cookie-banner .cookie-save-settings {
-  min-height: 40px;
+  min-height: 34px;
   margin: 0;
-  padding: 9px 13px;
+  padding: 7px 9px;
   border: 1px solid #111;
   border-radius: 0;
   font: inherit;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
