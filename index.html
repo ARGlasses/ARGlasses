@@ -2699,6 +2699,19 @@
     }
   }
 
+  @media screen and (max-width: 700px) and (max-height: 520px) {
+    html body .product-viewport .rail > .story {
+      height: calc(100svh - 100px) !important;
+      max-height: calc(100svh - 90px) !important;
+      min-height: 0 !important;
+    }
+    html body .product-viewport .rail > .story > img.bg { height: 28% !important; }
+    html body .product-viewport .rail > .story > .story-content { height: 72% !important; }
+    html body .product-viewport .rail > .story .story-teaser > span:nth-child(n+4) {
+      display: none !important;
+    }
+  }
+
   /* Fold in landscape and compact tablets can have ample width but very little
      height; use a shorter image region and let the copy panel scroll naturally. */
   @media screen and (min-width: 701px) and (max-width: 1099px) and (max-height: 520px) {
