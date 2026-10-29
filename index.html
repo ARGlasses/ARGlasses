@@ -2436,68 +2436,132 @@
 
 
 <style id="tablet-homepage-carousel-copy-fix">
-  /* Tablet-only carousel repair: give the specification copy enough room and
-     allow long values to wrap instead of being silently clipped. Desktop and
-     mobile retain their existing layouts. */
+  /* Tablet-only carousel layout. The earlier width rule left the base
+     min-width: 88vw in force, so the cards ignored their intended width.
+     Explicitly reset min-width and use a taller, balanced image/copy split. */
   @media screen and (min-width: 701px) and (max-width: 1099px) {
-    html body .product-viewport .story {
-      flex-basis: clamp(290px, 42vw, 430px) !important;
-      width: clamp(290px, 42vw, 430px) !important;
-      height: clamp(500px, 76svh, 780px) !important;
+    html body .product-viewport .rail {
+      align-items: center !important;
+      gap: clamp(.85rem, 2vw, 1.4rem) !important;
+      padding-inline: 7vw !important;
+      scroll-padding-inline: 7vw !important;
     }
-    html body .product-viewport .story img.bg {
-      height: 46% !important;
-      padding: .75rem 1rem .35rem !important;
+
+    html body .product-viewport .rail > .story {
+      box-sizing: border-box !important;
+      flex: 0 0 min(84vw, 720px) !important;
+      width: min(84vw, 720px) !important;
+      min-width: 0 !important;
+      max-width: 86vw !important;
+      height: clamp(560px, 82svh, 800px) !important;
+      max-height: 88svh !important;
+      display: block !important;
+      position: relative !important;
+      overflow: hidden !important;
+      border-radius: 1.25rem !important;
+      transform: none !important;
+    }
+
+    html body .product-viewport .rail > .story > img.bg {
+      position: absolute !important;
+      inset: 0 0 auto 0 !important;
+      display: block !important;
+      width: 100% !important;
+      height: 38% !important;
+      box-sizing: border-box !important;
       object-fit: contain !important;
+      object-position: center !important;
+      padding: 1rem 1.25rem .5rem !important;
+      transform: none !important;
     }
-    html body .product-viewport .story-content {
-      height: 54% !important;
-      padding: .75rem 1rem 2.4rem !important;
-      gap: .3rem !important;
+
+    html body .product-viewport .rail > .story > .story-content {
+      position: absolute !important;
+      inset: auto 0 0 0 !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      height: 62% !important;
+      max-width: none !important;
+      display: flex !important;
+      flex-direction: column !important;
       justify-content: flex-start !important;
+      align-items: stretch !important;
+      gap: .35rem !important;
+      padding: .85rem 1.15rem 1rem !important;
+      margin: 0 !important;
+      transform: none !important;
       overflow-x: hidden !important;
       overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: touch !important;
+      background: #fff !important;
     }
-    html body .product-viewport .story-content .story-kicker {
+
+    html body .product-viewport .rail > .story .story-kicker {
+      display: block !important;
+      margin: 0 !important;
       font-size: .72rem !important;
       line-height: 1.25 !important;
     }
-    html body .product-viewport .story-content .story-title {
+
+    html body .product-viewport .rail > .story .story-title {
+      display: block !important;
       max-width: 100% !important;
-      font-size: clamp(1.05rem, 2.2vw, 1.35rem) !important;
+      margin: 0 !important;
+      font-size: clamp(1.05rem, 2vw, 1.35rem) !important;
       line-height: 1.2 !important;
       overflow-wrap: anywhere !important;
     }
-    html body .product-viewport .story-content .story-teaser {
+
+    html body .product-viewport .rail > .story .story-teaser {
+      display: block !important;
+      flex: 0 0 auto !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      margin: .15rem 0 0 !important;
       font-size: .76rem !important;
-      line-height: 1.3 !important;
+      line-height: 1.28 !important;
       white-space: normal !important;
       overflow: visible !important;
       overflow-wrap: anywhere !important;
       word-break: normal !important;
+      text-overflow: unset !important;
     }
-    html body .product-viewport .story-content .story-teaser > span,
-    html body .product-viewport .story-content .story-teaser > span.price-line,
-    html body .product-viewport .story-content .story-teaser > span.spec-line,
-    html body .product-viewport .story-content .story-teaser > span.display-line,
-    html body .product-viewport .story-content .story-teaser > span.res-line,
-    html body .product-viewport .story-content .story-teaser > span.fov-line,
-    html body .product-viewport .story-content .story-teaser > span.hz-line {
+
+    html body .product-viewport .rail > .story .story-teaser > span {
       display: block !important;
+      box-sizing: border-box !important;
       width: 100% !important;
       height: auto !important;
       min-height: 0 !important;
+      margin: 0 0 .12rem !important;
       white-space: normal !important;
       overflow: visible !important;
       overflow-wrap: anywhere !important;
       word-break: normal !important;
-      text-overflow: clip !important;
+      text-overflow: unset !important;
+      font-size: inherit !important;
+      line-height: inherit !important;
     }
-    html body .product-viewport .story-content .story-actions {
+
+    html body .product-viewport .rail > .story .story-actions {
+      display: flex !important;
+      flex: 0 0 auto !important;
       flex-wrap: wrap !important;
-      gap: .4rem !important;
-      margin-top: .35rem !important;
+      align-items: center !important;
+      gap: .45rem !important;
+      margin: .45rem 0 0 !important;
+      padding: 0 0 .15rem !important;
+      transform: none !important;
+    }
+
+    html body .product-viewport .rail > .story .story-actions a,
+    html body .product-viewport .rail > .story .story-actions button {
+      max-width: 100% !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
     }
   }
 </style>
