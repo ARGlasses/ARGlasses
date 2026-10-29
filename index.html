@@ -2433,4 +2433,73 @@
     }
   </style>
 
+
+
+<style id="tablet-homepage-carousel-copy-fix">
+  /* Tablet-only carousel repair: give the specification copy enough room and
+     allow long values to wrap instead of being silently clipped. Desktop and
+     mobile retain their existing layouts. */
+  @media screen and (min-width: 701px) and (max-width: 1099px) {
+    html body .product-viewport .story {
+      flex-basis: clamp(290px, 42vw, 430px) !important;
+      width: clamp(290px, 42vw, 430px) !important;
+      height: clamp(500px, 76svh, 780px) !important;
+    }
+    html body .product-viewport .story img.bg {
+      height: 46% !important;
+      padding: .75rem 1rem .35rem !important;
+      object-fit: contain !important;
+    }
+    html body .product-viewport .story-content {
+      height: 54% !important;
+      padding: .75rem 1rem 2.4rem !important;
+      gap: .3rem !important;
+      justify-content: flex-start !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+    }
+    html body .product-viewport .story-content .story-kicker {
+      font-size: .72rem !important;
+      line-height: 1.25 !important;
+    }
+    html body .product-viewport .story-content .story-title {
+      max-width: 100% !important;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem) !important;
+      line-height: 1.2 !important;
+      overflow-wrap: anywhere !important;
+    }
+    html body .product-viewport .story-content .story-teaser {
+      font-size: .76rem !important;
+      line-height: 1.3 !important;
+      white-space: normal !important;
+      overflow: visible !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+    }
+    html body .product-viewport .story-content .story-teaser > span,
+    html body .product-viewport .story-content .story-teaser > span.price-line,
+    html body .product-viewport .story-content .story-teaser > span.spec-line,
+    html body .product-viewport .story-content .story-teaser > span.display-line,
+    html body .product-viewport .story-content .story-teaser > span.res-line,
+    html body .product-viewport .story-content .story-teaser > span.fov-line,
+    html body .product-viewport .story-content .story-teaser > span.hz-line {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      white-space: normal !important;
+      overflow: visible !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+      text-overflow: clip !important;
+    }
+    html body .product-viewport .story-content .story-actions {
+      flex-wrap: wrap !important;
+      gap: .4rem !important;
+      margin-top: .35rem !important;
+    }
+  }
+</style>
+
 </body></html>
