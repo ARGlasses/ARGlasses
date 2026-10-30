@@ -2666,11 +2666,22 @@
       max-height: calc(100svh - 100px) !important;
       translate: 0 26px !important;
     }
-    /* Keep manufacturer and product-name text at one consistent mobile-sized scale. */
+    /* Make manufacturer and product name visually identical in size and weight. */
     html body .product-viewport .rail > .story .story-kicker,
     html body .product-viewport .rail > .story .story-title {
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif !important;
       font-size: .95rem !important;
+      font-weight: 600 !important;
       line-height: 1.18 !important;
+      letter-spacing: normal !important;
+      text-transform: none !important;
+    }
+    html body .product-viewport .rail > .story .story-kicker {
+      margin: 0 !important;
+      opacity: 1 !important;
+    }
+    html body .product-viewport .rail > .story .story-title {
+      margin: 0 !important;
     }
     /* Remove the outlined product-type label to free space for card details. */
     html body .product-viewport .rail > .story .product-category {
