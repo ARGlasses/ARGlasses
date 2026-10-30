@@ -2605,4 +2605,55 @@
   }
 </style>
 
+
+<style id="fold-inner-two-card-carousel">
+  /* Galaxy Fold inner screen only: show two readable product cards side by side.
+     The 701–900px range avoids changing the normal phone and desktop layouts. */
+  @media screen and (min-width: 701px) and (max-width: 900px) {
+    html body .product-viewport .rail {
+      gap: 2vw !important;
+      padding-inline: 4vw !important;
+      scroll-padding-inline: 4vw !important;
+      align-items: center !important;
+    }
+    html body .product-viewport .rail > .story {
+      box-sizing: border-box !important;
+      flex: 0 0 43vw !important;
+      width: 43vw !important;
+      max-width: 43vw !important;
+      min-width: 0 !important;
+      height: clamp(430px, calc(100svh - 110px), 760px) !important;
+      max-height: calc(100svh - 80px) !important;
+    }
+    html body .product-viewport .rail > .story > .story-content {
+      min-width: 0 !important;
+      padding: .7rem .75rem .85rem !important;
+      gap: .22rem !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+    html body .product-viewport .rail > .story .story-title {
+      font-size: clamp(.9rem, 1.55vw, 1.1rem) !important;
+      line-height: 1.18 !important;
+      overflow-wrap: anywhere !important;
+    }
+    html body .product-viewport .rail > .story .story-teaser,
+    html body .product-viewport .rail > .story .story-teaser > span {
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+      font-size: clamp(.62rem, .95vw, .72rem) !important;
+      line-height: 1.22 !important;
+    }
+    html body .product-viewport .rail > .story .story-actions {
+      flex-wrap: wrap !important;
+      min-width: 0 !important;
+    }
+    html body .product-viewport .rail > .story .story-actions a,
+    html body .product-viewport .rail > .story .story-actions button {
+      font-size: .68rem !important;
+    }
+  }
+</style>
+
 </body></html>
