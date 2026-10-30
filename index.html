@@ -1771,6 +1771,22 @@
           prev.disabled = false;
           next.disabled = false;
         }
+        // Keep mobile pagination in sync during the swipe, without running the
+        // heavier card styling work on every native scroll frame.
+        let dotFrame = 0;
+        function updateActiveDot() {
+          const center = rail.scrollLeft + rail.clientWidth / 2;
+          let closest = allCards[0], min = Infinity;
+          allCards.forEach(card => {
+            const dist = Math.abs(cachedCenter(card) - center);
+            if (dist < min) { min = dist; closest = card; }
+          });
+          if (!closest) return;
+          const index = Number(closest.dataset.originalIndex);
+          const activeIndex = Number.isInteger(index) ? index : originals.indexOf(closest);
+          dotsWrap.querySelectorAll('button').forEach((dot, i) =>
+            dot.setAttribute('aria-current', filteredOriginals[i] === originals[activeIndex] ? 'true' : 'false'));
+        }
         function settle() {
           const card = closestCard();
           if (!card) return;
@@ -1792,6 +1808,11 @@
           if (!mobileLayout) {
             if (frame) cancelAnimationFrame(frame);
             frame = requestAnimationFrame(updateUI);
+          } else if (!dotFrame) {
+            dotFrame = requestAnimationFrame(() => {
+              dotFrame = 0;
+              updateActiveDot();
+            });
           }
           clearTimeout(settleTimer);
           const token = ++settleToken;
