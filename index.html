@@ -2658,12 +2658,13 @@
 </style>
 
 <style id="fold-inner-header-clearance">
-  /* Fold inner display only: shorten the cards so their top edge clears the
-     site header while retaining the two-card layout. */
+  /* Fold inner display only: retain a near-full-height card and lower it
+     slightly beneath the fixed header instead of shrinking it excessively. */
   @media screen and (min-width: 701px) and (max-width: 900px) {
     html body .product-viewport .rail > .story {
-      height: clamp(380px, calc(100svh - 170px), 700px) !important;
-      max-height: calc(100svh - 140px) !important;
+      height: clamp(560px, calc(100svh - 120px), 760px) !important;
+      max-height: calc(100svh - 100px) !important;
+      translate: 0 26px !important;
     }
   }
 </style>
