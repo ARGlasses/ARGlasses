@@ -184,3 +184,17 @@ body:has(#sales-top) footer.professional-footer{width:min(1160px,calc(100% - 2.5
 @media(min-width:901px) and (max-height:800px){#sales-top{padding-top:5.7rem}}
 @media(max-width:900px){#sales-top{padding-top:6.6rem}}
 @media(max-width:600px){#sales-top{padding-top:6.2rem}}
+
+
+/* Match the Future page's 1rem side gutters on both standard mobile and
+   the Galaxy Fold inner display. Keep desktop sizing unchanged. */
+@media screen and (max-width: 900px) {
+  #sales-top,
+  body:has(#sales-top) footer.professional-footer {
+    box-sizing: border-box !important;
+    width: calc(100% - 2rem) !important;
+    max-width: 1160px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
