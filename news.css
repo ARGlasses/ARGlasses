@@ -437,6 +437,6 @@ body.news-article .hero-img img{border:0 !important;box-shadow:none !important;}
    Standard mobile and desktop retain their existing spacing. */
 @media screen and (min-width: 701px) and (max-width: 900px) {
   body.news-hub main {
-    padding-top: 4.5rem;
+    padding-top: 6rem;
   }
 }
