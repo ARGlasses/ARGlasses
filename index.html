@@ -2774,4 +2774,45 @@
     }
   }
 </style>
+
+<style id="fold-native-touch-scroll">
+  /* Galaxy Fold inner display only: use the same native touch gestures as
+     standard mobile. Keep horizontal carousel swipes and vertical copy/page
+     scrolling browser-driven, including when a gesture starts in the lower
+     text half of a product card. */
+  @media screen and (min-width: 701px) and (max-width: 900px) {
+    html body .product-viewport,
+    html body .product-viewport .rail,
+    html body .product-viewport .rail > .story,
+    html body .product-viewport .rail > .story > img.bg,
+    html body .product-viewport .rail > .story > .story-content,
+    html body .product-viewport .rail > .story > .story-content * {
+      touch-action: pan-x pan-y pinch-zoom !important;
+    }
+
+    html body .product-viewport .rail {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior-x: auto !important;
+      scroll-behavior: auto !important;
+      scroll-snap-type: none !important;
+    }
+
+    html body .product-viewport .rail > .story {
+      scroll-snap-align: none !important;
+      scroll-snap-stop: normal !important;
+    }
+
+    html body .product-viewport .rail > .story > .story-content {
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: auto !important;
+      overscroll-behavior-x: auto !important;
+      overscroll-behavior-y: auto !important;
+    }
+  }
+</style>
+
 </body></html>
