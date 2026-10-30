@@ -198,3 +198,19 @@ body:has(#sales-top) footer.professional-footer{width:min(1160px,calc(100% - 2.5
     margin-right: auto !important;
   }
 }
+
+
+/* Enforce Future-page inner gutters against the higher-specificity shared
+   editorial rule. Keep the outer container full width and inset its content. */
+@media screen and (max-width: 900px) {
+  html body:has(main#sales-top) main#sales-top,
+  html body:has(main#sales-top) footer.professional-footer {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
