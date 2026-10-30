@@ -1,5 +1,6 @@
-/* Site-wide cookie preferences dialog.
-   Stores the visitor's choice; this file does not load analytics or advertising tools. */
+/* Site-wide privacy preferences dialog.
+   The current site does not load analytics or advertising trackers.
+   The visitor's choice is stored in localStorage, not in a cookie. */
 (function () {
   'use strict';
 
@@ -24,30 +25,27 @@
         '<div class="cookie-dialog-top">' +
           '<span class="cookie-language-label">Language</span>' +
           '<label class="cookie-language-select"><span class="sr-only">Language</span>' +
-            '<select id="cookie-language" aria-label="Language"><option value="en" selected>English (US)</option></select>' +
+            '<select id="cookie-language" aria-label="Language"><option value="en" selected>English (UK)</option></select>' +
           '</label>' +
         '</div>' +
         '<div class="cookie-dialog-content">' +
-          '<h2 id="cookie-title">Cookies</h2>' +
-          '<p id="cookie-description" class="cookie-list-heading">Cookies help us:</p>' +
+          '<h2 id="cookie-title">Cookies &amp; privacy</h2>' +
+          '<p id="cookie-description" class="cookie-list-heading">We use browser storage and third-party services to:</p>' +
           '<ul class="cookie-benefits">' +
-            '<li>Power this website and monitor its performance.</li>' +
-            '<li>Remember your preferences and improve your experience.</li>' +
-            '<li>Understand how you use this website.</li>' +
-            '<li>Deliver relevant ads and measure their effectiveness.</li>' +
+            '<li>Remember your privacy preference on this device.</li>' +
+            '<li>Support the core features of this website.</li>' +
+            '<li>Load external resources such as fonts and map data.</li>' +
+            '<li>Receive messages submitted through our contact form.</li>' +
           '</ul>' +
-          '<p class="cookie-choice-hint">To continue, select one of the following options:</p>' +
+          '<p class="cookie-choice-hint">We do not currently use analytics or advertising trackers on this website.</p>' +
           '<div id="cookie-settings" hidden>' +
-            '<div class="cookie-category"><div><strong>Essential</strong><p>Required for core site functionality and saving your cookie choice.</p></div><span class="cookie-always-on">Always on</span></div>' +
-            '<label class="cookie-category cookie-category-toggle"><span><strong>Analytics</strong><p>Help us understand site usage so we can improve it.</p></span><input id="cookie-analytics" type="checkbox"></label>' +
-            '<label class="cookie-category cookie-category-toggle"><span><strong>Advertising</strong><p>Help measure advertising performance and relevance.</p></span><input id="cookie-advertising" type="checkbox"></label>' +
-            '<button type="button" class="cookie-save-settings" id="save-cookie-settings">Save my choices</button>' +
+            '<div class="cookie-category"><div><strong>Privacy preference</strong><p>Your choice is saved in this browser using local storage. It is not an analytics or advertising cookie.</p></div><span class="cookie-always-on">Essential</span></div>' +
+            '<div class="cookie-category"><div><strong>Optional tracking</strong><p>No analytics or advertising tracking tools are currently loaded by the site.</p></div><span class="cookie-always-on">Not in use</span></div>' +
           '</div>' +
           '<p class="cookie-policy-link">Interested in the details? Read our <a href="' + policyUrl + '">Cookie Policy</a>.</p>' +
           '<div class="cookie-actions">' +
-            '<button type="button" class="cookie-button cookie-button-outline" id="cookie-menu">Cookie Menu</button>' +
-            '<button type="button" class="cookie-button cookie-button-primary" id="accept-cookies">Accept all</button>' +
-            '<button type="button" class="cookie-button cookie-button-primary" id="decline-cookies">Essential only</button>' +
+            '<button type="button" class="cookie-button cookie-button-outline" id="cookie-menu">Cookie details</button>' +
+            '<button type="button" class="cookie-button cookie-button-primary" id="continue-cookies">Continue</button>' +
           '</div>' +
         '</div>' +
       '</section>';
@@ -55,51 +53,37 @@
 
     const settings = overlay.querySelector('#cookie-settings');
     const menuButton = overlay.querySelector('#cookie-menu');
-    const acceptButton = overlay.querySelector('#accept-cookies');
-    const essentialButton = overlay.querySelector('#decline-cookies');
-    const saveButton = overlay.querySelector('#save-cookie-settings');
-    const analytics = overlay.querySelector('#cookie-analytics');
-    const advertising = overlay.querySelector('#cookie-advertising');
+    const continueButton = overlay.querySelector('#continue-cookies');
 
-    function closeDialog(value, preferences) {
-      const record = preferences || { analytics: value === 'accepted', advertising: value === 'accepted' };
+    function closeDialog() {
+      const preferences = { analytics: false, advertising: false };
       try {
-        window.localStorage.setItem(STORAGE_KEY, value);
-        window.localStorage.setItem('cookiePreferences', JSON.stringify(record));
+        window.localStorage.setItem(STORAGE_KEY, 'essential');
+        window.localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
       } catch (error) {}
       overlay.remove();
       document.dispatchEvent(new CustomEvent('cookieconsentchange', {
-        detail: { consent: value, preferences: record }
+        detail: { consent: 'essential', preferences: preferences }
       }));
       window.dispatchEvent(new CustomEvent('cookieconsentchange', {
-        detail: { consent: value, preferences: record }
+        detail: { consent: 'essential', preferences: preferences }
       }));
     }
 
     menuButton.addEventListener('click', function () {
       const opening = settings.hidden;
       settings.hidden = !opening;
-      menuButton.textContent = opening ? 'Hide settings' : 'Cookie settings';
-      if (opening) settings.querySelector('input').focus();
+      menuButton.textContent = opening ? 'Hide details' : 'Cookie details';
     });
-    acceptButton.addEventListener('click', function () {
-      closeDialog('accepted', { analytics: true, advertising: true });
-    });
-    essentialButton.addEventListener('click', function () {
-      closeDialog('essential', { analytics: false, advertising: false });
-    });
-    saveButton.addEventListener('click', function () {
-      const preferences = { analytics: analytics.checked, advertising: advertising.checked };
-      closeDialog(preferences.analytics || preferences.advertising ? 'accepted' : 'essential', preferences);
-    });
+    continueButton.addEventListener('click', closeDialog);
 
     overlay.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') {
-        // Do not treat dismissing the dialog as consent; visitors must make a choice.
+        // Do not treat dismissing the dialog as a choice.
         event.preventDefault();
       }
     });
-    acceptButton.focus();
+    continueButton.focus();
   }
 
   if (document.readyState === 'loading') {
