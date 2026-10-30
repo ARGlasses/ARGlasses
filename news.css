@@ -422,3 +422,12 @@ body.news-article .hero-img img{border:0 !important;box-shadow:none !important;}
     padding-top: 5.25rem;
   }
 }
+
+
+/* Standard mobile News page: move the full content down by three lines.
+   Keep the Fold inner display and desktop spacing rules separate. */
+@media screen and (max-width: 700px) {
+  body.news-hub main {
+    padding-top: 4.5rem;
+  }
+}
