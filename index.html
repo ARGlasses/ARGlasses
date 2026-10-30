@@ -2666,6 +2666,12 @@
       max-height: calc(100svh - 100px) !important;
       translate: 0 26px !important;
     }
+    /* Keep manufacturer and product-name text at one consistent mobile-sized scale. */
+    html body .product-viewport .rail > .story .story-kicker,
+    html body .product-viewport .rail > .story .story-title {
+      font-size: .95rem !important;
+      line-height: 1.18 !important;
+    }
     /* Remove the outlined product-type label to free space for card details. */
     html body .product-viewport .rail > .story .product-category {
       display: none !important;
