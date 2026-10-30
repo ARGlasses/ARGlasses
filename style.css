@@ -1476,3 +1476,37 @@ html body a.shop-all-btn:focus {
 }
 
 /* mobile-fold-editorial-reading-optimisation */
+
+
+/* Final safety net for other non-homepage content pages using the shared stylesheet.
+   The homepage product viewport is explicitly excluded. */
+@media screen and (max-width: 900px) {
+  html body:not(:has(.product-viewport)) main h1,
+  html body:not(:has(.product-viewport)) main h2,
+  html body:not(:has(.product-viewport)) main h3 {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    line-height: 1.28 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    text-wrap: pretty !important;
+  }
+  html body:not(:has(.product-viewport)) main p,
+  html body:not(:has(.product-viewport)) main li,
+  html body:not(:has(.product-viewport)) main figcaption {
+    line-height: 1.65 !important;
+    overflow-wrap: anywhere !important;
+  }
+  html body:not(:has(.product-viewport)) main > section,
+  html body:not(:has(.product-viewport)) main article {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  html body:not(:has(.product-viewport)) main table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
