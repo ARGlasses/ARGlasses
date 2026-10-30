@@ -413,3 +413,12 @@ body.news-article .company-visual figcaption {
 /* Roadmap hero images: clean edge with no dark frame or shadow. */
 body.news-article .hero-img{border:0 !important;box-shadow:none !important;background:transparent !important;}
 body.news-article .hero-img img{border:0 !important;box-shadow:none !important;}
+
+
+/* Desktop News page: move the page content down by one line without
+   changing the fixed navigation, standard mobile, or Galaxy Fold layouts. */
+@media screen and (min-width: 901px) {
+  body.news-hub main {
+    padding-top: 1.5rem;
+  }
+}
