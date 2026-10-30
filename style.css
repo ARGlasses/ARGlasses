@@ -1041,3 +1041,20 @@ html body a.shop-all-btn:focus {
 @media (prefers-reduced-motion: reduce) {
   #cookie-banner .cookie-button { transition: none; }
 }
+
+
+/* Fold inner display: use a half-width navigation drawer across every page
+   that loads the shared site header and stylesheet. */
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  html body #primary-nav {
+    width: 50vw !important;
+    max-width: 50vw !important;
+    min-width: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    transform: translateX(-100%) !important;
+  }
+  html body #primary-nav.open {
+    transform: translateX(0) !important;
+  }
+}
