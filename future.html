@@ -251,6 +251,149 @@
 }
 </style>
 
+
+<style>
+/* Galaxy Z Fold inner display: let Future-page diagrams and copy flow without clipping.
+   Standard mobile and desktop retain their existing layouts. */
+@media screen and (min-width: 701px) and (max-width: 900px) {
+  html body.future-page main.future-experience {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+  }
+  html body.future-page main.future-experience > section.fx-chapter {
+    display: block;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    scroll-snap-align: none !important;
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+
+  /* Timeline: diagram first, then the complete story and its three detail cells. */
+  html body.future-page .fx-timeline-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: minmax(260px, 34vh) auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  html body.future-page .fx-timeline-visual {
+    width: 100% !important;
+    min-height: 260px !important;
+    height: 34vh !important;
+    max-height: 340px !important;
+  }
+  html body.future-page .fx-timeline-story {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 1.25rem 0 0 !important;
+  }
+  html body.future-page .fx-story-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  /* Stack and scenarios: all cards and explanatory text remain in normal flow. */
+  html body.future-page .fx-stack-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    height: auto !important;
+  }
+  html body.future-page .fx-stack-card {
+    height: auto !important;
+    min-height: 120px !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  html body.future-page .fx-scenario-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  html body.future-page .fx-scenario-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: auto !important;
+    height: auto !important;
+  }
+  html body.future-page .fx-scenario-list button {
+    min-height: 76px !important;
+    height: auto !important;
+  }
+  html body.future-page .fx-scenario-stage {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 420px !important;
+    max-height: none !important;
+    overflow: hidden !important;
+  }
+  html body.future-page .fx-scenario-copy {
+    bottom: 8% !important;
+  }
+
+  /* Day section: restore the copy that was hidden at the tablet breakpoint. */
+  html body.future-page .fx-day {
+    grid-template-columns: minmax(0, 1fr) !important;
+    height: auto !important;
+  }
+  html body.future-page .fx-day-visual {
+    width: 100% !important;
+    height: 42vh !important;
+    min-height: 300px !important;
+    max-height: 420px !important;
+  }
+  html body.future-page .fx-day-copy {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-top: 1.5rem !important;
+  }
+  html body.future-page .fx-day-rule {
+    grid-template-columns: 55px 78px minmax(0, 1fr) !important;
+  }
+
+  /* Choice and research sections: keep all supporting copy visible. */
+  html body.future-page .fx-choice,
+  html body.future-page .fx-sources {
+    grid-template-columns: minmax(0, 1fr) !important;
+    height: auto !important;
+  }
+  html body.future-page .fx-choice-stage,
+  html body.future-page .fx-choice-card,
+  html body.future-page .fx-source-grid,
+  html body.future-page .fx-sources > div:first-child {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+  html body.future-page .fx-sources > div:first-child p {
+    display: block !important;
+  }
+  html body.future-page .fx-source-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html body.future-page .fx-final {
+    min-height: 420px !important;
+  }
+}
+</style>
+
 <script src="header.js" defer></script>
 <script>
 window.addEventListener("DOMContentLoaded",function(){
