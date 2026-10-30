@@ -15,7 +15,14 @@
 
     let consent = null;
     try { consent = window.localStorage.getItem(STORAGE_KEY); } catch (error) {}
-    if (consent === 'accepted' || consent === 'essential') return;
+    if (consent === 'accepted' || consent === 'essential') {
+      // Older versions could record optional categories as enabled. The current site
+      // has no optional trackers, so keep the stored compatibility record accurate.
+      try {
+        window.localStorage.setItem('cookiePreferences', JSON.stringify({ analytics: false, advertising: false }));
+      } catch (error) {}
+      return;
+    }
 
     const overlay = document.createElement('div');
     overlay.id = 'cookie-overlay';
