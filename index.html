@@ -196,25 +196,38 @@
         z-index: 55;
         pointer-events: none;
       }
+      /* Keep the original compact white indicators on mobile. */
       .dots button {
         pointer-events: auto;
-        width: 11px; height: 11px; border-radius: 999px;
-        border: 2px solid #087db5;
-        background: rgba(255,255,255,.96);
-        box-shadow: 0 1px 4px rgba(0,0,0,.28);
+        width: 8px; height: 8px; border-radius: 999px; border: 0;
+        background: rgba(255,255,255,.45);
         cursor: pointer;
         padding: 0;
-        transition: width .18s ease, background-color .18s ease, box-shadow .18s ease;
       }
       .dots button[aria-current="true"] {
-        width: 24px;
-        background: #087db5;
-        border-color: #087db5;
-        box-shadow: 0 1px 5px rgba(0,0,0,.3);
+        width: 22px;
+        background: white;
       }
-      .dots button:focus-visible {
-        outline: 2px solid #087db5;
-        outline-offset: 3px;
+      /* Larger, high-contrast indicators on desktop only. */
+      @media (min-width: 701px) {
+        .dots { gap: .6rem; }
+        .dots button {
+          width: 16px; height: 16px;
+          border: 2px solid #087db5;
+          background: rgba(255,255,255,.96);
+          box-shadow: 0 1px 4px rgba(0,0,0,.28);
+          transition: width .18s ease, background-color .18s ease, box-shadow .18s ease;
+        }
+        .dots button[aria-current="true"] {
+          width: 32px;
+          background: #087db5;
+          border-color: #087db5;
+          box-shadow: 0 1px 5px rgba(0,0,0,.3);
+        }
+        .dots button:focus-visible {
+          outline: 2px solid #087db5;
+          outline-offset: 3px;
+        }
       }
       @media (min-width: 1200px) {
         .arrow { width: 3.25rem; height: 3.25rem; }
