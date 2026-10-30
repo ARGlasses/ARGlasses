@@ -2694,4 +2694,36 @@
   }
 </style>
 
+
+<style id="fold-mobile-style-navigation-dots">
+  /* Match the compact white mobile indicators on the Fold inner display. */
+  @media screen and (min-width: 601px) and (max-width: 900px) {
+    html body .product-viewport .dots {
+      bottom: 1rem !important;
+      gap: .45rem !important;
+    }
+    html body .product-viewport .dots button {
+      width: 8px !important;
+      height: 8px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: rgba(255,255,255,.45) !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      transition: none !important;
+    }
+    html body .product-viewport .dots button[aria-current="true"] {
+      width: 22px !important;
+      height: 8px !important;
+      background: #fff !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    html body .product-viewport .dots button:focus-visible {
+      outline: 2px solid #087db5 !important;
+      outline-offset: 3px !important;
+    }
+  }
+</style>
+
 </body></html>
