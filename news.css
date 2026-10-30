@@ -419,6 +419,6 @@ body.news-article .hero-img img{border:0 !important;box-shadow:none !important;}
    changing the fixed navigation, standard mobile, or Galaxy Fold layouts. */
 @media screen and (min-width: 901px) {
   body.news-hub main {
-    padding-top: 4.5rem;
+    padding-top: 5.25rem;
   }
 }
