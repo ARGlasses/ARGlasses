@@ -2939,17 +2939,6 @@
       outline-offset: 2px;
       transition: outline-color 160ms ease, box-shadow 160ms ease;
     }
-    /* Enlarge only the product image while the pointer is directly over it. */
-    html body .product-viewport .rail > .story::after {
-      pointer-events: none;
-    }
-    html body .product-viewport .rail > .story img.bg {
-      transition: transform 180ms ease;
-      transform-origin: center center;
-    }
-    html body .product-viewport .rail > .story img.bg:hover {
-      transform: scale(1.15);
-    }
     html body .product-viewport .rail > .story:hover,
     html body .product-viewport .rail > .story:focus-within {
       outline-color: #aeb8c1;
@@ -2975,10 +2964,13 @@
       box-shadow: none !important;
       text-decoration: none !important;
     }
-    html body .product-viewport .rail > .story .story-actions a.amazon-button:hover {
-      background: #f4f6f8 !important;
-      border-color: #7f8d99 !important;
+    html body .product-viewport .rail > .story .story-actions a.amazon-button:hover,
+    html body .product-viewport .rail > .story .story-actions a.amazon-button:focus-visible {
+      background: #f0f7fc !important;
+      border-color: #0878bd !important;
       color: #064773 !important;
+      outline: 2px solid #0878bd !important;
+      outline-offset: 2px !important;
     }
   }
   @media (prefers-reduced-motion: reduce) {
