@@ -676,3 +676,56 @@ html body .product-viewport .rail > .story > picture > img.bg {
     right: .65rem !important;
   }
 }
+
+
+/* Follow-up correction: make the zoomed product photograph visibly rounded,
+   and restore the catalogue card's taller pre-tightening proportions. */
+.product-detail-layer.is-active .product-detail-morph-image {
+  border-radius: 30px !important;
+  clip-path: inset(0 round 30px) !important;
+  overflow: hidden !important;
+}
+.product-detail-layer.is-closing .product-detail-morph-image {
+  border-radius: 0 !important;
+  clip-path: inset(0 round 0) !important;
+}
+@media (max-width: 700px) {
+  .product-detail-layer.is-active .product-detail-morph-image {
+    border-radius: 22px !important;
+    clip-path: inset(0 round 22px) !important;
+  }
+}
+
+/* Restore the product cards' original taller footprint. Keep the card copy
+   in normal flow so the action buttons cannot sit on top of the bullet text. */
+@media (min-width: 901px) {
+  html body .product-viewport .rail > .story {
+    height: min(78svh, 700px) !important;
+    max-height: calc(100svh - 120px) !important;
+    min-height: 440px !important;
+  }
+  html body .product-viewport .rail > .story > .story-content {
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: .28rem !important;
+    padding: .65rem .65rem 1rem !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    transform: none !important;
+  }
+  html body .product-viewport .rail > .story .story-teaser {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+  html body .product-viewport .rail > .story .story-actions {
+    position: static !important;
+    flex: 0 0 auto !important;
+    margin: .45rem 0 0 !important;
+    padding: .25rem 0 .1rem !important;
+  }
+}
