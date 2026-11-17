@@ -332,12 +332,30 @@
     selected.clear();
     ids.slice(0, 3).forEach(id => { if (PRODUCTS.some(p => p.id === id)) selected.add(id); });
     if (selected.size < 2) return;
-    detailExpanded = false;
+
+    const dialog = $("gallery-compare-dialog");
+    if (dialog) {
+      dialog.hidden = true;
+      dialog.classList.remove("is-open");
+    }
+
+    // Desktop uses the in-gallery shortlist panel; mobile goes straight to the
+    // full specification table because the desktop preview rail is unavailable.
+    const mobile = window.matchMedia("(max-width: 760px)").matches;
+    detailExpanded = mobile;
     render();
     const url = new URL(window.location.href);
     url.searchParams.set("compare", [...selected].join(","));
     url.hash = "products";
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+
+    if (mobile) {
+      const section = $("comparison");
+      if (section) requestAnimationFrame(() => section.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start"
+      }));
+    }
   });
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{
     if (selected.size < 2) return;
