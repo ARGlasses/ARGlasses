@@ -1603,8 +1603,8 @@
           // Dismiss the prompt but keep selected products highlighted, so the
           // user can return to the carousel and choose the next product.
           closeDialog();
-          const carousel = document.querySelector(".product-viewport");
-          if (carousel) carousel.scrollIntoView({ behavior: "smooth", block: "center" });
+          // The picker was opened from the carousel. Keep the current scroll
+          // position; centring the carousel here makes the fixed header jump.
         });
         goButton.addEventListener("click", goCompare);
         save();
