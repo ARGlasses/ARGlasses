@@ -3213,8 +3213,18 @@
       top: -12px !important;
     }
   }
+
 </style>
 
+<style id="small-laptop-carousel-vertical-adjustment">
+  /* Smaller laptop screens: lower the carousel by half a line relative to
+     the standard desktop position, without affecting tablets or phones. */
+  @media screen and (min-width: 901px) and (max-width: 1599px) {
+    html body .product-viewport .rail > .story {
+      top: -16px !important;
+    }
+  }
+</style>
 
 <style id="comparison-scroll-header-clearance-v1">
   /* Intentional in-page navigation must stop below the shared site header. */
