@@ -143,7 +143,6 @@
     }
 
     function openDetails(card) {
-      if (window.matchMedia("(max-width: 700px)").matches) return;
       if (closing || layer.classList.contains("is-active")) return;
       const image = card.querySelector("img.bg");
       if (!image) return;
@@ -206,32 +205,23 @@
     });
 
     function syncImageAccessibility() {
-      const desktop = !window.matchMedia("(max-width: 700px)").matches;
       rail.querySelectorAll(".story img.bg").forEach(image => {
         const card = image.closest(".story");
-        if (desktop) {
-          image.tabIndex = 0;
-          image.removeAttribute("role");
-          image.setAttribute("aria-haspopup", "dialog");
-          const name = card && (card.dataset.productName || card.querySelector(".story-title")?.textContent.trim());
-          image.setAttribute("aria-label", "View details for " + (name || "product"));
-        } else {
-          image.removeAttribute("tabindex");
-          image.removeAttribute("role");
-          image.removeAttribute("aria-haspopup");
-          image.removeAttribute("aria-label");
-        }
+        image.tabIndex = 0;
+        image.setAttribute("role", "button");
+        image.setAttribute("aria-haspopup", "dialog");
+        const name = card && (card.dataset.productName || card.querySelector(".story-title")?.textContent.trim());
+        image.setAttribute("aria-label", "View details for " + (name || "product"));
       });
     }
     syncImageAccessibility();
-    rail.querySelectorAll(".story img.bg").forEach(image => {
-      const card = image.closest(".story");
-      image.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openDetails(card);
-        }
-      });
+
+    // Delegate keyboard handling so rebuilt carousel cards remain interactive.
+    rail.addEventListener("keydown", event => {
+      const image = event.target.closest && event.target.closest(".story img.bg");
+      if (!image || (event.key !== "Enter" && event.key !== " ")) return;
+      event.preventDefault();
+      openDetails(image.closest(".story"));
     });
 
     closeButton.addEventListener("click", closeDetails);
