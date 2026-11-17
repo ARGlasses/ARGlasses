@@ -27,6 +27,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=8"><link rel="stylesheet" href="compare.css?v=7"><link rel="stylesheet" href="product-hover.css"><link rel="stylesheet" href="homepage-polish.css?v=3"><link rel="stylesheet" href="product-detail.css?v=9">
   <style>
+    /* Reserve the fixed navigation's real layout space; fixed elements do not occupy document flow. */
+    body.comparison-page { padding-top: 56px !important; }
+    /* Avoid painting the unpositioned carousel at its default scroll offset. */
+    .product-viewport .rail { visibility: hidden; }
+    .product-viewport.is-carousel-ready .rail { visibility: visible; }
+
     /* Apply product action colours before the browser can paint the cards. */
     .product-viewport .story-content .story-actions a.amazon-button,
     .product-viewport .story-actions a.amazon-button {
@@ -2029,13 +2035,30 @@
         // Initialise with Snap Specs (2026) centred, without animating the page or rail.
         function initialise() {
           if (initialised) return;
-          initialised = true;
           const snapIndex = originals.findIndex(card => card.dataset.productId === 'snap-specs-2026');
-          centerOn(originals[snapIndex >= 0 ? snapIndex : 0], false);
+          const startingCard = originals[snapIndex >= 0 ? snapIndex : 0];
+          if (!startingCard || !rail.clientWidth) return;
+
+          // Freeze the initial state before the first visible paint: calculate
+          // geometry once, assign one scroll offset, then reveal the carousel.
+          refreshCardCenters();
+          const max = Math.max(0, rail.scrollWidth - rail.clientWidth);
+          rail.scrollLeft = Math.max(0, Math.min(max, targetLeft(startingCard)));
+          active = snapIndex >= 0 ? snapIndex : 0;
           updateUI();
+          initialised = true;
+          const viewport = rail.closest('.product-viewport');
+          if (viewport) viewport.classList.add('is-carousel-ready');
         }
-        if (document.readyState === 'complete') requestAnimationFrame(initialise);
-        else window.addEventListener('load', () => requestAnimationFrame(initialise), { once: true });
+
+        function initialiseWhenLayoutIsStable() {
+          const fontsReady = document.fonts && document.fonts.ready
+            ? document.fonts.ready
+            : Promise.resolve();
+          fontsReady.then(() => requestAnimationFrame(() => requestAnimationFrame(initialise)));
+        }
+        if (document.readyState === 'complete') initialiseWhenLayoutIsStable();
+        else window.addEventListener('load', initialiseWhenLayoutIsStable, { once: true });
       })();
     </script>
 
@@ -2378,19 +2401,7 @@
   </style>
 
 
-  <script>
-    // Start the product carousel with Snap Specs centred, then let visitors explore outward by capability.
-    window.addEventListener("DOMContentLoaded", function () {
-      const rail = document.querySelector(".product-viewport .rail");
-      const snap = rail && rail.querySelector('[data-product-id="snap-specs-2026"]');
-      if (!rail || !snap) return;
-      requestAnimationFrame(function () {
-        const railRect = rail.getBoundingClientRect();
-        const snapRect = snap.getBoundingClientRect();
-        rail.scrollLeft += snapRect.left - railRect.left - (rail.clientWidth - snap.clientWidth) / 2;
-      });
-    });
-  </script>
+  <!-- Carousel initial positioning is owned by the single gallery controller below. -->
 
   <style>
     /* Final card-spec layout overrides: all 12 facts remain readable at every breakpoint. */
