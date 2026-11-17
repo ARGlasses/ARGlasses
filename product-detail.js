@@ -66,6 +66,15 @@
     let closing = false;
     let closeTimer = 0;
     let originImageRect = null;
+    let suppressCardHoverUntilInput = false;
+
+    function releaseSuppressedCardHover() {
+      if (!suppressCardHoverUntilInput) return;
+      suppressCardHoverUntilInput = false;
+      gallery.classList.remove("suppress-card-hover");
+    }
+    document.addEventListener("pointermove", releaseSuppressedCardHover, { passive: true });
+    document.addEventListener("keydown", releaseSuppressedCardHover, true);
 
     function addSpecSection(section, product) {
       const rows = section.fields.filter(([, key]) => known(product[key]));
@@ -178,6 +187,8 @@
       layer.setAttribute("aria-hidden", "true");
       if (morphImage) morphImage.remove();
       morphImage = null;
+      gallery.classList.add("suppress-card-hover");
+      suppressCardHoverUntilInput = true;
       gallery.classList.remove("product-detail-open");
       document.body.style.overflow = "";
       closing = false;
