@@ -326,7 +326,7 @@
   });
 
   // Same-page entry point used by the product-card comparison dialog.
-  // Avoid a full navigation/reload, which re-injects the header and reflows the carousel.
+  // Keep the gallery in place and show the desktop product-card comparison preview.
   window.addEventListener("arglasses:gallery-compare", event => {
     const ids = Array.isArray(event.detail && event.detail.ids) ? event.detail.ids : [];
     selected.clear();
@@ -339,20 +339,23 @@
       dialog.classList.remove("is-open");
     }
 
-    // The card-level Compare action means "show me the comparison", not another
-    // confirmation step. Hide the shortlist panel and reveal the full table.
-    detailExpanded = true;
-    render();
     const url = new URL(window.location.href);
     url.searchParams.set("compare", [...selected].join(","));
-    url.hash = "comparison";
+    url.hash = "products";
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
 
-    const section = $("comparison");
-    if (section) requestAnimationFrame(() => section.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-      block: "start"
-    }));
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      // Preserve the established mobile detailed-comparison presentation.
+      detailExpanded = true;
+      render();
+      return;
+    }
+
+    // Desktop: restore the in-gallery product-card preview. The full spec table
+    // remains behind its explicit Details action; never scroll the page down.
+    detailExpanded = false;
+    renderPreview();
+    renderComparison();
   });
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{
     if (selected.size < 2) return;
