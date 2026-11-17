@@ -559,9 +559,10 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
   #comparison-preview { display: none !important; }
 }
 
-/* Small laptop: shift the positioned NEXT STEP panel right while preserving vertical centering. */
+/* Small laptop: move the positioned NEXT STEP panel right without changing its vertical centering. */
 @media (min-width: 901px) and (max-width: 1199px) {
   #comparison-preview .comparison-preview-actions {
-    transform: translate(24px, -50%);
+    right: calc(clamp(6rem, 10vw, 10rem) - 24px) !important;
+    transform: translateY(-50%) !important;
   }
 }
