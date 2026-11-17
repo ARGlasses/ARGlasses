@@ -211,12 +211,14 @@
         const card = image.closest(".product-card");
         if (desktop) {
           image.tabIndex = 0;
-          image.setAttribute("role", "button");
+          image.removeAttribute("role");
+          image.setAttribute("aria-haspopup", "dialog");
           const name = card && (card.dataset.productName || card.querySelector(".story-title")?.textContent.trim());
           image.setAttribute("aria-label", "View details for " + (name || "product"));
         } else {
           image.removeAttribute("tabindex");
           image.removeAttribute("role");
+          image.removeAttribute("aria-haspopup");
           image.removeAttribute("aria-label");
         }
       });
