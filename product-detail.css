@@ -549,3 +549,15 @@ html body .product-viewport .rail > .story > .story-content {
   .product-detail-specs { grid-template-columns: 1fr !important; }
   .product-detail-spec-section { padding: .65rem .75rem .55rem !important; }
 }
+
+/* Images inside picture elements fill a white image stage, rather than
+   inheriting any legacy blue card canvas through transparent pixels. */
+html body .product-viewport .rail > .story > picture > img.bg {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 1rem 1.25rem .5rem !important;
+  box-sizing: border-box !important;
+  object-fit: contain !important;
+  background-color: #fff !important;
+}
