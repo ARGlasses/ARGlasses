@@ -367,3 +367,39 @@
   .product-detail-close { top: .55rem !important; right: .65rem !important; }
   .product-detail-morph-image { border-radius: 18px !important; }
 }
+
+
+/* Final layout guardrails: keep the product artwork in its own left column. */
+.product-detail-layer.is-active .product-detail-visual { width: 46% !important; }
+.product-detail-morph-image {
+  z-index: 2 !important;
+  max-width: 40vw !important;
+  object-fit: contain !important;
+}
+.product-detail-content {
+  z-index: 4 !important;
+  inset: 0 0 0 46% !important;
+  background: transparent !important;
+}
+@media (max-width: 700px) {
+  .product-detail-layer.is-active .product-detail-visual { width: 100% !important; }
+  .product-detail-morph-image {
+    max-width: 84vw !important;
+    max-height: 31vh !important;
+  }
+  .product-detail-content { inset: 42% 0 0 !important; }
+}
+
+/* Product cards must use a neutral canvas; do not expose the legacy blue card fill. */
+html body .product-viewport .rail > .story,
+html body .product-viewport .rail > .story > picture,
+html body .product-viewport .rail > .story > img.bg {
+  background-color: #fff !important;
+}
+html body .product-viewport .rail > .story::after {
+  display: none !important;
+  background: none !important;
+}
+html body .product-viewport .rail > .story > img.bg {
+  mix-blend-mode: normal !important;
+}
