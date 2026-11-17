@@ -558,3 +558,10 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
 @media (max-width: 760px) {
   #comparison-preview { display: none !important; }
 }
+
+/* Small laptop: shift the positioned NEXT STEP panel right while preserving vertical centering. */
+@media (min-width: 901px) and (max-width: 1199px) {
+  #comparison-preview .comparison-preview-actions {
+    transform: translate(24px, -50%);
+  }
+}
