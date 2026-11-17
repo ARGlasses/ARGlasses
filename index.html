@@ -2904,83 +2904,20 @@
 </style>
 
 
-<style id="laptop-product-gallery-responsive-fix">
-@media screen and (min-width: 901px) and (max-width: 1599px) {
-  html body .product-viewport {
-    height:100svh!important; min-height:0!important; box-sizing:border-box!important;
-    padding:clamp(76px,10svh,96px) 0 28px!important; overflow:hidden!important;
+<style id="laptop-product-gallery-scale">
+  /* Laptop screens: preserve the original card design and simply scale it down
+     as one unit, so the image, copy and buttons keep their existing proportions. */
+  @media screen and (min-width: 901px) and (max-width: 1599px) {
+    html body .product-viewport .rail > .story {
+      zoom: .94;
+    }
   }
-  html body .product-viewport>.rail {
-    height:100%!important; min-height:0!important; box-sizing:border-box!important;
-    align-items:center!important; gap:clamp(1rem,2vw,1.5rem)!important;
-    padding:0 6vw!important; scroll-padding-inline:6vw!important;
+  @media screen and (min-width: 901px) and (max-width: 1599px) and (max-height: 760px) {
+    html body .product-viewport .rail > .story {
+      zoom: .90;
+    }
   }
-  html body .product-viewport>.rail>.story {
-    box-sizing:border-box!important; flex:0 0 min(78vw,1000px)!important;
-    width:min(78vw,1000px)!important; min-width:0!important; max-width:min(78vw,1000px)!important;
-    height:min(660px,calc(100svh - 132px))!important;
-    min-height:420px!important; max-height:calc(100svh - 132px)!important;
-    translate:none!important; transform:none!important;
-  }
-  html body .product-viewport>.rail>.story picture>img.bg {
-    height:46%!important; padding:.7rem 1.25rem .35rem!important;
-    object-fit:contain!important; transform:none!important;
-  }
-  html body .product-viewport>.rail>.story>.story-content {
-    position:absolute!important; inset:auto 0 0!important; width:100%!important;
-    height:54%!important; box-sizing:border-box!important; display:flex!important;
-    flex-direction:column!important; justify-content:flex-start!important;
-    align-items:stretch!important; gap:.28rem!important; padding:.75rem 1.25rem 1rem!important;
-    margin:0!important; overflow-x:hidden!important; overflow-y:auto!important;
-    overscroll-behavior:contain!important; background:#fff!important; transform:none!important;
-  }
-  html body .product-viewport>.rail>.story .story-kicker {
-    display:block!important; margin:0!important; font-size:.72rem!important; line-height:1.2!important;
-  }
-  html body .product-viewport>.rail>.story .story-title {
-    display:block!important; max-width:100%!important; margin:0!important;
-    font-size:clamp(1.05rem,1.35vw,1.3rem)!important; line-height:1.16!important;
-  }
-  html body .product-viewport>.rail>.story .story-teaser {
-    display:block!important; flex:0 0 auto!important; width:100%!important;
-    max-height:none!important; min-height:0!important; margin:.1rem 0 0!important;
-    overflow:visible!important; white-space:normal!important; overflow-wrap:anywhere!important;
-    font-size:clamp(.68rem,.72vw,.78rem)!important; line-height:1.24!important;
-  }
-  html body .product-viewport>.rail>.story .story-teaser>span {
-    display:block!important; width:100%!important; height:auto!important; margin:0 0 .08rem!important;
-    white-space:normal!important; overflow:visible!important; overflow-wrap:anywhere!important;
-    font-size:inherit!important; line-height:inherit!important;
-  }
-  html body .product-viewport>.rail>.story .story-actions {
-    position:static!important; display:flex!important; flex:0 0 auto!important;
-    flex-wrap:wrap!important; gap:.45rem!important; margin:.35rem 0 0!important;
-    padding:0 0 .1rem!important; transform:none!important;
-  }
-  html body .product-viewport>.rail>.story .story-actions a,
-  html body .product-viewport>.rail>.story .story-actions button {
-    max-width:100%!important; white-space:normal!important; overflow-wrap:anywhere!important;
-  }
-  html body .product-viewport>.arrow { top:calc(50% + 34px)!important; z-index:80!important; }
-  html body .product-viewport>.arrow.left {
-    left:max(12px,calc((100vw - min(78vw,1000px))/2 - 3.75rem))!important;
-  }
-  html body .product-viewport>.arrow.right {
-    right:max(12px,calc((100vw - min(78vw,1000px))/2 - 3.75rem))!important;
-  }
-  html body .product-viewport>.dots { bottom:.45rem!important; z-index:85!important; }
-}
-@media screen and (min-width:901px) and (max-width:1599px) and (max-height:650px) {
-  html body .product-viewport { padding:68px 0 20px!important; }
-  html body .product-viewport>.rail>.story {
-    height:calc(100svh - 100px)!important; max-height:calc(100svh - 100px)!important; min-height:0!important;
-  }
-  html body .product-viewport>.rail>.story picture>img.bg { height:34%!important; }
-  html body .product-viewport>.rail>.story>.story-content {
-    height:66%!important; padding:.55rem 1rem .7rem!important; gap:.2rem!important;
-  }
-  html body .product-viewport>.arrow { top:calc(50% + 24px)!important; }
-}
 </style>
+
 
 </body></html>
