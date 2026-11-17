@@ -3019,4 +3019,141 @@
   }
 </style>
 
+
+<style id="gallery-final-layout-and-image-normalization-v1">
+  /* One image stage for both direct IMG cards and PICTURE-wrapped cards.
+     This removes wrapper-dependent offsets and keeps every product centred. */
+  html body .product-viewport .rail > .story {
+    background: #fff !important;
+    background-image: none !important;
+  }
+  html body .product-viewport .rail > .story > picture {
+    position: absolute !important;
+    inset: 0 0 auto 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 38% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+  html body .product-viewport .rail > .story > picture > img.bg,
+  html body .product-viewport .rail > .story > img.bg {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: .65rem .8rem .35rem !important;
+    box-sizing: border-box !important;
+    object-fit: contain !important;
+    object-position: 50% 50% !important;
+    background: #fff !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    mix-blend-mode: normal !important;
+    transform: none !important;
+  }
+  /* Keyboard focus belongs on the card, not as a blue frame around the artwork. */
+  html body .product-viewport .rail > .story img.bg:focus,
+  html body .product-viewport .rail > .story img.bg:focus-visible {
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+  html body .product-viewport .rail > .story::before,
+  html body .product-viewport .rail > .story::after {
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Restore the gallery to the area below the shared site header. This prevents
+     the viewport from extending beneath the fold and clipping the dot controls. */
+  @media (min-width: 901px) {
+    html body .product-viewport {
+      height: calc(100svh - 72px) !important;
+      min-height: 520px !important;
+      max-height: calc(100svh - 72px) !important;
+      overflow: hidden !important;
+    }
+    html body .product-viewport .rail {
+      height: 100% !important;
+      min-height: 0 !important;
+      align-items: center !important;
+    }
+    html body .product-viewport .rail > .story {
+      height: min(72svh, 680px) !important;
+      max-height: calc(100svh - 160px) !important;
+      min-height: 420px !important;
+      align-self: center !important;
+      translate: none !important;
+    }
+    html body .product-viewport .rail > .story > picture,
+    html body .product-viewport .rail > .story > img.bg {
+      height: 38% !important;
+    }
+    html body .product-viewport .dots {
+      bottom: .8rem !important;
+      transform: none !important;
+      z-index: 90 !important;
+    }
+    html body .product-viewport > .arrow {
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 90 !important;
+    }
+  }
+  @media (min-width: 701px) and (max-width: 1099px) {
+    html body .product-viewport {
+      height: calc(100svh - 72px) !important;
+      min-height: 500px !important;
+      max-height: calc(100svh - 72px) !important;
+    }
+    html body .product-viewport .rail > .story {
+      height: min(74svh, 680px) !important;
+      max-height: calc(100svh - 150px) !important;
+      min-height: 400px !important;
+      translate: none !important;
+    }
+    html body .product-viewport .rail > .story > picture,
+    html body .product-viewport .rail > .story > img.bg {
+      height: 36% !important;
+    }
+    html body .product-viewport .dots {
+      bottom: .65rem !important;
+      transform: none !important;
+      z-index: 90 !important;
+    }
+  }
+  @media (max-width: 700px) {
+    html body .product-viewport {
+      height: calc(100svh - 64px) !important;
+      min-height: 480px !important;
+      max-height: calc(100svh - 64px) !important;
+    }
+    html body .product-viewport .rail > .story > picture,
+    html body .product-viewport .rail > .story > img.bg {
+      height: 42% !important;
+    }
+    html body .product-viewport .rail > .story > picture > img.bg,
+    html body .product-viewport .rail > .story > img.bg {
+      padding: .55rem .7rem .25rem !important;
+    }
+    html body .product-viewport .dots {
+      bottom: .55rem !important;
+      transform: none !important;
+      z-index: 90 !important;
+    }
+  }
+</style>
+
 </body></html>
