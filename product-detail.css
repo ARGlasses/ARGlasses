@@ -746,3 +746,11 @@ html body .product-viewport .rail > .story > picture > img.bg {
     border-top: 0 !important;
   }
 }
+
+
+/* After a detail-view return, do not mistake the stationary pointer or restored image focus for a fresh card hover. */
+.product-viewport.suppress-card-hover .rail > .story .story-actions {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
