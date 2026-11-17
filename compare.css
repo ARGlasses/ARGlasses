@@ -363,6 +363,11 @@ body.comparison-page .compare-hero .compare-trust span:before{color:#1681b7}
 .comparison-preview-card .product-price { font-size: .9rem !important; color: #343b44 !important; font-weight: 600 !important; }
 .comparison-preview-card .story-actions { margin-top: auto !important; padding-top: .35rem; }
 .comparison-preview-card .story-actions a { font-size: .85rem !important; padding: .5rem .65rem !important; }
+/* Small laptop screens: give the NEXT STEP panel a little extra separation. */
+@media (min-width: 901px) and (max-width: 1199px) {
+  .comparison-preview-actions { transform: translateX(6px); }
+}
+
 .comparison-preview-actions {
   align-self: stretch;
   box-sizing: border-box;
