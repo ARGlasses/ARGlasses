@@ -808,7 +808,40 @@
 
 </head>
 <body class="comparison-page">
-  <div id="site-header"></div>
+  <!-- Shared header is rendered in the initial HTML on the homepage to prevent a late-appearing navigation bar. Keep in sync with header.html. -->
+<nav class="container-fluid dark-nav" id="navbar" role="navigation">
+  <div class="nav-inner">
+    <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul>
+      <li>
+        <strong class="logo">
+          <a href="index.html" style="display:flex;align-items:center;gap:0;color:#000 !important;text-decoration:none;">
+            <img src="images/logo96x96.webp" alt="AR Glasses Logo" width="40" height="40" loading="eager" decoding="async" />
+            AR glasses
+          </a>
+        </strong>
+      </li>
+    </ul>
+    <ul id="primary-nav">
+      <li class="drawer-header">
+        <div class="drawer-brand">
+          <img src="images/logo96x96.webp" alt="AR Glasses Logo" width="40" height="40" loading="eager" decoding="async" />
+          <span>AR glasses</span>
+        </div>
+        <button class="drawer-close" aria-label="Close menu" aria-controls="primary-nav">&times;</button>
+      </li>
+      <li><a href="/guide">Guide</a></li>
+      <li><a href="/reviews">Reviews</a></li>
+      <li><a href="/news">News</a></li>
+      <li><a href="/database">Database</a></li>
+      <li><a href="sales.html" class="sales-nav-link">Sales</a></li>
+      <li><a href="future.html">Future</a></li>
+    </ul>
+  </div>
+</nav>
+<div id="backdrop" aria-hidden="true"></div>
     <!-- Product gallery: one slide per comparison product, sorted A–Z -->
     <section id="products" class="viewport product-viewport" aria-label="Alphabetical product gallery">
 <button class="arrow left" aria-label="Previous product" disabled>
@@ -1501,12 +1534,6 @@
     <div class="footer-content"><div class="footer-brand"><div class="footer-logo-group"><strong class="logo"><a href="index.html" style="display:flex;align-items:center;gap:0;color:#000 !important;text-decoration:none;"><img src="images/logo96x96.webp" alt="AR Glasses Logo" width="40" height="40" style="height:32px;width:auto;" />AR glasses</a></strong></div><p>Change how you see the world</p></div><div class="footer-links"><strong>Site Terms and Policies</strong><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="cookie-policy.html">Cookie Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div></div>
     <div class="footer-bottom"><small>&copy; 2026 ARglasses.com • All rights reserved</small></div>
   </footer>
-  <script>
-    window.addEventListener("DOMContentLoaded", function () {
-      const mount=document.getElementById("site-header");
-      fetch("./header.html?v=8").then(r=>r.text()).then(html=>{mount.innerHTML=html;if(typeof window.__initHeader==="function")window.__initHeader();});
-    });
-  </script>
     <script>
       (function () {
         const dialog = document.getElementById("gallery-compare-dialog");
