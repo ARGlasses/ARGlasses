@@ -2939,6 +2939,17 @@
       outline-offset: 2px;
       transition: outline-color 160ms ease, box-shadow 160ms ease;
     }
+    /* Enlarge only the product image while the pointer is directly over it. */
+    html body .product-viewport .rail > .story::after {
+      pointer-events: none;
+    }
+    html body .product-viewport .rail > .story > img.bg {
+      transition: transform 180ms ease;
+      transform-origin: center center;
+    }
+    html body .product-viewport .rail > .story > img.bg:hover {
+      transform: scale(1.05);
+    }
     html body .product-viewport .rail > .story:hover,
     html body .product-viewport .rail > .story:focus-within {
       outline-color: #aeb8c1;
@@ -2972,6 +2983,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     html body .product-viewport .rail > .story,
+    html body .product-viewport .rail > .story > img.bg,
     html body .product-viewport .rail > .story .story-actions {
       transition: none !important;
     }
