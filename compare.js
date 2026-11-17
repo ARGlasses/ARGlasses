@@ -325,6 +325,20 @@
     if(target.id==="differences-only"){state.differences=target.checked;render();}
   });
 
+  // Same-page entry point used by the product-card comparison dialog.
+  // Avoid a full navigation/reload, which re-injects the header and reflows the carousel.
+  window.addEventListener("arglasses:gallery-compare", event => {
+    const ids = Array.isArray(event.detail && event.detail.ids) ? event.detail.ids : [];
+    selected.clear();
+    ids.slice(0, 3).forEach(id => { if (PRODUCTS.some(p => p.id === id)) selected.add(id); });
+    if (selected.size < 2) return;
+    detailExpanded = false;
+    render();
+    const url = new URL(window.location.href);
+    url.searchParams.set("compare", [...selected].join(","));
+    url.hash = "products";
+    window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+  });
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{
     if (selected.size < 2) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
