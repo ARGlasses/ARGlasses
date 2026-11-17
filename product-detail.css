@@ -729,3 +729,20 @@ html body .product-viewport .rail > .story > picture > img.bg {
     padding: .25rem 0 .1rem !important;
   }
 }
+
+/* Detail view: remove the vertical image/content separator (and its mobile
+   horizontal equivalent) so the two areas read as one continuous canvas. */
+.product-detail-visual::after {
+  display: none !important;
+  content: none !important;
+}
+.product-detail-content {
+  border-left: 0 !important;
+  border-top: 0 !important;
+}
+@media (max-width: 700px) {
+  .product-detail-content {
+    border-left: 0 !important;
+    border-top: 0 !important;
+  }
+}
