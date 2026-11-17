@@ -65,6 +65,7 @@
     let morphImage = null;
     let closing = false;
     let closeTimer = 0;
+    let originImageRect = null;
 
     function addSpecSection(section, product) {
       const rows = section.fields.filter(([, key]) => known(product[key]));
@@ -155,6 +156,7 @@
       morphImage.alt = image.alt || heading.textContent + " product image";
       morphImage.src = image.currentSrc || image.src;
       const startRect = imageRect(image);
+      originImageRect = startRect;
       setImageRect(morphImage, startRect);
       layer.appendChild(morphImage);
 
@@ -182,17 +184,22 @@
       if (selectedImage && selectedImage.isConnected) selectedImage.focus({ preventScroll: true });
       selectedCard = null;
       selectedImage = null;
+      originImageRect = null;
     }
 
     function closeDetails() {
       if (!layer.classList.contains("is-active") || closing) return;
-      // Closing is intentionally immediate: remove the floating image before
-      // restoring the carousel so there is no reverse image fade or morph.
       closing = true;
       if (closeTimer) window.clearTimeout(closeTimer);
-      if (morphImage) morphImage.remove();
-      morphImage = null;
-      finishClose();
+      layer.classList.add("is-closing");
+      // Return the exact same image element to the exact screen rectangle it
+      // occupied before opening. The card stays hidden until the morph ends.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (morphImage && originImageRect) setImageRect(morphImage, originImageRect);
+        });
+      });
+      closeTimer = window.setTimeout(finishClose, reducedMotion.matches ? 60 : 980);
     }
 
     rail.addEventListener("click", event => {
