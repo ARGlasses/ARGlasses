@@ -199,16 +199,16 @@
     rail.addEventListener("click", event => {
       if (event.defaultPrevented) return;
       const interactive = event.target.closest("a, button, input, select, textarea, [role='button']");
-      if (interactive && !interactive.matches(".product-card img.bg")) return;
-      const card = event.target.closest(".product-card");
+      if (interactive && !interactive.matches(".story img.bg")) return;
+      const card = event.target.closest(".story");
       if (!card || !rail.contains(card)) return;
       openDetails(card);
     });
 
     function syncImageAccessibility() {
       const desktop = !window.matchMedia("(max-width: 700px)").matches;
-      rail.querySelectorAll(".product-card img.bg").forEach(image => {
-        const card = image.closest(".product-card");
+      rail.querySelectorAll(".story img.bg").forEach(image => {
+        const card = image.closest(".story");
         if (desktop) {
           image.tabIndex = 0;
           image.removeAttribute("role");
@@ -224,8 +224,8 @@
       });
     }
     syncImageAccessibility();
-    rail.querySelectorAll(".product-card img.bg").forEach(image => {
-      const card = image.closest(".product-card");
+    rail.querySelectorAll(".story img.bg").forEach(image => {
+      const card = image.closest(".story");
       image.addEventListener("keydown", event => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
