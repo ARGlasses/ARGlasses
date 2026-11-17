@@ -57,7 +57,7 @@
   </style>
   <link rel="icon" href="images/logo40x40.webp" type="image/webp">
   <script src="./header.js?v=6" defer></script><script src="./products-data.js" defer></script>
-  <script src="./compare.js?v=6" defer></script><script src="./product-detail.js?v=5" defer></script>
+  <script src="./compare.js?v=7" defer></script><script src="./product-detail.js?v=5" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -474,7 +474,7 @@
       #gallery-compare-dialog button{margin:0;min-height:2.35rem;padding:.5rem .75rem;font-size:.85rem}
       #gallery-compare-dialog .gallery-compare-close{position:absolute;top:.55rem;right:.55rem;border:0;background:#f0f4f7;color:#263746;border-radius:50%;width:2rem;height:2rem;min-height:2rem;padding:0;font-size:1.15rem;line-height:1}
       @media(max-width:480px){#gallery-compare-dialog{width:calc(100vw - 1.5rem)}#gallery-compare-dialog form{padding:.85rem}#gallery-compare-dialog .gallery-compare-actions{gap:.4rem!important}#gallery-compare-dialog button{padding:.45rem .6rem}}
-      .product-viewport .story.product-card.gallery-compare-picked{position:relative;border:3px solid #087db5!important;background:#edf8ff!important;box-shadow:inset 0 0 0 2px rgba(8,125,181,.16),0 0 0 3px rgba(8,125,181,.2),0 12px 30px rgba(8,75,115,.2)!important;}
+      .product-viewport .story.product-card.gallery-compare-picked{position:relative;box-sizing:border-box;outline:3px solid #087db5!important;outline-offset:-3px;border-color:transparent!important;background:#edf8ff!important;box-shadow:inset 0 0 0 2px rgba(8,125,181,.16),0 0 0 3px rgba(8,125,181,.2),0 12px 30px rgba(8,75,115,.2)!important;}
       .product-viewport .story.product-card.gallery-compare-picked .story-content{background:#edf8ff!important;}
       .product-viewport .story.product-card.gallery-compare-picked::before{content:'✓ Selected to compare';position:absolute;top:.65rem;left:.65rem;z-index:5;padding:.35rem .6rem;border-radius:999px;background:#087db5;color:#fff;font:600 .72rem/1.2 Poppins,system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.14);pointer-events:none;}
       @media(prefers-reduced-motion:reduce){.product-viewport .story.product-card{transition:none!important}}
@@ -1540,7 +1540,11 @@
           if (selected.length < 2) return;
           const ids = selected.slice(0, 3);
           try { sessionStorage.removeItem(storageKey); } catch (_) {}
-          window.location.href = "/?compare=" + encodeURIComponent(ids.join(","));
+          const url = new URL(window.location.href);
+          url.searchParams.set("compare", ids.join(","));
+          url.hash = "products";
+          window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+          window.dispatchEvent(new CustomEvent("arglasses:gallery-compare", { detail: { ids } }));
         }
         function showDialog() {
           selectedText.textContent = "Selected: " + selected.map(id => names.get(id)).join(" · ");
@@ -3179,6 +3183,20 @@
   #products,
   #comparison {
     scroll-margin-top: 84px !important;
+  }
+</style>
+\n
+<style id="comparison-no-carousel-motion-v1">
+  @media (min-width: 761px) {
+    .product-viewport.comparison-filter-active .rail,
+    .product-viewport.comparison-filter-active .story {
+      scroll-behavior: auto !important;
+      transition: none !important;
+      animation: none !important;
+    }
+    .product-viewport.comparison-filter-active .story {
+      transform: none !important;
+    }
   }
 </style>
 \n</body></html>
