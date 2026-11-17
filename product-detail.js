@@ -138,8 +138,8 @@
       }
       const left = window.innerWidth >= 1100 ? window.innerWidth * .045 : window.innerWidth * .025;
       const top = window.innerHeight * .14;
-      const width = window.innerWidth >= 1100 ? window.innerWidth * .46 : window.innerWidth * .43;
-      return { left, top, width, height: window.innerHeight * .7 };
+      const width = window.innerWidth >= 1100 ? window.innerWidth * .38 : window.innerWidth * .34;
+      return { left, top: window.innerHeight * .16, width, height: window.innerHeight * .66 };
     }
 
     function openDetails(card) {
@@ -186,13 +186,13 @@
 
     function closeDetails() {
       if (!layer.classList.contains("is-active") || closing) return;
+      // Closing is intentionally immediate: remove the floating image before
+      // restoring the carousel so there is no reverse image fade or morph.
       closing = true;
-      layer.classList.add("is-closing");
-      layer.classList.remove("is-active");
-      if (morphImage && selectedImage && selectedImage.isConnected) {
-        setImageRect(morphImage, imageRect(selectedImage));
-      }
-      closeTimer = window.setTimeout(finishClose, reducedMotion.matches ? 60 : 980);
+      if (closeTimer) window.clearTimeout(closeTimer);
+      if (morphImage) morphImage.remove();
+      morphImage = null;
+      finishClose();
     }
 
     rail.addEventListener("click", event => {
