@@ -84,6 +84,19 @@
 
     // Open/close drawer and handle submenu toggles
     document.addEventListener('click', (e) => {
+      // The homepage logo must not reload the homepage itself. A same-document
+      // reload tears down the fixed header and restarts the full-screen gallery,
+      // which looks like the header vanishes and the page jumps.
+      const homeLink = e.target.closest('#navbar .logo a');
+      if (homeLink) {
+        const currentPath = location.pathname.replace(/\\/+$/, '') || '/';
+        if (currentPath === '/' || currentPath === '/index.html') {
+          e.preventDefault();
+          if (menu && menu.classList.contains('open')) closeDrawer();
+          return;
+        }
+      }
+
       const toggle = e.target.closest('#menu-toggle');
       if (toggle) {
         e.preventDefault();
