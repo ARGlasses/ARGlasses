@@ -2932,6 +2932,17 @@
 
 
 <style id="desktop-card-hover-actions">
+  /* Restore the desktop product-image hover zoom without affecting card layout or action buttons. */
+  @media screen and (min-width: 901px) {
+    html body .product-viewport .rail > .story img.bg {
+      transition: transform 180ms ease !important;
+      transform-origin: center center !important;
+    }
+    html body .product-viewport .rail > .story img.bg:hover {
+      transform: scale(1.15) !important;
+    }
+  }
+
   /* Desktop: make the active product card and its actions clear on hover/focus. */
   @media screen and (min-width: 901px) {
     html body .product-viewport .rail > .story {
