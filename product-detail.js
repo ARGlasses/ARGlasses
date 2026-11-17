@@ -196,7 +196,9 @@
     }
 
     rail.addEventListener("click", event => {
-      if (event.defaultPrevented || event.target.closest("a, button, input, select, textarea, [role='button']")) return;
+      if (event.defaultPrevented) return;
+      const interactive = event.target.closest("a, button, input, select, textarea, [role='button']");
+      if (interactive && !interactive.matches(".product-card img.bg")) return;
       const card = event.target.closest(".product-card");
       if (!card || !rail.contains(card)) return;
       openDetails(card);
