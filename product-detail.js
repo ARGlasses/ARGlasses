@@ -23,7 +23,7 @@
       enterprise: "Enterprise AR"
     };
     const sections = [
-      { title: "Overview", fields: [["Price / availability", "priceText"], ["Release year", "year"]] },
+      { title: "Overview", fields: [["Price / availability", "priceText"]] },
       { title: "Display & optics", fields: [["Display technology", "display"], ["Resolution", "resolution"], ["Field of view", "fov"], ["Refresh rate", "refresh"], ["Brightness", "brightness"]] },
       { title: "Tracking & sensors", fields: [["Tracking", "tracking"]] },
       { title: "Cameras & audio", fields: [["Camera", "camera"], ["Audio", "audio"]] },
@@ -106,7 +106,7 @@
       sections.forEach(section => addSpecSection(section, product));
       const meta = document.createElement("p");
       meta.className = "product-detail-year";
-      meta.textContent = [categoryText, known(product.year) ? String(product.year) : ""].filter(Boolean).join("  ·  ");
+      meta.textContent = known(product.year) ? "Introduced " + String(product.year) : "";
       if (meta.textContent) specs.prepend(meta);
     }
 
