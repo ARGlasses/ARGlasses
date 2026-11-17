@@ -403,3 +403,149 @@ html body .product-viewport .rail > .story::after {
 html body .product-viewport .rail > .story > img.bg {
   mix-blend-mode: normal !important;
 }
+
+
+/* Polished reverse morph: the floating artwork travels back to its captured
+   source rectangle before the carousel is revealed again. */
+.product-detail-layer.is-closing .product-detail-backdrop {
+  opacity: 0 !important;
+  transition: opacity .72s cubic-bezier(.2,.75,.2,1) !important;
+}
+.product-detail-layer.is-closing .product-detail-content {
+  opacity: 0 !important;
+  transform: translateY(10px) !important;
+  transition: opacity .38s ease, transform .42s ease !important;
+}
+.product-detail-layer.is-closing .product-detail-morph-image {
+  opacity: 0 !important;
+  transition:
+    left .92s cubic-bezier(.18,.78,.2,1),
+    top .92s cubic-bezier(.18,.78,.2,1),
+    width .92s cubic-bezier(.18,.78,.2,1),
+    height .92s cubic-bezier(.18,.78,.2,1),
+    opacity .28s ease .64s !important;
+}
+
+/* Clear editorial hierarchy for product specifications. */
+.product-detail-content {
+  padding-top: clamp(1.6rem, 4vh, 3rem) !important;
+}
+.product-detail-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  letter-spacing: .16em !important;
+  font-size: .62rem !important;
+}
+.product-detail-eyebrow::after {
+  content: "";
+  width: 2.4rem;
+  height: 1px;
+  background: #9bb0be;
+}
+.product-detail-heading {
+  letter-spacing: -.045em !important;
+  line-height: 1.04 !important;
+  margin-top: .2rem !important;
+}
+.product-detail-brand {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: .3rem .65rem;
+  border: 1px solid #dce5eb;
+  border-radius: 999px;
+  background: rgba(255,255,255,.72);
+  color: #587083 !important;
+  font-size: .68rem !important;
+  letter-spacing: .025em !important;
+}
+.product-detail-summary {
+  max-width: 60ch !important;
+  color: #4b5d6b !important;
+  font-size: .84rem !important;
+  line-height: 1.6 !important;
+  margin: .85rem 0 1.1rem !important;
+}
+.product-detail-specs {
+  column-gap: .85rem !important;
+  row-gap: .65rem !important;
+}
+.product-detail-spec-section {
+  padding: .75rem .85rem .65rem !important;
+  border: 1px solid #e2e9ee !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,.78) !important;
+  box-shadow: 0 2px 8px rgba(34,55,72,.035) !important;
+}
+.product-detail-section-title {
+  display: flex;
+  align-items: center;
+  min-height: 1.5rem;
+  color: #2b4658 !important;
+  font-size: .69rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .055em !important;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e7edf1 !important;
+  margin-bottom: .35rem !important;
+}
+.product-detail-spec-row {
+  grid-template-columns: minmax(88px, .43fr) minmax(0, 1fr) !important;
+  gap: .6rem !important;
+  padding: .34rem 0 !important;
+  border-bottom: 1px solid #edf1f4 !important;
+}
+.product-detail-spec-row:last-child { border-bottom: 0 !important; }
+.product-detail-spec-label {
+  color: #7a8b97 !important;
+  font-size: .64rem !important;
+  line-height: 1.42 !important;
+}
+.product-detail-spec-value {
+  color: #263c4b !important;
+  font-size: .7rem !important;
+  line-height: 1.45 !important;
+  font-weight: 500 !important;
+}
+.product-detail-year {
+  margin: .4rem 0 .65rem !important;
+}
+
+/* Product artwork sits on a consistent white stage. The old blue hero-card
+   fill and gradient are explicitly removed from every gallery image wrapper. */
+html body .product-viewport .rail > .story {
+  background: #fff !important;
+  background-image: none !important;
+}
+html body .product-viewport .rail > .story > picture {
+  position: absolute !important;
+  inset: 0 0 auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: 58% !important;
+  background: #fff !important;
+  isolation: isolate !important;
+}
+html body .product-viewport .rail > .story > picture > img.bg,
+html body .product-viewport .rail > .story > img.bg {
+  background: #fff !important;
+  background-color: #fff !important;
+  background-image: none !important;
+  z-index: 1 !important;
+  object-fit: contain !important;
+}
+html body .product-viewport .rail > .story::before,
+html body .product-viewport .rail > .story::after {
+  background: none !important;
+  box-shadow: none !important;
+}
+html body .product-viewport .rail > .story > .story-content {
+  z-index: 2 !important;
+  background: #fff !important;
+}
+@media (max-width: 700px) {
+  html body .product-viewport .rail > .story > picture { height: 54% !important; }
+  .product-detail-specs { grid-template-columns: 1fr !important; }
+  .product-detail-spec-section { padding: .65rem .75rem .55rem !important; }
+}
