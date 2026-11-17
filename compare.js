@@ -263,7 +263,7 @@
     const rail = $("comparison-preview-rail");
     if (!preview || !rail) return;
     const desktop = !window.matchMedia("(max-width: 760px)").matches;
-    const active = desktop && selected.size >= 2;
+    const active = desktop && selected.size >= 2 && !detailExpanded;
     preview.hidden = !active;
     // Keep the actual carousel cards in place so their existing dimensions,
     // typography, imagery, and layout are unchanged. Only filter the desktop rail.
@@ -339,23 +339,20 @@
       dialog.classList.remove("is-open");
     }
 
-    // Desktop uses the in-gallery shortlist panel; mobile goes straight to the
-    // full specification table because the desktop preview rail is unavailable.
-    const mobile = window.matchMedia("(max-width: 760px)").matches;
-    detailExpanded = mobile;
+    // The card-level Compare action means "show me the comparison", not another
+    // confirmation step. Hide the shortlist panel and reveal the full table.
+    detailExpanded = true;
     render();
     const url = new URL(window.location.href);
     url.searchParams.set("compare", [...selected].join(","));
-    url.hash = "products";
+    url.hash = "comparison";
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
 
-    if (mobile) {
-      const section = $("comparison");
-      if (section) requestAnimationFrame(() => section.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        block: "start"
-      }));
-    }
+    const section = $("comparison");
+    if (section) requestAnimationFrame(() => section.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    }));
   });
   if($("compare-selected")) $("compare-selected").addEventListener("click",()=>{
     if (selected.size < 2) return;
@@ -384,6 +381,7 @@
   if($("comparison-preview-details")) $("comparison-preview-details").addEventListener("click",()=>{
     if (selected.size < 2) return;
     detailExpanded = true;
+    renderPreview();
     renderComparison();
     const section = $("comparison");
     if (section) section.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
