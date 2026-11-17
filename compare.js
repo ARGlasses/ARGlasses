@@ -345,8 +345,9 @@
     const url = new URL(window.location.href);
     url.hash = "products";
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
-    const gallery = $("products");
-    if (gallery) gallery.scrollIntoView({behavior, block:"start"});
+    // Desktop comparison is an overlay on the gallery. Do not scroll the page:
+    // the visitor is already in the right place and scrolling to block:start
+    // pushes the shared header out of view.
   });
   if($("comparison-preview-details")) $("comparison-preview-details").addEventListener("click",()=>{
     if (selected.size < 2) return;
