@@ -561,3 +561,118 @@ html body .product-viewport .rail > .story > picture > img.bg {
   object-fit: contain !important;
   background-color: #fff !important;
 }
+
+
+/* Detail-view polish v1: rounded image only after the morph reaches its zoomed state,
+   plus one consistent, scrollable specification layout for every product. */
+.product-detail-morph-image {
+  border-radius: 0 !important;
+  transition:
+    left .92s cubic-bezier(.18,.78,.2,1),
+    top .92s cubic-bezier(.18,.78,.2,1),
+    width .92s cubic-bezier(.18,.78,.2,1),
+    height .92s cubic-bezier(.18,.78,.2,1),
+    border-radius .72s cubic-bezier(.2,.7,.2,1),
+    opacity .32s ease !important;
+}
+.product-detail-layer.is-active .product-detail-morph-image {
+  border-radius: 26px !important;
+}
+.product-detail-layer.is-closing .product-detail-morph-image {
+  border-radius: 0 !important;
+}
+
+/* The information column is the only scrolling region; its structure is identical
+   across products, regardless of how many specification fields are available. */
+.product-detail-content {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  scrollbar-gutter: stable;
+  padding: 2.2rem clamp(1.5rem, 3.3vw, 3.5rem) 2.5rem !important;
+}
+.product-detail-specs {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: .65rem !important;
+  align-content: start !important;
+  padding-bottom: 1rem;
+}
+.product-detail-spec-section {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 !important;
+  padding: .85rem 1rem .7rem !important;
+  border: 1px solid #e2e9ee !important;
+  border-radius: 13px !important;
+  background: rgba(255,255,255,.84) !important;
+}
+.product-detail-section-title {
+  margin: 0 0 .35rem !important;
+  padding: 0 0 .45rem !important;
+  min-height: 0 !important;
+  font-size: .7rem !important;
+  line-height: 1.35 !important;
+}
+.product-detail-spec-row {
+  grid-template-columns: minmax(120px, .38fr) minmax(0, 1fr) !important;
+  gap: 1rem !important;
+  padding: .48rem 0 !important;
+  align-items: start;
+}
+.product-detail-spec-label {
+  font-size: .69rem !important;
+  line-height: 1.5 !important;
+}
+.product-detail-spec-value {
+  font-size: .74rem !important;
+  line-height: 1.55 !important;
+}
+.product-detail-summary {
+  margin: .8rem 0 1rem !important;
+  max-width: 62ch !important;
+  line-height: 1.65 !important;
+}
+.product-detail-year {
+  margin: .25rem 0 .6rem !important;
+}
+.product-detail-close {
+  position: fixed !important;
+  top: calc(72px + .8rem) !important;
+  right: 1rem !important;
+}
+@media (max-width: 1099px) and (min-width: 701px) {
+  .product-detail-content {
+    padding: 1.6rem 1.25rem 2rem !important;
+  }
+  .product-detail-spec-row {
+    grid-template-columns: minmax(100px, .38fr) minmax(0, 1fr) !important;
+    gap: .7rem !important;
+  }
+  .product-detail-close { top: calc(72px + .55rem) !important; }
+}
+@media (max-width: 700px) {
+  .product-detail-layer.is-active .product-detail-morph-image {
+    border-radius: 20px !important;
+  }
+  .product-detail-layer.is-closing .product-detail-morph-image {
+    border-radius: 0 !important;
+  }
+  .product-detail-content {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding: .9rem 1rem 1.5rem !important;
+  }
+  .product-detail-specs {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: .55rem !important;
+  }
+  .product-detail-spec-row {
+    grid-template-columns: minmax(104px, .4fr) minmax(0, 1fr) !important;
+    gap: .65rem !important;
+  }
+  .product-detail-close {
+    top: calc(64px + .5rem) !important;
+    right: .65rem !important;
+  }
+}
