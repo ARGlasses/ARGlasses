@@ -240,3 +240,130 @@
     scroll-behavior: auto !important;
   }
 }
+
+
+/* Product detail refinement: preserve the shared site header and use a clean light canvas. */
+#site-header {
+  position: relative !important;
+  z-index: 100002 !important;
+}
+#site-header #navbar {
+  position: relative !important;
+  z-index: 100003 !important;
+}
+.product-detail-layer {
+  inset: 72px 0 0 !important;
+  z-index: 100000 !important;
+  color: #263442 !important;
+}
+.product-detail-backdrop {
+  background: #f7f9fb !important;
+}
+.product-detail-visual {
+  background: transparent !important;
+}
+.product-detail-visual::after {
+  background: linear-gradient(transparent, rgba(32,54,72,.12), transparent) !important;
+}
+.product-detail-morph-image {
+  background: transparent !important;
+  border-radius: 24px !important;
+  filter: drop-shadow(0 22px 34px rgba(28,45,60,.14)) !important;
+}
+.product-detail-content {
+  inset: 0 0 0 46% !important;
+  padding: clamp(1.25rem, 3vh, 2rem) clamp(1.5rem, 3.3vw, 3.5rem) 1.25rem !important;
+  overflow: hidden !important;
+  color: #263442 !important;
+  scrollbar-color: rgba(40,60,80,.24) transparent !important;
+}
+.product-detail-eyebrow { color: #52758c !important; margin-bottom: .4rem !important; }
+.product-detail-heading {
+  color: #182a39 !important;
+  font-size: clamp(1.8rem, 3vw, 3.25rem) !important;
+  line-height: 1.02 !important;
+}
+.product-detail-brand { color: #667887 !important; margin-top: .4rem !important; }
+.product-detail-summary {
+  color: #465866 !important;
+  font-size: .82rem !important;
+  line-height: 1.45 !important;
+  margin: .75rem 0 .9rem !important;
+  max-width: 66ch !important;
+}
+.product-detail-specs {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: 1.4rem !important;
+  row-gap: .35rem !important;
+  align-content: start !important;
+}
+.product-detail-spec-section {
+  margin: 0 0 .45rem !important;
+  min-width: 0 !important;
+}
+.product-detail-section-title {
+  color: #203747 !important;
+  border-bottom-color: #d9e1e7 !important;
+  font-size: .76rem !important;
+  padding-bottom: .28rem !important;
+  margin-bottom: .2rem !important;
+}
+.product-detail-spec-row {
+  grid-template-columns: minmax(78px, .42fr) minmax(0, 1fr) !important;
+  gap: .5rem !important;
+  padding: .2rem 0 !important;
+  border-bottom-color: #e7edf1 !important;
+}
+.product-detail-spec-label {
+  color: #687b89 !important;
+  font-size: .65rem !important;
+  line-height: 1.32 !important;
+}
+.product-detail-spec-value {
+  color: #293b48 !important;
+  font-size: .68rem !important;
+  line-height: 1.34 !important;
+}
+.product-detail-year {
+  color: #687b89 !important;
+  font-size: .65rem !important;
+  margin: 0 0 .35rem !important;
+}
+.product-detail-year::before { background: #8ba6b8 !important; }
+.product-detail-close {
+  top: .8rem !important;
+  right: 1rem !important;
+  border-color: #cbd6de !important;
+  background: rgba(255,255,255,.88) !important;
+  color: #263b4b !important;
+}
+.product-detail-close:hover {
+  background: #eaf0f4 !important;
+  border-color: #9aabb8 !important;
+}
+.product-detail-close:focus-visible { outline-color: #287da8 !important; }
+
+@media (max-width: 1099px) and (min-width: 701px) {
+  .product-detail-content {
+    inset: 0 0 0 43% !important;
+    padding: 1.1rem 1.2rem .8rem !important;
+  }
+  .product-detail-specs { column-gap: .8rem !important; }
+  .product-detail-spec-row { grid-template-columns: minmax(70px, .4fr) minmax(0, 1fr) !important; }
+}
+@media (max-width: 700px) {
+  .product-detail-layer { inset: 64px 0 0 !important; }
+  .product-detail-content {
+    inset: 42% 0 0 !important;
+    padding: .85rem 1rem 1rem !important;
+    overflow-y: auto !important;
+    border-top: 1px solid #e0e7ec !important;
+  }
+  .product-detail-specs { grid-template-columns: 1fr !important; }
+  .product-detail-heading { font-size: clamp(1.65rem, 8vw, 2.5rem) !important; }
+  .product-detail-summary { margin: .55rem 0 .7rem !important; }
+  .product-detail-spec-section { margin-bottom: .5rem !important; }
+  .product-detail-close { top: .55rem !important; right: .65rem !important; }
+  .product-detail-morph-image { border-radius: 18px !important; }
+}
