@@ -57,7 +57,7 @@
   </style>
   <link rel="icon" href="images/logo40x40.webp" type="image/webp">
   <script src="./header.js?v=6" defer></script><script src="./products-data.js" defer></script>
-  <script src="./compare.js?v=5" defer></script><script src="./product-detail.js?v=5" defer></script>
+  <script src="./compare.js?v=6" defer></script><script src="./product-detail.js?v=5" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1540,7 +1540,7 @@
           if (selected.length < 2) return;
           const ids = selected.slice(0, 3);
           try { sessionStorage.removeItem(storageKey); } catch (_) {}
-          window.location.href = "/?compare=" + encodeURIComponent(ids.join(",")) + "#comparison";
+          window.location.href = "/?compare=" + encodeURIComponent(ids.join(","));
         }
         function showDialog() {
           selectedText.textContent = "Selected: " + selected.map(id => names.get(id)).join(" · ");
@@ -3173,4 +3173,12 @@
   }
 </style>
 
-</body></html>
+
+<style id="comparison-scroll-header-clearance-v1">
+  /* Intentional in-page navigation must stop below the shared site header. */
+  #products,
+  #comparison {
+    scroll-margin-top: 84px !important;
+  }
+</style>
+\n</body></html>
