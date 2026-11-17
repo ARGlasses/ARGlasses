@@ -143,6 +143,7 @@
     }
 
     function openDetails(card) {
+      if (window.matchMedia("(max-width: 700px)").matches) return;
       if (closing || layer.classList.contains("is-active")) return;
       const image = card.querySelector("img.bg");
       if (!image) return;
@@ -204,12 +205,25 @@
       openDetails(card);
     });
 
+    function syncImageAccessibility() {
+      const desktop = !window.matchMedia("(max-width: 700px)").matches;
+      rail.querySelectorAll(".product-card img.bg").forEach(image => {
+        const card = image.closest(".product-card");
+        if (desktop) {
+          image.tabIndex = 0;
+          image.setAttribute("role", "button");
+          const name = card && (card.dataset.productName || card.querySelector(".story-title")?.textContent.trim());
+          image.setAttribute("aria-label", "View details for " + (name || "product"));
+        } else {
+          image.removeAttribute("tabindex");
+          image.removeAttribute("role");
+          image.removeAttribute("aria-label");
+        }
+      });
+    }
+    syncImageAccessibility();
     rail.querySelectorAll(".product-card img.bg").forEach(image => {
-      image.tabIndex = 0;
-      image.setAttribute("role", "button");
       const card = image.closest(".product-card");
-      const name = card && (card.dataset.productName || card.querySelector(".story-title")?.textContent.trim());
-      image.setAttribute("aria-label", "View details for " + (name || "product"));
       image.addEventListener("keydown", event => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
@@ -220,7 +234,7 @@
 
     closeButton.addEventListener("click", closeDetails);
     layer.addEventListener("click", event => {
-      if (event.target === layer || event.target === visual || event.target.classList.contains("product-detail-backdrop")) closeDetails();
+      if (event.target === layer || event.target === visual || event.target === content || event.target.classList.contains("product-detail-backdrop")) closeDetails();
     });
     document.addEventListener("keydown", event => {
       if (!layer.classList.contains("is-active")) return;
@@ -235,6 +249,7 @@
     });
 
     window.addEventListener("resize", () => {
+      syncImageAccessibility();
       if (morphImage && layer.classList.contains("is-active")) setImageRect(morphImage, targetImageRect());
     });
     window.addEventListener("pagehide", () => {
