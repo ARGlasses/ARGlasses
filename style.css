@@ -1524,3 +1524,29 @@ html body a.shop-all-btn:focus {
   html body #backdrop { z-index: 10000 !important; }
   html body #primary-nav { z-index: 10002 !important; }
 }
+
+
+/* Mobile hamburger hit-target and drawer-open state hardening. */
+@media screen and (max-width: 768px) {
+  html body #navbar { z-index: 10001 !important; }
+  html body #navbar .nav-inner { position: relative !important; }
+  html body #navbar #menu-toggle {
+    display: inline-flex !important;
+    position: relative !important;
+    z-index: 10004 !important;
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 10px !important;
+    margin: 0 8px 0 0 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+  }
+  html body #navbar #menu-toggle span { pointer-events: none !important; }
+  html body #primary-nav { z-index: 10003 !important; }
+  html body #primary-nav.open { transform: translateX(0) !important; visibility: visible !important; }
+  html body #backdrop { z-index: 10002 !important; }
+}
