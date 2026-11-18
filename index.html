@@ -1694,16 +1694,25 @@
             const kicker = card.querySelector(".story-kicker");
             if (!brand || !title || title.querySelector(".manufacturer-inline")) return;
             const modelName = title.textContent.trim();
-            const label = document.createElement("strong");
-            label.className = "manufacturer-inline";
-            label.textContent = brand;
-            label.style.fontSize = "inherit";
-            label.style.fontWeight = "700";
-            label.style.color = "inherit";
-            label.style.overflowWrap = "anywhere";
-            title.textContent = "";
-            title.appendChild(label);
-            title.appendChild(document.createTextNode(" " + modelName));
+            // Some product titles already contain the full manufacturer name.
+            // In particular, do not prepend "Meta / Ray-Ban" to Ray-Ban Meta titles.
+            const brandAlreadyInTitle =
+              brand.toLowerCase().includes("meta") &&
+              brand.toLowerCase().includes("ray-ban") &&
+              /meta/i.test(modelName) &&
+              /ray[ -]?ban/i.test(modelName);
+            if (!brandAlreadyInTitle) {
+              const label = document.createElement("strong");
+              label.className = "manufacturer-inline";
+              label.textContent = brand;
+              label.style.fontSize = "inherit";
+              label.style.fontWeight = "700";
+              label.style.color = "inherit";
+              label.style.overflowWrap = "anywhere";
+              title.textContent = "";
+              title.appendChild(label);
+              title.appendChild(document.createTextNode(" " + modelName));
+            }
             if (kicker) {
               Array.from(kicker.childNodes).forEach(function (node) {
                 if (node.nodeType === Node.TEXT_NODE) node.remove();
