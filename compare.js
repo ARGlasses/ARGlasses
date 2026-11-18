@@ -428,22 +428,33 @@
   });
   if($("comparison-preview-clear")) $("comparison-preview-clear").addEventListener("click",clearSelectionAndReturnToCarousel);
   function clearSelectionAndReturnToCarousel() {
+    // Clear both comparison engines: the catalogue Set and the gallery's
+    // session-persisted card selection/highlights.
     selected.clear();
     detailExpanded = false;
+    state.differences = false;
+    const differenceToggle = $("differences-only");
+    if (differenceToggle) differenceToggle.checked = false;
     const dialog = $("gallery-compare-dialog");
-    if (dialog) dialog.hidden = true;
+    if (dialog) {
+      dialog.hidden = true;
+      dialog.classList.remove("is-open");
+    }
+    window.dispatchEvent(new Event("arglasses:clear-gallery-selection"));
     render();
-    // Make the carousel the explicit return destination, even when clearing from
-    // a comparison URL whose previous hash points at the results table.
+    // render() removes the compare query parameter; make the product carousel
+    // the explicit destination for every clear-selection control.
     const url = new URL(window.location.href);
+    url.searchParams.delete("compare");
     url.hash = "products";
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
     const carousel = $("products");
-    if (carousel) carousel.scrollIntoView({
+    if (carousel) requestAnimationFrame(() => carousel.scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
       block: "start"
-    });
+    }));
   }
+  window.addEventListener("arglasses:clear-comparison-selection", clearSelectionAndReturnToCarousel);
   if($("clear-comparison")) $("clear-comparison").addEventListener("click",clearSelectionAndReturnToCarousel);
   if($("clear-picker-selection")) $("clear-picker-selection").addEventListener("click",clearSelectionAndReturnToCarousel);
   if($("copy-comparison-link")) $("copy-comparison-link").addEventListener("click",async()=>{
