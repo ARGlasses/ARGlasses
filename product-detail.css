@@ -761,3 +761,47 @@ html body .product-viewport .rail > .story > picture > img.bg {
   .product-viewport .story img.bg { cursor: auto !important; }
   .product-viewport .story img.bg:focus-visible { outline: none !important; }
 }
+
+
+/* Desktop expanded-product view: cursor-following magnifier for the large image. */
+.product-detail-zoom-lens {
+  position: fixed;
+  z-index: 6;
+  width: 220px;
+  height: 220px;
+  box-sizing: border-box;
+  border: 3px solid rgba(255,255,255,.96);
+  border-radius: 50%;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  box-shadow: 0 12px 34px rgba(22,38,52,.24), 0 0 0 1px rgba(33,57,75,.2);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.94);
+  transition: opacity 120ms ease, transform 120ms ease;
+  will-change: left, top, background-position;
+}
+.product-detail-zoom-lens.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.product-detail-zoom-lens::after {
+  content: "2.5×";
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(24,42,57,.82);
+  color: #fff;
+  font: 600 11px/1.3 "Poppins", sans-serif;
+  letter-spacing: .02em;
+}
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .product-detail-layer.is-active .product-detail-morph-image {
+    cursor: zoom-in;
+  }
+}
+@media (max-width: 900px), (hover: none), (pointer: coarse) {
+  .product-detail-zoom-lens { display: none !important; }
+}
