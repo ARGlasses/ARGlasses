@@ -325,6 +325,32 @@
     if(target.id==="differences-only"){state.differences=target.checked;render();}
   });
 
+  // Explicit mobile entry point used by the gallery Compare button.
+  // It bypasses cross-script custom-event timing and always opens the real table.
+  window.arglassesOpenMobileComparison = function(ids) {
+    selected.clear();
+    (Array.isArray(ids) ? ids : []).slice(0, 3).forEach(id => {
+      if (PRODUCTS.some(product => product.id === id)) selected.add(id);
+    });
+    if (selected.size < 2) return false;
+    detailExpanded = true;
+    const url = new URL(window.location.href);
+    url.searchParams.set("compare", [...selected].join(","));
+    url.hash = "comparison";
+    window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    render();
+    const section = $("comparison");
+    if (!section) return false;
+    section.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      section.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start"
+      });
+    }));
+    return true;
+  };
+
   // Same-page entry point used by the product-card comparison dialog.
   // Keep the gallery in place and show the desktop product-card comparison preview.
   window.addEventListener("arglasses:gallery-compare", event => {
