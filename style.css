@@ -1575,3 +1575,47 @@ html body a.shop-all-btn:focus {
     cursor: pointer !important;
   }
 }
+
+
+/* Keep the mobile hamburger morphing into a clean X, never a star-like shape. */
+@media screen and (max-width: 768px) {
+  html body #navbar #menu-toggle {
+    position: relative !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+  html body #navbar #menu-toggle span {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 22px !important;
+    height: 2px !important;
+    margin: 0 !important;
+    transform-origin: center !important;
+    transition: transform 180ms ease, opacity 180ms ease !important;
+  }
+  html body #navbar #menu-toggle span:nth-child(1) {
+    transform: translate(-50%, calc(-50% - 7px)) !important;
+    opacity: 1 !important;
+  }
+  html body #navbar #menu-toggle span:nth-child(2) {
+    transform: translate(-50%, -50%) !important;
+    opacity: 1 !important;
+  }
+  html body #navbar #menu-toggle span:nth-child(3) {
+    transform: translate(-50%, calc(-50% + 7px)) !important;
+    opacity: 1 !important;
+  }
+  html body #navbar #menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(45deg) !important;
+  }
+  html body #navbar #menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    transform: translate(-50%, -50%) !important;
+    opacity: 0 !important;
+  }
+  html body #navbar #menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translate(-50%, -50%) rotate(-45deg) !important;
+  }
+}
