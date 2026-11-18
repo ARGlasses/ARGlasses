@@ -3325,4 +3325,55 @@
   }
 </style>
 
+
+<style id="fold-inner-product-heading-single-line">
+  /* Galaxy Fold inner display only: keep manufacturer + full product name together
+     on the first line; give the product name priority if the manufacturer is long. */
+  @media screen and (min-width: 701px) and (max-width: 900px) {
+    html body .product-viewport .rail > .story .story-content {
+      display: grid !important;
+      grid-template-columns: minmax(0, auto) minmax(0, 1fr) !important;
+      align-content: end !important;
+      column-gap: .3rem !important;
+      row-gap: .35rem !important;
+    }
+    html body .product-viewport .rail > .story .story-kicker {
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+      min-width: 0 !important;
+      max-width: 8.5ch !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      font-size: clamp(.48rem, .78vw, .62rem) !important;
+      line-height: 1.1 !important;
+    }
+    html body .product-viewport .rail > .story .story-title {
+      grid-column: 2 !important;
+      grid-row: 1 !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      overflow-wrap: normal !important;
+      font-size: clamp(.58rem, 1vw, .76rem) !important;
+      line-height: 1.1 !important;
+    }
+    html body .product-viewport .rail > .story .story-teaser {
+      grid-column: 1 / -1 !important;
+      grid-row: 2 !important;
+      display: block !important;
+      max-height: 4.4em !important;
+      overflow: hidden !important;
+      font-size: clamp(.54rem, .8vw, .66rem) !important;
+      line-height: 1.1 !important;
+    }
+    html body .product-viewport .rail > .story .story-teaser .price-line,
+    html body .product-viewport .rail > .story .story-teaser .spec-line {
+      font-size: inherit !important;
+      line-height: inherit !important;
+    }
+  }
+</style>
+
 </body></html>
