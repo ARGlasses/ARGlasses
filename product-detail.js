@@ -187,7 +187,7 @@
       }
 
       const lensSize = 220;
-      const zoom = 2.5;
+      const zoom = 2;
       const panelWidth = window.innerWidth * .46;
       const maxLeft = Math.max(12, panelWidth - lensSize - 12);
       const maxTop = Math.max(84, window.innerHeight - lensSize - 12);
