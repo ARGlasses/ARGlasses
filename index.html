@@ -63,7 +63,7 @@
   </style>
   <link rel="icon" href="images/logo40x40.webp" type="image/webp">
   <script src="./header.js?v=9" defer></script><script src="./products-data.js" defer></script>
-  <script src="./compare.js?v=10" defer></script><script src="./product-detail.js?v=7" defer></script>
+  <script src="./compare.js?v=11" defer></script><script src="./product-detail.js?v=7" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1642,7 +1642,18 @@
           return false;
         };
         function closeDialog() { dialog.hidden = true; dialog.classList.remove("is-open"); save(); }
-        clearButton.addEventListener("click", function () { selected = []; closeDialog(); });
+        // The gallery and comparison table have separate selection stores.
+        // Keep their reset operation synchronised whichever Clear button is used.
+        window.addEventListener("arglasses:clear-gallery-selection", function () {
+          selected = [];
+          try { sessionStorage.removeItem(storageKey); } catch (_) {}
+          save();
+        });
+        clearButton.addEventListener("click", function () {
+          selected = [];
+          closeDialog();
+          window.dispatchEvent(new Event("arglasses:clear-comparison-selection"));
+        });
         closeButton.addEventListener("click", closeDialog);
         dialog.addEventListener("click", event => { if (event.target === dialog) closeDialog(); });
         addButton.addEventListener("click", function () {
