@@ -754,3 +754,10 @@ html body .product-viewport .rail > .story > picture > img.bg {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* Mobile regression fix: the product image remains part of the swipeable gallery,
+   not a desktop zoom/detail affordance. */
+@media (max-width: 700px) {
+  .product-viewport .story img.bg { cursor: auto !important; }
+  .product-viewport .story img.bg:focus-visible { outline: none !important; }
+}
