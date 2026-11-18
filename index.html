@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=11"><link rel="stylesheet" href="compare.css?v=7"><link rel="stylesheet" href="product-hover.css"><link rel="stylesheet" href="homepage-polish.css?v=3"><link rel="stylesheet" href="product-detail.css?v=10">
+  <link rel="stylesheet" href="style.css?v=12"><link rel="stylesheet" href="compare.css?v=7"><link rel="stylesheet" href="product-hover.css"><link rel="stylesheet" href="homepage-polish.css?v=3"><link rel="stylesheet" href="product-detail.css?v=10">
   <style>
     /* Reserve the fixed navigation's real layout space; fixed elements do not occupy document flow. */
     body.comparison-page { padding-top: 56px !important; }
@@ -836,7 +836,7 @@
           <img src="images/logo96x96.webp" alt="AR Glasses Logo" width="40" height="40" loading="eager" decoding="async" />
           <span>AR glasses</span>
         </div>
-        <button class="drawer-close" aria-label="Close menu" aria-controls="primary-nav">&times;</button>
+        <button class="drawer-close" aria-label="Close menu" aria-controls="primary-nav" onclick="event.preventDefault();event.stopPropagation();const m=document.getElementById('primary-nav');const b=document.getElementById('backdrop');const t=document.getElementById('menu-toggle');if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');}if(b){b.classList.remove('show');b.setAttribute('aria-hidden','true');}if(t){t.setAttribute('aria-expanded','false');t.setAttribute('aria-label','Open menu');}document.body.style.overflow='';">&times;</button>
       </li>
       <li><a href="/guide">Guide</a></li>
       <li><a href="/reviews">Reviews</a></li>
