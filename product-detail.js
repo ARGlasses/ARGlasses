@@ -109,9 +109,18 @@
       const cardTeaser = card.querySelector(".story-teaser");
       const titleText = product.name || card.dataset.productName || (cardTitle && cardTitle.textContent.trim()) || "Product";
       const brandText = product.brand || card.dataset.brand || (cardKicker && cardKicker.childNodes[0] && cardKicker.childNodes[0].textContent.trim()) || "";
+      // Put the manufacturer in the main heading unless the model name
+      // already contains every meaningful part of the manufacturer name.
+      const manufacturerTokens = String(brandText || "").toLocaleLowerCase().match(/[a-z0-9]+/g) || [];
+      const modelTokens = String(titleText || "").toLocaleLowerCase().match(/[a-z0-9]+/g) || [];
+      const modelTokenSet = new Set(modelTokens);
+      const manufacturerAlreadyInName = manufacturerTokens.length > 0 &&
+        manufacturerTokens.every(token => modelTokenSet.has(token));
+      heading.textContent = brandText && !manufacturerAlreadyInName
+        ? brandText + " " + titleText
+        : titleText;
       const categoryText = categoryLabels[product.category || card.dataset.category] || "";
-      heading.textContent = titleText;
-      brand.textContent = [brandText, categoryText].filter(Boolean).join("  /  ");
+      brand.textContent = categoryText;
       const summaryText = product.summary || (cardTeaser && cardTeaser.textContent.trim()) || "";
       // Include the manufacturer in the expanded description itself, not only
       // in the separate brand line. Avoid repeating it when the summary already names it.
