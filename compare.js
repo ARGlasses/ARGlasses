@@ -342,21 +342,24 @@
     const section = $("comparison");
     if (!section) return false;
     section.hidden = false;
-    // Mobile layouts can reflow after the comparison table is rendered.
-    // Wait for layout to settle, then scroll using its final document position.
+    // Use the browser's native anchor navigation after the table is visible.
+    // This is more reliable on mobile Safari/Chrome than a calculated scrollTo
+    // while the comparison section is being unhidden and reflowed.
     section.style.scrollMarginTop = "84px";
-    const scrollToComparison = () => {
+    const navigateToComparison = () => {
       if (!section.isConnected || section.hidden) return;
-      const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - 84);
-      window.scrollTo({
-        top,
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+      section.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start"
       });
+      if (window.location.hash !== "#comparison") {
+        window.location.hash = "comparison";
+      }
     };
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      scrollToComparison();
-      setTimeout(scrollToComparison, 180);
-      setTimeout(scrollToComparison, 450);
+      navigateToComparison();
+      setTimeout(navigateToComparison, 180);
+      setTimeout(navigateToComparison, 450);
     }));
     return true;
   };
@@ -464,8 +467,21 @@
       // not merely to the product carousel partway down the page.
       url.hash = "";
       window.history.replaceState({}, "", url.pathname + url.search);
-      window.scrollTo({top: 0, behavior: "auto"});
-      requestAnimationFrame(() => window.scrollTo({top: 0, behavior: "smooth"}));
+      // The comparison section is removed from layout by render(). Wait until
+      // that collapse and browser scroll anchoring have completed, then reset
+      // every possible document scroll root to the true homepage top.
+      document.documentElement.style.overflowAnchor = "none";
+      const returnToHomepageTop = () => {
+        window.scrollTo({top: 0, left: 0, behavior: "auto"});
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      };
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        returnToHomepageTop();
+        setTimeout(returnToHomepageTop, 120);
+        setTimeout(returnToHomepageTop, 360);
+        setTimeout(() => { document.documentElement.style.overflowAnchor = ""; }, 500);
+      }));
     } else {
       const carousel = $("products");
       if (carousel) requestAnimationFrame(() => carousel.scrollIntoView({
