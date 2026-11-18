@@ -345,9 +345,17 @@
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
 
     if (window.matchMedia("(max-width: 760px)").matches) {
-      // Preserve the established mobile detailed-comparison presentation.
+      // Mobile: show the specification table and scroll once it is laid out.
       detailExpanded = true;
       render();
+      const section = $("comparison");
+      if (section) {
+        section.hidden = false;
+        requestAnimationFrame(() => section.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          block: "start"
+        }));
+      }
       return;
     }
 
@@ -366,9 +374,12 @@
     // The preview flow is desktop-only; retain the existing detailed comparison flow on mobile.
     if (window.matchMedia("(max-width: 760px)").matches) {
       detailExpanded = true;
-      renderComparison();
+      render();
       const section = $("comparison");
-      if (section) section.scrollIntoView({behavior, block:"start"});
+      if (section) {
+        section.hidden = false;
+        requestAnimationFrame(() => section.scrollIntoView({behavior, block:"start"}));
+      }
       return;
     }
     detailExpanded = false;
