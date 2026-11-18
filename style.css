@@ -1546,7 +1546,11 @@ html body a.shop-all-btn:focus {
     cursor: pointer !important;
   }
   html body #navbar #menu-toggle span { pointer-events: none !important; }
-  html body #primary-nav { z-index: 10003 !important; }
-  html body #primary-nav.open { transform: translateX(0) !important; visibility: visible !important; }
-  html body #backdrop { z-index: 10002 !important; }
+  /* The backdrop is a sibling of #navbar. Keep it below the navbar's
+     stacking context so the drawer (inside #navbar) remains interactive. */
+  html body #primary-nav { z-index: 10003 !important; pointer-events: auto !important; }
+  html body #primary-nav.open { transform: translateX(0) !important; visibility: visible !important; pointer-events: auto !important; }
+  html body #backdrop { z-index: 10000 !important; }
+  html body #navbar { z-index: 10001 !important; }
+
 }
