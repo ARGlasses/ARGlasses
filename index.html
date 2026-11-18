@@ -354,9 +354,6 @@
         .gallery-topline strong { font-size:.65rem; }
       }
 
-
-
-
     .product-viewport { perspective: 1400px; overflow: hidden; }
     .product-viewport .rail {
       gap: clamp(.35rem, .65vw, .65rem);
@@ -380,9 +377,6 @@
       .product-viewport .story img.bg { height: 54%; }
       .product-viewport .story-content { height: 46%; padding: 1rem 1.1rem 3rem; }
     }
-
-
-
 
 /* Desktop catalogue rail: force five compact cards into the actual rail width. */
 @media (min-width: 1100px) {
@@ -469,7 +463,6 @@
   .product-viewport .story img.bg { height: 30% !important; }
   .product-viewport .story-content { height: 70% !important; }
 }
-
 
       #gallery-compare-dialog{position:fixed!important;inset:50% auto auto 50%!important;transform:translate(-50%,-50%)!important;display:block;box-sizing:border-box;margin:0;border:1px solid rgba(15,35,55,.14);border-radius:14px;padding:0;width:22rem;max-width:calc(100vw - 2rem);max-height:calc(100dvh - 2rem);overflow-y:auto;overscroll-behavior:contain;background:#fff;color:#172433;box-shadow:0 12px 36px rgba(10,25,40,.2);z-index:1000}
       #gallery-compare-dialog[hidden]{display:none!important}
@@ -643,7 +636,6 @@
 }
 </style>
 
-
 <style>
 /* Refined desktop product cards: left-aligned copy, lowered by two lines, with actions on a shared bottom edge. */
 @media (min-width: 1100px) {
@@ -723,7 +715,6 @@
 }
 </style>
 
-
 <style>
 /* Mobile-only carousel readability: give product copy enough room and keep it scrollable. */
 @media (max-width: 700px) {
@@ -790,7 +781,6 @@
   }
 }
 </style>
-
 
   <style>
     /* Final mobile override: force all bullet rows and descendants to identical typography. */
@@ -2416,7 +2406,6 @@
     }
   </style>
 
-
   <!-- Carousel initial positioning is owned by the single gallery controller below. -->
 
   <style>
@@ -2487,10 +2476,6 @@
     }
   </style>
 
-
-
-
-
   <style id="mobile-uniform-bullet-typography">
     /* Last-in-document mobile override: every generated bullet is a direct span. */
     @media screen and (max-width: 700px) {
@@ -2534,7 +2519,6 @@
     }
   </style>
 
-
   <style id="mobile-product-buttons-position">
     @media screen and (max-width: 700px) {
       /* Lower the two action buttons by about one line; leave copy and card position unchanged. */
@@ -2543,7 +2527,6 @@
       }
     }
   </style>
-
 
   <style id="mobile-product-card-position">
     @media screen and (max-width: 700px) {
@@ -2555,7 +2538,6 @@
     }
   </style>
 
-
   <style id="mobile-product-copy-nudge">
     @media screen and (max-width: 700px) {
       /* Raise the copy only; keep the card, image, and buttons in place. */
@@ -2564,7 +2546,6 @@
       }
     }
   </style>
-
 
   <style id="mobile-smoother-carousel-scroll">
     @media screen and (max-width: 700px) {
@@ -2629,8 +2610,6 @@
       }
     }
   </style>
-
-
 
 <style id="tablet-homepage-carousel-copy-fix">
   /*
@@ -2772,7 +2751,6 @@
   }
 </style>
 
-
 <style id="fold-inner-two-card-carousel">
   /* Galaxy Fold inner screen only: show two readable product cards side by side.
      The 701–900px range avoids changing the normal phone and desktop layouts. */
@@ -2861,7 +2839,6 @@
   }
 </style>
 
-
 <style id="fold-mobile-style-navigation-dots">
   /* Match the compact white mobile indicators on the Fold inner display. */
   @media screen and (min-width: 601px) and (max-width: 900px) {
@@ -2893,7 +2870,6 @@
     }
   }
 </style>
-
 
 <style id="mobile-navigation-dots-lower">
   /* Standard mobile only: lower the navigation dots by one and a half lines. */
@@ -2961,7 +2937,6 @@
   }
 </style>
 
-
 <style id="laptop-product-gallery-scale">
   /* Laptop screens: preserve the original card design and simply scale it down
      as one unit, so the image, copy and buttons keep their existing proportions. */
@@ -2977,8 +2952,6 @@
   }
 </style>
 
-
-
 <style id="laptop-stop-bullets-at-audio">
   /* Laptop only: show the product bullets through Audio, and hide later specs. */
   @media screen and (min-width: 901px) and (max-width: 1599px) {
@@ -2987,7 +2960,6 @@
     }
   }
 </style>
-
 
 <style id="desktop-card-hover-actions">
   /* Restore the desktop product-image hover zoom without affecting card layout or action buttons. */
@@ -3076,7 +3048,6 @@
     }
   }
 </style>
-
 
 <style id="gallery-final-layout-and-image-normalization-v1">
   /* One image stage for both direct IMG cards and PICTURE-wrapped cards.
@@ -3213,7 +3184,6 @@
   }
 </style>
 
-
 <style id="gallery-carousel-vertical-nudge-v1">
   /* Keep the established carousel position, lowered by half a line
      without changing the gallery viewport, card dimensions, or controls. */
@@ -3321,57 +3291,6 @@
       width: 32.25vw !important;
       min-width: 0 !important;
       max-width: 32.25vw !important;
-    }
-  }
-</style>
-
-
-<style id="fold-inner-product-heading-single-line">
-  /* Galaxy Fold inner display only: keep manufacturer + full product name together
-     on the first line; give the product name priority if the manufacturer is long. */
-  @media screen and (min-width: 701px) and (max-width: 900px) {
-    html body .product-viewport .rail > .story .story-content {
-      display: grid !important;
-      grid-template-columns: minmax(0, auto) minmax(0, 1fr) !important;
-      align-content: end !important;
-      column-gap: .3rem !important;
-      row-gap: .35rem !important;
-    }
-    html body .product-viewport .rail > .story .story-kicker {
-      grid-column: 1 !important;
-      grid-row: 1 !important;
-      min-width: 0 !important;
-      max-width: 8.5ch !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
-      font-size: clamp(.48rem, .78vw, .62rem) !important;
-      line-height: 1.1 !important;
-    }
-    html body .product-viewport .rail > .story .story-title {
-      grid-column: 2 !important;
-      grid-row: 1 !important;
-      min-width: 0 !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
-      overflow-wrap: normal !important;
-      font-size: clamp(.58rem, 1vw, .76rem) !important;
-      line-height: 1.1 !important;
-    }
-    html body .product-viewport .rail > .story .story-teaser {
-      grid-column: 1 / -1 !important;
-      grid-row: 2 !important;
-      display: block !important;
-      max-height: 4.4em !important;
-      overflow: hidden !important;
-      font-size: clamp(.54rem, .8vw, .66rem) !important;
-      line-height: 1.1 !important;
-    }
-    html body .product-viewport .rail > .story .story-teaser .price-line,
-    html body .product-viewport .rail > .story .story-teaser .spec-line {
-      font-size: inherit !important;
-      line-height: inherit !important;
     }
   }
 </style>
