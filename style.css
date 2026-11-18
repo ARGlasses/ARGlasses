@@ -1511,9 +1511,9 @@ html body a.shop-all-btn:focus {
   }
 }
 
-/* Mobile-only touch reliability for the drawer: explicit hit area and stacking. */
+/* Mobile drawer stacking: preserve the fixed header so it does not create a blank strip in page flow. */
 @media (max-width: 768px) {
-  html body #navbar { position: relative !important; z-index: 10001 !important; }
+  html body #navbar { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; z-index: 10001 !important; }
   html body #navbar .hamburger {
     position: relative !important; z-index: 10003 !important;
     display: inline-flex !important; flex: 0 0 44px !important;
