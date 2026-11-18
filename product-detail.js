@@ -112,7 +112,13 @@
       const categoryText = categoryLabels[product.category || card.dataset.category] || "";
       heading.textContent = titleText;
       brand.textContent = [brandText, categoryText].filter(Boolean).join("  /  ");
-      summary.textContent = product.summary || (cardTeaser && cardTeaser.textContent.trim()) || "";
+      const summaryText = product.summary || (cardTeaser && cardTeaser.textContent.trim()) || "";
+      // Include the manufacturer in the expanded description itself, not only
+      // in the separate brand line. Avoid repeating it when the summary already names it.
+      const manufacturerInSummary = brandText && summaryText.toLocaleLowerCase().includes(brandText.toLocaleLowerCase());
+      summary.textContent = brandText && !manufacturerInSummary
+        ? "Manufacturer: " + brandText + ". " + summaryText
+        : summaryText;
       specs.replaceChildren();
       sections.forEach(section => addSpecSection(section, product));
       const meta = document.createElement("p");
