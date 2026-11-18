@@ -805,30 +805,3 @@ html body .product-viewport .rail > .story > picture > img.bg {
 @media (max-width: 900px), (hover: none), (pointer: coarse) {
   .product-detail-zoom-lens { display: none !important; }
 }
-
-
-/* Mirror the close transition on entry: the artwork grows from its card bounds,
-   then fades fully into view during the final part of the morph. */
-.product-detail-layer .product-detail-morph-image {
-  opacity: 0 !important;
-  transition:
-    left .92s cubic-bezier(.18,.78,.2,1),
-    top .92s cubic-bezier(.18,.78,.2,1),
-    width .92s cubic-bezier(.18,.78,.2,1),
-    height .92s cubic-bezier(.18,.78,.2,1),
-    border-radius .72s cubic-bezier(.2,.7,.2,1),
-    opacity .28s ease .64s !important;
-}
-.product-detail-layer.is-active:not(.is-closing) .product-detail-morph-image {
-  opacity: 1 !important;
-}
-.product-detail-layer.is-closing .product-detail-morph-image {
-  opacity: 0 !important;
-  transition:
-    left .92s cubic-bezier(.18,.78,.2,1),
-    top .92s cubic-bezier(.18,.78,.2,1),
-    width .92s cubic-bezier(.18,.78,.2,1),
-    height .92s cubic-bezier(.18,.78,.2,1),
-    border-radius .72s cubic-bezier(.2,.7,.2,1),
-    opacity .28s ease .64s !important;
-}
