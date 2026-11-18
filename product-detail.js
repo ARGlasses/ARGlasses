@@ -250,9 +250,6 @@
       previousBodyOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       layer.setAttribute("aria-hidden", "false");
-      // Commit the image's hidden starting opacity before activating the detail
-      // layer, so the opening fade runs just like the delayed fade on close.
-      if (morphImage) window.getComputedStyle(morphImage).opacity;
       layer.classList.add("is-active");
 
       requestAnimationFrame(() => {
