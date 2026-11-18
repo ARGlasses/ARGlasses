@@ -1619,3 +1619,20 @@ html body a.shop-all-btn:focus {
     transform: translate(-50%, -50%) rotate(-45deg) !important;
   }
 }
+
+
+/* Keep the hamburger as three horizontal bars while the drawer is open. */
+@media screen and (max-width: 768px) {
+  html body #navbar #menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translate(-50%, calc(-50% - 7px)) !important;
+    opacity: 1 !important;
+  }
+  html body #navbar #menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    transform: translate(-50%, -50%) !important;
+    opacity: 1 !important;
+  }
+  html body #navbar #menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translate(-50%, calc(-50% + 7px)) !important;
+    opacity: 1 !important;
+  }
+}
