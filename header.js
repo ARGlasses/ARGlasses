@@ -99,8 +99,8 @@
 
       const toggle = e.target.closest('#menu-toggle');
       if (toggle) {
+        // The direct listener below owns this control, avoiding double toggles.
         e.preventDefault();
-        if (menu && menu.classList.contains('open')) closeDrawer(); else openDrawer();
         return;
       }
 
@@ -130,6 +130,18 @@
         return;
       }
     }, { passive: false });
+
+    // Bind the hamburger directly so the mobile control is independent of
+    // delegated click-handler conflicts elsewhere on the homepage.
+    const toggleButton = qs('#menu-toggle');
+    if (toggleButton && !toggleButton.dataset.drawerBound) {
+      toggleButton.dataset.drawerBound = 'true';
+      toggleButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (menu && menu.classList.contains('open')) closeDrawer();
+        else openDrawer();
+      });
+    }
 
     // Keyboard + resize
     window.addEventListener('keydown', (e) => {
