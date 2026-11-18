@@ -99,13 +99,8 @@
 
       const toggle = e.target.closest('#menu-toggle');
       if (toggle) {
-        // Handle this through one delegated capture listener. This survives
-        // late header injection/replacement and cannot be blocked by a stale
-        // element-specific listener.
-        e.preventDefault();
-        e.stopPropagation();
-        if (menu && menu.classList.contains('open')) closeDrawer();
-        else openDrawer();
+        // The button's inline handler owns the toggle so it still works if
+        // shared-header initialization has not completed yet.
         return;
       }
 
