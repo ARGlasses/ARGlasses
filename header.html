@@ -2,7 +2,7 @@
 <nav class="container-fluid dark-nav" id="navbar" role="navigation">
   <div class="nav-inner">
     <!-- Mobile hamburger -->
-    <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu">
+    <button id="menu-toggle" class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu" onclick="event.preventDefault();event.stopPropagation();const m=document.getElementById('primary-nav');const b=document.getElementById('backdrop');const o=m&&!m.classList.contains('open');if(m){m.classList.toggle('open',o);m.setAttribute('aria-hidden',String(!o));}if(b){b.classList.toggle('show',o);b.setAttribute('aria-hidden',String(!o));}this.setAttribute('aria-expanded',String(o));this.setAttribute('aria-label',o?'Close menu':'Open menu');document.body.style.overflow=o?'hidden':'';">
       <span></span><span></span><span></span>
     </button>
 
