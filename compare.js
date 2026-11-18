@@ -342,11 +342,21 @@
     const section = $("comparison");
     if (!section) return false;
     section.hidden = false;
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      section.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        block: "start"
+    // Mobile layouts can reflow after the comparison table is rendered.
+    // Wait for layout to settle, then scroll using its final document position.
+    section.style.scrollMarginTop = "84px";
+    const scrollToComparison = () => {
+      if (!section.isConnected || section.hidden) return;
+      const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - 84);
+      window.scrollTo({
+        top,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
       });
+    };
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      scrollToComparison();
+      setTimeout(scrollToComparison, 180);
+      setTimeout(scrollToComparison, 450);
     }));
     return true;
   };
@@ -448,11 +458,21 @@
     url.searchParams.delete("compare");
     url.hash = "products";
     window.history.replaceState({}, "", url.pathname + url.search + url.hash);
-    const carousel = $("products");
-    if (carousel) requestAnimationFrame(() => carousel.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-      block: "start"
-    }));
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
+    if (isMobile) {
+      // On phones, Clear means return to the actual top of the homepage,
+      // not merely to the product carousel partway down the page.
+      url.hash = "";
+      window.history.replaceState({}, "", url.pathname + url.search);
+      window.scrollTo({top: 0, behavior: "auto"});
+      requestAnimationFrame(() => window.scrollTo({top: 0, behavior: "smooth"}));
+    } else {
+      const carousel = $("products");
+      if (carousel) requestAnimationFrame(() => carousel.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start"
+      }));
+    }
   }
   window.addEventListener("arglasses:clear-comparison-selection", clearSelectionAndReturnToCarousel);
   if($("clear-comparison")) $("clear-comparison").addEventListener("click",clearSelectionAndReturnToCarousel);
