@@ -1559,8 +1559,8 @@ html body a.shop-all-btn:focus {
 /* Mobile drawer: compact side panel rather than a full-screen takeover. */
 @media screen and (max-width: 768px) {
   html body #primary-nav {
-    width: min(86vw, 360px) !important;
-    max-width: min(86vw, 360px) !important;
+    width: 50vw !important;
+    max-width: 50vw !important;
     min-width: 0 !important;
     height: 100vh !important;
     height: 100dvh !important;
