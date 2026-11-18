@@ -3263,4 +3263,14 @@
     }
   }
 </style>
-\n</body></html>
+\n<style id="fold-inner-product-card-extra-height">
+  /* Fold inner display only: extend product cards downward by about two text lines. */
+  @media screen and (min-width: 701px) and (max-width: 900px) {
+    html body .product-viewport .rail > .story {
+      height: clamp(430px, calc(100svh - 80px), 760px) !important;
+      max-height: calc(100svh - 80px) !important;
+    }
+  }
+</style>
+
+</body></html>
