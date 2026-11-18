@@ -10,6 +10,7 @@
     const products = Array.isArray(window.ARG_PRODUCTS) ? window.ARG_PRODUCTS : [];
     const productsById = new Map(products.map(product => [product.id, product]));
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const isMobile = () => window.matchMedia("(max-width: 700px)").matches;
     const motionTime = () => reducedMotion.matches ? 40 : 980;
     const known = value => {
       if (value == null) return false;
@@ -214,7 +215,8 @@
     }
 
     rail.addEventListener("click", event => {
-      if (event.defaultPrevented) return;
+      // Desktop-only expanded detail interaction; mobile retains its original gallery behavior.
+      if (isMobile() || event.defaultPrevented) return;
       const interactive = event.target.closest("a, button, input, select, textarea, [role='button']");
       if (interactive && !interactive.matches(".story img.bg")) return;
       const card = event.target.closest(".story");
@@ -225,6 +227,13 @@
     function syncImageAccessibility() {
       rail.querySelectorAll(".story img.bg").forEach(image => {
         const card = image.closest(".story");
+        if (isMobile()) {
+          image.removeAttribute("tabindex");
+          image.removeAttribute("role");
+          image.removeAttribute("aria-haspopup");
+          image.removeAttribute("aria-label");
+          return;
+        }
         image.tabIndex = 0;
         image.setAttribute("role", "button");
         image.setAttribute("aria-haspopup", "dialog");
@@ -237,7 +246,7 @@
     // Delegate keyboard handling so rebuilt carousel cards remain interactive.
     rail.addEventListener("keydown", event => {
       const image = event.target.closest && event.target.closest(".story img.bg");
-      if (!image || (event.key !== "Enter" && event.key !== " ")) return;
+      if (isMobile() || !image || (event.key !== "Enter" && event.key !== " ")) return;
       event.preventDefault();
       openDetails(image.closest(".story"));
     });
