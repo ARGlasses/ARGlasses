@@ -64,6 +64,7 @@
     let selectedCard = null;
     let selectedImage = null;
     let morphImage = null;
+    let zoomLens = null;
     let closing = false;
     let closeTimer = 0;
     let originImageRect = null;
@@ -153,6 +154,56 @@
       image.style.height = rect.height + "px";
     }
 
+    function hideImageZoom() {
+      if (zoomLens) zoomLens.classList.remove("is-visible");
+    }
+
+    function updateImageZoom(event) {
+      // The magnifier is deliberately desktop-only; touch and coarse pointers
+      // keep the existing image/detail interaction unchanged.
+      if (!zoomLens || !morphImage ||
+          !window.matchMedia("(min-width: 901px) and (hover: hover) and (pointer: fine)").matches ||
+          event.pointerType === "touch") return;
+
+      const rect = morphImage.getBoundingClientRect();
+      const sourceWidth = morphImage.naturalWidth || (selectedImage && selectedImage.naturalWidth);
+      const sourceHeight = morphImage.naturalHeight || (selectedImage && selectedImage.naturalHeight);
+      if (!sourceWidth || !sourceHeight) return;
+
+      // Match the image's actual object-fit: contain drawing area, not the
+      // potentially taller rectangular element surrounding it.
+      const fitScale = Math.min(rect.width / sourceWidth, rect.height / sourceHeight);
+      const drawnWidth = sourceWidth * fitScale;
+      const drawnHeight = sourceHeight * fitScale;
+      const drawnLeft = rect.left + (rect.width - drawnWidth) / 2;
+      const drawnTop = rect.top + (rect.height - drawnHeight) / 2;
+      const pointerX = event.clientX;
+      const pointerY = event.clientY;
+
+      if (pointerX < drawnLeft || pointerX > drawnLeft + drawnWidth ||
+          pointerY < drawnTop || pointerY > drawnTop + drawnHeight) {
+        hideImageZoom();
+        return;
+      }
+
+      const lensSize = 220;
+      const zoom = 2.5;
+      const panelWidth = window.innerWidth * .46;
+      const maxLeft = Math.max(12, panelWidth - lensSize - 12);
+      const maxTop = Math.max(84, window.innerHeight - lensSize - 12);
+      const lensLeft = Math.min(maxLeft, Math.max(12, pointerX - lensSize / 2));
+      const lensTop = Math.min(maxTop, Math.max(84, pointerY - lensSize / 2));
+
+      zoomLens.style.left = lensLeft + "px";
+      zoomLens.style.top = lensTop + "px";
+      zoomLens.style.backgroundImage = 'url("' + (morphImage.currentSrc || morphImage.src) + '")';
+      zoomLens.style.backgroundSize = (drawnWidth * zoom) + "px " + (drawnHeight * zoom) + "px";
+      zoomLens.style.backgroundPosition =
+        (lensSize / 2 - (pointerX - drawnLeft) * zoom) + "px " +
+        (lensSize / 2 - (pointerY - drawnTop) * zoom) + "px";
+      zoomLens.classList.add("is-visible");
+    }
+
     function targetImageRect() {
       if (window.matchMedia("(max-width: 700px)").matches) {
         return {
@@ -185,6 +236,15 @@
       setImageRect(morphImage, startRect);
       layer.appendChild(morphImage);
 
+      if (zoomLens) zoomLens.remove();
+      zoomLens = document.createElement("div");
+      zoomLens.className = "product-detail-zoom-lens";
+      zoomLens.setAttribute("aria-hidden", "true");
+      layer.appendChild(zoomLens);
+      morphImage.addEventListener("pointerenter", updateImageZoom);
+      morphImage.addEventListener("pointermove", updateImageZoom);
+      morphImage.addEventListener("pointerleave", hideImageZoom);
+
       gallery.classList.add("product-detail-open");
       document.body.style.overflow = "hidden";
       layer.setAttribute("aria-hidden", "false");
@@ -203,6 +263,8 @@
       layer.setAttribute("aria-hidden", "true");
       if (morphImage) morphImage.remove();
       morphImage = null;
+      if (zoomLens) zoomLens.remove();
+      zoomLens = null;
       gallery.classList.add("suppress-card-hover");
       suppressCardHoverUntilInput = true;
       gallery.classList.remove("product-detail-open");
@@ -217,6 +279,7 @@
     function closeDetails() {
       if (!layer.classList.contains("is-active") || closing) return;
       closing = true;
+      hideImageZoom();
       if (closeTimer) window.clearTimeout(closeTimer);
       layer.classList.add("is-closing");
       // Return the exact same image element to the exact screen rectangle it
@@ -283,6 +346,7 @@
     });
 
     window.addEventListener("resize", () => {
+      hideImageZoom();
       syncImageAccessibility();
       if (morphImage && layer.classList.contains("is-active")) setImageRect(morphImage, targetImageRect());
     });
