@@ -99,8 +99,13 @@
 
       const toggle = e.target.closest('#menu-toggle');
       if (toggle) {
-        // The direct listener below owns this control, avoiding double toggles.
+        // Handle this through one delegated capture listener. This survives
+        // late header injection/replacement and cannot be blocked by a stale
+        // element-specific listener.
         e.preventDefault();
+        e.stopPropagation();
+        if (menu && menu.classList.contains('open')) closeDrawer();
+        else openDrawer();
         return;
       }
 
@@ -129,20 +134,7 @@
       if (isMobile() && e.target.closest('#primary-nav a')) {
         return;
       }
-    }, { passive: false });
-
-    // Bind the hamburger directly so the mobile control is independent of
-    // delegated click-handler conflicts elsewhere on the homepage.
-    const toggleButton = qs('#menu-toggle');
-    if (toggleButton && !toggleButton.dataset.drawerBound) {
-      toggleButton.dataset.drawerBound = 'true';
-      toggleButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (menu && menu.classList.contains('open')) closeDrawer();
-        else openDrawer();
-      }, true);
-    }
+    }, { capture: true, passive: false });
 
     // Keyboard + resize
     window.addEventListener('keydown', (e) => {
