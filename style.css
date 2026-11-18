@@ -1554,3 +1554,24 @@ html body a.shop-all-btn:focus {
   html body #navbar { z-index: 10001 !important; }
 
 }
+
+
+/* Mobile drawer: compact side panel rather than a full-screen takeover. */
+@media screen and (max-width: 768px) {
+  html body #primary-nav {
+    width: min(86vw, 360px) !important;
+    max-width: min(86vw, 360px) !important;
+    min-width: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+  html body #primary-nav .drawer-close {
+    position: relative !important;
+    z-index: 5 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+  }
+}
