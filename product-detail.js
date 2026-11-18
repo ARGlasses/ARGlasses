@@ -68,6 +68,7 @@
     let closing = false;
     let closeTimer = 0;
     let originImageRect = null;
+    let previousBodyOverflow = "";
     let suppressCardHoverUntilInput = false;
 
     function releaseSuppressedCardHover() {
@@ -246,6 +247,7 @@
       morphImage.addEventListener("pointerleave", hideImageZoom);
 
       gallery.classList.add("product-detail-open");
+      previousBodyOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       layer.setAttribute("aria-hidden", "false");
       layer.classList.add("is-active");
@@ -268,7 +270,7 @@
       gallery.classList.add("suppress-card-hover");
       suppressCardHoverUntilInput = true;
       gallery.classList.remove("product-detail-open");
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousBodyOverflow;
       closing = false;
       if (selectedImage && selectedImage.isConnected) selectedImage.focus({ preventScroll: true });
       selectedCard = null;
@@ -282,13 +284,25 @@
       hideImageZoom();
       if (closeTimer) window.clearTimeout(closeTimer);
       layer.classList.add("is-closing");
-      // Return the exact same image element to the exact screen rectangle it
-      // occupied before opening. The card stays hidden until the morph ends.
+
+      // Restore the page's original viewport width first. The source card can
+      // move slightly when the scrollbar returns, so measure its live rectangle
+      // after layout settles rather than reusing the (possibly hovered/scaled)
+      // rectangle captured when the image was first clicked.
+      document.body.style.overflow = previousBodyOverflow;
+      gallery.classList.remove("product-detail-open");
+
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          if (morphImage && originImageRect) setImageRect(morphImage, originImageRect);
+          if (morphImage && selectedImage && selectedImage.isConnected) {
+            originImageRect = imageRect(selectedImage);
+            setImageRect(morphImage, originImageRect);
+          }
         });
       });
+
+      // The catalogue fades back in beneath the returning image. The image's
+      // final fade reveals the same-sized card artwork instead of a late jump.
       closeTimer = window.setTimeout(finishClose, reducedMotion.matches ? 60 : 980);
     }
 
