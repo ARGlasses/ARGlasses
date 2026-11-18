@@ -104,6 +104,10 @@
     }
 
     function renderDetails(card) {
+      // Each product opens from the top, even when the previous product's
+      // specification panel was left part-way down.
+      content.scrollTop = 0;
+      content.scrollLeft = 0;
       const id = card.dataset.productId;
       const product = productsById.get(id) || {};
       const cardTitle = card.querySelector(".story-title");
@@ -136,6 +140,8 @@
       meta.className = "product-detail-year";
       meta.textContent = known(product.year) ? "Introduced " + String(product.year) : "";
       if (meta.textContent) specs.prepend(meta);
+      content.scrollTop = 0;
+      content.scrollLeft = 0;
     }
 
     function imageRect(image) {
@@ -251,9 +257,15 @@
       document.body.style.overflow = "hidden";
       layer.setAttribute("aria-hidden", "false");
       layer.classList.add("is-active");
+      content.scrollTop = 0;
+      content.scrollLeft = 0;
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
+          // Reassert the top position after the new product's layout has
+          // been painted, avoiding restoration of the previous product's scroll.
+          content.scrollTop = 0;
+          content.scrollLeft = 0;
           if (morphImage) setImageRect(morphImage, targetImageRect());
           window.setTimeout(() => closeButton.focus({ preventScroll: true }), motionTime() * .55);
         });
