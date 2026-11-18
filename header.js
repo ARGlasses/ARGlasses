@@ -138,9 +138,10 @@
       toggleButton.dataset.drawerBound = 'true';
       toggleButton.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (menu && menu.classList.contains('open')) closeDrawer();
         else openDrawer();
-      });
+      }, true);
     }
 
     // Keyboard + resize
