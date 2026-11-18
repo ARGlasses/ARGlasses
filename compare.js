@@ -336,8 +336,10 @@
     detailExpanded = true;
     const url = new URL(window.location.href);
     url.searchParams.set("compare", [...selected].join(","));
-    url.hash = "comparison";
-    window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    // Clear any previous fragment first so assigning #comparison below always
+    // triggers a real browser anchor navigation, not just a URL state update.
+    url.hash = "";
+    window.history.replaceState({}, "", url.pathname + url.search);
     render();
     const section = $("comparison");
     if (!section) return false;
@@ -348,13 +350,13 @@
     section.style.scrollMarginTop = "84px";
     const navigateToComparison = () => {
       if (!section.isConnected || section.hidden) return;
+      // Assigning the fragment invokes native in-page navigation after the
+      // section is visible; repeat scrollIntoView after mobile reflow settles.
+      window.location.hash = "comparison";
       section.scrollIntoView({
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
         block: "start"
       });
-      if (window.location.hash !== "#comparison") {
-        window.location.hash = "comparison";
-      }
     };
     requestAnimationFrame(() => requestAnimationFrame(() => {
       navigateToComparison();
