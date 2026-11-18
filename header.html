@@ -52,4 +52,4 @@
 </nav>
 
 <!-- Backdrop for mobile drawer -->
-<div id="backdrop" aria-hidden="true" style="z-index:10000 !important;"></div>
+<div id="backdrop" aria-hidden="true" style="z-index:10000 !important;" onclick="const m=document.getElementById('primary-nav');const b=this;const t=document.getElementById('menu-toggle');if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');}b.classList.remove('show');b.setAttribute('aria-hidden','true');if(t){t.setAttribute('aria-expanded','false');t.setAttribute('aria-label','Open menu');}document.body.style.overflow='';"></div>
