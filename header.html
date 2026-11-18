@@ -29,17 +29,6 @@
     <ul id="primary-nav">
       <!-- Drawer header (mobile only) -->
       <li class="drawer-header">
-        <div class="drawer-brand">
-          <img
-            src="images/logo96x96.webp"
-            alt="AR Glasses Logo"
-            width="40"
-            height="40"
-            loading="lazy"
-            decoding="async"
-          />
-          <span>AR glasses</span>
-        </div>
         <button class="drawer-close" aria-label="Close menu" aria-controls="primary-nav" onclick="event.preventDefault();event.stopPropagation();const m=document.getElementById('primary-nav');const b=document.getElementById('backdrop');const t=document.getElementById('menu-toggle');if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');}if(b){b.classList.remove('show');b.setAttribute('aria-hidden','true');}if(t){t.setAttribute('aria-expanded','false');t.setAttribute('aria-label','Open menu');}document.body.style.overflow='';">&times;</button>
       </li>
 
