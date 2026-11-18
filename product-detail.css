@@ -771,7 +771,7 @@ html body .product-viewport .rail > .story > picture > img.bg {
   height: 220px;
   box-sizing: border-box;
   border: 3px solid rgba(255,255,255,.96);
-  border-radius: 50%;
+  border-radius: 10px;
   background-color: #fff;
   background-repeat: no-repeat;
   box-shadow: 0 12px 34px rgba(22,38,52,.24), 0 0 0 1px rgba(33,57,75,.2);
@@ -786,7 +786,7 @@ html body .product-viewport .rail > .story > picture > img.bg {
   transform: scale(1);
 }
 .product-detail-zoom-lens::after {
-  content: "2.5×";
+  content: "2×";
   position: absolute;
   right: 9px;
   bottom: 9px;
