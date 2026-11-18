@@ -3282,4 +3282,14 @@
   }
 </style>
 
+<style id="fold-inner-product-card-half-line-shorter">
+  /* Shorten Fold inner-display product cards by about half a text line only. */
+  @media screen and (min-width: 701px) and (max-width: 900px) {
+    html body .product-viewport .rail > .story {
+      height: clamp(430px, calc(100svh - 88px), 760px) !important;
+      max-height: calc(100svh - 88px) !important;
+    }
+  }
+</style>
+
 </body></html>
