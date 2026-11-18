@@ -3311,5 +3311,18 @@
     }
   }
 </style>
+<style id="fold-inner-product-card-quarter-narrower">
+  /* Galaxy Fold inner display only: reduce each card's actual flex width by 25%,
+     allowing more product cards to fit across the carousel. */
+  @media screen and (min-width: 701px) and (max-width: 900px) {
+    html body .product-viewport .rail > .story {
+      box-sizing: border-box !important;
+      flex: 0 0 32.25vw !important;
+      width: 32.25vw !important;
+      min-width: 0 !important;
+      max-width: 32.25vw !important;
+    }
+  }
+</style>
 
 </body></html>
