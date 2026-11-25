@@ -1,7 +1,7 @@
 /* Full-width expandable catalogue filters: no sidebar or squeezed product rail. */
 .catalogue-filter-shell{box-sizing:border-box;width:100%;max-width:100%;margin:0 auto 1rem;padding:0 clamp(.75rem,2.2vw,2rem);font-family:inherit;color:#243342}
 .catalogue-filter-toolbar{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;min-height:48px}
-.catalogue-filter-toggle{display:inline-flex;align-items:center;gap:.55rem;width:auto;min-height:42px;margin:0;padding:.55rem .95rem;border:1px solid #cbd9e4;border-radius:9px;background:#fff;color:#174d70;font:600 .88rem inherit;box-shadow:0 2px 7px rgba(25,55,75,.06);cursor:pointer;transition:background .16s,border-color .16s,box-shadow .16s}
+.catalogue-filter-toggle{display:inline-flex;align-items:center;gap:.55rem;width:auto;min-height:42px;margin:0;padding:.55rem .95rem;border:1px solid #cbd9e4;border-radius:9px;background:#fff;color:#174d70;font-family:inherit;font-size:.88rem;font-weight:600;box-shadow:0 2px 7px rgba(25,55,75,.06);cursor:pointer;transition:background .16s,border-color .16s,box-shadow .16s}
 .catalogue-filter-toggle:hover{background:#f1f7fb;border-color:#8fb6ce;box-shadow:0 3px 10px rgba(25,55,75,.1)}
 .catalogue-filter-toggle:focus-visible,.catalogue-filter-clear:focus-visible,.catalogue-filter-chip:focus-visible,.catalogue-filter-option input:focus-visible{outline:2px solid #1682bd;outline-offset:3px}
 .catalogue-filter-icon{font-size:1.2rem;line-height:1}
@@ -13,7 +13,7 @@
 .catalogue-filter-panel-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.85rem}
 .catalogue-filter-panel-head strong{display:block;color:#243342;font-size:.96rem;font-weight:650}
 .catalogue-filter-panel-head span{display:block;margin-top:.15rem;color:#6a7885;font-size:.78rem}
-.catalogue-filter-clear,.catalogue-filter-clear-inline{width:auto;margin:0;padding:.35rem .65rem;border:1px solid #d5dfe7;border-radius:7px;background:#fff;color:#24506d;font:500 .78rem inherit;cursor:pointer}
+.catalogue-filter-clear,.catalogue-filter-clear-inline{width:auto;margin:0;padding:.35rem .65rem;border:1px solid #d5dfe7;border-radius:7px;background:#fff;color:#24506d;font-family:inherit;font-size:.78rem;font-weight:500;cursor:pointer}
 .catalogue-filter-groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}
 .catalogue-filter-group{min-width:0;border:1px solid #e3e9ee;border-radius:9px;background:#fbfcfd}
 .catalogue-filter-group>summary{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.65rem .75rem;color:#2c4050;font-size:.84rem;font-weight:600;cursor:pointer;list-style:none}
@@ -31,7 +31,7 @@
 .catalogue-filter-applied{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin:.45rem 0 .2rem}
 .catalogue-filter-applied:empty{display:none}
 .catalogue-filter-applied-label{color:#687987;font-size:.75rem;font-weight:600}
-.catalogue-filter-chip{width:auto;margin:0;padding:.28rem .55rem;border:1px solid #cfe0eb;border-radius:99px;background:#eff6fa;color:#174d70;font:500 .72rem inherit;cursor:pointer}
+.catalogue-filter-chip{width:auto;margin:0;padding:.28rem .55rem;border:1px solid #cfe0eb;border-radius:99px;background:#eff6fa;color:#174d70;font-family:inherit;font-size:.72rem;font-weight:500;cursor:pointer}
 .catalogue-filter-chip:hover{background:#e2f0f8}
 .catalogue-filter-clear-inline{border:0;background:transparent;color:#24506d;text-decoration:underline}
 @media(max-width:900px){.catalogue-filter-groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
