@@ -1,14 +1,14 @@
-/* Desktop sidebar for the main product gallery; hidden on smaller screens. */
+/* Compact desktop-only filter sidebar for the primary product gallery. */
 .desktop-gallery-layout{display:block}
 .desktop-catalogue-filters{display:none}
 @media(min-width:1000px){
- .desktop-gallery-layout{display:grid;grid-template-columns:minmax(220px,260px) minmax(0,1fr);gap:1.25rem;align-items:start;max-width:100%;padding-inline:clamp(1rem,3vw,3rem)}
- .desktop-catalogue-filters{display:block;position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow:auto;padding:1rem;background:#fff;border:1px solid #e3e8ee;border-radius:14px;box-shadow:0 5px 20px rgba(25,45,65,.06);font-family:inherit}
+ .desktop-gallery-layout{display:grid;grid-template-columns:minmax(175px,195px) minmax(0,1fr);gap:1rem;align-items:start;max-width:100%;padding-inline:clamp(1rem,3vw,3rem)}
+ .desktop-catalogue-filters{display:block;position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow:auto;box-sizing:border-box;padding:.7rem;background:#fff;border:1px solid #e3e8ee;border-radius:11px;box-shadow:0 4px 14px rgba(25,45,65,.05);font-family:inherit;font-size:.74rem;line-height:1.25}
  .desktop-gallery-layout>.product-viewport{width:100%;min-width:0;margin:0}
- .desktop-filter-heading{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.8rem}
- .desktop-filter-heading strong{font-size:.95rem}
- .desktop-filter-reset{width:auto;margin:0;padding:.35rem .65rem;font-size:.75rem;border:1px solid #d5dde5;background:#fff;color:#24506d;border-radius:7px;cursor:pointer}
- .desktop-filter-search,.desktop-filter-field{display:block;margin:.65rem 0;font-size:.78rem;font-weight:600}
- .desktop-filter-search input,.desktop-filter-field select{box-sizing:border-box;width:100%;margin:.25rem 0 0;padding:.55rem .65rem;min-height:2.4rem;font-size:.82rem;border:1px solid #d7dfe7;border-radius:8px;background:#fff}
- .desktop-filter-count{margin:.75rem 0 0;color:#647383;font-size:.75rem}
+ .desktop-filter-heading{display:flex;justify-content:space-between;align-items:center;gap:.35rem;margin:0 0 .45rem}
+ .desktop-filter-heading strong{font-size:.76rem;font-weight:700}
+ .desktop-filter-reset{width:auto;margin:0;padding:.22rem .42rem;font:inherit;font-size:.68rem;border:1px solid #d5dde5;background:#fff;color:#24506d;border-radius:6px;cursor:pointer}
+ .desktop-filter-field{display:block;margin:.38rem 0;font-size:.72rem;font-weight:600}
+ .desktop-filter-field select{appearance:auto;box-sizing:border-box;width:100%;margin:.18rem 0 0;padding:.34rem .42rem;min-height:1.9rem;font:inherit;font-size:.72rem;font-weight:400;border:1px solid #d7dfe7;border-radius:6px;background-color:#fff;cursor:pointer}
+ .desktop-filter-count{margin:.48rem 0 0;color:#647383;font-size:.68rem}
 }
