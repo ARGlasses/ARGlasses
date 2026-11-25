@@ -2,7 +2,7 @@
 .desktop-gallery-layout{display:block}
 .desktop-catalogue-filters{display:none}
 @media(min-width:1000px){
- .desktop-gallery-layout{display:grid;grid-template-columns:minmax(175px,195px) minmax(0,1fr);gap:1rem;align-items:start;max-width:100%;padding-inline:clamp(1rem,3vw,3rem);margin:0}
+ .desktop-gallery-layout{display:grid;grid-template-columns:minmax(228px,254px) minmax(0,1fr);gap:1rem;align-items:start;max-width:100%;padding-inline:clamp(1rem,3vw,3rem);margin:0}
  .desktop-gallery-layout>.product-viewport{width:100%;min-width:0;margin:0}
  .desktop-catalogue-filters{display:flex;align-items:flex-start;gap:.55rem;position:sticky;top:1rem;align-self:start;width:100%;height:max-content;max-height:calc(100vh - 2rem);overflow:auto;box-sizing:border-box;padding:.65rem;background:#fff;border:1px solid #e3e8ee;border-radius:10px;box-shadow:0 3px 12px rgba(25,45,65,.045);font-family:inherit;font-size:.72rem;line-height:1.3;margin:0}
  .desktop-filter-content{flex:1;min-width:0}
@@ -10,7 +10,7 @@
  .desktop-filter-heading strong{font-size:.74rem;font-weight:700}
  .desktop-filter-reset{width:auto;margin:0;padding:.18rem .4rem;font:inherit;font-size:.68rem;border:1px solid #d5dde5;background:#fff;color:#24506d;border-radius:6px;cursor:pointer}
  .desktop-filter-field{display:block;margin:.38rem 0;font-size:.72rem;font-weight:500;line-height:1.3}
- .desktop-filter-field select{appearance:auto;box-sizing:border-box;width:100%;margin:.16rem 0 0;padding:.3rem .38rem;min-height:1.75rem;font:inherit;font-size:.72rem;font-weight:400;line-height:1.3;border:1px solid #d7dfe7;border-radius:6px;background-color:#fff;cursor:pointer}
+ .desktop-filter-field select{appearance:auto;box-sizing:border-box;width:100%;margin:.16rem 0 0;padding:.3rem .38rem;min-height:1.75rem;font:inherit;font-size:.36rem;font-weight:400;line-height:1.3;border:1px solid #d7dfe7;border-radius:6px;background-color:#fff;cursor:pointer}
  .desktop-filter-count{margin:.45rem 0 0;color:#647383;font-size:.68rem;line-height:1.3}
  .desktop-filter-toggle{position:relative;flex:0 0 32px;width:32px;height:32px;display:grid;place-items:center;box-sizing:border-box;margin:0;padding:0;font-family:inherit;font-size:0;font-weight:600;line-height:1;color:#174d70;background:linear-gradient(145deg,#fff,#edf5fa);border:1px solid #cbdce8;border-radius:9px;box-shadow:0 2px 5px rgba(20,65,95,.08);cursor:pointer;transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
  .desktop-filter-toggle::before{content:"‹";font-family:Arial,sans-serif;font-size:1.55rem;font-weight:400;line-height:1;transform:none}
