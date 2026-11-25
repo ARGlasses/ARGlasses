@@ -22,7 +22,7 @@
   const toggle=document.createElement("button");
   toggle.type="button";
   toggle.className="desktop-filter-toggle";
-  toggle.textContent="Filters";
+  toggle.textContent="";
   toggle.setAttribute("aria-expanded","true");
   toggle.setAttribute("aria-controls","desktop-filter-content");
   const content=document.createElement("div");
@@ -32,7 +32,7 @@
   layout.append(sidebar,gallery);
   sidebar.append(toggle,content);
 
-  content.innerHTML='<div class="desktop-filter-heading"><strong>Filter products</strong><button type="button" class="desktop-filter-reset">Clear</button></div>';
+  content.innerHTML='<div class="desktop-filter-heading"><button type="button" class="desktop-filter-reset">Clear</button></div>';
   facets.forEach(([key,label,get])=>{
     const values=[...new Set(products.map(get).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
     const wrap=document.createElement("label"); wrap.className="desktop-filter-field";
